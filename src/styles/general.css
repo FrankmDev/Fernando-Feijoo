@@ -5,13 +5,10 @@
 }
 
 :root {
-  --main: #8576ff;
-  --purple-dark: #382838;
-  --purple-light: #b297b2;
-  --lilac: #8576ff;
   --white: #e9ecef;
-  --black: #070707;
-  --yellow: #deb763;
+  --black: #000000;
+
+  --radius: 0.5em;
 }
 
 * {
@@ -22,7 +19,7 @@
 
 html {
   font-family: "Exo", sans-serif;
-  font-weight: 600;
+  font-weight: 300;
   overflow-x: hidden;
   font-size: 1.2rem;
   scroll-behavior: smooth;
