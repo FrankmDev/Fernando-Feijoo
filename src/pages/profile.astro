@@ -3,10 +3,26 @@ import Header from "@sections/Header/Header.astro";
 import Footer from "@sections/Footer/Footer.astro";
 ---
 
-<section id="profile">
+<section id="profile ">
   <Header />
   <section>
-    <h1>Profile</h1>
+    <div class="grid grid-cols-2">
+      <img src="/public/About.jpg" class="w-1/2 mx-auto" />
+      <article class="flex flex-col items-center w-1/2">
+        <h3 class="font-bold text-xl">Fernando Feijoo</h3>
+        <p>
+          Feijoo has an MA in Fine Art Printmaking from Winchester Art School
+          and a BA in Illustration from Maidstone Kent. He trained as master
+          printer at the Curwen Studio before moving into Art education. Feijoo
+          is a multi-disciplinary artist who explores a wide range of medium
+          with his work such as printmaking, drawing, painting, artist books and
+          ceramics. Feijoo has exhibited work internationally and has won many
+          prestigious prizes and awards, with work acquired in many permanent
+          collections. He is also an Honorary member of the Royal Society of
+          Painters & Printmakers London UK.
+        </p>
+      </article>
+    </div>
   </section>
   <Footer />
 </section>
