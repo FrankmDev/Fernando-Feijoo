@@ -1,12 +1,12 @@
 ---
-import Header from "@sections/Header/Header.astro";
-import Footer from "@sections/Footer/Footer.astro";
+import "@styles/general.css";
+import Layout from "@layouts/Layout.astro";
+import SectionContainer from "@components/SectionContainer.astro";
+import PageBanner from "@components/PageBanner.astro";
 ---
 
-<section id="contact">
-  <Header />
-  <section>
-    <h1>CONTACT</h1>
-  </section>
-  <Footer />
-</section>
+<Layout title="Contact">
+  <SectionContainer id="contact">
+    <PageBanner title="Contact" />
+  </SectionContainer>
+</Layout>

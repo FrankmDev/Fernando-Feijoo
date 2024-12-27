@@ -1,0 +1,29 @@
+---
+const { id } = Astro.props;
+---
+
+<section
+  id={id}
+  {...Astro.props}
+  class="flex flex-col gap-28 mb-40 px-5 max-sm:px-0 flex-1"
+>
+  <slot />
+</section>
+<style>
+  section {
+    scroll-behavior: smooth;
+    scroll-margin: 1rem;
+  }
+  @media (width <= 1024px) {
+    section {
+      scroll-margin: 5rem;
+      margin-bottom: 5rem;
+      gap: 5rem;
+    }
+  }
+  @media (width<=600px) {
+    section {
+      gap: 3rem;
+    }
+  }
+</style>
