@@ -1,11 +1,124 @@
 ---
-import Nav from "@components/Header/Nav.astro";
 import Logo from "@components/Header/Logo.astro";
+
+const links = [
+  {
+    to: "/",
+    label: "Home",
+  },
+  {
+    to: "/works",
+    label: "Works",
+  },
+  {
+    to: "/profile",
+    label: "Profile",
+  },
+  {
+    to: "/contact",
+    label: "Contact",
+  },
+];
 ---
 
-<header
-  class="flex items-center justify-between mx-auto px-6 py-4 max-w-[1400px]"
->
-  <Logo />
-  <Nav />
+<script>
+  let isToggled = false;
+
+  function toggleNavlinks() {
+    const navlinks = document.querySelector("#navlinks");
+    const hamburger = document.querySelector("#hamburger");
+    const layer = document.querySelector("#navLayer");
+
+    if (isToggled) {
+      navlinks.classList.add("!visible", "!scale-100", "!opacity-100");
+      hamburger.classList.add("toggled");
+      layer.classList.add("scale-y-100");
+    } else {
+      navlinks.classList.remove("!visible", "!scale-100", "!opacity-100");
+      hamburger.classList.remove("toggled");
+      layer.classList.remove("scale-y-100");
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const hamburger = document.querySelector("#hamburger");
+    const navlinks = document.querySelector("#navlinks");
+    const layer = document.querySelector("#navLayer");
+    const links = [...navlinks.querySelectorAll("a")];
+
+    if (hamburger && navlinks && layer) {
+      hamburger.addEventListener("click", () => {
+        isToggled = !isToggled;
+        toggleNavlinks();
+      });
+
+      links.forEach((link) => {
+        link.addEventListener("click", () => {
+          isToggled = false;
+          toggleNavlinks();
+        });
+      });
+    }
+  });
+</script>
+
+<header>
+  <nav class="absolute z-10 w-full">
+    <section>
+      <div
+        class="relative flex flex-wrap items-center justify-between gap-6 py-3 md:gap-0 md:py-4"
+      >
+        <div class="relative z-20 flex w-full justify-between md:px-0 lg:w-max">
+          <Logo />
+          <div class="relative flex max-h-10 items-center lg:hidden">
+            <button aria-label="hamburger" id="hamburger" class="relative p-6">
+              <div
+                aria-hidden="true"
+                class="line h-0.5 w-5 bg-current transition duration-300"
+              >
+              </div>
+              <div
+                aria-hidden="true"
+                class="line mt-2 h-0.5 w-5 bg-current transition duration-300"
+              >
+              </div>
+            </button>
+          </div>
+        </div>
+        <div
+          id="navLayer"
+          aria-hidden="true"
+          class="fixed inset-0 z-10 h-screen w-screen origin-bottom scale-y-0 transition-transform duration-500 lg:hidden"
+        >
+        </div>
+        <div
+          id="navlinks"
+          class="invisible absolute top-full left-0 z-20 w-full origin-top-right scale-90 flex-col gap-6 p-8 opacity-0 transition-all duration-300 lg:visible lg:relative lg:flex lg:w-7/12 lg:translate-y-0 lg:scale-100 lg:flex-row lg:items-center lg:gap-0 lg:p-0 lg:opacity-100"
+        >
+          <div class="w-full lg:w-auto lg:pr-4 lg:pt-0">
+            <ul class="flex flex-col gap-6 lg:flex-row lg:gap-4">
+              {
+                links.map((link) => (
+                  <li>
+                    <a href={link.to} class="block transition">
+                      {link.label}
+                    </a>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </nav>
 </header>
+
+<style>
+  .toggled div:first-child {
+    @apply translate-y-1.5 rotate-45;
+  }
+  .toggled div:last-child {
+    @apply -translate-y-1 -rotate-45;
+  }
+</style>
