@@ -1,4 +1,5 @@
 ---
+import { ClientRouter } from "astro:transitions";
 interface Props {
   title: string;
 }
@@ -18,8 +19,9 @@ import Footer from "@sections/Footer/Footer.astro";
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <link rel="stylesheet" href="/styles/general.css" />
+    <ClientRouter />
   </head>
-  <body class="flex flex-col items-center">
+  <body class="flex flex-col items-center max-w-[1600px] mx-auto">
     <Header />
     <slot />
     <Footer />

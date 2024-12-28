@@ -3,7 +3,10 @@ import Logo from "@components/Header/Logo.astro";
 import Socials from "@components/Hero/Socials.astro";
 ---
 
-<footer class="flex items-center justify-between px-xl">
-  <Logo />
-  <Socials />
+<footer class="flex flex-col items-center justify-between px-xl w-full">
+  <div class="flex items-center w-full justify-between max-w-screen mx-auto">
+    <Logo />
+    <Socials />
+  </div>
+  <p class="font-light text-gray-400 text-xs">&copy; 2024 Fernando Feijoo</p>
 </footer>
