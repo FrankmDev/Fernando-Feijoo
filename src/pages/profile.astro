@@ -1,13 +1,12 @@
 ---
-import Header from "@sections/Header/Header.astro";
-import Footer from "@sections/Footer/Footer.astro";
+import SectionContainer from "@components/SectionContainer.astro";
+import Layout from "@layouts/Layout.astro";
 ---
 
-<section id="profile ">
-  <Header />
-  <section>
-    <div class="grid grid-cols-2">
-      <img src="/public/About.jpg" class="w-1/2 mx-auto" />
+<Layout title="Profile">
+  <SectionContainer>
+    <div class="grid grid-cols-2 w-full">
+      <img src="/public/About.jpg" class="w-3/4 mx-auto" />
       <article class="flex flex-col items-center w-1/2">
         <h3 class="font-bold text-xl">Fernando Feijoo</h3>
         <p>
@@ -23,6 +22,5 @@ import Footer from "@sections/Footer/Footer.astro";
         </p>
       </article>
     </div>
-  </section>
-  <Footer />
-</section>
+  </SectionContainer>
+</Layout>
