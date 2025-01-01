@@ -10,7 +10,7 @@ import {
 import Autoplay from "embla-carousel-autoplay";
 
 const plugin = Autoplay({
-  delay: 4000,
+  delay: 2000,
   stopOnMouseEnter: true,
   stopOnInteraction: false,
 });
@@ -18,41 +18,23 @@ const plugin = Autoplay({
 
 <template>
   <Carousel
-    class="relative w-full"
+    class="relative w-full max-w-[500px]"
     :plugins="[plugin]"
     @mouseenter="plugin.stop"
     @mouseleave="[plugin.reset(), plugin.play(), console.log('Running')]"
   >
     <CarouselContent>
-      <CarouselItem :key="index">
+      <CarouselItem v-for="(_, index) in 5" :key="index">
         <div class="p-1">
           <Card>
-            <CardContent class="flex items-center justify-center">
-              <img src="/public/TheFall.jpg" />
-            </CardContent>
-          </Card>
-        </div>
-      </CarouselItem>
-      <CarouselItem :key="index">
-        <div class="p-1">
-          <Card>
-            <CardContent class="flex items-center justify-center">
-              <img src="/public/heroSlider/Persons.png" />
-            </CardContent>
-          </Card>
-        </div>
-      </CarouselItem>
-      <CarouselItem :key="index">
-        <div class="p-1">
-          <Card>
-            <CardContent class="flex items-center justify-center">
-              <img src="/public/heroSlider/TheFuture.jpg" />
+            <CardContent
+              class="bg-red-500 flex aspect-square items-center justify-center p-6"
+            >
+              <span class="text-4xl font-semibold">{{ index + 1 }}</span>
             </CardContent>
           </Card>
         </div>
       </CarouselItem>
     </CarouselContent>
-    <CarouselPrevious />
-    <CarouselNext />
   </Carousel>
 </template>
