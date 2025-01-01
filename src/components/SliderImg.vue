@@ -10,7 +10,7 @@ import {
 import Autoplay from "embla-carousel-autoplay";
 
 const plugin = Autoplay({
-  delay: 5000,
+  delay: 4000,
   stopOnMouseEnter: true,
   stopOnInteraction: false,
 });
