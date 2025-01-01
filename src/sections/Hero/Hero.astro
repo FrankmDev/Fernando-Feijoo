@@ -1,9 +1,11 @@
 ---
 import Socials from "@components/Hero/Socials.astro";
 import SliderImg from "@components/SliderImg.vue";
+import ContactBanner from "@components/Hero/ContactBanner.astro";
 ---
 
 <section class="flex pt-10 flex-col items-center justify-center gap-md">
   <SliderImg client:load />
   <Socials />
+  <ContactBanner />
 </section>
