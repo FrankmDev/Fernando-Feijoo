@@ -6,18 +6,77 @@ import SliderImg from "@components/SliderImg.vue";
 import PageBanner from "@components/PageBanner.astro";
 import ContactBanner from "@components/Hero/ContactBanner.astro";
 import Cta from "@components/Cta.astro";
+import MapIcon from "@icons/map-icon.astro";
+import RightArrowIcon from "@icons/rightArrow-icon.astro";
+
+const COLLECTIONS: string[] = [
+  "Ashmolean Museum, Oxford, England",
+  "Bodleian Library, Oxford University, England",
+  "British Museum, London, England",
+  "The Pallant House Prints and Drawings Collection, Chichester, West Sussex, England",
+  "Jiangsu Museum of Contemporary Art, China",
+  "V&A Print collection London, England",
+  "University of Wales Aberystwyth, Wales",
+  "Winchester School of Art Library, England",
+];
+
+const AWARDS_PUBLICATIONS: { year: number; title: string }[] = [
+  {
+    year: 2020,
+    title:
+      "Hawthorn printmaking purchase prize, RE exhibition Bankside gallery London",
+  },
+  {
+    year: 2018,
+    title:
+      "The Artist’s Eye Award by Printmaking Today Magazine on artist book RUN",
+  },
+  {
+    year: 2018,
+    title:
+      "Hawthorn printmaking purchase prize, RE exhibition Bankside gallery London",
+  },
+  { year: 2012, title: "Clifford Chance purchase prize, RE London" },
+  {
+    year: 2011,
+    title: "London Lives Printmaking prize highly commended entry",
+  },
+  {
+    year: 2008,
+    title:
+      "Winner of the London Print Studio Prize at the RE annual exhibition",
+  },
+  {
+    year: 2007,
+    title:
+      "Prize winning book 14th Tallinn print triennial, held at the Kumu Art Museum Estonia",
+  },
+  {
+    year: 2005,
+    title:
+      "Grant from the Birgit Skiold foundation to fund new artist book project",
+  },
+  {
+    year: 2004,
+    title:
+      "Winner of the ‘Design a Book of Fables’ competition in association with the FPBA",
+  },
+];
 ---
 
 <Layout title="Profile">
   <SectionContainer>
     <PageBanner title="Profile" />
-    <div class="grid grid-cols-2 gap-6 mx-auto max-w-[1200px]">
-      <figure class="mx-auto">
+
+    <div
+      class="container mx-auto px-4 max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-6"
+    >
+      <figure class="mx-auto w-full">
         <SliderImg client:load />
       </figure>
-      <article class="flex flex-col justify-center mx-auto">
-        <h3 class="font-bold text-5xl">Fernando Feijoo</h3>
-        <p>
+      <article class="flex flex-col justify-center mx-auto text-gray-800">
+        <h3 class="font-bold text-3xl md:text-5xl mb-4">Fernando Feijoo</h3>
+        <p class="text-sm md:text-base">
           Feijoo has an MA in Fine Art Printmaking from Winchester Art School
           and a BA in Illustration from Maidstone Kent. He trained as master
           printer at the Curwen Studio before moving into Art education. Feijoo
@@ -28,35 +87,91 @@ import Cta from "@components/Cta.astro";
           collections. He is also an Honorary member of the Royal Society of
           Painters & Printmakers London UK.
         </p>
-        <Cta href="/contact" label="Contact me" isDark />
+        <h3 class="text-xl font-bold my-3">Residences</h3>
+        <ul>
+          <li class="font-italic flex items-center gap-1">
+            <RightArrowIcon aria-hidden="true" class="w-5 h-5 text-gray-600" />
+            Franz Maserelle Centrum, Kasterlle, Belgium
+          </li>
+          <li class="font-italic flex items-center gap-1">
+            <RightArrowIcon aria-hidden="true" class="w-5 h-5 text-gray-600" />
+            La Curtiduria Arts Centre Oaxaca, Mexico
+          </li>
+          <li class="font-italic flex items-center gap-1">
+            <RightArrowIcon aria-hidden="true" class="w-5 h-5 text-gray-600" />
+            London Print Studio, London UK
+          </li>
+        </ul>
+        <Cta href="/contact" label="Contact me" isDark class="mt-6" />
       </article>
     </div>
-    <section class="grid grid-cols-2 gap-6 mx-auto max-w-6xl">
+
+    <!-- Sección Collections + Awards -->
+    <section
+      class="container mx-auto px-4 max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-6 mt-12"
+      aria-label="Collections and Awards"
+    >
+      <!-- Collections -->
       <div>
-        <h3 class="font-bold text-5xl">Collections</h3>
-        <p></p>
-        Ashmolean Museum, Oxford, England Bodleian Library, Oxford University, England
-        British Museum, London, England The Pallant House Prints and Drawings Collection,
-        Chichester, West Sussex, England Jiangsu Museum of Contemporary Art, China
-        V&A Print collection London, England University of Wales Aberystwyth, Wales
-        Winchester School of Art Library, England
+        <h3 class="font-bold text-3xl md:text-5xl mb-6">Collections</h3>
+        <ul class="space-y-4">
+          {
+            COLLECTIONS.map((collection) => (
+              <li class="flex items-center gap-3">
+                <MapIcon aria-hidden="true" class="w-5 h-5 text-gray-600" />
+                <p class="text-sm md:text-base">{collection}</p>
+              </li>
+            ))
+          }
+        </ul>
       </div>
+
+      <!-- Awards & Publications -->
       <div>
-        <h3 class="font-bold text-5xl">Awards & Publications</h3>
-        <p>
-          2020 Hawthorn printmaking purchase prize, RE exhibition Bankside
-          gallery London 2018 The Artist’s Eye Award by Printmaking Today
-          Magazine on artist book RUN 2018 Hawthorn printmaking purchase prize,
-          RE exhibition Bankside gallery London 2012 Clifford Chance purchase
-          prize, RE London 2011 London Lives Printmaking prize highly commended
-          entry 2008 Winner of the London Print Studio Prize at the RE annual
-          exhibition 2007 Prize winning book 14th Tallinn print triennial, held
-          at the Kumu Art Museum Estonia 2005 Grant from the Birgit Skiold
-          foundation to fund new artist book project 2004 Winner of the ‘Design
-          a Book of Fables’ competition in association with the FPBA
-        </p>
+        <h3 class="font-bold text-3xl md:text-5xl mb-6">
+          Awards & Publications
+        </h3>
+        <ul class="space-y-4">
+          {
+            AWARDS_PUBLICATIONS.map((award) => (
+              <li class="flex items-start gap-3">
+                <span class="bg-black text-white text-xs font-semibold px-2 py-1 rounded">
+                  {award.year}
+                </span>
+                <p class="text-sm md:text-base">{award.title}</p>
+              </li>
+            ))
+          }
+        </ul>
       </div>
     </section>
+    <section>
+      <p class="text-xl">
+        My work has a sense of humor within it even though sometimes I make
+        images which reflect the darker side of human nature. I am interested in
+        social and political issues and reflect these themes within my work. My
+        narrative images have hidden layers of information within them which the
+        viewer can find each time they return to the work. The closer you are
+        drawn into the image, the more you understand about the characters and
+        the lives they lead. The process of drawing is fundamental for me. I
+        enjoy how it translates through different print processes and creates
+        alternate styles of work. I see myself as a journeyman: travelling
+        around, absorbing all the variety of cultural differences and
+        architectural styles when I visit a new city, exploring people’s lives
+        and conditions in the twenty first century. These observations are then
+        reflected throughout my work as a series of sequential narrative images.
+        I enjoy exploring new ways of making work through combining different
+        media together, working with the interactions and juxtapositions of
+        materials and techniques, which encourage fresh viewpoints and outcomes.
+        Drawing is a powerful medium which allows me to push my ideas into
+        different directions and create the fantastic. There are no rules to be
+        followed: just pure experimentation and fun to be had.
+      </p>
+      <h3 class="text-3xl font-italic text-center mt-5">
+        Fernando Feijoo - Artist
+      </h3>
+    </section>
+
     <ContactBanner />
   </SectionContainer>
 </Layout>
