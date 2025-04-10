@@ -1,0 +1,39 @@
+---
+interface Props {
+  class?: string;
+  href: string;
+  label?: string;
+  isDark?: boolean;
+}
+
+const {
+  href,
+  class: className = "",
+  label = "Contact me",
+  isDark = false,
+} = Astro.props;
+---
+
+<a
+  href={href}
+  rel="noopener noreferrer"
+  class:list={[
+    "inline-block w-fit px-4 py-2 sm:px-6 sm:py-3 rounded-xl mt-6 transition duration-300 ease-in-out",
+    {
+      "bg-black text-white hover:bg-white hover:text-black hover:outline hover:outline-[1px]":
+        isDark,
+      "bg-white text-black hover:bg-black hover:text-white hover:outline hover:outline-[1px]":
+        !isDark,
+    },
+    className,
+  ]}
+  aria-label={label}
+>
+  <slot>{label}</slot>
+</a>
+
+<style>
+  a {
+    text-decoration: none;
+  }
+</style>

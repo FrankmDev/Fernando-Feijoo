@@ -5,6 +5,7 @@ import Layout from "@layouts/Layout.astro";
 import SliderImg from "@components/SliderImg.vue";
 import PageBanner from "@components/PageBanner.astro";
 import ContactBanner from "@components/Hero/ContactBanner.astro";
+import Cta from "@components/Cta.astro";
 ---
 
 <Layout title="Profile">
@@ -14,8 +15,8 @@ import ContactBanner from "@components/Hero/ContactBanner.astro";
       <figure class="mx-auto">
         <SliderImg client:load />
       </figure>
-      <article class="flex flex-col items-center mx-auto">
-        <h3 class="font-bold text-xl">Fernando Feijoo</h3>
+      <article class="flex flex-col justify-center mx-auto">
+        <h3 class="font-bold text-5xl">Fernando Feijoo</h3>
         <p>
           Feijoo has an MA in Fine Art Printmaking from Winchester Art School
           and a BA in Illustration from Maidstone Kent. He trained as master
@@ -27,8 +28,35 @@ import ContactBanner from "@components/Hero/ContactBanner.astro";
           collections. He is also an Honorary member of the Royal Society of
           Painters & Printmakers London UK.
         </p>
+        <Cta href="/contact" label="Contact me" isDark />
       </article>
     </div>
+    <section class="grid grid-cols-2 gap-6 mx-auto max-w-6xl">
+      <div>
+        <h3 class="font-bold text-5xl">Collections</h3>
+        <p></p>
+        Ashmolean Museum, Oxford, England Bodleian Library, Oxford University, England
+        British Museum, London, England The Pallant House Prints and Drawings Collection,
+        Chichester, West Sussex, England Jiangsu Museum of Contemporary Art, China
+        V&A Print collection London, England University of Wales Aberystwyth, Wales
+        Winchester School of Art Library, England
+      </div>
+      <div>
+        <h3 class="font-bold text-5xl">Awards & Publications</h3>
+        <p>
+          2020 Hawthorn printmaking purchase prize, RE exhibition Bankside
+          gallery London 2018 The Artist’s Eye Award by Printmaking Today
+          Magazine on artist book RUN 2018 Hawthorn printmaking purchase prize,
+          RE exhibition Bankside gallery London 2012 Clifford Chance purchase
+          prize, RE London 2011 London Lives Printmaking prize highly commended
+          entry 2008 Winner of the London Print Studio Prize at the RE annual
+          exhibition 2007 Prize winning book 14th Tallinn print triennial, held
+          at the Kumu Art Museum Estonia 2005 Grant from the Birgit Skiold
+          foundation to fund new artist book project 2004 Winner of the ‘Design
+          a Book of Fables’ competition in association with the FPBA
+        </p>
+      </div>
+    </section>
     <ContactBanner />
   </SectionContainer>
 </Layout>

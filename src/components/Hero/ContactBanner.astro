@@ -1,32 +1,30 @@
 ---
 import BannerImg from "/public/bannerimg.jpg";
 import { Image } from "astro:assets";
-
-const IMAGES = {
-  Hero: "/public/heroSlider/hero-1.jpg",
-  Profile: "/public/heroSlider/hero-2.jpg",
-  About: "/public/heroSlider/hero-3.jpg",
-};
+import Cta from "@components/Cta.astro";
 ---
 
-<section class="my-10 mx-auto">
-  <div class="grid grid-cols-2 w-[1200px]">
-    <article class="bg-black text-white p-10">
-      <h2 class="text-3xl font-bold mb-4">Contact me</h2>
-      <p>
+<section class="my-10 mx-auto" aria-label="Contacto y presentación">
+  <div class="container mx-auto px-4 max-w-6xl grid grid-cols-1 md:grid-cols-2">
+    <article class="bg-black text-white p-6 md:p-10">
+      <h2 class="text-2xl md:text-3xl font-bold mb-4">Contact me</h2>
+      <p class="text-sm md:text-base">
         Lorem ipsum dolor, sit amet consectetur adipisicing elit.
         Exercitationem, impedit et dolorum, fugit saepe aliquid quod cumque
         nulla quisquam aspernatur dolore consequatur deserunt quaerat possimus,
         non aliquam repudiandae. Totam, quae.
       </p>
-      <button
-        class="bg-white text-black px-4 py-2 rounded-xl mt-6 hover:bg-black hover:outline hover:outline-[1px] hover:text-white transition duration-300 easy-in-out"
-      >
-        Contact me
-      </button>
+      <Cta href="/contact" label="Contact" class="mt-6" />
     </article>
-    <figure>
-      <Image src={BannerImg} alt="Banner" class="w-full h-full object-cover" />
+    <figure class="w-full h-full">
+      <Image
+        src={BannerImg}
+        alt="Fotografía representativa del artista"
+        width={600}
+        height={400}
+        class="w-full h-full object-cover rounded-lg"
+        loading="lazy"
+      />
     </figure>
   </div>
 </section>

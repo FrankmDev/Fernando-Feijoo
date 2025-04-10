@@ -3,10 +3,35 @@ import "@styles/general.css";
 import Layout from "@layouts/Layout.astro";
 import SectionContainer from "@components/SectionContainer.astro";
 import PageBanner from "@components/PageBanner.astro";
+import SliderImg from "@components/SliderImg.vue";
 ---
 
 <Layout title="Contact">
   <SectionContainer id="contact">
     <PageBanner title="Contact" />
+    <section>
+      <h2 class="text-3xl">
+        lorem ipsum dolor sit amet lorem ipsum dolor sit amet Lorem ipsum dolor
+        sit amet, consectetur adipisicing elit. Enim nulla mollitia inventore
+        dolorem facilis ad modi iure alias? Neque, facilis explicabo assumenda
+        temporibus eius ut ipsam modi tempore ab quo!r
+      </h2>
+    </section>
+    <div class="grid grid-cols-2 gap-6 mx-auto max-w-[1200px]">
+      <article class="flex flex-col items-center mx-auto">
+        <h3 class="font-bold text-xl">Fernando Feijoo</h3>
+        <p>
+          Feijoo has an MA in Fine Art Printmaking from Winchester Art School
+          and a BA in Illustration from Maidstone Kent. He trained as master
+          printer at the Curwen Studio before moving into Art education. Feijoo
+          is a multi-disciplinary artist who explores a wide range of medium
+          with his work such as printmaking, drawing, painting, artist books and
+          ceramics. Feijoo has exhibited work internationally and has won many
+          prestigious prizes and awards, with work acquired in many permanent
+          collections. He is also an Honorary member of the Royal Society of
+          Painters & Printmakers London UK.
+        </p>
+      </article>
+    </div>
   </SectionContainer>
 </Layout>
