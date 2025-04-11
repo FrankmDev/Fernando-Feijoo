@@ -1,18 +1,15 @@
 ---
+interface Props {
+  class?: string;
+}
 
+const { class: className = "" } = Astro.props;
 ---
 
-<a href="/" class="flex gap-3 items-center">
-  <h2 class="text-4xl font-bold uppercase max-lg:text-3xl max-md:text-2xl">
-    Fernando Feijoo
-  </h2>
-  <div class="flex flex-col">
+<a href="/" class:list={["flex gap-3 items-center", className]}>
+  <h2 class="text-3xl md:text-4xl font-bold uppercase">Fernando Feijoo</h2>
+  <div class="flex flex-col text-xs md:text-sm">
     <span class="-mb-1">Artist &</span>
     <span>Printmaker</span>
   </div>
 </a>
-<style>
-  span {
-    @apply text-sm max-lg:text-xs;
-  }
-</style>

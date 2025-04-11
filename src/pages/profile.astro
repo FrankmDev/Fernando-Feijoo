@@ -1,6 +1,7 @@
 ---
 import "@styles/general.css";
 import SectionContainer from "@components/SectionContainer.astro";
+import TitleSection from "@components/TitleSection.astro";
 import Layout from "@layouts/Layout.astro";
 import SliderImg from "@components/SliderImg.vue";
 import PageBanner from "@components/PageBanner.astro";
@@ -62,12 +63,17 @@ const AWARDS_PUBLICATIONS: { year: number; title: string }[] = [
       "Winner of the ‘Design a Book of Fables’ competition in association with the FPBA",
   },
 ];
+
+const RESIDENCES: string[] = [
+  "Franz Maserelle Centrum, Kasterlle, Belgium",
+  "La Curtiduria Arts Centre Oaxaca, Mexico",
+  "London Print Studio, London UK",
+];
 ---
 
 <Layout title="Profile">
   <SectionContainer>
     <PageBanner title="Profile" />
-
     <div
       class="container mx-auto px-4 max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-6"
     >
@@ -75,8 +81,8 @@ const AWARDS_PUBLICATIONS: { year: number; title: string }[] = [
         <SliderImg client:load />
       </figure>
       <article class="flex flex-col justify-center mx-auto text-gray-800">
-        <h3 class="font-bold text-3xl md:text-5xl mb-4">Fernando Feijoo</h3>
-        <p class="text-sm md:text-base">
+        <TitleSection title="Fernando Feijoo" id="profile" />
+        <p class="text-sm md:text-base mt-4">
           Feijoo has an MA in Fine Art Printmaking from Winchester Art School
           and a BA in Illustration from Maidstone Kent. He trained as master
           printer at the Curwen Studio before moving into Art education. Feijoo
@@ -87,34 +93,17 @@ const AWARDS_PUBLICATIONS: { year: number; title: string }[] = [
           collections. He is also an Honorary member of the Royal Society of
           Painters & Printmakers London UK.
         </p>
-        <h3 class="text-xl font-bold my-3">Residences</h3>
-        <ul>
-          <li class="font-italic flex items-center gap-1">
-            <RightArrowIcon aria-hidden="true" class="w-5 h-5 text-gray-600" />
-            Franz Maserelle Centrum, Kasterlle, Belgium
-          </li>
-          <li class="font-italic flex items-center gap-1">
-            <RightArrowIcon aria-hidden="true" class="w-5 h-5 text-gray-600" />
-            La Curtiduria Arts Centre Oaxaca, Mexico
-          </li>
-          <li class="font-italic flex items-center gap-1">
-            <RightArrowIcon aria-hidden="true" class="w-5 h-5 text-gray-600" />
-            London Print Studio, London UK
-          </li>
-        </ul>
         <Cta href="/contact" label="Contact me" isDark class="mt-6" />
       </article>
     </div>
 
-    <!-- Sección Collections + Awards -->
     <section
       class="container mx-auto px-4 max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-6 mt-12"
       aria-label="Collections and Awards"
     >
-      <!-- Collections -->
       <div>
-        <h3 class="font-bold text-3xl md:text-5xl mb-6">Collections</h3>
-        <ul class="space-y-4">
+        <TitleSection title="Collections" id="collections" />
+        <ul class="space-y-4 mb-8">
           {
             COLLECTIONS.map((collection) => (
               <li class="flex items-center gap-3">
@@ -124,18 +113,29 @@ const AWARDS_PUBLICATIONS: { year: number; title: string }[] = [
             ))
           }
         </ul>
+        <TitleSection title="Residences" id="residences" />
+        <ul class="space-y-4">
+          {
+            RESIDENCES.map((residence) => (
+              <li class="flex items-center gap-3 italic">
+                <RightArrowIcon
+                  aria-hidden="true"
+                  class="w-5 h-5 text-gray-600"
+                />
+                <p class="text-sm md:text-base">{residence}</p>
+              </li>
+            ))
+          }
+        </ul>
       </div>
 
-      <!-- Awards & Publications -->
       <div>
-        <h3 class="font-bold text-3xl md:text-5xl mb-6">
-          Awards & Publications
-        </h3>
+        <TitleSection title="Awards & Publications" id="awards" />
         <ul class="space-y-4">
           {
             AWARDS_PUBLICATIONS.map((award) => (
               <li class="flex items-start gap-3">
-                <span class="bg-black text-white text-xs font-semibold px-2 py-1 rounded">
+                <span class="bg-black text-white text-md font-semibold px-2 py-1 rounded">
                   {award.year}
                 </span>
                 <p class="text-sm md:text-base">{award.title}</p>
@@ -145,31 +145,39 @@ const AWARDS_PUBLICATIONS: { year: number; title: string }[] = [
         </ul>
       </div>
     </section>
-    <section>
-      <p class="text-xl">
+
+    <section
+      class="container mx-auto px-4 max-w-6xl mt-12"
+      aria-label="Artist's statement"
+    >
+      <TitleSection
+        title="Artist's statement"
+        class="text-center"
+        id="statement"
+      />
+      <p class="text-base md:text-xl mt-4 mx-auto">
         My work has a sense of humor within it even though sometimes I make
         images which reflect the darker side of human nature. I am interested in
-        social and political issues and reflect these themes within my work. My
-        narrative images have hidden layers of information within them which the
-        viewer can find each time they return to the work. The closer you are
-        drawn into the image, the more you understand about the characters and
-        the lives they lead. The process of drawing is fundamental for me. I
-        enjoy how it translates through different print processes and creates
-        alternate styles of work. I see myself as a journeyman: travelling
-        around, absorbing all the variety of cultural differences and
-        architectural styles when I visit a new city, exploring people’s lives
-        and conditions in the twenty first century. These observations are then
-        reflected throughout my work as a series of sequential narrative images.
-        I enjoy exploring new ways of making work through combining different
-        media together, working with the interactions and juxtapositions of
-        materials and techniques, which encourage fresh viewpoints and outcomes.
-        Drawing is a powerful medium which allows me to push my ideas into
-        different directions and create the fantastic. There are no rules to be
-        followed: just pure experimentation and fun to be had.
+        <em>social and political issues</em> and reflect these themes within my work.
+        My narrative images have hidden layers of information within them which the
+        viewer can find each time they return to the work. The closer you are drawn
+        into the image, the more you understand about the characters and the lives
+        they lead. The process of drawing is fundamental for me. I enjoy how it translates
+        through different print processes and creates alternate styles of work. I
+        see myself as a journeyman: travelling around, absorbing all the variety
+        of cultural differences and architectural styles when I visit a new city,
+        exploring people’s lives and conditions in the twenty first century. These
+        observations are then reflected throughout my work as a series of sequential
+        narrative images. I enjoy exploring new ways of making work through combining
+        different media together, working with the interactions and juxtapositions
+        of materials and techniques, which encourage fresh viewpoints and outcomes.
+        Drawing is a powerful medium which allows me to push my ideas into different
+        directions and create the fantastic. There are no rules to be followed: just
+        pure experimentation and fun to be had.
       </p>
-      <h3 class="text-3xl font-italic text-center mt-5">
+      <p class="text-2xl md:text-3xl italic text-center mt-6">
         Fernando Feijoo - Artist
-      </h3>
+      </p>
     </section>
 
     <ContactBanner />
