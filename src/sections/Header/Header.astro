@@ -1,14 +1,15 @@
 ---
 import "@styles/general.css";
 import Logo from "@components/Header/Logo.astro";
-
 const navItems = [
   { href: "/", text: "Home" },
   { href: "/works", text: "Works" },
   { href: "/profile", text: "Profile" },
-  { href: "/contact", text: "Contact" },
+  {
+    href: "/contact",
+    text: "Contact",
+  },
 ];
-
 const currentPath = Astro.url.pathname;
 ---
 
@@ -24,10 +25,10 @@ const currentPath = Astro.url.pathname;
             <a
               href={item.href}
               class:list={[
-                "text-sm font-medium py-2 transition-colors duration-200 text-black",
+                "text-sm font-medium py-2 transition-all duration-300 text-black",
                 currentPath === item.href
                   ? " border-b-2 border-black"
-                  : " hover:italic",
+                  : " hover:skew-x-[-10deg]",
               ]}
               aria-current={currentPath === item.href ? "page" : undefined}
             >
@@ -39,39 +40,39 @@ const currentPath = Astro.url.pathname;
 
       <button
         id="mobile-menu-toggle"
-        class="md:hidden flex items-center p-2 rounded-md text-gray-600 hover:text-blue-600 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
-        aria-label="Abrir menú de navegación"
+        class="md:hidden flex items-center p-2 rounded-md text-gray-600 hover:text-blue-600 hover:bg-gray-100 focus:outline-none transition-colors"
+        aria-label="Open Nav"
         aria-expanded="false"
         aria-controls="mobile-menu"
       >
         <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      width="24"
-      height="24"
-      color="#000000"
-      fill="none"
-      class="icon-mobile-nav open-icon"
-    >
-      <path
-        d="M10 5L20 5"
-        stroke="currentColor"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"></path>
-      <path
-        d="M4 12L20 12"
-        stroke="currentColor"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"></path>
-      <path
-        d="M4 19L14 19"
-        stroke="currentColor"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"></path>
-    </svg>
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          width="24"
+          height="24"
+          color="#000000"
+          fill="none"
+          class="icon-mobile-nav open-icon"
+        >
+          <path
+            d="M10 5L20 5"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"></path>
+          <path
+            d="M4 12L20 12"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"></path>
+          <path
+            d="M4 19L14 19"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"></path>
+        </svg>
       </button>
     </div>
   </div>
@@ -83,24 +84,25 @@ const currentPath = Astro.url.pathname;
     <button
       id="close-menu-button"
       class="absolute top-4 right-4 p-2 text-white hover:text-gray-300 focus:outline-none"
-      aria-label="Cerrar menú de navegación"
+      aria-label="Close Nav"
     >
-       <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      width="24"
-      height="24"
-      color="#fff"
-      fill="none"
-      class="icon-mobile-nav close-icon"
-    >
-      <path
-        d="M19.0005 4.99988L5.00049 18.9999M5.00049 4.99988L19.0005 18.9999"
-        stroke="currentColor"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"></path>
-    </svg>   </button>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        width="24"
+        height="24"
+        color="#fff"
+        fill="none"
+        class="icon-mobile-nav close-icon"
+      >
+        <path
+          d="M19.0005 4.99988L5.00049 18.9999M5.00049 4.99988L19.0005 18.9999"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"></path>
+      </svg>
+    </button>
 
     <nav
       class="flex flex-col items-center justify-center space-y-6 w-full px-8"
@@ -110,10 +112,10 @@ const currentPath = Astro.url.pathname;
           <a
             href={item.href}
             class:list={[
-              "text-2xl font-medium py-2 px-4 text-center transition-all duration-1000 w-full ",
+              "text-2xl font-medium py-2 px-4 text-center transition-all duration-300 w-full ",
               currentPath === item.href
                 ? "text-white w-min border-b-2 border-white"
-                : "text-white hover:italic ",
+                : "text-white hover:skew-x-[-10deg]",
             ]}
             aria-current={currentPath === item.href ? "page" : undefined}
           >
@@ -166,61 +168,3 @@ const currentPath = Astro.url.pathname;
     animation-delay: 0.5s;
   }
 </style>
-
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const toggleButton = document.getElementById("mobile-menu-toggle");
-    const closeButton = document.getElementById("close-menu-button");
-    const mobileMenu = document.getElementById("mobile-menu");
-
-    if (toggleButton && closeButton && mobileMenu) {
-      // Función para abrir el menú
-      function openMenu() {
-        mobileMenu.classList.add("menu-open");
-        mobileMenu.classList.remove("translate-x-full");
-        toggleButton.setAttribute("aria-expanded", "true");
-        document.body.classList.add("menu-open");
-      }
-
-      // Función para cerrar el menú
-      function closeMenu() {
-        mobileMenu.classList.remove("menu-open");
-        mobileMenu.classList.add("translate-x-full");
-        toggleButton.setAttribute("aria-expanded", "false");
-        document.body.classList.remove("menu-open");
-      }
-
-      // Abrir menú al hacer click en el botón de hamburguesa
-      toggleButton.addEventListener("click", openMenu);
-
-      // Cerrar menú al hacer click en el botón de cerrar
-      closeButton.addEventListener("click", closeMenu);
-
-      // Cerrar menú al hacer clic en un enlace
-      const menuLinks = mobileMenu.querySelectorAll("a");
-      menuLinks.forEach((link) => {
-        link.addEventListener("click", closeMenu);
-      });
-
-      // Cerrar menú al presionar Escape
-      document.addEventListener("keydown", (e) => {
-        if (
-          e.key === "Escape" &&
-          toggleButton.getAttribute("aria-expanded") === "true"
-        ) {
-          closeMenu();
-        }
-      });
-
-      // Cerrar menú al cambiar a vista de escritorio
-      window.addEventListener("resize", () => {
-        if (
-          window.innerWidth >= 768 &&
-          toggleButton.getAttribute("aria-expanded") === "true"
-        ) {
-          closeMenu();
-        }
-      });
-    }
-  });
-</script>
