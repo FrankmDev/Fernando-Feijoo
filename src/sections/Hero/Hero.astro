@@ -4,96 +4,83 @@ import Socials from "@components/Hero/Socials.astro";
 import SliderHero from "@components/SliderHero.vue";
 import ContactBanner from "@components/Hero/ContactBanner.astro";
 
-// Definir galería directamente con imágenes
+// Importar todas las imágenes
+import CerbusImg from "@assets/works/prints/godsMonsters/cerbus.avif";
+import AgniImg from "@assets/works/prints/godsMonsters/agni.avif";
+import PrometheusImg from "@assets/works/prints/godsMonsters/prometheus.avif";
+import VolcanImg from "@assets/works/prints/godsMonsters/volcan.avif";
+import ShuImg from "@assets/works/prints/godsMonsters/shu.avif";
+import FenirImg from "@assets/works/prints/godsMonsters/fenir.avif";
+
+import BurnInHellImg from "@assets/works/ceramics/burnInHell/burnInHell.avif";
+import ChaosImg from "@assets/works/ceramics/chaos/chaos.avif";
+import RocketManImg from "@assets/works/ceramics/rocketMan/rocketMan.avif";
+import AzraelImg from "@assets/works/ceramics/azrael/azrael.avif";
+import BalaImg from "@assets/works/ceramics/bala/bala1.avif";
+import AfterlifeImg from "@assets/works/ceramics/afterLife/afterlife.avif";
+
+import GodsMonstersBookImg from "@assets/works/artistBooks/godsMonsters/1.avif";
+import RunImg from "@assets/works/artistBooks/run/1.avif";
+import ContemporaryStreetImg from "@assets/works/artistBooks/contemporaryStreetAlphabet/1.avif";
+import CrackProgressImg from "@assets/works/artistBooks/crackProgressCharliesProgress/1.avif";
+import JourneyManImg from "@assets/works/artistBooks/theJourneyMan/1.avif";
+import FutureImg from "@assets/works/artistBooks/future/1.avif";
+
+import BotanicalGardenImg from "@assets/works/drawings/botanicalGardenMalaga.avif";
+import CadaquesImg from "@assets/works/drawings/cadaques.avif";
+import CastelDeFerroImg from "@assets/works/drawings/castelDeFerro.avif";
+import CircusImg from "@assets/works/drawings/circus.avif";
+import MalagaImg from "@assets/works/drawings/malaga.avif";
+import SemanaSantaImg from "@assets/works/drawings/semanaSanta.avif";
+
+// Definir galería con imágenes importadas
 const gallery = [
   {
     id: "prints",
     title: "Prints",
     items: [
-      {
-        src: "/src/assets/works/prints/godsMonsters/draco.avif",
-        title: "Draco",
-      },
-      { src: "/src/assets/works/prints/godsMonsters/agni.avif", title: "Agni" },
-      {
-        src: "/src/assets/works/prints/godsMonsters/prometheus.avif",
-        title: "Prometheus",
-      },
-      {
-        src: "/src/assets/works/prints/godsMonsters/volcan.avif",
-        title: "Volcan",
-      },
-      { src: "/src/assets/works/prints/godsMonsters/shu.avif", title: "Shu" },
-      {
-        src: "/src/assets/works/prints/godsMonsters/fenir.avif",
-        title: "Fenir",
-      },
+      { src: CerbusImg, title: "Cerberus" },
+      { src: AgniImg, title: "Agni" },
+      { src: PrometheusImg, title: "Prometheus" },
+      { src: VolcanImg, title: "Volcan" },
+      { src: ShuImg, title: "Shu" },
+      { src: FenirImg, title: "Fenir" },
     ],
   },
   {
     id: "ceramics",
     title: "Ceramics",
     items: [
-      {
-        src: "/src/assets/works/ceramics/burnInHell/burnInHell.avif",
-        title: "Burn in Hell",
-      },
-      { src: "/src/assets/works/ceramics/chaos/chaos.avif", title: "Chaos" },
-      {
-        src: "/src/assets/works/ceramics/rocketMan/rocketMan.avif",
-        title: "Rocket Man",
-      },
-      { src: "/src/assets/works/ceramics/azrael/azrael.avif", title: "Azrael" },
-      { src: "/src/assets/works/ceramics/bala/bala1.avif", title: "Bala" },
-      {
-        src: "/src/assets/works/ceramics/afterLife/afterlife.avif",
-        title: "Afterlife",
-      },
+      { src: BurnInHellImg, title: "Burn in Hell" },
+      { src: ChaosImg, title: "Chaos" },
+      { src: RocketManImg, title: "Rocket Man" },
+      { src: AzraelImg, title: "Azrael" },
+      { src: BalaImg, title: "Bala" },
+      { src: AfterlifeImg, title: "Afterlife" },
     ],
   },
   {
     id: "artist-books",
     title: "Artist Books",
     items: [
-      {
-        src: "/src/assets/works/artistBooks/godsMonsters/1.avif",
-        title: "God Monsters",
-      },
-      { src: "/src/assets/works/artistBooks/run/1.avif", title: "Run" },
-      {
-        src: "/src/assets/works/artistBooks/contemporaryStreetAlphabet/1.avif",
-        title: "Contemporary Street Alphabet",
-      },
-      {
-        src: "/src/assets/works/artistBooks/crackProgressCharliesProgress/1.avif",
-        title: "Crack Progress Charlie's Progress",
-      },
-      {
-        src: "/src/assets/works/artistBooks/theJourneyMan/1.avif",
-        title: "The Journey Man",
-      },
-      { src: "/src/assets/works/artistBooks/future/1.avif", title: "Future" },
+      { src: GodsMonstersBookImg, title: "God Monsters" },
+      { src: RunImg, title: "Run" },
+      { src: ContemporaryStreetImg, title: "Contemporary Street Alphabet" },
+      { src: CrackProgressImg, title: "Crack Progress Charlie's Progress" },
+      { src: JourneyManImg, title: "The Journey Man" },
+      { src: FutureImg, title: "Future" },
     ],
   },
   {
     id: "drawings",
     title: "Drawings",
     items: [
-      {
-        src: "/src/assets/works/drawings/botanicalGardenMalaga.avif",
-        title: "Botanical Garden",
-      },
-      { src: "/src/assets/works/drawings/cadaques.avif", title: "Cadaques" },
-      {
-        src: "/src/assets/works/drawings/castelDeFerro.avif",
-        title: "Castel de Ferro",
-      },
-      { src: "/src/assets/works/drawings/circus.avif", title: "Circus" },
-      { src: "/src/assets/works/drawings/malaga.avif", title: "Malaga" },
-      {
-        src: "/src/assets/works/drawings/semanaSanta.avif",
-        title: "Semana Santa",
-      },
+      { src: BotanicalGardenImg, title: "Botanical Garden" },
+      { src: CadaquesImg, title: "Cadaques" },
+      { src: CastelDeFerroImg, title: "Castel de Ferro" },
+      { src: CircusImg, title: "Circus" },
+      { src: MalagaImg, title: "Malaga" },
+      { src: SemanaSantaImg, title: "Semana Santa" },
     ],
   },
 ];
@@ -131,15 +118,17 @@ const generateSlug = (title: string) =>
                   aria-label={`View details for ${title}`}
                 >
                   <div class="aspect-[3/4] relative">
-                    <img
+                    <Image
                       src={src}
                       alt={title}
                       class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      loading="lazy"
                       decoding="async"
+                      widths={[300, 600]}
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     />
                     <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 transition-opacity duration-300 flex items-center justify-center">
-                      <span class="text-white text-3xl font-bold opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <span class="text-white text-lg font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                         {title}
                       </span>
                     </div>
