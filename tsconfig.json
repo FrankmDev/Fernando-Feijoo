@@ -3,27 +3,14 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "src/*"
-      ],
-      "@components/*": [
-        "src/components/*"
-      ],
-      "@layouts/*": [
-        "src/layouts/*"
-      ],
-      "@pages/*": [
-        "src/pages/*"
-      ],
-      "@styles/*": [
-        "src/styles/*"
-      ],
-      "@sections/*": [
-        "src/sections/*"
-      ],
-      "@icons/*": [
-        "src/icons/*"
-      ]
+      "@/*": ["src/*"],
+      "@components/*": ["src/components/*"],
+      "@layouts/*": ["src/layouts/*"],
+      "@pages/*": ["src/pages/*"],
+      "@styles/*": ["src/styles/*"],
+      "@sections/*": ["src/sections/*"],
+      "@icons/*": ["src/icons/*"],
+      "@assets/*": ["src/assets/*"]
     },
     "jsx": "preserve"
   }

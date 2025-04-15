@@ -1,11 +1,166 @@
 ---
+import { Image } from "astro:assets";
 import Socials from "@components/Hero/Socials.astro";
 import SliderHero from "@components/SliderHero.vue";
 import ContactBanner from "@components/Hero/ContactBanner.astro";
+
+// Definir galería directamente con imágenes
+const gallery = [
+  {
+    id: "prints",
+    title: "Prints",
+    items: [
+      {
+        src: "/src/assets/works/prints/godsMonsters/draco.avif",
+        title: "Draco",
+      },
+      { src: "/src/assets/works/prints/godsMonsters/agni.avif", title: "Agni" },
+      {
+        src: "/src/assets/works/prints/godsMonsters/prometheus.avif",
+        title: "Prometheus",
+      },
+      {
+        src: "/src/assets/works/prints/godsMonsters/volcan.avif",
+        title: "Volcan",
+      },
+      { src: "/src/assets/works/prints/godsMonsters/shu.avif", title: "Shu" },
+      {
+        src: "/src/assets/works/prints/godsMonsters/fenir.avif",
+        title: "Fenir",
+      },
+    ],
+  },
+  {
+    id: "ceramics",
+    title: "Ceramics",
+    items: [
+      {
+        src: "/src/assets/works/ceramics/burnInHell/burnInHell.avif",
+        title: "Burn in Hell",
+      },
+      { src: "/src/assets/works/ceramics/chaos/chaos.avif", title: "Chaos" },
+      {
+        src: "/src/assets/works/ceramics/rocketMan/rocketMan.avif",
+        title: "Rocket Man",
+      },
+      { src: "/src/assets/works/ceramics/azrael/azrael.avif", title: "Azrael" },
+      { src: "/src/assets/works/ceramics/bala/bala1.avif", title: "Bala" },
+      {
+        src: "/src/assets/works/ceramics/afterLife/afterlife.avif",
+        title: "Afterlife",
+      },
+    ],
+  },
+  {
+    id: "artist-books",
+    title: "Artist Books",
+    items: [
+      {
+        src: "/src/assets/works/artistBooks/godsMonsters/1.avif",
+        title: "God Monsters",
+      },
+      { src: "/src/assets/works/artistBooks/run/1.avif", title: "Run" },
+      {
+        src: "/src/assets/works/artistBooks/contemporaryStreetAlphabet/1.avif",
+        title: "Contemporary Street Alphabet",
+      },
+      {
+        src: "/src/assets/works/artistBooks/crackProgressCharliesProgress/1.avif",
+        title: "Crack Progress Charlie's Progress",
+      },
+      {
+        src: "/src/assets/works/artistBooks/theJourneyMan/1.avif",
+        title: "The Journey Man",
+      },
+      { src: "/src/assets/works/artistBooks/future/1.avif", title: "Future" },
+    ],
+  },
+  {
+    id: "drawings",
+    title: "Drawings",
+    items: [
+      {
+        src: "/src/assets/works/drawings/botanicalGardenMalaga.avif",
+        title: "Botanical Garden",
+      },
+      { src: "/src/assets/works/drawings/cadaques.avif", title: "Cadaques" },
+      {
+        src: "/src/assets/works/drawings/castelDeFerro.avif",
+        title: "Castel de Ferro",
+      },
+      { src: "/src/assets/works/drawings/circus.avif", title: "Circus" },
+      { src: "/src/assets/works/drawings/malaga.avif", title: "Malaga" },
+      {
+        src: "/src/assets/works/drawings/semanaSanta.avif",
+        title: "Semana Santa",
+      },
+    ],
+  },
+];
+
+// Función para generar slugs más robusta
+const generateSlug = (title: string) =>
+  title
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
 ---
 
-<section class="flex pt-10 flex-col items-center justify-center gap-md">
+<section class="container mx-auto px-4 py-16 flex flex-col items-center gap-16">
   <SliderHero client:load />
   <Socials />
+
+  <section class="flex flex-col items-center gap-24 w-full">
+    {
+      gallery.map(({ id, title, items }) => (
+        <section id={id} class="w-full">
+          <h2 class="text-3xl md:text-4xl font-semibold mb-12 tracking-tight text-zinc-900">
+            {title}
+          </h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            {items.map(({ src, title }) => {
+              const slug = generateSlug(title);
+              const href = `/works/${id}/${slug}`;
+
+              return (
+                <a
+                  href={href}
+                  class="group block relative rounded-xl overflow-hidden bg-white shadow-sm hover:shadow-lg transition-shadow duration-300"
+                  aria-label={`View details for ${title}`}
+                >
+                  <div class="aspect-[3/4] relative">
+                    <img
+                      src={src}
+                      alt={title}
+                      class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      decoding="async"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    />
+                    <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 transition-opacity duration-300 flex items-center justify-center">
+                      <span class="text-white text-3xl font-bold opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        {title}
+                      </span>
+                    </div>
+                  </div>
+                </a>
+              );
+            })}
+          </div>
+        </section>
+      ))
+    }
+  </section>
+
   <ContactBanner />
 </section>
+
+<style>
+  .shadow-sm {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+  .shadow-lg {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  }
+</style>
