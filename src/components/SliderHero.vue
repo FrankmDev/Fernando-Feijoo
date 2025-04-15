@@ -38,7 +38,7 @@ const plugin = Autoplay({
         <div class="p-1">
           <Card>
             <CardContent class="flex items-center justify-center">
-              <img src="public/heroSlider/2.avif" />
+              <img src="/public/heroSlider/2.avif" />
             </CardContent>
           </Card>
         </div>
@@ -48,7 +48,7 @@ const plugin = Autoplay({
         <div class="p-1">
           <Card>
             <CardContent class="flex items-center justify-center">
-              <img src="public/heroSlider/3.avif" />
+              <img src="/public/heroSlider/3.avif" />
             </CardContent>
           </Card>
         </div>
