@@ -95,11 +95,11 @@ const generateSlug = (title: string) =>
     .replace(/(^-|-$)/g, "");
 ---
 
-<section class="container mx-auto px-4 py-16 flex flex-col items-center gap-16">
+<section class="w-full px-4 mx-auto py-16 flex flex-col items-center">
   <SliderHero client:load />
   <Socials />
 
-  <section class="flex flex-col items-center gap-24 w-full">
+  <section class="flex flex-col items-center gap-20 w-full">
     {
       gallery.map(({ id, title, items }) => (
         <section id={id} class="w-full">

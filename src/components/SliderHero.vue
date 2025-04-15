@@ -54,7 +54,5 @@ const plugin = Autoplay({
         </div>
       </CarouselItem>
     </CarouselContent>
-    <CarouselPrevious />
-    <CarouselNext />
   </Carousel>
 </template>
