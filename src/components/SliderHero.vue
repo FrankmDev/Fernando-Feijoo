@@ -28,25 +28,27 @@ const plugin = Autoplay({
         <div class="p-1">
           <Card>
             <CardContent class="flex items-center justify-center">
-              <img src="/public/TheFall.jpg" />
+              <img src="/public/heroSlider/TheFall.avif" />
             </CardContent>
           </Card>
         </div>
       </CarouselItem>
+
       <CarouselItem :key="index">
         <div class="p-1">
           <Card>
             <CardContent class="flex items-center justify-center">
-              <img src="/public/heroSlider/Persons.png" />
+              <img src="public/heroSlider/2.avif" />
             </CardContent>
           </Card>
         </div>
       </CarouselItem>
+
       <CarouselItem :key="index">
         <div class="p-1">
           <Card>
             <CardContent class="flex items-center justify-center">
-              <img src="/public/heroSlider/TheFuture.jpg" />
+              <img src="public/heroSlider/3.avif" />
             </CardContent>
           </Card>
         </div>
