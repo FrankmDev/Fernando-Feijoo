@@ -99,7 +99,7 @@ const generateSlug = (title: string) =>
   <SliderHero client:load />
   <Socials />
 
-  <section class="flex flex-col items-center gap-20 w-full">
+  <section class="flex flex-col items-center gap-20 w-full mb-20">
     {
       gallery.map(({ id, title, items }) => (
         <section id={id} class="w-full">
@@ -128,7 +128,7 @@ const generateSlug = (title: string) =>
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     />
                     <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 transition-opacity duration-300 flex items-center justify-center">
-                      <span class="text-white text-lg font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <span class="text-white text-3xl font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                         {title}
                       </span>
                     </div>

@@ -4,6 +4,8 @@ import Layout from "@layouts/Layout.astro";
 import SectionContainer from "@components/SectionContainer.astro";
 import PageBanner from "@components/PageBanner.astro";
 import SliderImg from "@components/SliderImg.vue";
+import Cta from "@components/Cta.astro";
+import TitleSection from "@components/TitleSection.astro";
 ---
 
 <Layout title="Contact">
@@ -17,10 +19,15 @@ import SliderImg from "@components/SliderImg.vue";
         temporibus eius ut ipsam modi tempore ab quo!r
       </h2>
     </section>
-    <div class="grid grid-cols-2 gap-6 mx-auto max-w-[1200px]">
-      <article class="flex flex-col items-center mx-auto">
-        <h3 class="font-bold text-xl">Fernando Feijoo</h3>
-        <p>
+    <div
+      class="container mx-auto px-4 max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-6"
+    >
+      <figure class="mx-auto w-full">
+        <SliderImg client:load />
+      </figure>
+      <article class="flex flex-col justify-center mx-auto text-gray-800">
+        <TitleSection title="Fernando Feijoo" id="profile" />
+        <p class="text-sm md:text-base mt-4">
           Feijoo has an MA in Fine Art Printmaking from Winchester Art School
           and a BA in Illustration from Maidstone Kent. He trained as master
           printer at the Curwen Studio before moving into Art education. Feijoo
@@ -31,8 +38,8 @@ import SliderImg from "@components/SliderImg.vue";
           collections. He is also an Honorary member of the Royal Society of
           Painters & Printmakers London UK.
         </p>
+        <Cta href="/contact" label="Contact me" isDark class="mt-6" />
       </article>
-      <SliderImg client:load />
     </div>
   </SectionContainer>
 </Layout>
