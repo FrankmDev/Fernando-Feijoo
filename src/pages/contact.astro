@@ -4,42 +4,79 @@ import Layout from "@layouts/Layout.astro";
 import SectionContainer from "@components/SectionContainer.astro";
 import PageBanner from "@components/PageBanner.astro";
 import SliderImg from "@components/SliderImg.vue";
-import Cta from "@components/Cta.astro";
-import TitleSection from "@components/TitleSection.astro";
+import MailIcon from "@icons/mail-icon.astro";
+import MapIcon from "@icons/map-icon.astro";
+
+const contactData = [
+  {
+    icon: MailIcon,
+    text: "info@fernando-feijoo.com",
+    href: "mailto:info@fernando-feijoo.com",
+    ariaLabel: "Send email to Fernando Feijoo",
+  },
+  {
+    icon: MapIcon,
+    text: "London, UK",
+    href: "https://www.google.es/maps/place/Londres,+Reino+Unido/@51.5281779,-0.4319063,10z/data=!3m1!4b1!4m6!3m5!1s0x47d8a00baf21de75:0x52963a5addd52a99!8m2!3d51.5072178!4d-0.1275862!16zL20vMDRqcGw?entry=ttu&g_ep=EgoyMDI1MDQxNi4xIKXMDSoASAFQAw%3D%3D",
+    ariaLabel: "View location in London, UK",
+  },
+];
 ---
 
 <Layout title="Contact">
   <SectionContainer id="contact">
-    <PageBanner title="Contact" />
-    <section>
-      <h2 class="text-4xl text-center">
-        lorem ipsum dolor sit amet lorem ipsum dolor sit amet Lorem ipsum dolor
-        sit amet, consectetur adipisicing elit. Enim nulla mollitia inventore
-        dolorem facilis ad modi iure alias? Neque, facilis explicabo assumenda
-        temporibus eius ut ipsam modi tempore ab quo!r
-      </h2>
-    </section>
-    <div
-      class="container mx-auto px-4 max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-6"
-    >
-      <figure class="mx-auto w-full">
-        <SliderImg client:load />
-      </figure>
-      <article class="flex flex-col justify-center mx-auto text-gray-800">
-        <TitleSection title="Fernando Feijoo" id="profile" />
-        <p class="text-sm md:text-base mt-4">
-          Feijoo has an MA in Fine Art Printmaking from Winchester Art School
-          and a BA in Illustration from Maidstone Kent. He trained as master
-          printer at the Curwen Studio before moving into Art education. Feijoo
-          is a multi-disciplinary artist who explores a wide range of medium
-          with his work such as printmaking, drawing, painting, artist books and
-          ceramics. Feijoo has exhibited work internationally and has won many
-          prestigious prizes and awards, with work acquired in many permanent
-          collections. He is also an Honorary member of the Royal Society of
-          Painters & Printmakers London UK.
-        </p>
-        <Cta href="/contact" label="Contact me" isDark class="mt-6" />
-      </article>
-    </div>
+    <main>
+      <PageBanner title="Contact" />
+      <blockquote class="text-5xl text-center italic my-20" lang="en">
+        “The world is full of conflict and confusion. In my work I try to
+        interpret the chaos in positive, humorous and imaginative ways.”
+      </blockquote>
+      <section
+        class="container mx-auto px-4 max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-6"
+        aria-labelledby="contact"
+      >
+        <figure
+          class="mx-auto w-full"
+          role="figure"
+          aria-label="Contact slider"
+        >
+          <SliderImg client:load loading="lazy" />
+        </figure>
+
+        <div
+          class="flex flex-col items-start justify-center gap-5"
+          itemscope
+          itemtype="https://schema.org/ContactPoint"
+        >
+          {
+            contactData.map(({ icon: Icon, text, href, ariaLabel }, index) => (
+              <address class="flex gap-3 items-center group">
+                <figure
+                  class="bg-black border-2 border-black rounded-full p-3 group-hover:bg-white transition duration-300 ease-in-out"
+                  role="figure"
+                  aria-label={`${text} icon`}
+                >
+                  <Icon class=" group-hover:text-black transition duration-300 ease-in-out" />
+                </figure>
+                <a
+                  href={href}
+                  class="text-2xl relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-black after:transition-all after:duration-300 after:ease-in-out group-hover:after:w-full"
+                  aria-label={ariaLabel}
+                  rel={
+                    href.startsWith("mailto:")
+                      ? "nofollow"
+                      : "nofollow noopener"
+                  }
+                  itemprop={href.startsWith("mailto:") ? "email" : "url"}
+                >
+                  {text}
+                </a>
+              </address>
+            ))
+          }
+        </div>
+      </section>
+    </main>
   </SectionContainer>
 </Layout>
+
