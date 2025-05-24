@@ -11,11 +11,10 @@ const { title } = Astro.props;
 >
   <Image
     src={BannerImg}
-    alt=""
+    alt="Hands working on a ceramic"
     aria-hidden="true"
     class="absolute inset-0 w-full h-full object-cover"
-    sizes="100vw"
-    loading="eager"
+    loading="lazy"
   />
 
   <div class="absolute inset-0 bg-black/30" aria-hidden="true"></div>
