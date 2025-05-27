@@ -4,15 +4,117 @@ import Layout from "@layouts/Layout.astro";
 import SectionContainer from "@components/SectionContainer.astro";
 import PageBanner from "@components/PageBanner.astro";
 import TitleSection from "@components/TitleSection.astro";
+import { Image } from "astro:assets";
+import type { Work } from "@data/works";
+import { WORKS } from "@data/works";
+
+// Importar imágenes
+import GodsMonsters1 from "@assets/works/artistBooks/godsMonsters/1.avif";
+import Run1 from "@assets/works/artistBooks/run/1.avif";
+import Contemporary1 from "@assets/works/artistBooks/contemporaryStreetAlphabet/1.avif";
+import CrackProgress1 from "@assets/works/artistBooks/crackProgressCharliesProgress/1.avif";
+import JourneyMan1 from "@assets/works/artistBooks/theJourneyMan/1.avif";
+import Future1 from "@assets/works/artistBooks/future/1.avif";
+
+// Mapear imágenes a slugs
+const imageMap = {
+  "god-monsters": GodsMonsters1,
+  run: Run1,
+  "contemporary-street-alphabet": Contemporary1,
+  "crack-progress-charlies-progress": CrackProgress1,
+  "the-journey-man": JourneyMan1,
+  future: Future1,
+} as const;
+
+type ImageMapKey = keyof typeof imageMap;
+
+// Extender el tipo Work para incluir la propiedad collection
+type WorkWithCollection = Work & {
+  collection?: ImageMapKey;
+  image?: typeof GodsMonsters1; // Usamos el tipo de una de las imágenes importadas
+};
+
+// Obtener todas las obras de artistas
+const artistBooks = WORKS.find((category) => category.slug === "artist-books");
+const allWorks =
+  artistBooks?.works?.map((work) => ({
+    ...work,
+    collection: work.slug as ImageMapKey,
+    image: imageMap[work.slug as ImageMapKey] || null,
+  })) || [];
+
+// Función para generar slugs
+const generateSlug = (title: string) =>
+  title
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^\w\s-]/g, "")
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "");
 ---
 
-<Layout title="Contact">
-  <SectionContainer id="contact">
+<Layout title="Works">
+  <SectionContainer id="works">
     <main>
       <PageBanner title="Works" />
       <section class="mt-10">
         <TitleSection title="Artist Books" />
+        {
+          allWorks.length > 0 ? (
+            <div
+              class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mt-8"
+              itemscope
+              itemtype="https://schema.org/Collection"
+            >
+              {allWorks.map((work) => {
+                const slug = generateSlug(work.title);
+                const href = `/works/artist-books/${work.collection}/${slug}`;
+
+                return work.image ? (
+                  <a
+                    href={href}
+                    class="group block relative rounded-xl overflow-hidden bg-white shadow-sm hover:shadow-lg transition-shadow duration-300"
+                    aria-label={`View details for ${work.title}`}
+                    itemprop="work"
+                  >
+                    <div class="aspect-[3/4] relative">
+                      <Image
+                        src={work.image}
+                        alt={`${work.title} by Fernando Feijoo`}
+                        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        loading="lazy"
+                        decoding="async"
+                        widths={[300, 600]}
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      />
+                      <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 transition-opacity duration-300 flex items-center justify-center">
+                        <span class="text-white text-3xl font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                          {work.title}
+                        </span>
+                      </div>
+                    </div>
+                  </a>
+                ) : (
+                  <p class="text-gray-600">Image not found for {work.title}</p>
+                );
+              })}
+            </div>
+          ) : (
+            <p class="text-gray-600 mt-4">No works found in this category.</p>
+          )
+        }
       </section>
     </main>
   </SectionContainer>
 </Layout>
+
+<style>
+  .shadow-sm {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+  .shadow-lg {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  }
+</style>

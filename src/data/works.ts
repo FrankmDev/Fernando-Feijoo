@@ -23,7 +23,7 @@ export interface Category {
   works?: Work[];
 }
 
-export const works: Category[] = [
+export const WORKS: Category[] = [
   {
     slug: "prints",
     title: "Prints",

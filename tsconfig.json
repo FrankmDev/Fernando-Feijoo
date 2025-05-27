@@ -10,8 +10,10 @@
       "@styles/*": ["src/styles/*"],
       "@sections/*": ["src/sections/*"],
       "@icons/*": ["src/icons/*"],
-      "@assets/*": ["src/assets/*"]
+      "@assets/*": ["src/assets/*"],
+      "@data/*": ["src/data/*"]
     },
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "types": ["astro/client"]
   }
 }
