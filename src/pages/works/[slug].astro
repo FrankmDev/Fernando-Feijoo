@@ -3,29 +3,31 @@ import "@styles/general.css";
 import Layout from "@layouts/Layout.astro";
 import SectionContainer from "@components/SectionContainer.astro";
 import PageBanner from "@components/PageBanner.astro";
-import { works } from "@data/works";
+import { WORKS } from "@data/works";
 
 // Obtener el slug de la URL
 const { slug } = Astro.params;
 
 // Buscar la obra correspondiente
-const allWorks = works.flatMap(category => 
-  category.works ? category.works.map(work => ({
-    ...work,
-    categorySlug: category.slug
-  })) : []
+const allWorks = WORKS.flatMap((category) =>
+  category.works
+    ? category.works.map((work) => ({
+        ...work,
+        categorySlug: category.slug,
+      }))
+    : [],
 );
 
-const work = allWorks.find(w => w.slug === slug);
+const work = allWorks.find((w) => w.slug === slug);
 
 // Si no se encuentra la obra, redirigir a la página 404
 if (!work) {
-  return Astro.redirect('/404');
+  return Astro.redirect("/404");
 }
 
 // Obtener obras relacionadas (excluyendo la actual)
 const relatedWorks = allWorks
-  .filter(w => w.slug !== slug && w.categorySlug === work.categorySlug)
+  .filter((w) => w.slug !== slug && w.categorySlug === work.categorySlug)
   .slice(0, 4);
 ---
 
@@ -33,107 +35,124 @@ const relatedWorks = allWorks
   <SectionContainer id="work-detail">
     <main>
       <PageBanner title={work.title} />
-      
+
       <section class="py-12">
         <div class="container mx-auto px-4">
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Galería de imágenes */}
             <div class="space-y-4">
-              <div class="aspect-w-1 aspect-h-1 bg-gray-100 rounded-lg overflow-hidden">
+              <div
+                class="aspect-w-1 aspect-h-1 bg-gray-100 rounded-lg overflow-hidden"
+              >
                 <img
-                  src={work.imageUrls[0].replace('@', '')}
+                  src={work.imageUrls[0].replace("@", "")}
                   alt={work.title}
                   class="w-full h-full object-cover"
                   loading="eager"
                 />
               </div>
-              {work.imageUrls.length > 1 && (
-                <div class="grid grid-cols-4 gap-2">
-                  {work.imageUrls.slice(1).map((image, index) => (
-                    <div key={index} class="aspect-square bg-gray-100 rounded overflow-hidden">
-                      <img
-                        src={image.replace('@', '')}
-                        alt={`${work.title} - ${index + 2}`}
-                        class="w-full h-full object-cover"
-                        loading="lazy"
-                      />
-                    </div>
-                  ))}
-                </div>
-              )}
+              {
+                work.imageUrls.length > 1 && (
+                  <div class="grid grid-cols-4 gap-2">
+                    {work.imageUrls.slice(1).map((image, index) => (
+                      <div class="aspect-square bg-gray-100 rounded overflow-hidden">
+                        <img
+                          src={image.replace("@", "")}
+                          alt={`${work.title} - ${index + 2}`}
+                          class="w-full h-full object-cover"
+                          loading="lazy"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                )
+              }
             </div>
-            
+
             {/* Información de la obra */}
             <div class="space-y-6">
               <h1 class="text-3xl md:text-4xl font-bold text-gray-900">
                 {work.title}
               </h1>
-              
+
               <div class="prose max-w-none">
-                {work.description && (
-                  <div class="mb-6">
-                    <h2 class="text-xl font-semibold mb-2">Description</h2>
-                    <p class="text-gray-700">{work.description}</p>
-                  </div>
-                )}
-                
+                {
+                  work.description && (
+                    <div class="mb-6">
+                      <h2 class="text-xl font-semibold mb-2">Description</h2>
+                      <p class="text-gray-700">{work.description}</p>
+                    </div>
+                  )
+                }
+
                 <div class="space-y-4">
                   <div>
                     <h3 class="text-sm font-medium text-gray-500">Medium</h3>
                     <p class="mt-1 text-gray-900">{work.medium}</p>
                   </div>
-                  
-                  {work.dimensions && (
-                    <div>
-                      <h3 class="text-sm font-medium text-gray-500">Dimensions</h3>
-                      <p class="mt-1 text-gray-900">{work.dimensions}</p>
-                    </div>
-                  )}
-                  
-                  {work.edition && (
-                    <div>
-                      <h3 class="text-sm font-medium text-gray-500">Edition</h3>
-                      <p class="mt-1 text-gray-900">{work.edition}</p>
-                    </div>
-                  )}
-                  
-                  {work.price && (
-                    <div>
-                      <h3 class="text-sm font-medium text-gray-500">Price</h3>
-                      <p class="mt-1 text-gray-900">{work.price}</p>
-                    </div>
-                  )}
+
+                  {
+                    work.dimensions && (
+                      <div>
+                        <h3 class="text-sm font-medium text-gray-500">
+                          Dimensions
+                        </h3>
+                        <p class="mt-1 text-gray-900">{work.dimensions}</p>
+                      </div>
+                    )
+                  }
+
+                  {
+                    work.edition && (
+                      <div>
+                        <h3 class="text-sm font-medium text-gray-500">
+                          Edition
+                        </h3>
+                        <p class="mt-1 text-gray-900">{work.edition}</p>
+                      </div>
+                    )
+                  }
+
+                  {
+                    work.price && (
+                      <div>
+                        <h3 class="text-sm font-medium text-gray-500">Price</h3>
+                        <p class="mt-1 text-gray-900">{work.price}</p>
+                      </div>
+                    )
+                  }
                 </div>
               </div>
             </div>
           </div>
-          
+
           {/* Obras relacionadas */}
-          {relatedWorks.length > 0 && (
-            <div class="mt-16">
-              <h2 class="text-2xl font-bold text-gray-900 mb-8">Related Works</h2>
-              <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                {relatedWorks.map((relatedWork) => (
-                  <a 
-                    href={`/works/${relatedWork.slug}`}
-                    class="group block"
-                  >
-                    <div class="aspect-w-1 aspect-h-1 bg-gray-100 rounded-lg overflow-hidden">
-                      <img
-                        src={relatedWork.imageUrls[0].replace('@', '')}
-                        alt={relatedWork.title}
-                        class="w-full h-48 object-cover group-hover:opacity-90 transition-opacity"
-                        loading="lazy"
-                      />
-                    </div>
-                    <h3 class="mt-2 text-sm font-medium text-gray-900 group-hover:text-indigo-600">
-                      {relatedWork.title}
-                    </h3>
-                  </a>
-                ))}
+          {
+            relatedWorks.length > 0 && (
+              <div class="mt-16">
+                <h2 class="text-2xl font-bold text-gray-900 mb-8">
+                  Related Works
+                </h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                  {relatedWorks.map((relatedWork) => (
+                    <a href={`/works/${relatedWork.slug}`} class="group block">
+                      <div class="aspect-w-1 aspect-h-1 bg-gray-100 rounded-lg overflow-hidden">
+                        <img
+                          src={relatedWork.imageUrls[0].replace("@", "")}
+                          alt={relatedWork.title}
+                          class="w-full h-48 object-cover group-hover:opacity-90 transition-opacity"
+                          loading="lazy"
+                        />
+                      </div>
+                      <h3 class="mt-2 text-sm font-medium text-gray-900 group-hover:text-indigo-600">
+                        {relatedWork.title}
+                      </h3>
+                    </a>
+                  ))}
+                </div>
               </div>
-            </div>
-          )}
+            )
+          }
         </div>
       </section>
     </main>
