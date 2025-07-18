@@ -1,101 +1,43 @@
 ---
-import { Image } from "astro:assets";
 import Socials from "@components/Hero/Socials.astro";
 import SliderHero from "@components/SliderHero.vue";
 import ContactBanner from "@components/Hero/ContactBanner.astro";
+import { WORKS } from "@data/works";
 
-// Importar todas las imágenes
-import CerbusImg from "@assets/works/prints/godsMonsters/cerbus.avif";
-import AgniImg from "@assets/works/prints/godsMonsters/agni.avif";
-import PrometheusImg from "@assets/works/prints/godsMonsters/prometheus.avif";
-import VolcanImg from "@assets/works/prints/godsMonsters/volcan.avif";
-import ShuImg from "@assets/works/prints/godsMonsters/shu.avif";
-import FenirImg from "@assets/works/prints/godsMonsters/fenir.avif";
+// Obtener todas las obras de todas las categorías
+const allWorks = WORKS.flatMap((category) =>
+  category.works
+    ? category.works.map((work) => ({
+        ...work,
+        categorySlug: category.slug,
+        categoryTitle: category.title,
+      }))
+    : category.collections
+      ? category.collections.flatMap((collection) =>
+          collection.works.map((work) => ({
+            ...work,
+            categorySlug: category.slug,
+            categoryTitle: category.title,
+            collectionSlug: collection.slug,
+            collectionTitle: collection.title,
+          })),
+        )
+      : [],
+);
 
-import BurnInHellImg from "@assets/works/ceramics/burnInHell/burnInHell.avif";
-import ChaosImg from "@assets/works/ceramics/chaos/chaos.avif";
-import RocketManImg from "@assets/works/ceramics/rocketMan/rocketMan.avif";
-import AzraelImg from "@assets/works/ceramics/azrael/azrael.avif";
-import BalaImg from "@assets/works/ceramics/bala/bala1.avif";
-import AfterlifeImg from "@assets/works/ceramics/afterLife/afterlife.avif";
+// Organizar obras por categoría para la galería
+const gallery = WORKS.map((category) => {
+  // Obtener obras destacadas de cada categoría (primeras 6)
+  const categoryWorks = allWorks
+    .filter((work) => work.categorySlug === category.slug)
+    .slice(0, 6);
 
-import GodsMonstersBookImg from "@assets/works/artistBooks/godsMonsters/1.avif";
-import RunImg from "@assets/works/artistBooks/run/1.avif";
-import ContemporaryStreetImg from "@assets/works/artistBooks/contemporaryStreetAlphabet/1.avif";
-import CrackProgressImg from "@assets/works/artistBooks/crackProgressCharliesProgress/1.avif";
-import JourneyManImg from "@assets/works/artistBooks/theJourneyMan/1.avif";
-import FutureImg from "@assets/works/artistBooks/future/1.avif";
-
-import BotanicalGardenImg from "@assets/works/drawings/botanicalGardenMalaga.avif";
-import CadaquesImg from "@assets/works/drawings/cadaques.avif";
-import CastelDeFerroImg from "@assets/works/drawings/castelDeFerro.avif";
-import CircusImg from "@assets/works/drawings/circus.avif";
-import MalagaImg from "@assets/works/drawings/malaga.avif";
-import SemanaSantaImg from "@assets/works/drawings/semanaSanta.avif";
-
-// Definir galería con imágenes importadas
-const gallery = [
-  {
-    id: "prints",
-    title: "Prints",
-    items: [
-      { src: CerbusImg, title: "Cerberus" },
-      { src: AgniImg, title: "Agni" },
-      { src: PrometheusImg, title: "Prometheus" },
-      { src: VolcanImg, title: "Volcan" },
-      { src: ShuImg, title: "Shu" },
-      { src: FenirImg, title: "Fenir" },
-    ],
-  },
-  {
-    id: "ceramics",
-    title: "Ceramics",
-    items: [
-      { src: BurnInHellImg, title: "Burn in Hell" },
-      { src: ChaosImg, title: "Chaos" },
-      { src: RocketManImg, title: "Rocket Man" },
-      { src: AzraelImg, title: "Azrael" },
-      { src: BalaImg, title: "Bala" },
-      { src: AfterlifeImg, title: "Afterlife" },
-    ],
-  },
-  {
-    id: "artist-books",
-    title: "Artist Books",
-    items: [
-      { src: GodsMonstersBookImg, title: "God Monsters" },
-      { src: RunImg, title: "Run" },
-      { src: ContemporaryStreetImg, title: "Contemporary Street Alphabet" },
-      { src: CrackProgressImg, title: "Crack Progress Charlie's Progress" },
-      { src: JourneyManImg, title: "The Journey Man" },
-      { src: FutureImg, title: "Future" },
-    ],
-  },
-  {
-    id: "drawings",
-    title: "Drawings",
-    items: [
-      { src: BotanicalGardenImg, title: "Botanical Garden" },
-      { src: CadaquesImg, title: "Cadaques" },
-      { src: CastelDeFerroImg, title: "Castel de Ferro" },
-      { src: CircusImg, title: "Circus" },
-      { src: MalagaImg, title: "Malaga" },
-      { src: SemanaSantaImg, title: "Semana Santa" },
-    ],
-  },
-];
-
-// Función para generar slugs más robusta
-const generateSlug = (title: string) =>
-  title
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[^\w\s-]/g, "")
-    .replace(/\s+/g, "-")
-    .replace(/-+/g, "-")
-    .replace(/^-|-$/g, "");
-
-// Rest of the code remains the same
+  return {
+    id: category.slug,
+    title: category.title,
+    items: categoryWorks,
+  };
+}).filter((category) => category.items.length > 0);
 ---
 
 <section class="w-full px-4 mx-auto py-16 flex flex-col items-center">
@@ -110,29 +52,45 @@ const generateSlug = (title: string) =>
             {title}
           </h2>
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-            {items.map(({ src, title }) => {
-              const slug = generateSlug(title);
-              const href = `/works/${id}/${slug}`;
+            {items.map((work) => {
+              const href = `/works/${work.slug}`;
+              const hasImage = work.imageUrls && work.imageUrls.length > 0;
+              const imageUrl = hasImage
+                ? work.imageUrls[0].replace("@", "")
+                : "";
 
               return (
                 <a
                   href={href}
                   class="group block relative rounded-xl overflow-hidden bg-white shadow-sm hover:shadow-lg transition-shadow duration-300"
-                  aria-label={`View details for ${title}`}
+                  aria-label={`View details for ${work.title}`}
                 >
                   <div class="aspect-[3/4] relative">
-                    <Image
-                      src={src}
-                      alt={title}
-                      class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      loading="lazy"
-                      decoding="async"
-                      widths={[300, 600]}
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    />
+                    {hasImage ? (
+                      <img
+                        src={imageUrl}
+                        alt={work.title}
+                        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        loading="lazy"
+                        decoding="async"
+                        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                      />
+                    ) : null}
+                    {/* Fallback placeholder */}
+                    <div class="absolute inset-0 bg-gray-200 flex items-center justify-center">
+                      <div class="text-center">
+                        <div class="text-gray-400 text-4xl mb-2">🖼️</div>
+                        <h3 class="text-sm font-medium text-gray-600">
+                          {work.title}
+                        </h3>
+                        <p class="text-xs text-gray-500 mt-1">
+                          Image coming soon
+                        </p>
+                      </div>
+                    </div>
                     <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 transition-opacity duration-300 flex items-center justify-center">
-                      <span class="text-white text-3xl font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        {title}
+                      <span class="text-white text-xl font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        View Details
                       </span>
                     </div>
                   </div>
