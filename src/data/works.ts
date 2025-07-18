@@ -40,6 +40,8 @@ export const WORKS: Category[] = [
             medium: "Linocut, wood block & Letterpress",
             imageUrls: [
               "@assets/works/prints/citizensWastrels/afterHours.avif",
+              "@assets/works/prints/citizensWastrels/angelOfVictory.avif",
+              "@assets/works/prints/citizensWastrels/earlyHourOfTheMorning.avif",
             ],
           },
           {
@@ -49,6 +51,7 @@ export const WORKS: Category[] = [
             medium: "Linocut, wood block & Letterpress",
             imageUrls: [
               "@assets/works/prints/citizensWastrels/angelOfVictory.avif",
+              "@assets/works/prints/citizensWastrels/gettingWeighed.avif",
             ],
           },
           {
@@ -74,7 +77,7 @@ export const WORKS: Category[] = [
             title: "Nightcap",
             description: "",
             medium: "Linocut, wood block & Letterpress",
-            imageUrls: ["@assets/works/prints/nightcap.avif"],
+            imageUrls: ["@assets/works/prints/citizensWastrels/nightcap.avif"],
           },
           {
             slug: "selfmade-man",
@@ -82,7 +85,7 @@ export const WORKS: Category[] = [
             description: "",
             medium: "Linocut, wood block & Letterpress",
             imageUrls: [
-              "@assets/works/prints/citizensWastrels/selfmadeMan.avif",
+              "@assets/works/prints/citizensWastrels/selfMadeMan.avif",
             ],
           },
           {
@@ -91,7 +94,7 @@ export const WORKS: Category[] = [
             description: "",
             medium: "Linocut, wood block & Letterpress",
             imageUrls: [
-              "@assets/works/prints/citizensWastrels/timeIsJustAnIllusion.avif",
+              "@assets/works/prints/citizensWastrels/timeIsJustAnIllution.avif",
             ],
           },
           {
@@ -159,7 +162,7 @@ export const WORKS: Category[] = [
             description: "",
             medium: "Linocut, wood block & Letterpress",
             imageUrls: [
-              "@assets/works/prints/gamesPlayers/hierarchiOfAnarchy.avif",
+              "@assets/works/prints/gamesPlayer/hierarchiOfAnarchy.avif",
             ],
           },
           {
@@ -167,7 +170,7 @@ export const WORKS: Category[] = [
             title: "Machiavellian",
             description: "",
             medium: "Linocut, wood block & Letterpress",
-            imageUrls: ["@assets/works/prints/gamesPlayers/machiavellian.avif"],
+            imageUrls: ["@assets/works/prints/gamesPlayer/machiavellian.avif"],
           },
           {
             slug: "ace-of-diamonds",
@@ -175,7 +178,7 @@ export const WORKS: Category[] = [
             description: "",
             medium: "Linocut, wood block & Letterpress",
             imageUrls: [
-              "@assets/works/prints/gamesPlayers/packOfLiars/aceOfDiamonds.avif",
+              "@assets/works/prints/gamesPlayer/packOfLiars/aceOfDiamonds.avif",
             ],
           },
           {
@@ -184,7 +187,7 @@ export const WORKS: Category[] = [
             description: "",
             medium: "Linocut, wood block & Letterpress",
             imageUrls: [
-              "@assets/works/prints/gamesPlayers/packOfLiars/eightOfDiamonds.avif",
+              "@assets/works/prints/gamesPlayer/packOfLiars/eightOfDiamonds.avif",
             ],
           },
           {
@@ -193,7 +196,7 @@ export const WORKS: Category[] = [
             description: "",
             medium: "Linocut, wood block & Letterpress",
             imageUrls: [
-              "@assets/works/prints/gamesPlayers/packOfLiars/fiveOfDiamonds.avif",
+              "@assets/works/prints/gamesPlayer/packOfLiars/fiveOfDiamonds.avif",
             ],
           },
           {
@@ -202,7 +205,7 @@ export const WORKS: Category[] = [
             description: "",
             medium: "Linocut, wood block & Letterpress",
             imageUrls: [
-              "@assets/works/prints/gamesPlayers/packOfLiars/fourOfDiamonds.avif",
+              "@assets/works/prints/gamesPlayer/packOfLiars/fourOfDiamonds.avif",
             ],
           },
           {
@@ -211,7 +214,7 @@ export const WORKS: Category[] = [
             description: "",
             medium: "Linocut, wood block & Letterpress",
             imageUrls: [
-              "@assets/works/prints/gamesPlayers/packOfLiars/nineOfDiamonds.avif",
+              "@assets/works/prints/gamesPlayer/packOfLiars/nineOfDiamonds.avif",
             ],
           },
           {
@@ -220,7 +223,7 @@ export const WORKS: Category[] = [
             description: "",
             medium: "Linocut, wood block & Letterpress",
             imageUrls: [
-              "@assets/works/prints/gamesPlayers/packOfLiars/jackOfDiamonds.avif",
+              "@assets/works/prints/gamesPlayer/packOfLiars/jackOfDiamonds.avif",
             ],
           },
           {
@@ -229,7 +232,7 @@ export const WORKS: Category[] = [
             description: "",
             medium: "Linocut, wood block & Letterpress",
             imageUrls: [
-              "@assets/works/prints/gamesPlayers/packOfLiars/kingOfDiamonds.avif",
+              "@assets/works/prints/gamesPlayer/packOfLiars/kingOfDiamonds.avif",
             ],
           },
           {
@@ -238,7 +241,7 @@ export const WORKS: Category[] = [
             description: "",
             medium: "Linocut, wood block & Letterpress",
             imageUrls: [
-              "@assets/works/prints/gamesPlayers/packOfLiars/queenOfDiamonds.avif",
+              "@assets/works/prints/gamesPlayer/packOfLiars/queenOfDiamonds.avif",
             ],
           },
           {
@@ -247,7 +250,7 @@ export const WORKS: Category[] = [
             description: "",
             medium: "Linocut, wood block & Letterpress",
             imageUrls: [
-              "@assets/works/prints/gamesPlayers/packOfLiars/sevenOfDiamonds.avif",
+              "@assets/works/prints/gamesPlayer/packOfLiars/sevenOfDiamonds.avif",
             ],
           },
           {
@@ -256,7 +259,7 @@ export const WORKS: Category[] = [
             description: "",
             medium: "Linocut, wood block & Letterpress",
             imageUrls: [
-              "@assets/works/prints/gamesPlayers/packOfLiars/sixOfDiamonds.avif",
+              "@assets/works/prints/gamesPlayer/packOfLiars/sixOfDiamonds.avif",
             ],
           },
           {
@@ -265,7 +268,7 @@ export const WORKS: Category[] = [
             description: "",
             medium: "Linocut, wood block & Letterpress",
             imageUrls: [
-              "@assets/works/prints/gamesPlayers/packOfLiars/threeOfDiamonds.avif",
+              "@assets/works/prints/gamesPlayer/packOfLiars/threeOfDiamonds.avif",
             ],
           },
           {
@@ -274,7 +277,7 @@ export const WORKS: Category[] = [
             description: "",
             medium: "Linocut, wood block & Letterpress",
             imageUrls: [
-              "@assets/works/prints/gamesPlayers/packOfLiars/twoOfDiamonds.avif",
+              "@assets/works/prints/gamesPlayer/packOfLiars/twoOfDiamonds.avif",
             ],
           },
           {
@@ -283,7 +286,7 @@ export const WORKS: Category[] = [
             description: "",
             medium: "Linocut, wood block & Letterpress",
             imageUrls: [
-              "@assets/works/prints/gamesPlayers/packOfLiars/joker1.avif",
+              "@assets/works/prints/gamesPlayer/packOfLiars/joker1.avif",
             ],
           },
           {
@@ -292,7 +295,7 @@ export const WORKS: Category[] = [
             description: "",
             medium: "Linocut, wood block & Letterpress",
             imageUrls: [
-              "@assets/works/prints/gamesPlayers/packOfLiars/joker2.avif",
+              "@assets/works/prints/gamesPlayer/packOfLiars/joker2.avif",
             ],
           },
         ],
@@ -426,7 +429,7 @@ export const WORKS: Category[] = [
             title: "Quetzalcoatl",
             description: "",
             medium: "Linocut, wood block & Letterpress",
-            imageUrls: ["@assets/works/prints/godsMonsters/quetzalcoatl.avif"],
+            imageUrls: ["@assets/works/prints/godsMonsters/quetzlcoatl.avif"],
           },
           {
             slug: "ra",
@@ -582,7 +585,7 @@ export const WORKS: Category[] = [
             title: "The Fall",
             description: "",
             medium: "Linocut, wood block & Letterpress",
-            imageUrls: ["@assets/works/prints/inferno/theFall.avif"],
+            imageUrls: ["@assets/works/prints/inferno/thFall.avif"],
           },
           {
             slug: "today",
@@ -613,10 +616,7 @@ export const WORKS: Category[] = [
             title: "Enzo",
             description: "",
             medium: "Linocut, wood block & Letterpress",
-            imageUrls: [
-              "@assets/works/prints/persons/Enzo.avif",
-              "@assets/works/prints/persons/EnzoColor.avif",
-            ],
+            imageUrls: ["@assets/works/prints/persons/Enzo.avif"],
           },
           {
             slug: "hector",
@@ -833,7 +833,7 @@ export const WORKS: Category[] = [
         medium: "Underglaze painting, oxides and clear glaze finish",
         dimensions: "20 x 20 x 30 cm",
         price: "£1500",
-        imageUrls: ["@assets/works/ceramics/afterlife.avif"],
+        imageUrls: ["@assets/works/ceramics/afterLife/afterlife.avif"],
       },
       {
         slug: "azrael",
@@ -842,7 +842,7 @@ export const WORKS: Category[] = [
         medium: "Underglaze painting, oxides and clear glaze finish",
         dimensions: "25 x 25 x 5 cm",
         price: "£800",
-        imageUrls: ["@assets/works/ceramics/azrael.avif"],
+        imageUrls: ["@assets/works/ceramics/azrael/azrael.avif"],
       },
       {
         slug: "bala",
@@ -851,7 +851,7 @@ export const WORKS: Category[] = [
         medium: "Underglaze painting, oxides and clear glaze finish",
         dimensions: "20 x 20 x 30 cm",
         price: "£1500",
-        imageUrls: ["@assets/works/ceramics/bala.avif"],
+        imageUrls: ["@assets/works/ceramics/bala/bala1.avif"],
       },
       {
         slug: "burn-in-hell",
@@ -860,7 +860,7 @@ export const WORKS: Category[] = [
         medium: "Underglaze painting, oxides and clear glaze finish",
         dimensions: "20 x 20 x 30 cm",
         price: "£1200",
-        imageUrls: ["@assets/works/ceramics/burnInHell.avif"],
+        imageUrls: ["@assets/works/ceramics/burnInHell/burnInHell.avif"],
       },
       {
         slug: "chaos",
@@ -869,7 +869,7 @@ export const WORKS: Category[] = [
         medium: "Underglaze painting, oxides and clear glaze finish",
         dimensions: "20 x 20 x 30 cm",
         price: "£1000",
-        imageUrls: ["@assets/works/ceramics/chaos.avif"],
+        imageUrls: ["@assets/works/ceramics/chaos/chaos.avif"],
       },
       {
         slug: "lockdown",
@@ -878,7 +878,7 @@ export const WORKS: Category[] = [
         medium: "Underglaze painting, oxides and clear glaze finish",
         dimensions: "20 x 20 x 30 cm",
         price: "£1500",
-        imageUrls: ["@assets/works/ceramics/lockdown.avif"],
+        imageUrls: ["@assets/works/ceramics/lockdown/lockdown.avif"],
       },
       {
         slug: "los-tres-amigos",
@@ -887,7 +887,7 @@ export const WORKS: Category[] = [
         medium: "Underglaze painting, oxides and clear glaze finish",
         dimensions: "20 x 20 x 30 cm",
         price: "£1500",
-        imageUrls: ["@assets/works/ceramics/losTresAmigos.avif"],
+        imageUrls: ["@assets/works/ceramics/losTresAmigos/www1.avif"],
       },
       {
         slug: "medusa",
@@ -896,7 +896,7 @@ export const WORKS: Category[] = [
         medium: "Underglaze painting, oxides and clear glaze finish",
         dimensions: "20 x 20 x 30 cm",
         price: "£1500",
-        imageUrls: ["@assets/works/ceramics/medusa.avif"],
+        imageUrls: ["@assets/works/ceramics/medusa/medusaPlate.avif"],
       },
       {
         slug: "rocket-man",
@@ -905,7 +905,7 @@ export const WORKS: Category[] = [
         medium: "Underglaze painting, oxides and clear glaze finish",
         dimensions: "20 x 20 x 30 cm",
         price: "£1000",
-        imageUrls: ["@assets/works/ceramics/rocketMan.avif"],
+        imageUrls: ["@assets/works/ceramics/rocketMan/rocketMan.avif"],
       },
       {
         slug: "safe-passage",
@@ -914,7 +914,7 @@ export const WORKS: Category[] = [
         medium: "Underglaze painting, oxides and clear glaze finish",
         dimensions: "20 x 20 x 30 cm",
         price: "£1500",
-        imageUrls: ["@assets/works/ceramics/safePassage.avif"],
+        imageUrls: ["@assets/works/ceramics/safePassage/safePassage.avif"],
       },
       {
         slug: "freedom",

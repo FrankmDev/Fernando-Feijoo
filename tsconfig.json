@@ -11,7 +11,8 @@
       "@sections/*": ["src/sections/*"],
       "@icons/*": ["src/icons/*"],
       "@assets/*": ["src/assets/*"],
-      "@data/*": ["src/data/*"]
+      "@data/*": ["src/data/*"],
+      "@utils/*": ["src/utils/*"]
     },
     "jsx": "preserve",
     "types": ["astro/client"]
