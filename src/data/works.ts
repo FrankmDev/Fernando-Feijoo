@@ -1012,4 +1012,185 @@ export const WORKS: Category[] = [
       },
     ],
   },
+  {
+    slug: "artist-books",
+    title: "Artist Books",
+    collections: [
+      {
+        slug: "contemporary-street-alphabet",
+        title: "Contemporary Street Alphabet",
+        description:
+          "A modern exploration of urban typography and street art culture",
+        works: [
+          {
+            slug: "contemporary-street-alphabet-1",
+            title: "Contemporary Street Alphabet",
+            description: "",
+            medium: "Artist Book",
+            imageUrls: [
+              "@assets/works/artistBooks/contemporaryStreetAlphabet/1.avif",
+              "@assets/works/artistBooks/contemporaryStreetAlphabet/2.avif",
+              "@assets/works/artistBooks/contemporaryStreetAlphabet/3.avif",
+              "@assets/works/artistBooks/contemporaryStreetAlphabet/4.avif",
+              "@assets/works/artistBooks/contemporaryStreetAlphabet/5.avif",
+              "@assets/works/artistBooks/contemporaryStreetAlphabet/6.avif",
+            ],
+          },
+        ],
+      },
+      {
+        slug: "crack-progress-charlies-progress",
+        title: "Crack Progress & Charlie's Progress",
+        description:
+          "A narrative exploration of urban decay and personal transformation",
+        works: [
+          {
+            slug: "crack-progress-charlies-progress-1",
+            title: "Crack Progress & Charlie's Progress",
+            description: "",
+            medium: "Artist Book",
+            imageUrls: [
+              "@assets/works/artistBooks/crackProgressCharliesProgress/1.avif",
+              "@assets/works/artistBooks/crackProgressCharliesProgress/2.avif",
+              "@assets/works/artistBooks/crackProgressCharliesProgress/3.avif",
+              "@assets/works/artistBooks/crackProgressCharliesProgress/4.avif",
+            ],
+          },
+        ],
+      },
+      {
+        slug: "future",
+        title: "Future",
+        description:
+          "A vision of tomorrow through contemporary artistic expression",
+        works: [
+          {
+            slug: "future-1",
+            title: "Future",
+            description: "",
+            medium: "Artist Book",
+            imageUrls: [
+              "@assets/works/artistBooks/future/1.avif",
+              "@assets/works/artistBooks/future/2.avif",
+              "@assets/works/artistBooks/future/3.avif",
+              "@assets/works/artistBooks/future/4.avif",
+              "@assets/works/artistBooks/future/5.avif",
+              "@assets/works/artistBooks/future/6.avif",
+            ],
+          },
+        ],
+      },
+      {
+        slug: "gods-monsters-book",
+        title: "Gods & Monsters Book",
+        description:
+          "An artist book exploring mythology and contemporary interpretations",
+        works: [
+          {
+            slug: "gods-monsters-book-1",
+            title: "Gods & Monsters Book",
+            description: "",
+            medium: "Artist Book",
+            imageUrls: [
+              "@assets/works/artistBooks/godsMonsters/1.avif",
+              "@assets/works/artistBooks/godsMonsters/2.avif",
+              "@assets/works/artistBooks/godsMonsters/3.avif",
+              "@assets/works/artistBooks/godsMonsters/4.avif",
+              "@assets/works/artistBooks/godsMonsters/5.avif",
+              "@assets/works/artistBooks/godsMonsters/6.avif",
+            ],
+          },
+        ],
+      },
+      {
+        slug: "modern-marriage-book",
+        title: "Modern Marriage Book",
+        description: "A contemporary look at relationships and modern life",
+        works: [
+          {
+            slug: "modern-marriage-book-1",
+            title: "Modern Marriage Book",
+            description: "",
+            medium: "Artist Book",
+            imageUrls: [
+              "@assets/works/artistBooks/modernMarriage/1.avif",
+              "@assets/works/artistBooks/modernMarriage/2.avif",
+              "@assets/works/artistBooks/modernMarriage/3.avif",
+              "@assets/works/artistBooks/modernMarriage/4.avif",
+            ],
+          },
+        ],
+      },
+      {
+        slug: "run-book",
+        title: "Run Book",
+        description: "An exploration of movement, escape, and urban dynamics",
+        works: [
+          {
+            slug: "run-book-1",
+            title: "Run Book",
+            description: "",
+            medium: "Artist Book",
+            imageUrls: [
+              "@assets/works/artistBooks/run/1.avif",
+              "@assets/works/artistBooks/run/2.avif",
+              "@assets/works/artistBooks/run/3.avif",
+              "@assets/works/artistBooks/run/4.avif",
+              "@assets/works/artistBooks/run/5.avif",
+              "@assets/works/artistBooks/run/6.avif",
+            ],
+          },
+        ],
+      },
+      {
+        slug: "the-journey-man-book",
+        title: "The Journey Man Book",
+        description:
+          "A visual narrative of travel, discovery, and personal transformation",
+        works: [
+          {
+            slug: "the-journey-man-book-1",
+            title: "The Journey Man Book",
+            description: "",
+            medium: "Artist Book",
+            imageUrls: [
+              "@assets/works/artistBooks/theJourneyMan/1.avif",
+              "@assets/works/artistBooks/theJourneyMan/2.avif",
+              "@assets/works/artistBooks/theJourneyMan/3.avif",
+              "@assets/works/artistBooks/theJourneyMan/4.avif",
+              "@assets/works/artistBooks/theJourneyMan/5.avif",
+              "@assets/works/artistBooks/theJourneyMan/6.avif",
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    slug: "mixed-media",
+    title: "Mixed Media",
+    works: [
+      {
+        slug: "luchador",
+        title: "Luchador",
+        description: "",
+        medium: "Mixed Media",
+        imageUrls: ["@assets/works/mixed/luchador.avif"],
+      },
+      {
+        slug: "pagannini",
+        title: "Pagannini",
+        description: "",
+        medium: "Mixed Media",
+        imageUrls: ["@assets/works/mixed/pagannini.avif"],
+      },
+      {
+        slug: "puta-gallina",
+        title: "Puta Gallina",
+        description: "",
+        medium: "Mixed Media",
+        imageUrls: ["@assets/works/mixed/putaGallina.avif"],
+      },
+    ],
+  },
 ];
