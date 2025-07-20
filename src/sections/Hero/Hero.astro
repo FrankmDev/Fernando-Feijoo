@@ -83,20 +83,21 @@ const gallery = WORKS.map((category) => {
                   class="group block relative rounded-xl overflow-hidden bg-white shadow-sm hover:shadow-lg transition-shadow duration-300"
                   aria-label={`View details for ${work.title}`}
                 >
-                  <div class="aspect-[3/4] relative">
+                  <div class="aspect-[4/4] relative overflow-hidden">
                     {hasImages && firstImageUrl ? (
                       <img
                         src={firstImageUrl}
                         alt={work.title}
-                        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 rounded-xl"
+                        class="w-full h-full object-fill transition-transform duration-500 group-hover:scale-105"
                         loading="lazy"
                         decoding="async"
+                        style="width: 100% !important; height: 100% !important; object-fit: fill !important;"
                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
                       />
                     ) : null}
 
                     <div
-                      class={`absolute inset-0 bg-gray-200 flex items-center justify-center rounded-xl ${hasImages && firstImageUrl ? "hidden" : ""}`}
+                      class={`absolute inset-0 bg-gray-200 flex items-center justify-center ${hasImages && firstImageUrl ? "hidden" : ""}`}
                     >
                       <div class="text-center">
                         <div class="text-gray-400 text-4xl mb-2">🖼️</div>
@@ -109,7 +110,7 @@ const gallery = WORKS.map((category) => {
                       </div>
                     </div>
 
-                    <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 transition-opacity duration-300 flex items-center justify-center rounded-xl">
+                    <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 transition-opacity duration-300 flex items-center justify-center">
                       <span class="text-white text-xl font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                         View Details
                       </span>

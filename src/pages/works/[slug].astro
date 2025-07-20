@@ -5,7 +5,25 @@ import SectionContainer from "@components/SectionContainer.astro";
 import PageBanner from "@components/PageBanner.astro";
 import WorkImageSlider from "@components/WorkImageSlider.vue";
 import { WORKS } from "@data/works";
-import { getFirstImageUrl } from "@utils/imageUtils";
+
+// Helper function to process image URLs
+function processImageUrl(imageUrl: string): string {
+  if (!imageUrl) return "";
+
+  if (imageUrl.startsWith("@assets/")) {
+    return imageUrl.replace("@assets/", "/");
+  }
+
+  if (imageUrl.startsWith("@")) {
+    return imageUrl.substring(1);
+  }
+
+  if (imageUrl.startsWith("/") || imageUrl.startsWith("http")) {
+    return imageUrl;
+  }
+
+  return "/" + imageUrl;
+}
 
 // Generate static paths for all works
 export async function getStaticPaths() {
@@ -74,12 +92,36 @@ const allWorks = WORKS.flatMap((category) =>
       : [],
 );
 
-// Get related works (same category, different work)
-const relatedWorks = allWorks
-  .filter((w) => w.slug !== work.slug && w.categorySlug === categorySlug)
-  .slice(0, 4);
+// Get related works (prioritize same collection, then same category)
+let relatedWorks = [];
 
-/*
+// First, try to get works from the same collection if it exists
+if (collectionSlug) {
+  relatedWorks = allWorks
+    .filter((w) => w.slug !== work.slug && w.collectionSlug === collectionSlug)
+    .slice(0, 4);
+}
+
+// If we don't have enough works from the collection (or no collection),
+// fill with works from the same category
+if (relatedWorks.length < 4) {
+  const categoryWorks = allWorks
+    .filter((w) =>
+      w.slug !== work.slug &&
+      w.categorySlug === categorySlug &&
+      !relatedWorks.some(rw => rw.slug === w.slug) // Avoid duplicates
+    )
+    .slice(0, 4 - relatedWorks.length);
+
+  relatedWorks = [...relatedWorks, ...categoryWorks];
+  }
+
+  // Get the first image for the banner background
+  const bannerBackgroundImage = work?.imageUrls && work.imageUrls.length > 0
+    ? processImageUrl(work.imageUrls[0])
+    : null;
+
+  /*
 TODO: Future logic for when image URLs are properly set up:
 
 // Function to convert @assets paths to actual image imports
@@ -100,29 +142,17 @@ const getImageSrc = (imageUrl: string) => {
 <Layout title={`${work?.title || 'Work'} - Fernando Feijoo`}>
   <SectionContainer id="work-detail">
     <main>
-      <PageBanner title={work?.title || 'Work Not Found'} />
+      <PageBanner
+        title={work?.title || 'Work Not Found'}
+        backgroundImage={bannerBackgroundImage}
+      />
 
       {work ? (
         <section class="py-12">
           <div class="container mx-auto px-4">
             <!-- Breadcrumb -->
-            <nav class="flex items-center space-x-2 text-sm text-gray-500 mb-8">
-              <a href="/" class="">Home</a>
-              <span>/</span>
-              <a href="/#works" class="">Works</a>
-              <span>/</span>
-              <a href={`/#${categorySlug}`} class="">{categoryTitle}</a>
-              {collectionTitle && (
-                <>
-                  <span>/</span>
-                  <span class="text-gray-600">{collectionTitle}</span>
-                </>
-              )}
-              <span>/</span>
-              <span class="">{work.title}</span>
-            </nav>
 
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mt-16">
             <!-- Main Image Section -->
             <div class="space-y-4">
               <WorkImageSlider
@@ -211,24 +241,31 @@ const getImageSrc = (imageUrl: string) => {
             {relatedWorks.length > 0 && (
               <div class="mt-16 border-t border-gray-200 pt-12">
                 <h2 class="text-2xl font-bold text-gray-900 mb-8">
-                  More from {categoryTitle}
+                  {collectionTitle ? `More from ${collectionTitle}` : `More from ${categoryTitle}`}
                 </h2>
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                  {relatedWorks.map((relatedWork) => (
-                    relatedWork && relatedWork.slug ? (
+                  {relatedWorks.map((relatedWork) => {
+                    if (!relatedWork || !relatedWork.slug) return null;
+
+                    const workImageUrls = relatedWork.imageUrls || [];
+                    const hasImages = workImageUrls.length > 0;
+                    const firstImageUrl = hasImages ? processImageUrl(workImageUrls[0]) : "";
+
+                    return (
                       <a href={`/works/${relatedWork.slug}`} class="group block">
-                        <div class="aspect-w-1 aspect-h-1 bg-gray-200 rounded-lg overflow-hidden flex items-center justify-center">
-                          {relatedWork.imageUrls && relatedWork.imageUrls.length > 0 ? (
+                        <div class="aspect-w-1 aspect-h-1 bg-gray-200 rounded-lg overflow-hidden relative">
+                          {hasImages && firstImageUrl ? (
                             <img
-                              src={getFirstImageUrl(relatedWork.imageUrls)}
+                              src={firstImageUrl}
                               alt={relatedWork.title || 'Related work'}
-                              class="w-full h-48 object-cover group-hover:opacity-90 transition-opacity"
+                              class="w-full h-full object-fill group-hover:opacity-90 transition-opacity"
+                              style="width: 100% !important; height: 100% !important; object-fit: fill !important;"
                               loading="lazy"
                               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
                             />
                           ) : null}
-                          <!-- Fallback for related works -->
-                          <div class="flex items-center justify-center w-full h-48 bg-gray-200 rounded-lg">
+
+                          <div class={`absolute inset-0 flex items-center justify-center bg-gray-200 rounded-lg ${hasImages && firstImageUrl ? "hidden" : ""}`}>
                             <div class="text-center">
                               <div class="text-gray-400 text-2xl mb-2">🖼️</div>
                               <p class="text-xs text-gray-500">Image coming soon</p>
@@ -239,8 +276,8 @@ const getImageSrc = (imageUrl: string) => {
                           {relatedWork.title || 'Untitled'}
                         </h3>
                       </a>
-                    ) : null
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
             )}

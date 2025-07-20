@@ -1,7 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import BannerImg from "/public/profile/ceramic-header.avif";
-const { title } = Astro.props;
+const { title, backgroundImage } = Astro.props;
 ---
 
 <section
@@ -9,15 +9,27 @@ const { title } = Astro.props;
   role="region"
   aria-label={title}
 >
-  <Image
-    src={BannerImg}
-    alt="Hands working on a ceramic"
-    aria-hidden="true"
-    class="absolute inset-0 w-full h-full object-cover"
-    loading="lazy"
-  />
+  {
+    backgroundImage ? (
+      <img
+        src={backgroundImage}
+        alt={title}
+        aria-hidden="true"
+        class="absolute inset-0 w-full h-full object-cover"
+        loading="lazy"
+      />
+    ) : (
+      <Image
+        src={BannerImg}
+        alt="Hands working on a ceramic"
+        aria-hidden="true"
+        class="absolute inset-0 w-full h-full object-cover"
+        loading="lazy"
+      />
+    )
+  }
 
-  <div class="absolute inset-0 bg-black/30" aria-hidden="true"></div>
+  <div class="absolute inset-0 bg-black/60" aria-hidden="true"></div>
 
   <h2
     class="relative z-10 text-white text-4xl md:text-5xl font-bold text-center px-4"
