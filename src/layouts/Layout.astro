@@ -15,7 +15,10 @@ import Footer from "@sections/Footer/Footer.astro";
     <meta charset="UTF-8" />
     <meta name="description" content="Astro description" />
     <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <!-- Favicon universal compatible -->
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="icon" type="image/avif" href="/favicon.avif" />
+    <link rel="apple-touch-icon" href="/favicon.png" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <link rel="stylesheet" href="/styles/general.css" />
@@ -23,7 +26,7 @@ import Footer from "@sections/Footer/Footer.astro";
     <ClientRouter />
   </head>
   <body class="flex flex-col items-center max-w-[2000px] mx-auto">
-    <Header client  />
+    <Header client />
     <slot />
     <Footer />
   </body>
