@@ -2,12 +2,16 @@
   "name": "fernando-feijoo",
   "type": "module",
   "version": "0.0.1",
+  "engines": {
+    "node": ">=18.17.1"
+  },
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro check && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "vercel-build": "astro build"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
@@ -34,7 +38,14 @@
     "vue": "^3.5.13"
   },
   "devDependencies": {
+    "@astrojs/vercel": "^8.2.2",
     "prettier": "3.4.1",
     "prettier-plugin-astro": "0.14.1"
+  },
+  "optionalDependencies": {
+    "@rollup/rollup-darwin-arm64": "^4.0.0",
+    "@rollup/rollup-darwin-x64": "^4.0.0",
+    "@rollup/rollup-linux-x64-gnu": "^4.0.0",
+    "@rollup/rollup-win32-x64-msvc": "^4.0.0"
   }
 }
