@@ -16,5 +16,12 @@
     },
     "jsx": "preserve",
     "types": ["astro/client"]
-  }
+  },
+  "exclude": [
+    "api-backup/**/*",
+    "test-smtp.js",
+    "debug-works.js",
+    "scripts/**/*",
+    "node_modules"
+  ]
 }

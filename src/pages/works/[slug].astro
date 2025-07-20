@@ -9,33 +9,44 @@ import { getFirstImageUrl } from "@utils/imageUtils";
 
 // Generate static paths for all works
 export async function getStaticPaths() {
+  console.log("🔍 Generating static paths for works...");
+
   // Get all works from all categories and collections
   const allWorks = WORKS.flatMap((category) =>
     category.works
-      ? category.works.map((work) => ({
-          params: { slug: work.slug },
-          props: {
-            work: work,
-            categorySlug: category.slug,
-            categoryTitle: category.title
-          },
-        }))
+      ? category.works.map((work) => {
+          console.log(`📄 Adding work: ${work.slug} from category ${category.slug}`);
+          return {
+            params: { slug: work.slug },
+            props: {
+              work: work,
+              categorySlug: category.slug,
+              categoryTitle: category.title
+            },
+          };
+        })
       : category.collections
-        ? category.collections.flatMap((collection) =>
-            collection.works.map((work) => ({
-              params: { slug: work.slug },
-              props: {
-                work: work,
-                categorySlug: category.slug,
-                categoryTitle: category.title,
-                collectionSlug: collection.slug,
-                collectionTitle: collection.title
-              },
-            })),
-          )
+        ? category.collections.flatMap((collection) => {
+            console.log(`📚 Processing collection: ${collection.slug} in category ${category.slug}`);
+            return collection.works.map((work) => {
+              console.log(`📄 Adding work: ${work.slug} from collection ${collection.slug}`);
+              return {
+                params: { slug: work.slug },
+                props: {
+                  work: work,
+                  categorySlug: category.slug,
+                  categoryTitle: category.title,
+                  collectionSlug: collection.slug,
+                  collectionTitle: collection.title
+                },
+              };
+            });
+          })
         : [],
   );
 
+  console.log(`✅ Generated ${allWorks.length} static paths`);
+  console.log(`📋 All slugs:`, allWorks.map(w => w.params.slug));
   return allWorks;
 }
 
@@ -47,6 +58,24 @@ const { work, categorySlug, categoryTitle, collectionSlug, collectionTitle } = A
   collectionSlug?: string;
   collectionTitle?: string;
 };
+
+// Debug logging
+console.log("🔍 Work page props:", {
+  requestedSlug: Astro.params.slug,
+  workSlug: work?.slug,
+  workTitle: work?.title,
+  categorySlug,
+  categoryTitle,
+  collectionSlug,
+  collectionTitle
+});
+
+// Validate that work exists
+if (!work) {
+  console.error(`❌ Work not found for slug: ${Astro.params.slug}`);
+  console.error(`Available props:`, Astro.props);
+  throw new Error(`Work not found for slug: ${Astro.params.slug}`);
+}
 
 // Get all works for related works section
 const allWorks = WORKS.flatMap((category) =>
@@ -92,29 +121,30 @@ const getImageSrc = (imageUrl: string) => {
 */
 ---
 
-<Layout title={`${work.title} - Fernando Feijoo`}>
+<Layout title={`${work?.title || 'Work'} - Fernando Feijoo`}>
   <SectionContainer id="work-detail">
     <main>
-      <PageBanner title={work.title} />
+      <PageBanner title={work?.title || 'Work Not Found'} />
 
-      <section class="py-12">
-        <div class="container mx-auto px-4">
-          <!-- Breadcrumb -->
-          <nav class="flex items-center space-x-2 text-sm text-gray-500 mb-8">
-            <a href="/" class="hover:text-gray-700">Home</a>
-            <span>/</span>
-            <a href="/#works" class="hover:text-gray-700">Works</a>
-            <span>/</span>
-            <a href={`/#${categorySlug}`} class="hover:text-gray-700">{categoryTitle}</a>
-            {collectionTitle && (
-              <>
-                <span>/</span>
-                <span class="text-gray-600">{collectionTitle}</span>
-              </>
-            )}
-            <span>/</span>
-            <span class="text-gray-900">{work.title}</span>
-          </nav>
+      {work ? (
+        <section class="py-12">
+          <div class="container mx-auto px-4">
+            <!-- Breadcrumb -->
+            <nav class="flex items-center space-x-2 text-sm text-gray-500 mb-8">
+              <a href="/" class="hover:text-gray-700">Home</a>
+              <span>/</span>
+              <a href="/#works" class="hover:text-gray-700">Works</a>
+              <span>/</span>
+              <a href={`/#${categorySlug}`} class="hover:text-gray-700">{categoryTitle}</a>
+              {collectionTitle && (
+                <>
+                  <span>/</span>
+                  <span class="text-gray-600">{collectionTitle}</span>
+                </>
+              )}
+              <span>/</span>
+              <span class="text-gray-900">{work.title}</span>
+            </nav>
 
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
             <!-- Main Image Section -->
@@ -201,43 +231,64 @@ const getImageSrc = (imageUrl: string) => {
 
           <!-- Note: All images are now handled by the WorkImageSlider component above -->
 
-          <!-- Related Works -->
-          {relatedWorks.length > 0 && (
-            <div class="mt-16 border-t border-gray-200 pt-12">
-              <h2 class="text-2xl font-bold text-gray-900 mb-8">
-                More from {categoryTitle}
-              </h2>
-              <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                {relatedWorks.map((relatedWork) => (
-                  <a href={`/works/${relatedWork.slug}`} class="group block">
-                    <div class="aspect-w-1 aspect-h-1 bg-gray-200 rounded-lg overflow-hidden flex items-center justify-center">
-                      {relatedWork.imageUrls && relatedWork.imageUrls.length > 0 ? (
-                        <img
-                          src={getFirstImageUrl(relatedWork.imageUrls)}
-                          alt={relatedWork.title}
-                          class="w-full h-48 object-cover group-hover:opacity-90 transition-opacity"
-                          loading="lazy"
-                          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
-                        />
-                      ) : null}
-                      <!-- Fallback for related works -->
-                      <div class="flex items-center justify-center w-full h-48 bg-gray-200 rounded-lg">
-                        <div class="text-center">
-                          <div class="text-gray-400 text-2xl mb-2">🖼️</div>
-                          <p class="text-xs text-gray-500">Image coming soon</p>
+            <!-- Related Works -->
+            {relatedWorks.length > 0 && (
+              <div class="mt-16 border-t border-gray-200 pt-12">
+                <h2 class="text-2xl font-bold text-gray-900 mb-8">
+                  More from {categoryTitle}
+                </h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                  {relatedWorks.map((relatedWork) => (
+                    relatedWork && relatedWork.slug ? (
+                      <a href={`/works/${relatedWork.slug}`} class="group block">
+                        <div class="aspect-w-1 aspect-h-1 bg-gray-200 rounded-lg overflow-hidden flex items-center justify-center">
+                          {relatedWork.imageUrls && relatedWork.imageUrls.length > 0 ? (
+                            <img
+                              src={getFirstImageUrl(relatedWork.imageUrls)}
+                              alt={relatedWork.title || 'Related work'}
+                              class="w-full h-48 object-cover group-hover:opacity-90 transition-opacity"
+                              loading="lazy"
+                              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                            />
+                          ) : null}
+                          <!-- Fallback for related works -->
+                          <div class="flex items-center justify-center w-full h-48 bg-gray-200 rounded-lg">
+                            <div class="text-center">
+                              <div class="text-gray-400 text-2xl mb-2">🖼️</div>
+                              <p class="text-xs text-gray-500">Image coming soon</p>
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                    </div>
-                    <h3 class="mt-2 text-sm font-medium text-gray-900 group-hover:text-indigo-600">
-                      {relatedWork.title}
-                    </h3>
-                  </a>
-                ))}
+                        <h3 class="mt-2 text-sm font-medium text-gray-900 group-hover:text-indigo-600">
+                          {relatedWork.title || 'Untitled'}
+                        </h3>
+                      </a>
+                    ) : null
+                  ))}
+                </div>
               </div>
+            )}
+          </div>
+        </section>
+      ) : (
+        <section class="py-12">
+          <div class="container mx-auto px-4 text-center">
+            <div class="max-w-md mx-auto">
+              <div class="text-6xl mb-4">🖼️</div>
+              <h1 class="text-2xl font-bold text-gray-900 mb-4">Work Not Found</h1>
+              <p class="text-gray-600 mb-6">
+                The work you're looking for doesn't exist or has been moved.
+              </p>
+              <a
+                href="/#works"
+                class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gray-900 hover:bg-gray-800 transition-colors duration-200"
+              >
+                View All Works
+              </a>
             </div>
-          )}
-        </div>
-      </section>
+          </div>
+        </section>
+      )}
     </main>
   </SectionContainer>
 </Layout>
