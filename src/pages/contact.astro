@@ -4,6 +4,7 @@ import Layout from "@layouts/Layout.astro";
 import SectionContainer from "@components/SectionContainer.astro";
 import PageBanner from "@components/PageBanner.astro";
 import SliderImg from "@components/SliderImg.vue";
+import Form from "@components/Form.vue";
 import MailIcon from "@icons/mail-icon.astro";
 import MapIcon from "@icons/map-icon.astro";
 
@@ -27,9 +28,9 @@ const contactData = [
   <SectionContainer id="contact">
     <main>
       <PageBanner title="Contact" />
-      <blockquote class="text-5xl text-center italic my-20" lang="en">
-        “The world is full of conflict and confusion. In my work I try to
-        interpret the chaos in positive, humorous and imaginative ways.”
+      <blockquote class="text-4xl text-center italic my-20" lang="en">
+        "The world is full of conflict and confusion. In my work I try to
+        interpret the chaos in positive, humorous and imaginative ways."
       </blockquote>
       <section
         class="container mx-auto px-4 max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-6"
@@ -44,7 +45,7 @@ const contactData = [
         </figure>
 
         <div
-          class="flex flex-col items-start justify-center gap-5"
+          class="flex flex-col items-start justify-center gap-8"
           itemscope
           itemtype="https://schema.org/ContactPoint"
         >
@@ -52,31 +53,40 @@ const contactData = [
             contactData.map(({ icon: Icon, text, href, ariaLabel }, index) => (
               <address class="flex gap-3 items-center group">
                 <figure
-                  class="bg-black border-2 border-black rounded-full p-3 group-hover:bg-white transition duration-300 ease-in-out"
+                  class="bg-black border-2 border-black rounded-full p-3 group-hover:bg-white transition duration-300 ease-in-out flex-shrink-0"
                   role="figure"
                   aria-label={`${text} icon`}
                 >
                   <Icon class=" group-hover:text-black transition duration-300 ease-in-out" />
                 </figure>
-                <a
-                  href={href}
-                  class="text-2xl relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-black after:transition-all after:duration-300 after:ease-in-out group-hover:after:w-full"
-                  aria-label={ariaLabel}
-                  rel={
-                    href.startsWith("mailto:")
-                      ? "nofollow"
-                      : "nofollow noopener"
-                  }
-                  itemprop={href.startsWith("mailto:") ? "email" : "url"}
-                >
-                  {text}
-                </a>
+                <div class="flex flex-col">
+                  <span class="text-sm font-medium text-gray-600 tracking-wider uppercase mb-1">
+                    {href.startsWith("mailto:") ? "EMAIL" : "LOCATION"}
+                  </span>
+                  <a
+                    href={href}
+                    class="text-2xl relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-black after:transition-all after:duration-300 after:ease-in-out group-hover:after:w-full"
+                    aria-label={ariaLabel}
+                    rel={
+                      href.startsWith("mailto:")
+                        ? "nofollow"
+                        : "nofollow noopener"
+                    }
+                    itemprop={href.startsWith("mailto:") ? "email" : "url"}
+                  >
+                    {text}
+                  </a>
+                </div>
               </address>
             ))
           }
         </div>
       </section>
+
+      <!-- Contact Form Section -->
+      <section class="container mx-auto px-4 max-w-6xl py-16">
+        <Form client:load />
+      </section>
     </main>
   </SectionContainer>
 </Layout>
-
