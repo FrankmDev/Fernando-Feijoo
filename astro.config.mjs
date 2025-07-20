@@ -5,10 +5,13 @@ import vue from "@astrojs/vue";
 
 // https://astro.build/config
 export default defineConfig({
-  output: "static",
   integrations: [tailwind({ applyBaseStyles: false }), vue()],
-  server: {
-    port: 4321,
-    host: true,
+  vite: {
+    ssr: {
+      noExternal: ["zod", "radix-vue", "@vueuse/core"],
+    },
+    optimizeDeps: {
+      include: ["zod", "radix-vue", "@vueuse/core"],
+    },
   },
 });

@@ -9,44 +9,33 @@ import { getFirstImageUrl } from "@utils/imageUtils";
 
 // Generate static paths for all works
 export async function getStaticPaths() {
-  console.log("🔍 Generating static paths for works...");
-
   // Get all works from all categories and collections
   const allWorks = WORKS.flatMap((category) =>
     category.works
-      ? category.works.map((work) => {
-          console.log(`📄 Adding work: ${work.slug} from category ${category.slug}`);
-          return {
-            params: { slug: work.slug },
-            props: {
-              work: work,
-              categorySlug: category.slug,
-              categoryTitle: category.title
-            },
-          };
-        })
+      ? category.works.map((work) => ({
+          params: { slug: work.slug },
+          props: {
+            work: work,
+            categorySlug: category.slug,
+            categoryTitle: category.title
+          },
+        }))
       : category.collections
-        ? category.collections.flatMap((collection) => {
-            console.log(`📚 Processing collection: ${collection.slug} in category ${category.slug}`);
-            return collection.works.map((work) => {
-              console.log(`📄 Adding work: ${work.slug} from collection ${collection.slug}`);
-              return {
-                params: { slug: work.slug },
-                props: {
-                  work: work,
-                  categorySlug: category.slug,
-                  categoryTitle: category.title,
-                  collectionSlug: collection.slug,
-                  collectionTitle: collection.title
-                },
-              };
-            });
-          })
+        ? category.collections.flatMap((collection) =>
+            collection.works.map((work) => ({
+              params: { slug: work.slug },
+              props: {
+                work: work,
+                categorySlug: category.slug,
+                categoryTitle: category.title,
+                collectionSlug: collection.slug,
+                collectionTitle: collection.title
+              },
+            })),
+          )
         : [],
   );
 
-  console.log(`✅ Generated ${allWorks.length} static paths`);
-  console.log(`📋 All slugs:`, allWorks.map(w => w.params.slug));
   return allWorks;
 }
 
@@ -59,21 +48,8 @@ const { work, categorySlug, categoryTitle, collectionSlug, collectionTitle } = A
   collectionTitle?: string;
 };
 
-// Debug logging
-console.log("🔍 Work page props:", {
-  requestedSlug: Astro.params.slug,
-  workSlug: work?.slug,
-  workTitle: work?.title,
-  categorySlug,
-  categoryTitle,
-  collectionSlug,
-  collectionTitle
-});
-
 // Validate that work exists
 if (!work) {
-  console.error(`❌ Work not found for slug: ${Astro.params.slug}`);
-  console.error(`Available props:`, Astro.props);
   throw new Error(`Work not found for slug: ${Astro.params.slug}`);
 }
 
