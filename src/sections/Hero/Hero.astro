@@ -3,9 +3,27 @@ import Socials from "@components/Hero/Socials.astro";
 import SliderHero from "@components/SliderHero.vue";
 import ContactBanner from "@components/Hero/ContactBanner.astro";
 import { WORKS } from "@data/works";
-import { getFirstImageUrl } from "@utils/imageUtils";
 
-// Obtener todas las obras de todas las categorías
+// Helper function to process image URLs
+function processImageUrl(imageUrl: string): string {
+  if (!imageUrl) return "";
+
+  if (imageUrl.startsWith("@assets/")) {
+    return imageUrl.replace("@assets/", "/");
+  }
+
+  if (imageUrl.startsWith("@")) {
+    return imageUrl.substring(1);
+  }
+
+  if (imageUrl.startsWith("/") || imageUrl.startsWith("http")) {
+    return imageUrl;
+  }
+
+  return "/" + imageUrl;
+}
+
+// Get all works from all categories
 const allWorks = WORKS.flatMap((category) =>
   category.works
     ? category.works.map((work) => ({
@@ -26,9 +44,8 @@ const allWorks = WORKS.flatMap((category) =>
       : [],
 );
 
-// Organizar obras por categoría para la galería
+// Organize works by category for gallery
 const gallery = WORKS.map((category) => {
-  // Obtener obras destacadas de cada categoría (primeras 6)
   const categoryWorks = allWorks
     .filter((work) => work.categorySlug === category.slug)
     .slice(0, 6);
@@ -54,20 +71,22 @@ const gallery = WORKS.map((category) => {
           </h2>
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {items.map((work) => {
-              const href = `/works/${work.slug}`;
-              const hasImage = work.imageUrls && work.imageUrls.length > 0;
-              const imageUrl = getFirstImageUrl(work.imageUrls || []);
+              const workImageUrls = work.imageUrls || [];
+              const hasImages = workImageUrls.length > 0;
+              const firstImageUrl = hasImages
+                ? processImageUrl(workImageUrls[0])
+                : "";
 
               return (
                 <a
-                  href={href}
+                  href={`/works/${work.slug}`}
                   class="group block relative rounded-xl overflow-hidden bg-white shadow-sm hover:shadow-lg transition-shadow duration-300"
                   aria-label={`View details for ${work.title}`}
                 >
                   <div class="aspect-[3/4] relative">
-                    {hasImage && imageUrl ? (
+                    {hasImages && firstImageUrl ? (
                       <img
-                        src={imageUrl}
+                        src={firstImageUrl}
                         alt={work.title}
                         class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 rounded-xl"
                         loading="lazy"
@@ -75,9 +94,9 @@ const gallery = WORKS.map((category) => {
                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
                       />
                     ) : null}
-                    {/* Fallback placeholder */}
+
                     <div
-                      class={`absolute inset-0 bg-gray-200 flex items-center justify-center rounded-xl ${hasImage && imageUrl ? "hidden" : ""}`}
+                      class={`absolute inset-0 bg-gray-200 flex items-center justify-center rounded-xl ${hasImages && firstImageUrl ? "hidden" : ""}`}
                     >
                       <div class="text-center">
                         <div class="text-gray-400 text-4xl mb-2">🖼️</div>
@@ -89,6 +108,7 @@ const gallery = WORKS.map((category) => {
                         </p>
                       </div>
                     </div>
+
                     <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 transition-opacity duration-300 flex items-center justify-center rounded-xl">
                       <span class="text-white text-xl font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                         View Details
