@@ -1,0 +1,211 @@
+---
+import "@styles/general.css";
+import Layout from "@layouts/Layout.astro";
+import SectionContainer from "@components/SectionContainer.astro";
+import PageBanner from "@components/PageBanner.astro";
+import TitleSection from "@components/TitleSection.astro";
+import { WORKS } from "@data/works";
+
+// Helper function to process image URLs
+function processImageUrl(imageUrl: string): string {
+  if (!imageUrl) return "";
+
+  if (imageUrl.startsWith("@assets/")) {
+    return imageUrl.replace("@assets/", "/");
+  }
+
+  if (imageUrl.startsWith("@")) {
+    return imageUrl.substring(1);
+  }
+
+  if (imageUrl.startsWith("/") || imageUrl.startsWith("http")) {
+    return imageUrl;
+  }
+
+  return "/" + imageUrl;
+}
+
+// Get the ceramics category
+const ceramicsCategory = WORKS.find((category) => category.slug === "ceramics");
+
+if (!ceramicsCategory) {
+  throw new Error("Ceramics category not found");
+}
+
+// Get the first image for the banner background
+const bannerBackgroundImage =
+  ceramicsCategory.works && ceramicsCategory.works.length > 0 && ceramicsCategory.works[0].imageUrls && ceramicsCategory.works[0].imageUrls.length > 0
+    ? processImageUrl(ceramicsCategory.works[0].imageUrls[0])
+    : null;
+---
+
+<Layout title="Ceramics - Fernando Feijoo">
+  <SectionContainer id="ceramics">
+    <main>
+      <PageBanner
+        title="Ceramics"
+        backgroundImage={bannerBackgroundImage}
+      />
+
+      <section class="py-12">
+        <div class="container mx-auto px-4">
+          <!-- Breadcrumb -->
+          <nav class="flex items-center space-x-2 text-sm text-gray-500 mb-8">
+            <a href="/" class="hover:text-gray-700 transition-colors">Home</a>
+            <span>/</span>
+            <a href="/works" class="hover:text-gray-700 transition-colors">Works</a>
+            <span>/</span>
+            <span class="text-gray-900">Ceramics</span>
+          </nav>
+
+          <!-- Category Description -->
+          <div class="text-center mb-12">
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+              Explore Fernando Feijoo's ceramics collection featuring
+              {ceramicsCategory.works?.length || 0} unique {ceramicsCategory.works?.length === 1 ? 'piece' : 'pieces'}
+              crafted with underglaze painting, oxides and clear glaze finishes.
+            </p>
+          </div>
+
+          <!-- Works Grid -->
+          {ceramicsCategory.works && ceramicsCategory.works.length > 0 ? (
+            <div>
+              <TitleSection title="Ceramic Works" />
+              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8 mt-8">
+                {ceramicsCategory.works.map((work) => {
+                  if (!work || !work.slug) return null;
+
+                  const workImageUrls = work.imageUrls || [];
+                  const hasImages = workImageUrls.length > 0;
+                  const firstImageUrl = hasImages ? processImageUrl(workImageUrls[0]) : "";
+
+                  return (
+                    <a
+                      href={`/works/${work.slug}`}
+                      class="group block relative rounded-xl overflow-hidden bg-white shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
+                      aria-label={`View details for ${work.title}`}
+                    >
+                      <div class="aspect-[3/4] relative">
+                        {hasImages && firstImageUrl ? (
+                          <img
+                            src={firstImageUrl}
+                            alt={`${work.title} by Fernando Feijoo`}
+                            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                            loading="lazy"
+                            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                          />
+                        ) : null}
+
+                        <div class={`absolute inset-0 flex items-center justify-center bg-gray-200 rounded-lg ${hasImages && firstImageUrl ? "hidden" : ""}`}>
+                          <div class="text-center">
+                            <div class="text-gray-400 text-3xl mb-2">🏺</div>
+                            <p class="text-xs text-gray-500">Image coming soon</p>
+                          </div>
+                        </div>
+
+                        <!-- Overlay -->
+                        <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 transition-opacity duration-300 flex items-center justify-center">
+                          <div class="text-white text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <h3 class="text-lg font-bold mb-1">{work.title}</h3>
+                            {work.medium && (
+                              <p class="text-sm text-gray-200">{work.medium}</p>
+                            )}
+                            {work.price && (
+                              <p class="text-sm text-green-300 font-semibold mt-1">{work.price}</p>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Card content -->
+                      <div class="p-4">
+                        <h3 class="text-lg font-semibold text-gray-900 group-hover:text-indigo-600 transition-colors">
+                          {work.title}
+                        </h3>
+                        {work.medium && (
+                          <p class="text-sm text-gray-600 mt-1">
+                            {work.medium}
+                          </p>
+                        )}
+                        <div class="flex justify-between items-center mt-2">
+                          {work.dimensions && (
+                            <p class="text-xs text-gray-500">
+                              {work.dimensions}
+                            </p>
+                          )}
+                          {work.price && (
+                            <p class="text-sm font-semibold text-green-600">
+                              {work.price}
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                    </a>
+                  );
+                })}
+              </div>
+            </div>
+          ) : (
+            <div class="text-center py-12">
+              <div class="text-6xl mb-4">🏺</div>
+              <h2 class="text-2xl font-bold text-gray-900 mb-4">No Ceramic Works Available</h2>
+              <p class="text-gray-600 mb-6">
+                This collection is currently being updated. Please check back soon.
+              </p>
+              <a
+                href="/works"
+                class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gray-900 hover:bg-gray-800 transition-colors duration-200"
+              >
+                View Other Collections
+              </a>
+            </div>
+          )}
+
+          <!-- Contact Section -->
+          <div class="text-center mt-16 pt-12 border-t border-gray-200">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">
+              Interested in These Ceramic Works?
+            </h2>
+            <p class="text-gray-600 mb-6 max-w-md mx-auto">
+              Get in touch to inquire about availability, pricing, or commissioning custom ceramic pieces.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+              <a
+                href="/contact"
+                class="inline-flex items-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gray-900 hover:bg-gray-800 transition-colors duration-200"
+              >
+                Contact Fernando
+              </a>
+              <a
+                href="/works"
+                class="inline-flex items-center px-6 py-3 border border-gray-300 text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 transition-colors duration-200"
+              >
+                ← Back to All Works
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </SectionContainer>
+</Layout>
+
+<style>
+  .container {
+    max-width: 1200px;
+  }
+
+  .shadow-sm {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+
+  .shadow-lg {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  }
+
+  @media (min-width: 1024px) {
+    .grid {
+      gap: 2rem;
+    }
+  }
+</style>

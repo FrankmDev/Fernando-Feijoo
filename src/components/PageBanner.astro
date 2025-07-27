@@ -1,7 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import BannerImg from "/public/profile/ceramic-header.avif";
-const { title, backgroundImage } = Astro.props;
+const { title, subtitle, backgroundImage } = Astro.props;
 ---
 
 <section
@@ -31,11 +31,14 @@ const { title, backgroundImage } = Astro.props;
 
   <div class="absolute inset-0 bg-black/60" aria-hidden="true"></div>
 
-  <h2
-    class="relative z-10 text-white text-4xl md:text-5xl font-bold text-center px-4"
-    role="heading"
-    aria-level="1"
-  >
-    {title}
-  </h2>
+  <div class="relative z-10 text-white text-center px-4">
+    <h2 class="text-4xl md:text-5xl font-bold" role="heading" aria-level="1">
+      {title}
+    </h2>
+    {
+      subtitle && (
+        <p class="text-xl md:text-2xl mt-2 text-gray-200">{subtitle}</p>
+      )
+    }
+  </div>
 </section>

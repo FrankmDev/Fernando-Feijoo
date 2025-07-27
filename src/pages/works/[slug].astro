@@ -93,12 +93,12 @@ const allWorks = WORKS.flatMap((category) =>
 );
 
 // Get related works (prioritize same collection, then same category)
-let relatedWorks = [];
+let relatedWorks: any[] = [];
 
 // First, try to get works from the same collection if it exists
 if (collectionSlug) {
   relatedWorks = allWorks
-    .filter((w) => w.slug !== work.slug && w.collectionSlug === collectionSlug)
+    .filter((w) => w.slug !== work.slug && (w as any).collectionSlug === collectionSlug)
     .slice(0, 4);
 }
 
@@ -109,7 +109,7 @@ if (relatedWorks.length < 4) {
     .filter((w) =>
       w.slug !== work.slug &&
       w.categorySlug === categorySlug &&
-      !relatedWorks.some(rw => rw.slug === w.slug) // Avoid duplicates
+      !relatedWorks.some((rw: any) => rw.slug === w.slug) // Avoid duplicates
     )
     .slice(0, 4 - relatedWorks.length);
 
@@ -244,7 +244,7 @@ const getImageSrc = (imageUrl: string) => {
                   {collectionTitle ? `More from ${collectionTitle}` : `More from ${categoryTitle}`}
                 </h2>
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                  {relatedWorks.map((relatedWork) => {
+                  {relatedWorks.map((relatedWork: any) => {
                     if (!relatedWork || !relatedWork.slug) return null;
 
                     const workImageUrls = relatedWork.imageUrls || [];
