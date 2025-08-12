@@ -768,61 +768,6 @@ export const WORKS: Category[] = [
     ],
   },
   {
-    slug: "artist-books",
-    title: "Artist Books",
-    works: [
-      {
-        slug: "contemporary-street-alphabet",
-        title: "Contemporary Street Alphabet",
-        description: "",
-        medium: "Offset lithograph & Letterpress",
-        imageUrls: [],
-      },
-      {
-        slug: "cracks-progress-charlies-progress",
-        title: "Crack's Progress & Charlie's Progress",
-        description: "",
-        medium: "Offset lithograph",
-        imageUrls: [],
-      },
-      {
-        slug: "future",
-        title: "Future",
-        description: "",
-        medium: "Linocut, Letterpress, and collage",
-        imageUrls: [],
-      },
-      {
-        slug: "gods-and-monsters",
-        title: "Gods & Monsters",
-        description: "",
-        medium: "Linocut, wood block & Letterpress",
-        imageUrls: [],
-      },
-      {
-        slug: "the-journey-man-artist-book",
-        title: "The Journey Man",
-        description: "",
-        medium: "Etching & Letterpress",
-        imageUrls: [],
-      },
-      {
-        slug: "modern-marriage",
-        title: "Modern Marriage",
-        description: "",
-        medium: "Offset lithograph & Letterpress",
-        imageUrls: [],
-      },
-      {
-        slug: "run",
-        title: "Run",
-        description: "",
-        medium: "Linocut, Letterpress, and collage",
-        imageUrls: [],
-      },
-    ],
-  },
-  {
     slug: "ceramics",
     title: "Ceramics",
     works: [
