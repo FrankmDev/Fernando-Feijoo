@@ -14,6 +14,12 @@ const plugin = Autoplay({
   stopOnMouseEnter: true,
   stopOnInteraction: false,
 });
+
+const slides = [
+  { id: 1, src: "/heroSlider/TheFall.avif", alt: "The Fall artwork" },
+  { id: 2, src: "/heroSlider/2.avif", alt: "Artwork 2" },
+  { id: 3, src: "/heroSlider/3.avif", alt: "Artwork 3" },
+];
 </script>
 
 <template>
@@ -21,34 +27,19 @@ const plugin = Autoplay({
     class="relative w-full"
     :plugins="[plugin]"
     @mouseenter="plugin.stop"
-    @mouseleave="[plugin.reset(), plugin.play(), console.log('Running')]"
+    @mouseleave="[plugin.reset(), plugin.play()]"
   >
     <CarouselContent>
-      <CarouselItem :key="index">
+      <CarouselItem v-for="slide in slides" :key="slide.id">
         <div class="p-1">
           <Card>
             <CardContent class="flex items-center justify-center">
-              <img src="/heroSlider/TheFall.avif" />
-            </CardContent>
-          </Card>
-        </div>
-      </CarouselItem>
-
-      <CarouselItem :key="index">
-        <div class="p-1">
-          <Card>
-            <CardContent class="flex items-center justify-center">
-              <img src="/heroSlider/2.avif" />
-            </CardContent>
-          </Card>
-        </div>
-      </CarouselItem>
-
-      <CarouselItem :key="index">
-        <div class="p-1">
-          <Card>
-            <CardContent class="flex items-center justify-center">
-              <img src="/heroSlider/3.avif" />
+              <img
+                :src="slide.src"
+                :alt="slide.alt"
+                loading="lazy"
+                class="w-full h-auto object-cover"
+              />
             </CardContent>
           </Card>
         </div>
