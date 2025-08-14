@@ -246,15 +246,9 @@ const { id = "imageModal" } = Astro.props;
 
   // Initialize modal when DOM is loaded
   document.addEventListener("DOMContentLoaded", () => {
-    window.imageModal = new ImageModal("imageModal");
+    const modalInstance = new ImageModal("imageModal");
+    (window as any).imageModal = modalInstance;
   });
-
-  // Make it globally accessible
-  declare global {
-    interface Window {
-      imageModal: ImageModal;
-    }
-  }
 </script>
 
 <style>

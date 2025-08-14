@@ -128,7 +128,7 @@ const processedImageUrls = work?.imageUrls ? work.imageUrls.map((url: string) =>
 
 // SEO metadata
 const pageTitle = `${work?.title || 'Work'} by Fernando Feijoo`;
-const pageDescription = work?.description || `${work?.title} - ${work?.medium || 'Artwork'} by Fernando Feijoo. ${collectionTitle ? `Part of ${collectionTitle} collection.` : ''}`;
+
 ---
 
 <Layout title={pageTitle}>
@@ -255,7 +255,6 @@ const pageDescription = work?.description || `${work?.title} - ${work?.medium ||
                       const processedUrl = processImageUrl(imageUrl);
                       return (
                         <button
-                          key={index}
                           class="gallery-image group relative overflow-hidden bg-gray-200 hover:opacity-90 transition-all cursor-pointer aspect-square"
                           onclick={`openImageModal(${JSON.stringify(processedImageUrls)}, ${index})`}
                           aria-label={`Open image ${index + 1} in gallery`}
@@ -292,7 +291,7 @@ const pageDescription = work?.description || `${work?.title} - ${work?.medium ||
                   {collectionTitle ? `More from ${collectionTitle}` : `More ${categoryTitle}`}
                 </h2>
                 <div class="grid grid-cols-3 gap-1 md:gap-2 w-full max-w-7xl mx-auto">
-                  {relatedWorks.map((relatedWork: any, index: number) => {
+                  {relatedWorks.map((relatedWork: any) => {
                     if (!relatedWork || !relatedWork.slug) return null;
 
                     const workImageUrls = relatedWork.imageUrls || [];
@@ -300,7 +299,7 @@ const pageDescription = work?.description || `${work?.title} - ${work?.medium ||
                     const firstImageUrl = hasImages ? processImageUrl(workImageUrls[0]) : "";
 
                     return (
-                      <a key={index} href={`/works/${relatedWork.slug}`} class="group block relative bg-white transition-transform duration-300 hover:scale-[1.02]">
+                      <a href={`/works/${relatedWork.slug}`} class="group block relative bg-white transition-transform duration-300 hover:scale-[1.02]">
                         <div class="aspect-square relative overflow-hidden bg-gray-100">
                           {hasImages && firstImageUrl ? (
                             <img
@@ -368,7 +367,7 @@ const pageDescription = work?.description || `${work?.title} - ${work?.medium ||
   <!-- Modal Script -->
   <script>
     // Global function to open image modal
-    window.openImageModal = function(images, startIndex = 0) {
+    window.openImageModal = function(images: any, startIndex = 0) {
       if (window.imageModal && typeof window.imageModal.openModal === 'function') {
         window.imageModal.openModal(images, startIndex);
       } else {

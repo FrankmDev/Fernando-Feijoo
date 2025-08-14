@@ -47,18 +47,8 @@ const structuredData = {
   ],
 };
 
-// Page-specific structured data
-let pageStructuredData = structuredData;
-if (Astro.url.pathname.includes("/works/")) {
-  pageStructuredData = {
-    ...structuredData,
-    "@type": "VisualArtwork",
-    creator: {
-      "@type": "Person",
-      name: "Fernando Feijoo",
-    },
-  };
-}
+// Page-specific structured data - keep it simple to avoid TypeScript errors
+const pageStructuredData = structuredData;
 ---
 
 <!doctype html>
@@ -143,11 +133,12 @@ if (Astro.url.pathname.includes("/works/")) {
     <!-- Structured Data -->
     <script
       type="application/ld+json"
+      is:inline
       set:html={JSON.stringify(pageStructuredData)}
     />
 
     <!-- Scripts -->
-    <script src="@components/scripts/mobile-menu.js" defer></script>
+    <script src="@components/scripts/mobile-menu.js" is:inline defer></script>
 
     <!-- Performance optimizations -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -186,11 +177,17 @@ if (Astro.url.pathname.includes("/works/")) {
       if ("performance" in window && "PerformanceObserver" in window) {
         // Monitor basic performance metrics
         window.addEventListener("load", () => {
-          const perfData = performance.getEntriesByType("navigation")[0];
-          if (perfData) {
+          const perfData = performance.getEntriesByType(
+            "navigation",
+          )[0] as PerformanceNavigationTiming;
+          if (
+            perfData &&
+            (perfData as any).loadEventEnd &&
+            (perfData as any).fetchStart
+          ) {
             console.log(
               "Page Load Time:",
-              perfData.loadEventEnd - perfData.fetchStart,
+              (perfData as any).loadEventEnd - (perfData as any).fetchStart,
             );
           }
         });

@@ -99,7 +99,7 @@ const pageDescription = collection.description || `Explore ${collection.title}, 
             <div>
               <TitleSection title={`${collection.works.length} Works in ${collection.title}`} class="text-center mb-8" />
               <div class="grid grid-cols-3 gap-1 md:gap-2 w-full max-w-7xl mx-auto">
-                {collection.works.map((work, index) => {
+                {collection.works.map((work) => {
                   if (!work || !work.slug) return null;
 
                   const workImageUrls = work.imageUrls || [];
@@ -108,7 +108,6 @@ const pageDescription = collection.description || `Explore ${collection.title}, 
 
                   return (
                     <a
-                      key={index}
                       href={`/works/${work.slug}`}
                       class="group block relative bg-white transition-transform duration-300 hover:scale-[1.02]"
                       aria-label={`View details for ${work.title}`}

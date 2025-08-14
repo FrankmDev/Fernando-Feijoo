@@ -73,7 +73,7 @@ export function getAdditionalImageUrls(imageUrls: string[]): string[] {
  * @param title - Title of the work
  * @returns Placeholder image URL or data URL
  */
-export function getFallbackImageUrl(title: string): string {
+export function getFallbackImageUrl(): string {
   // Return empty string to show CSS placeholder instead
   return "";
 }
