@@ -17,8 +17,8 @@ const plugin = Autoplay({
 
 const slides = [
   { id: 1, src: "/heroSlider/TheFall.avif", alt: "The Fall artwork" },
-  { id: 2, src: "/heroSlider/2.avif", alt: "Artwork 2" },
-  { id: 3, src: "/heroSlider/3.avif", alt: "Artwork 3" },
+  { id: 2, src: "/heroSlider/2.avif", alt: "The ing on artwork" },
+  { id: 3, src: "/heroSlider/3.avif", alt: "Monsters artwork" },
 ];
 </script>
 
@@ -37,7 +37,10 @@ const slides = [
               <img
                 :src="slide.src"
                 :alt="slide.alt"
-                loading="lazy"
+                :loading="slide.id === 1 ? 'eager' : 'lazy'"
+                :fetchpriority="slide.id === 1 ? 'high' : 'auto'"
+                decoding="async"
+                sizes="100vw"
                 class="w-full h-auto object-cover"
               />
             </CardContent>
