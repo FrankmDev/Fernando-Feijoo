@@ -2,32 +2,344 @@
 import { ClientRouter } from "astro:transitions";
 interface Props {
   title: string;
+  description?: string;
+  image?: string;
+  canonicalURL?: string;
+  noindex?: boolean;
 }
 
-const { title } = Astro.props;
+const {
+  title,
+  description = "Fernando Feijoo is a multi-disciplinary artist and printmaker exploring printmaking, drawing, painting, artist books and ceramics. View his portfolio of contemporary artwork.",
+  image = "/favicon.png",
+  canonicalURL,
+  noindex = false,
+} = Astro.props;
+
+// Safe URL handling
+const siteUrl = Astro.site
+  ? Astro.site.toString()
+  : "https://fernando-feijoo.com";
+const currentUrl = canonicalURL || `${siteUrl}${Astro.url.pathname}`;
+const imageUrl = image.startsWith("http") ? image : `${siteUrl}${image}`;
+
 import Header from "@sections/Header/Header.astro";
 import Footer from "@sections/Footer/Footer.astro";
+
+// Generate structured data
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Fernando Feijoo",
+  jobTitle: "Artist & Printmaker",
+  description:
+    "Multi-disciplinary artist specializing in printmaking, ceramics, drawings, and mixed media",
+  url: siteUrl,
+  sameAs: [
+    // Add social media URLs when available
+  ],
+  knowsAbout: [
+    "Printmaking",
+    "Ceramics",
+    "Drawing",
+    "Mixed Media",
+    "Artist Books",
+  ],
+};
+
+// Page-specific structured data
+let pageStructuredData = structuredData;
+if (Astro.url.pathname.includes("/works/")) {
+  pageStructuredData = {
+    ...structuredData,
+    "@type": "VisualArtwork",
+    creator: {
+      "@type": "Person",
+      name: "Fernando Feijoo",
+    },
+  };
+}
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" prefix="og: http://ogp.me/ns#">
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content="Astro description" />
-    <meta name="viewport" content="width=device-width" />
-    <!-- Favicon universal compatible -->
-    <link rel="icon" type="image/png" href="/favicon.png" />
-    <link rel="icon" type="image/avif" href="/favicon.avif" />
-    <link rel="apple-touch-icon" href="/favicon.png" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+    />
     <meta name="generator" content={Astro.generator} />
+
+    <!-- Primary Meta Tags -->
     <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+    <meta name="author" content="Fernando Feijoo" />
+    <meta
+      name="keywords"
+      content="Fernando Feijoo, artist, printmaker, ceramics, drawings, mixed media, artist books, contemporary art, linocut, letterpress"
+    />
+
+    <!-- Robots -->
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    {!noindex && <meta name="robots" content="index, follow" />}
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href={currentUrl} />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:site_name"
+      content="Fernando Feijoo - Artist & Printmaker"
+    />
+    <meta property="og:url" content={currentUrl} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={imageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="Fernando Feijoo - Contemporary Artist & Printmaker"
+    />
+    <meta property="og:locale" content="en_GB" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={currentUrl} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={imageUrl} />
+    <meta
+      property="twitter:image:alt"
+      content="Fernando Feijoo - Contemporary Artist & Printmaker"
+    />
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
+    <link rel="icon" type="image/avif" sizes="32x32" href="/favicon.avif" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#000000" />
+
+    <!-- Preconnect to external domains -->
+    <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+
+    <!-- Preload critical resources -->
+    <link rel="preload" href="/styles/general.css" as="style" />
+    <link
+      rel="preload"
+      href="/Exo2-VariableFont_wght.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
+    <!-- Styles -->
     <link rel="stylesheet" href="/styles/general.css" />
-    <script src="@components/scripts/mobile-menu.js"></script>
+
+    <!-- Structured Data -->
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(pageStructuredData)}
+    />
+
+    <!-- Scripts -->
+    <script src="@components/scripts/mobile-menu.js" defer></script>
+
+    <!-- Performance optimizations -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="format-detection" content="telephone=no" />
+
+    <!-- Security -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
+
+    <!-- Astro transitions -->
     <ClientRouter />
   </head>
-  <body class="flex flex-col items-center max-w-[2000px] mx-auto">
-    <Header client />
-    <slot />
+
+  <body
+    class="flex flex-col items-center max-w-[2000px] mx-auto min-h-screen bg-white text-gray-900"
+  >
+    <!-- Skip to main content for accessibility -->
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-black text-white px-4 py-2 z-50"
+    >
+      Skip to main content
+    </a>
+
+    <Header />
+
+    <main id="main-content" class="flex-1 w-full" role="main">
+      <slot />
+    </main>
+
     <Footer />
+
+    <!-- Performance monitoring -->
+    <script>
+      // Basic performance monitoring
+      if ("performance" in window && "PerformanceObserver" in window) {
+        // Monitor basic performance metrics
+        window.addEventListener("load", () => {
+          const perfData = performance.getEntriesByType("navigation")[0];
+          if (perfData) {
+            console.log(
+              "Page Load Time:",
+              perfData.loadEventEnd - perfData.fetchStart,
+            );
+          }
+        });
+
+        // Monitor LCP (Largest Contentful Paint)
+        try {
+          const observer = new PerformanceObserver((list) => {
+            const entries = list.getEntries();
+            const lastEntry = entries[entries.length - 1];
+            console.log("LCP:", lastEntry.startTime);
+          });
+          observer.observe({
+            type: "largest-contentful-paint",
+            buffered: true,
+          });
+        } catch (e) {
+          // PerformanceObserver not fully supported
+        }
+      }
+
+      // Error reporting
+      window.addEventListener("error", (e) => {
+        console.error("Global error:", e.error);
+      });
+
+      window.addEventListener("unhandledrejection", (e) => {
+        console.error("Unhandled promise rejection:", e.reason);
+      });
+    </script>
+
+    <!-- Service Worker registration -->
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker
+            .register("/sw.js")
+            .then((registration) => {
+              console.log("SW registered: ", registration);
+            })
+            .catch((registrationError) => {
+              console.log("SW registration failed: ", registrationError);
+            });
+        });
+      }
+    </script>
   </body>
 </html>
+
+<style>
+  /* Screen reader only utility */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .focus\:not-sr-only:focus {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: inherit;
+    margin: inherit;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+  }
+
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Focus styles for better accessibility */
+  :focus {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+  }
+
+  /* Print styles */
+  @media print {
+    body {
+      max-width: none;
+      margin: 0;
+      padding: 1rem;
+    }
+
+    /* Hide navigation and non-essential elements */
+    header,
+    footer {
+      display: none;
+    }
+
+    /* Ensure images fit on page */
+    img {
+      max-width: 100% !important;
+      height: auto !important;
+    }
+
+    /* Break pages appropriately */
+    h1,
+    h2,
+    h3 {
+      break-after: avoid;
+    }
+
+    /* Show URLs for links */
+    a[href]:after {
+      content: " (" attr(href) ")";
+      font-size: 0.8em;
+    }
+
+    a[href^="#"]:after,
+    a[href^="javascript:"]:after {
+      content: "";
+    }
+  }
+
+  /* High contrast mode support */
+  @media (prefers-contrast: high) {
+    body {
+      background: white;
+      color: black;
+    }
+  }
+
+  /* Reduced motion support */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* Dark mode support (if needed in future) */
+  @media (prefers-color-scheme: dark) {
+    /* Add dark mode styles here if needed */
+  }
+</style>

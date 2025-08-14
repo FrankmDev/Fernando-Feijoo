@@ -48,7 +48,7 @@ const allWorks = WORKS.flatMap((category) =>
 const gallery = WORKS.map((category) => {
   const categoryWorks = allWorks
     .filter((work) => work.categorySlug === category.slug)
-    .slice(0, 6);
+    .slice(0, 9); // Changed to 9 to fill 3x3 grid better
 
   return {
     id: category.slug,
@@ -65,11 +65,11 @@ const gallery = WORKS.map((category) => {
   <section class="flex flex-col items-center gap-20 w-full mb-20">
     {
       gallery.map(({ id, title, items }) => (
-        <section id={id} class="w-full">
-          <h2 class="text-3xl md:text-4xl font-semibold mb-12 tracking-tight text-zinc-900">
+        <section id={id} class="w-full max-w-7xl">
+          <h2 class="text-3xl md:text-4xl font-semibold mb-12 tracking-tight text-zinc-900 text-center">
             {title}
           </h2>
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-3">
+          <div class="grid grid-cols-3 gap-1 md:gap-2 w-full">
             {items.map((work) => {
               const workImageUrls = work.imageUrls || [];
               const hasImages = workImageUrls.length > 0;
@@ -80,45 +80,53 @@ const gallery = WORKS.map((category) => {
               return (
                 <a
                   href={`/works/${work.slug}`}
-                  class="group block relative rounded-xl overflow-hidden bg-white shadow-sm hover:shadow-lg transition-shadow duration-300"
+                  class="group block relative bg-white transition-transform duration-300 hover:scale-[1.02]"
                   aria-label={`View details for ${work.title}`}
                 >
-                  <div class="aspect-[4/4] relative overflow-hidden">
+                  <div class="aspect-square relative overflow-hidden bg-gray-100">
                     {hasImages && firstImageUrl ? (
                       <img
                         src={firstImageUrl}
                         alt={work.title}
-                        class="w-full h-full object-fill transition-transform duration-500 group-hover:scale-105"
+                        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                         loading="lazy"
                         decoding="async"
-                        style="width: 100% !important; height: 100% !important; object-fit: fill !important;"
-                        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
                       />
-                    ) : null}
-
-                    <div
-                      class={`absolute inset-0 bg-gray-200 flex items-center justify-center ${hasImages && firstImageUrl ? "hidden" : ""}`}
-                    >
-                      <div class="text-center">
-                        <div class="text-gray-400 text-4xl mb-2">🖼️</div>
-                        <h3 class="text-sm font-medium text-gray-600">
-                          {work.title}
-                        </h3>
-                        <p class="text-xs text-gray-500 mt-1">
-                          Image coming soon
-                        </p>
+                    ) : (
+                      <div class="w-full h-full flex items-center justify-center bg-gray-50">
+                        <div class="text-center p-4">
+                          <div class="text-gray-400 text-2xl md:text-4xl mb-2">🖼️</div>
+                          <h3 class="text-xs md:text-sm font-medium text-gray-600 line-clamp-2">
+                            {work.title}
+                          </h3>
+                        </div>
                       </div>
-                    </div>
+                    )}
 
-                    <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 transition-opacity duration-300 flex items-center justify-center">
-                      <span class="text-white text-xl font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        View Details
-                      </span>
+                    <!-- Hover overlay -->
+                    <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300 flex items-center justify-center">
+                      <div class="text-white text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <h3 class="text-sm md:text-lg font-medium mb-1">{work.title}</h3>
+                        <p class="text-xs opacity-80">View Details</p>
+                      </div>
                     </div>
                   </div>
                 </a>
               );
             })}
+          </div>
+
+          {/* View All Button */}
+          <div class="text-center mt-8">
+            <a
+              href={`/works${id === 'prints' ? '' : `/${id}`}`}
+              class="inline-flex items-center px-6 py-3 text-sm font-medium text-gray-900 bg-white hover:bg-gray-100 border border-gray-200 hover:border-gray-300 transition-all duration-200"
+            >
+              View All {title}
+              <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+              </svg>
+            </a>
           </div>
         </section>
       ))
@@ -129,10 +137,81 @@ const gallery = WORKS.map((category) => {
 </section>
 
 <style>
-  .shadow-sm {
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  /* Ensure proper aspect ratio for square images */
+  .aspect-square {
+    aspect-ratio: 1 / 1;
   }
-  .shadow-lg {
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+
+  /* Line clamp utility */
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* Responsive grid - always 3 columns but with different gaps */
+  @media (max-width: 480px) {
+    .grid {
+      gap: 1px;
+    }
+  }
+
+  @media (min-width: 481px) and (max-width: 768px) {
+    .grid {
+      gap: 0.125rem; /* 2px */
+    }
+  }
+
+  @media (min-width: 769px) {
+    .grid {
+      gap: 0.5rem; /* 8px */
+    }
+  }
+
+  /* Smooth transitions */
+  .transition-transform {
+    transition-property: transform;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 300ms;
+  }
+
+  .transition-all {
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 300ms;
+  }
+
+  /* Hover effects */
+  .hover\:scale-\[1\.02\]:hover {
+    --tw-scale-x: 1.02;
+    --tw-scale-y: 1.02;
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+  }
+
+  .group:hover .group-hover\:scale-110 {
+    --tw-scale-x: 1.1;
+    --tw-scale-y: 1.1;
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+  }
+
+  /* Remove any unwanted borders or shadows */
+  .grid > * {
+    border: none;
+    box-shadow: none;
+  }
+
+  /* Ensure full width utilization */
+  .max-w-7xl {
+    max-width: 1280px;
+  }
+
+  /* Performance optimization */
+  .group {
+    will-change: transform;
+  }
+
+  .group img {
+    will-change: transform;
   }
 </style>

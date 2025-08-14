@@ -32,10 +32,21 @@ if (!artistBooksCategory) {
   throw new Error("Artist Books category not found");
 }
 
+// Get all works from all collections in artist books
+const allArtistBooksWorks = artistBooksCategory.collections
+  ? artistBooksCategory.collections.flatMap(collection =>
+      collection.works.map(work => ({
+        ...work,
+        collectionTitle: collection.title,
+        collectionSlug: collection.slug
+      }))
+    )
+  : [];
+
 // Get the first image for the banner background
-const bannerBackgroundImage =
-  artistBooksCategory.works && artistBooksCategory.works.length > 0 && artistBooksCategory.works[0].imageUrls && artistBooksCategory.works[0].imageUrls.length > 0
-    ? processImageUrl(artistBooksCategory.works[0].imageUrls[0])
+const bannerBackgroundImage = allArtistBooksWorks.length > 0 &&
+  allArtistBooksWorks[0].imageUrls && allArtistBooksWorks[0].imageUrls.length > 0
+    ? processImageUrl(allArtistBooksWorks[0].imageUrls[0])
     : null;
 ---
 
@@ -62,78 +73,87 @@ const bannerBackgroundImage =
           <div class="text-center mb-12">
             <p class="text-lg text-gray-600 max-w-2xl mx-auto">
               Explore Fernando Feijoo's artist books collection featuring
-              {artistBooksCategory.works?.length || 0} unique {artistBooksCategory.works?.length === 1 ? 'book' : 'books'}
-              that combine visual art with narrative storytelling.
+              {allArtistBooksWorks.length} unique {allArtistBooksWorks.length === 1 ? 'book' : 'books'}
+              that combine visual art with narrative storytelling across
+              {artistBooksCategory.collections?.length || 0} collections.
             </p>
           </div>
 
-          <!-- Works Grid -->
-          {artistBooksCategory.works && artistBooksCategory.works.length > 0 ? (
+          <!-- Collections -->
+          {artistBooksCategory.collections && artistBooksCategory.collections.length > 0 ? (
             <div>
-              <TitleSection title="Artist Books Collection" />
-              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8 mt-8">
-                {artistBooksCategory.works.map((work) => {
-                  if (!work || !work.slug) return null;
+              {artistBooksCategory.collections.map((collection) => (
+                <div class="mb-16">
+                  <TitleSection title={collection.title} />
 
-                  const workImageUrls = work.imageUrls || [];
-                  const hasImages = workImageUrls.length > 0;
-                  const firstImageUrl = hasImages ? processImageUrl(workImageUrls[0]) : "";
+                  {collection.description && (
+                    <div class="text-center mb-8">
+                      <p class="text-gray-600 max-w-xl mx-auto">
+                        {collection.description}
+                      </p>
+                    </div>
+                  )}
 
-                  return (
-                    <a
-                      href={`/works/${work.slug}`}
-                      class="group block relative rounded-xl overflow-hidden bg-white shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
-                      aria-label={`View details for ${work.title}`}
-                    >
-                      <div class="aspect-[3/4] relative">
-                        {hasImages && firstImageUrl ? (
-                          <img
-                            src={firstImageUrl}
-                            alt={`${work.title} by Fernando Feijoo`}
-                            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                            loading="lazy"
-                            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
-                          />
-                        ) : null}
+                  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mt-8">
+                    {collection.works.map((work) => {
+                      if (!work || !work.slug) return null;
 
-                        <div class={`absolute inset-0 flex items-center justify-center bg-gray-200 rounded-lg ${hasImages && firstImageUrl ? "hidden" : ""}`}>
-                          <div class="text-center">
-                            <div class="text-gray-400 text-3xl mb-2">📚</div>
-                            <p class="text-xs text-gray-500">Image coming soon</p>
-                          </div>
-                        </div>
+                      const workImageUrls = work.imageUrls || [];
+                      const hasImages = workImageUrls.length > 0;
+                      const firstImageUrl = hasImages ? processImageUrl(workImageUrls[0]) : "";
 
-                        <!-- Overlay -->
-                        <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 transition-opacity duration-300 flex items-center justify-center">
-                          <div class="text-white text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                            <h3 class="text-lg font-bold mb-1">{work.title}</h3>
-                            {work.medium && (
-                              <p class="text-sm text-gray-200">{work.medium}</p>
-                            )}
-                          </div>
-                        </div>
-                      </div>
+                      return (
+                        <a
+                          href={`/works/${work.slug}`}
+                          class="group block transition-transform duration-200 hover:translate-y-[-2px]"
+                          aria-label={`View details for ${work.title}`}
+                        >
+                          <article class="bg-white">
+                            <!-- Image Container -->
+                            <div class="aspect-[3/4] bg-gray-100 overflow-hidden mb-4">
+                              {hasImages && firstImageUrl ? (
+                                <img
+                                  src={firstImageUrl}
+                                  alt={`${work.title} by Fernando Feijoo`}
+                                  class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                                  loading="lazy"
+                                  decoding="async"
+                                />
+                              ) : (
+                                <div class="w-full h-full flex items-center justify-center">
+                                  <div class="text-center">
+                                    <div class="text-gray-400 text-4xl mb-2">📚</div>
+                                    <p class="text-xs text-gray-400">Image coming soon</p>
+                                  </div>
+                                </div>
+                              )}
+                            </div>
 
-                      <!-- Card content -->
-                      <div class="p-4">
-                        <h3 class="text-lg font-semibold text-gray-900 group-hover:text-indigo-600 transition-colors">
-                          {work.title}
-                        </h3>
-                        {work.medium && (
-                          <p class="text-sm text-gray-600 mt-1">
-                            {work.medium}
-                          </p>
-                        )}
-                        {work.dimensions && (
-                          <p class="text-xs text-gray-500 mt-1">
-                            {work.dimensions}
-                          </p>
-                        )}
-                      </div>
-                    </a>
-                  );
-                })}
-              </div>
+                            <!-- Content -->
+                            <div class="space-y-2">
+                              <h3 class="text-lg font-medium text-gray-900 group-hover:text-gray-700 transition-colors">
+                                {work.title}
+                              </h3>
+
+                              {work.medium && (
+                                <p class="text-sm text-gray-600">
+                                  {work.medium}
+                                </p>
+                              )}
+
+                              {work.dimensions && (
+                                <p class="text-xs text-gray-500">
+                                  {work.dimensions}
+                                </p>
+                              )}
+                            </div>
+                          </article>
+                        </a>
+                      );
+                    })}
+                  </div>
+                </div>
+              ))}
             </div>
           ) : (
             <div class="text-center py-12">
@@ -144,7 +164,7 @@ const bannerBackgroundImage =
               </p>
               <a
                 href="/works"
-                class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gray-900 hover:bg-gray-800 transition-colors duration-200"
+                class="inline-flex items-center px-6 py-3 text-base font-medium text-white bg-gray-900 hover:bg-gray-700 transition-colors duration-200"
               >
                 View Other Collections
               </a>
@@ -162,13 +182,13 @@ const bannerBackgroundImage =
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
               <a
                 href="/contact"
-                class="inline-flex items-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gray-900 hover:bg-gray-800 transition-colors duration-200"
+                class="inline-flex items-center px-8 py-3 text-base font-medium text-white bg-gray-900 hover:bg-gray-700 transition-colors duration-200"
               >
                 Contact Fernando
               </a>
               <a
                 href="/works"
-                class="inline-flex items-center px-6 py-3 border border-gray-300 text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 transition-colors duration-200"
+                class="inline-flex items-center px-6 py-3 text-base font-medium text-gray-700 bg-white hover:bg-gray-100 transition-colors duration-200"
               >
                 ← Back to All Works
               </a>
@@ -185,17 +205,63 @@ const bannerBackgroundImage =
     max-width: 1200px;
   }
 
-  .shadow-sm {
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  }
-
-  .shadow-lg {
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-  }
-
-  @media (min-width: 1024px) {
+  /* Responsive Grid Adjustments */
+  @media (max-width: 640px) {
     .grid {
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+      gap: 1.5rem;
+    }
+  }
+
+  @media (min-width: 641px) and (max-width: 1023px) {
+    .grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 2rem;
     }
+  }
+
+  @media (min-width: 1024px) and (max-width: 1279px) {
+    .grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 2rem;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 2rem;
+    }
+  }
+
+  /* Ensure consistent aspect ratios */
+  .aspect-\[3\/4\] {
+    aspect-ratio: 3/4;
+  }
+
+  /* Smooth transitions */
+  .transition-transform {
+    transition-property: transform;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 200ms;
+  }
+
+  .transition-colors {
+    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 200ms;
+  }
+
+  /* Hover effects */
+  .hover\:translate-y-\[-2px\]:hover {
+    --tw-translate-y: -2px;
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+  }
+
+  /* Image scale on hover */
+  .group:hover .group-hover\:scale-105 {
+    --tw-scale-x: 1.05;
+    --tw-scale-y: 1.05;
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   }
 </style>

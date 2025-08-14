@@ -4,8 +4,27 @@ import Layout from "@layouts/Layout.astro";
 import SectionContainer from "@components/SectionContainer.astro";
 import PageBanner from "@components/PageBanner.astro";
 import TitleSection from "@components/TitleSection.astro";
-import CollectionCard from "@components/CollectionCard.astro";
+import ContactBanner from "@components/Hero/ContactBanner.astro";
 import { WORKS } from "@data/works";
+
+// Helper function to process image URLs
+function processImageUrl(imageUrl: string): string | null {
+  if (!imageUrl) return null;
+
+  if (imageUrl.startsWith("@assets/")) {
+    return imageUrl.replace("@assets/", "/");
+  }
+
+  if (imageUrl.startsWith("@")) {
+    return imageUrl.substring(1);
+  }
+
+  if (imageUrl.startsWith("/") || imageUrl.startsWith("http")) {
+    return imageUrl;
+  }
+
+  return "/" + imageUrl;
+}
 
 // Helper function to get the first image from a collection or category
 function getFirstImageFromWorks(works: any[]): string | null {
@@ -13,7 +32,8 @@ function getFirstImageFromWorks(works: any[]): string | null {
 
   for (const work of works) {
     if (work.imageUrls && work.imageUrls.length > 0) {
-      return work.imageUrls[0];
+      const processed = processImageUrl(work.imageUrls[0]);
+      if (processed) return processed;
     }
   }
   return null;
@@ -33,7 +53,7 @@ interface ProcessedCollection {
 // Process each category to prepare data for display
 const processedCategories = WORKS.map((category) => {
   if (category.collections) {
-    // Category has collections (like Prints)
+    // Category has collections (like Prints and Artist Books)
     const collections: ProcessedCollection[] = category.collections.map(
       (collection) => ({
         title: collection.title,
@@ -51,7 +71,7 @@ const processedCategories = WORKS.map((category) => {
       collections,
     };
   } else if (category.works) {
-    // Category has direct works (like Artist Books, Ceramics, etc.)
+    // Category has direct works (like Ceramics, Drawings, etc.)
     const collections: ProcessedCollection[] = [
       {
         title: category.title,
@@ -99,18 +119,54 @@ const categoriesWithContent = processedCategories.filter(
           {
             categoriesWithContent.map((category) => (
               <div class="mb-16">
-                <TitleSection title={category.title} />
+                <TitleSection title={category.title} class="text-center mb-8" />
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8 mt-8">
+                <div class="grid grid-cols-3 gap-1 md:gap-2 w-full max-w-7xl mx-auto">
                   {category.collections?.map((collection) => (
-                    <CollectionCard
-                      title={collection.title}
+                    <a
                       href={collection.href}
-                      imageUrl={collection.imageUrl}
-                      imageAlt={collection.imageAlt}
-                      description={collection.description}
-                      workCount={collection.workCount}
-                    />
+                      class="group block relative bg-white transition-transform duration-300 hover:scale-[1.02]"
+                      aria-label={`View ${collection.title} collection`}
+                    >
+                      <article class="w-full">
+                        <!-- Image Container -->
+                        <div class="aspect-square relative overflow-hidden bg-gray-100">
+                          {collection.imageUrl ? (
+                            <img
+                              src={collection.imageUrl}
+                              alt={collection.imageAlt}
+                              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                              loading="lazy"
+                              decoding="async"
+                            />
+                          ) : (
+                            <div class="w-full h-full flex items-center justify-center bg-gray-50">
+                              <div class="text-center p-4">
+                                <div class="text-gray-400 text-2xl md:text-4xl mb-2">
+                                  {category.title === "Prints" ? "🖼️" :
+                                   category.title === "Artist Books" ? "📚" :
+                                   category.title === "Ceramics" ? "🏺" :
+                                   category.title === "Drawings" ? "✏️" : "🎨"}
+                                </div>
+                                <h3 class="text-xs md:text-sm font-medium text-gray-600 line-clamp-2">
+                                  {collection.title}
+                                </h3>
+                              </div>
+                            </div>
+                          )}
+
+                          <!-- Hover overlay -->
+                          <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300 flex items-center justify-center">
+                            <div class="text-white text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                              <h3 class="text-sm md:text-lg font-medium mb-1">{collection.title}</h3>
+                              <p class="text-xs opacity-80">
+                                {collection.workCount} {collection.workCount === 1 ? 'work' : 'works'}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </article>
+                    </a>
                   ))}
                 </div>
               </div>
@@ -128,26 +184,106 @@ const categoriesWithContent = processedCategories.filter(
             </p>
             <a
               href="/contact"
-              class="inline-flex items-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gray-900 hover:bg-gray-800 transition-colors duration-200"
+              class="inline-flex items-center px-8 py-3 text-base font-medium text-white bg-gray-900 hover:bg-gray-700 transition-colors duration-200"
             >
               Contact Fernando
             </a>
           </div>
         </div>
       </section>
+
+      <!-- Contact Banner -->
+      <ContactBanner />
     </main>
   </SectionContainer>
 </Layout>
 
 <style>
-  /* Additional styles for better visual hierarchy */
   .container {
     max-width: 1200px;
   }
 
-  @media (min-width: 1024px) {
+  /* Line clamp utility for description text */
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* Ensure consistent aspect ratios */
+  .aspect-square {
+    aspect-ratio: 1 / 1;
+  }
+
+  /* Responsive grid - always 3 columns but with different gaps */
+  @media (max-width: 480px) {
     .grid {
-      gap: 2rem;
+      gap: 1px;
     }
+  }
+
+  @media (min-width: 481px) and (max-width: 768px) {
+    .grid {
+      gap: 0.125rem; /* 2px */
+    }
+  }
+
+  @media (min-width: 769px) {
+    .grid {
+      gap: 0.5rem; /* 8px */
+    }
+  }
+
+  /* Smooth transitions */
+  .transition-transform {
+    transition-property: transform;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 300ms;
+  }
+
+  .transition-all {
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 300ms;
+  }
+
+  .transition-colors {
+    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 200ms;
+  }
+
+  /* Hover effects */
+  .hover\:scale-\[1\.02\]:hover {
+    --tw-scale-x: 1.02;
+    --tw-scale-y: 1.02;
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+  }
+
+  .group:hover .group-hover\:scale-110 {
+    --tw-scale-x: 1.1;
+    --tw-scale-y: 1.1;
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+  }
+
+  /* Remove any unwanted borders or shadows */
+  .grid > * {
+    border: none;
+    box-shadow: none;
+  }
+
+  /* Ensure full width utilization */
+  .max-w-7xl {
+    max-width: 1280px;
+  }
+
+  /* Performance optimization */
+  .group {
+    will-change: transform;
+  }
+
+  .group img {
+    will-change: transform;
   }
 </style>
