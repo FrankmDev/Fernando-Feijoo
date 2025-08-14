@@ -1,4 +1,5 @@
 ---
+import Analytics from "@vercel/analytics/astro";
 import { ClientRouter } from "astro:transitions";
 interface Props {
   title: string;
@@ -177,7 +178,7 @@ const pageStructuredData = structuredData;
         // Monitor basic performance metrics
         window.addEventListener("load", () => {
           const perfData = performance.getEntriesByType(
-            "navigation",
+            "navigation"
           )[0] as PerformanceNavigationTiming;
           if (
             perfData &&
@@ -186,7 +187,7 @@ const pageStructuredData = structuredData;
           ) {
             console.log(
               "Page Load Time:",
-              (perfData as any).loadEventEnd - (perfData as any).fetchStart,
+              (perfData as any).loadEventEnd - (perfData as any).fetchStart
             );
           }
         });
