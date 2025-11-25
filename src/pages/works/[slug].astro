@@ -356,7 +356,7 @@ const pageTitle = `${work?.title || 'Work'} by Fernando Feijoo`;
   <ImageModal id="imageModal" />
 
   <!-- Structured Data -->
-  <script type="application/ld+json" set:html={JSON.stringify({
+  <script type="application/ld+json" is:inline set:html={JSON.stringify({
     "@context": "https://schema.org",
     "@type": "VisualArtwork",
     "name": work.title,
