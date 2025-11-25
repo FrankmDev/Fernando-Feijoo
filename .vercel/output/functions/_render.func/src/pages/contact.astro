@@ -1,0 +1,166 @@
+---
+import "@styles/general.css";
+import Layout from "@layouts/Layout.astro";
+import SectionContainer from "@components/SectionContainer.astro";
+import PageBanner from "@components/PageBanner.astro";
+import Form from "@components/Form.vue";
+import Socials from "@components/Hero/Socials.astro";
+import MailIcon from "@icons/mail-icon.astro";
+import MapIcon from "@icons/map-icon.astro";
+import PhoneIcon from "@icons/phone-icon.astro";
+import TitleSection from "@/components/TitleSection.astro";
+import Cta from "@/components/Cta.astro";
+
+const contactData = [
+  {
+    icon: MailIcon,
+    text: "info@fernando-feijoo.com",
+    href: "mailto:info@fernando-feijoo.com",
+    ariaLabel: "Send email to Fernando Feijoo",
+    label: "EMAIL",
+    itemprop: "email",
+  },
+  {
+    icon: MapIcon,
+    text: "Cambridge",
+    href: "https://www.google.com/maps/place/Cambridge,+UK",
+    ariaLabel: "View location in Cambridge, UK",
+    label: "LOCATION",
+    itemprop: "address",
+  },
+  {
+    icon: PhoneIcon,
+    text: "+44 1223 123456",
+    href: "tel:+441223123456",
+    ariaLabel: "Call Fernando Feijoo",
+    label: "PHONE",
+    itemprop: "telephone",
+  },
+];
+
+const pageDescription =
+  "Get in touch with Fernando Feijoo. Contact information, location in Cambridge, UK, and inquiry form for commissions, exhibitions, and collaborations.";
+---
+
+<Layout title="Contact - Fernando Feijoo" description={pageDescription}>
+  <SectionContainer id="contact">
+    <main>
+      <PageBanner title="Contact" />
+      <blockquote class="text-4xl px-10 text-center italic my-20" lang="en">
+        "The world is full of conflict and confusion. In my work I try to
+        interpret the chaos in positive, humorous and imaginative ways."
+      </blockquote>
+      <section
+        class="container mx-auto px-4 max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-16 items-center"
+        aria-labelledby="contact-heading"
+        itemscope
+        itemtype="https://schema.org/ContactPoint"
+      >
+        <!-- Left side: Static Image -->
+        <figure
+          class="w-full order-2 md:order-1"
+          role="figure"
+          aria-label="Fernando Feijoo working with Columbian printing press"
+        >
+          <img
+            src="/profile/columbian.avif"
+            alt="Fernando Feijoo working with a Columbian printing press in his studio"
+            class="w-full max-h-[450px] object-cover object-top rounded-lg shadow-lg md:max-h-[700px]"
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
+            width="600"
+            height="700"
+          />
+        </figure>
+
+        <!-- Right side: Contact Information -->
+        <div
+          class="flex flex-col items-start justify-center gap-6 order-1 md:order-2"
+        >
+          <div>
+            <TitleSection title="Get in Touch" />
+            <p class="text-lg text-gray-700 leading-relaxed">
+              I'd love to hear from you. Whether you're interested in
+              commissioning a piece, discussing a collaboration, or simply want
+              to learn more about my work, please don't hesitate to reach out.
+            </p>
+          </div>
+
+          <!-- Contact Details -->
+          <div class="flex flex-col gap-6 w-full">
+            {
+              contactData.map(
+                ({ icon: Icon, text, href, ariaLabel, label, itemprop }) => (
+                  <address class="flex gap-4 items-center group not-italic">
+                    <figure
+                      class="bg-black border-2 border-black rounded-full p-3 group-hover:bg-white transition duration-300 ease-in-out flex-shrink-0"
+                      role="img"
+                      aria-label={`${label} icon`}
+                    >
+                      <Icon class="group-hover:text-black transition duration-300 ease-in-out" />
+                    </figure>
+                    <div class="flex flex-col">
+                      <span class="text-sm font-medium text-gray-600 tracking-wider uppercase mb-1">
+                        {label}
+                      </span>
+                      <a
+                        href={href}
+                        class="text-xl md:text-2xl relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-black after:transition-all after:duration-300 after:ease-in-out hover:after:w-full"
+                        aria-label={ariaLabel}
+                        rel={
+                          href.startsWith("mailto:") || href.startsWith("tel:")
+                            ? "nofollow"
+                            : "nofollow noopener noreferrer"
+                        }
+                        target={href.startsWith("http") ? "_blank" : undefined}
+                        itemprop={itemprop}
+                      >
+                        {text}
+                      </a>
+                    </div>
+                  </address>
+                )
+              )
+            }
+          </div>
+
+          <Cta href="#" label="Explore my CV" isDark={true} />
+          <!-- Social Links -->
+          <div class="mt-4">
+            <h3
+              class="text-sm font-medium text-gray-600 tracking-wider uppercase mb-4"
+            >
+              Follow Me
+            </h3>
+            <Socials />
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact Form Section -->
+      <section
+        class="container mx-auto px-4 max-w-6xl py-16"
+        aria-labelledby="form-heading"
+      >
+        <h3 id="form-heading" class="sr-only">Contact Form</h3>
+        <Form client:load />
+      </section>
+    </main>
+  </SectionContainer>
+</Layout>
+
+<style>
+  /* Screen reader only utility */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+</style>

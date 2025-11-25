@@ -1,0 +1,258 @@
+---
+import "@styles/general.css";
+import Layout from "@layouts/Layout.astro";
+import SectionContainer from "@components/SectionContainer.astro";
+import PageBanner from "@components/PageBanner.astro";
+import TitleSection from "@components/TitleSection.astro";
+import { WORKS } from "@data/works";
+
+// Helper function to process image URLs
+function processImageUrl(imageUrl: string): string {
+  if (!imageUrl) return "";
+
+  if (imageUrl.startsWith("@assets/")) {
+    return imageUrl.replace("@assets/", "/");
+  }
+
+  if (imageUrl.startsWith("@")) {
+    return imageUrl.substring(1);
+  }
+
+  if (imageUrl.startsWith("/") || imageUrl.startsWith("http")) {
+    return imageUrl;
+  }
+
+  return "/" + imageUrl;
+}
+
+// Generate static paths for all artist book collections
+export async function getStaticPaths() {
+  const artistBooksCategory = WORKS.find((category) => category.slug === "artist-books");
+
+  if (!artistBooksCategory || !artistBooksCategory.collections) {
+    return [];
+  }
+
+  return artistBooksCategory.collections.map((collection) => ({
+    params: { collection: collection.slug },
+    props: {
+      collection: collection,
+      categoryTitle: artistBooksCategory.title,
+      categorySlug: artistBooksCategory.slug,
+    },
+  }));
+}
+
+// Get the props passed from getStaticPaths
+const { collection, categoryTitle } = Astro.props;
+
+// Validate that collection exists
+if (!collection) {
+  throw new Error(`Collection not found for slug: ${Astro.params.collection}`);
+}
+
+// Get the first image for the banner background
+const bannerBackgroundImage =
+  collection.works && collection.works.length > 0 && collection.works[0].imageUrls && collection.works[0].imageUrls.length > 0
+    ? processImageUrl(collection.works[0].imageUrls[0])
+    : null;
+---
+
+<Layout title={`${collection.title} - ${categoryTitle} - Fernando Feijoo`}>
+  <SectionContainer id="collection-detail">
+    <main>
+      <PageBanner
+        title={collection.title}
+        subtitle={categoryTitle}
+        backgroundImage={bannerBackgroundImage}
+      />
+
+      <section class="py-12">
+        <div class="container mx-auto px-4">
+          <!-- Breadcrumb -->
+          <nav class="flex items-center space-x-2 text-sm text-gray-500 mb-8">
+            <a href="/" class="hover:text-gray-700 transition-colors">Home</a>
+            <span>/</span>
+            <a href="/works" class="hover:text-gray-700 transition-colors">Works</a>
+            <span>/</span>
+            <a href="/works/artist-books" class="hover:text-gray-700 transition-colors">Artist Books</a>
+            <span>/</span>
+            <span class="text-gray-900">{collection.title}</span>
+          </nav>
+
+          <!-- Collection Info -->
+          {collection.description && (
+            <div class="text-center mb-12">
+              <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                {collection.description}
+              </p>
+            </div>
+          )}
+
+          <!-- Works Grid -->
+          {collection.works && collection.works.length > 0 ? (
+            <div>
+              <TitleSection title={`Works in ${collection.title}`} />
+              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mt-8">
+                {collection.works.map((work) => {
+                  if (!work || !work.slug) return null;
+
+                  const workImageUrls = work.imageUrls || [];
+                  const hasImages = workImageUrls.length > 0;
+                  const firstImageUrl = hasImages ? processImageUrl(workImageUrls[0]) : "";
+
+                  return (
+                    <a
+                      href={`/works/${work.slug}`}
+                      class="group block transition-transform duration-200 hover:translate-y-[-2px]"
+                      aria-label={`View details for ${work.title}`}
+                    >
+                      <article class="bg-white">
+                        <!-- Image Container -->
+                        <div class="aspect-[3/4] bg-gray-100 overflow-hidden mb-4">
+                          {hasImages && firstImageUrl ? (
+                            <img
+                              src={firstImageUrl}
+                              alt={`${work.title} by Fernando Feijoo`}
+                              class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                              loading="lazy"
+                              decoding="async"
+                            />
+                          ) : (
+                            <div class="w-full h-full flex items-center justify-center">
+                              <div class="text-center">
+                                <div class="text-gray-400 text-4xl mb-2">📚</div>
+                                <p class="text-xs text-gray-400">Image coming soon</p>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+
+                        <!-- Content -->
+                        <div class="space-y-2">
+                          <h3 class="text-lg font-medium text-gray-900 group-hover:text-gray-700 transition-colors">
+                            {work.title}
+                          </h3>
+
+                          {work.medium && (
+                            <p class="text-sm text-gray-600">
+                              {work.medium}
+                            </p>
+                          )}
+
+                          {work.dimensions && (
+                            <p class="text-xs text-gray-500">
+                              {work.dimensions}
+                            </p>
+                          )}
+                        </div>
+                      </article>
+                    </a>
+                  );
+                })}
+              </div>
+            </div>
+          ) : (
+            <div class="text-center py-12">
+              <div class="text-6xl mb-4">📚</div>
+              <h2 class="text-2xl font-bold text-gray-900 mb-4">No Works Available</h2>
+              <p class="text-gray-600 mb-6">
+                This collection is currently being updated. Please check back soon.
+              </p>
+              <a
+                href="/works/artist-books"
+                class="inline-flex items-center px-6 py-3 text-base font-medium text-white bg-gray-900 hover:bg-gray-700 transition-colors duration-200"
+              >
+                View Other Artist Books
+              </a>
+            </div>
+          )}
+
+          <!-- Back to Collections -->
+          <div class="text-center mt-16 pt-12 border-t border-gray-200">
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+              <a
+                href="/contact"
+                class="inline-flex items-center px-8 py-3 text-base font-medium text-white bg-gray-900 hover:bg-gray-700 transition-colors duration-200"
+              >
+                Inquire About This Collection
+              </a>
+              <a
+                href="/works/artist-books"
+                class="inline-flex items-center px-6 py-3 text-base font-medium text-gray-700 bg-white hover:bg-gray-100 transition-colors duration-200"
+              >
+                ← Back to Artist Books
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </SectionContainer>
+</Layout>
+
+<style>
+  .container {
+    max-width: 1200px;
+  }
+
+  /* Responsive Grid Adjustments */
+  @media (max-width: 640px) {
+    .grid {
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+      gap: 1.5rem;
+    }
+  }
+
+  @media (min-width: 641px) and (max-width: 1023px) {
+    .grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 2rem;
+    }
+  }
+
+  @media (min-width: 1024px) and (max-width: 1279px) {
+    .grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 2rem;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 2rem;
+    }
+  }
+
+  /* Ensure consistent aspect ratios */
+  .aspect-\[3\/4\] {
+    aspect-ratio: 3/4;
+  }
+
+  /* Smooth transitions */
+  .transition-transform {
+    transition-property: transform;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 200ms;
+  }
+
+  .transition-colors {
+    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 200ms;
+  }
+
+  /* Hover effects */
+  .hover\:translate-y-\[-2px\]:hover {
+    --tw-translate-y: -2px;
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+  }
+
+  /* Image scale on hover */
+  .group:hover .group-hover\:scale-105 {
+    --tw-scale-x: 1.05;
+    --tw-scale-y: 1.05;
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+  }
+</style>
