@@ -26,23 +26,28 @@ function processImageUrl(imageUrl: string): string {
   return "/" + imageUrl;
 }
 
-// Get the mixed media category
-const mixedMediaCategory = WORKS.find((category) => category.slug === "mixed-media");
+// Get the prints category
+const printsCategory = WORKS.find((category) => category.slug === "prints");
 
-if (!mixedMediaCategory) {
-  throw new Error("Mixed Media category not found");
+if (!printsCategory) {
+  throw new Error("Prints category not found");
 }
 
+// Get all collections from prints
+const collections = printsCategory.collections || [];
+
 // Get the first image for the banner background
-const bannerBackgroundImage =
-  mixedMediaCategory.works && mixedMediaCategory.works.length > 0 && mixedMediaCategory.works[0].imageUrls && mixedMediaCategory.works[0].imageUrls.length > 0
-    ? processImageUrl(mixedMediaCategory.works[0].imageUrls[0])
+const bannerBackgroundImage = collections.length > 0 &&
+  collections[0].works.length > 0 &&
+  collections[0].works[0].imageUrls &&
+  collections[0].works[0].imageUrls.length > 0
+    ? processImageUrl(collections[0].works[0].imageUrls[0])
     : null;
 
 // SEO metadata
-const pageTitle = "Mixed Media - Fernando Feijoo | Artist & Printmaker";
-const pageDescription = `Explore Fernando Feijoo's mixed media collection featuring ${mixedMediaCategory.works?.length || 0} unique pieces that combine various artistic techniques and materials in innovative ways.`;
-const pageUrl = "https://fernandofeijoo.com/works/mixed-media";
+const pageTitle = "Prints - Fernando Feijoo | Artist & Printmaker";
+const pageDescription = `Explore Fernando Feijoo's prints collection featuring ${collections.length} unique collections including linocut, wood block, and letterpress works.`;
+const pageUrl = "https://fernandofeijoo.com/works/prints";
 const ogImage = bannerBackgroundImage ? `https://fernandofeijoo.com${bannerBackgroundImage}` : "https://fernandofeijoo.com/og-image.jpg";
 ---
 
@@ -50,7 +55,7 @@ const ogImage = bannerBackgroundImage ? `https://fernandofeijoo.com${bannerBackg
   <Fragment slot="head">
     <!-- SEO Meta Tags -->
     <meta name="description" content={pageDescription} />
-    <meta name="keywords" content="Fernando Feijoo, mixed media, contemporary art, multimedia art, collage" />
+    <meta name="keywords" content="Fernando Feijoo, prints, printmaking, linocut, letterpress, wood block, contemporary prints" />
     <link rel="canonical" href={pageUrl} />
     
     <!-- Open Graph Tags -->
@@ -71,7 +76,7 @@ const ogImage = bannerBackgroundImage ? `https://fernandofeijoo.com${bannerBackg
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
       "@type": "CollectionPage",
-      "name": "Mixed Media Collection",
+      "name": "Prints Collection",
       "description": pageDescription,
       "url": pageUrl,
       "creator": {
@@ -79,61 +84,65 @@ const ogImage = bannerBackgroundImage ? `https://fernandofeijoo.com${bannerBackg
         "name": "Fernando Feijoo",
         "url": "https://fernandofeijoo.com"
       },
-      "numberOfItems": mixedMediaCategory.works?.length || 0
+      "numberOfItems": collections.length
     })} />
   </Fragment>
-  <SectionContainer id="mixed-media">
+
+  <SectionContainer id="prints">
     <main>
       <PageBanner
-        title="Mixed Media"
+        title="Prints"
         backgroundImage={bannerBackgroundImage}
       />
 
       <section class="py-12">
         <div class="container mx-auto px-4">
           <!-- Breadcrumb -->
-          <nav class="flex items-center space-x-2 text-sm text-gray-500 mb-8">
+          <nav class="flex items-center space-x-2 text-sm text-gray-500 mb-8" aria-label="Breadcrumb">
             <a href="/" class="hover:text-gray-700 transition-colors">Home</a>
             <span>/</span>
             <a href="/works" class="hover:text-gray-700 transition-colors">Works</a>
             <span>/</span>
-            <span class="text-gray-900">Mixed Media</span>
+            <span class="text-gray-900">Prints</span>
           </nav>
 
           <!-- Category Description -->
           <div class="text-center mb-12">
             <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-              Explore Fernando Feijoo's mixed media collection featuring
-              {mixedMediaCategory.works?.length || 0} unique {mixedMediaCategory.works?.length === 1 ? 'piece' : 'pieces'}
-              that combine various artistic techniques and materials in innovative ways.
+              Explore Fernando Feijoo's prints collection featuring
+              {collections.length} unique {collections.length === 1 ? 'collection' : 'collections'}
+              of linocut, wood block, and letterpress works.
             </p>
           </div>
 
-          <!-- Works Grid -->
-          {mixedMediaCategory.works && mixedMediaCategory.works.length > 0 ? (
+          <!-- Collections Grid -->
+          {collections && collections.length > 0 ? (
             <div>
-              <TitleSection title="Mixed Media Works" class="text-center mb-8" />
+              <TitleSection title="Print Collections" class="text-center mb-8" />
               <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1 md:gap-2 w-full max-w-7xl mx-auto">
-                {mixedMediaCategory.works.map((work) => {
-                  if (!work || !work.slug) return null;
+                {collections.map((collection) => {
+                  if (!collection || !collection.slug) return null;
 
-                  const workImageUrls = work.imageUrls || [];
-                  const hasImages = workImageUrls.length > 0;
-                  const firstImageUrl = hasImages ? processImageUrl(workImageUrls[0]) : "";
+                  const collectionWorks = collection.works || [];
+                  const hasWorks = collectionWorks.length > 0;
+                  const firstWork = hasWorks ? collectionWorks[0] : null;
+                  const firstImageUrl = firstWork && firstWork.imageUrls && firstWork.imageUrls.length > 0
+                    ? processImageUrl(firstWork.imageUrls[0])
+                    : "";
 
                   return (
                     <a
-                      href={`/works/${work.slug}`}
+                      href={`/works/prints/${collection.slug}`}
                       class="group block relative bg-white transition-transform duration-300 hover:scale-[1.02]"
-                      aria-label={`View details for ${work.title}`}
+                      aria-label={`View ${collection.title} collection`}
                     >
                       <article class="w-full">
                         <!-- Image Container -->
                         <div class="aspect-square relative overflow-hidden bg-gray-100">
-                          {hasImages && firstImageUrl ? (
+                          {firstImageUrl ? (
                             <img
                               src={firstImageUrl}
-                              alt={`${work.title} by Fernando Feijoo`}
+                              alt={`${collection.title} collection by Fernando Feijoo`}
                               class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                               loading="lazy"
                               decoding="async"
@@ -143,9 +152,9 @@ const ogImage = bannerBackgroundImage ? `https://fernandofeijoo.com${bannerBackg
                           ) : (
                             <div class="w-full h-full flex items-center justify-center bg-gray-50">
                               <div class="text-center p-4">
-                                <div class="text-gray-400 text-2xl md:text-4xl mb-2">🎨</div>
+                                <div class="text-gray-400 text-2xl md:text-4xl mb-2">🖼️</div>
                                 <h3 class="text-xs md:text-sm font-medium text-gray-600 line-clamp-2">
-                                  {work.title}
+                                  {collection.title}
                                 </h3>
                               </div>
                             </div>
@@ -154,8 +163,10 @@ const ogImage = bannerBackgroundImage ? `https://fernandofeijoo.com${bannerBackg
                           <!-- Hover overlay -->
                           <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-70 transition-all duration-300 flex items-center justify-center">
                             <div class="text-white text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                              <h3 class="text-3xl font-medium mb-1">{work.title}</h3>
-                              <p class="text-md opacity-80">View Details</p>
+                              <h3 class="text-3xl font-medium mb-1">{collection.title}</h3>
+                              <p class="text-md opacity-80">
+                                {collectionWorks.length} {collectionWorks.length === 1 ? 'work' : 'works'}
+                              </p>
                             </div>
                           </div>
                         </div>
@@ -167,8 +178,8 @@ const ogImage = bannerBackgroundImage ? `https://fernandofeijoo.com${bannerBackg
             </div>
           ) : (
             <div class="text-center py-12">
-              <div class="text-6xl mb-4">🎨</div>
-              <h2 class="text-2xl font-bold text-gray-900 mb-4">No Mixed Media Works Available</h2>
+              <div class="text-6xl mb-4">🖼️</div>
+              <h2 class="text-2xl font-bold text-gray-900 mb-4">No Print Collections Available</h2>
               <p class="text-gray-600 mb-6">
                 This collection is currently being updated. Please check back soon.
               </p>
@@ -180,6 +191,30 @@ const ogImage = bannerBackgroundImage ? `https://fernandofeijoo.com${bannerBackg
               </a>
             </div>
           )}
+
+          <!-- Contact Section -->
+          <div class="text-center mt-16 pt-12 border-t border-gray-200">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">
+              Interested in These Prints?
+            </h2>
+            <p class="text-gray-600 mb-6 max-w-md mx-auto">
+              Get in touch to inquire about availability, pricing, or commissioning custom prints.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+              <a
+                href="/contact"
+                class="inline-flex items-center px-8 py-3 text-base font-medium text-white bg-gray-900 hover:bg-gray-700 transition-colors duration-200"
+              >
+                Contact Fernando
+              </a>
+              <a
+                href="/works"
+                class="inline-flex items-center px-6 py-3 text-base font-medium text-gray-700 bg-white hover:bg-gray-100 transition-colors duration-200"
+              >
+                ← Back to All Works
+              </a>
+            </div>
+          </div>
         </div>
       </section>
 

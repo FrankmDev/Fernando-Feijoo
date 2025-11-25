@@ -38,9 +38,50 @@ const bannerBackgroundImage =
   drawingsCategory.works && drawingsCategory.works.length > 0 && drawingsCategory.works[0].imageUrls && drawingsCategory.works[0].imageUrls.length > 0
     ? processImageUrl(drawingsCategory.works[0].imageUrls[0])
     : null;
+
+// SEO metadata
+const pageTitle = "Drawings - Fernando Feijoo | Artist & Printmaker";
+const pageDescription = `Explore Fernando Feijoo's drawings collection featuring ${drawingsCategory.works?.length || 0} unique pieces that capture moments, places, and characters through various drawing techniques.`;
+const pageUrl = "https://fernandofeijoo.com/works/drawings";
+const ogImage = bannerBackgroundImage ? `https://fernandofeijoo.com${bannerBackgroundImage}` : "https://fernandofeijoo.com/og-image.jpg";
 ---
 
-<Layout title="Drawings - Fernando Feijoo">
+<Layout title={pageTitle}>
+  <Fragment slot="head">
+    <!-- SEO Meta Tags -->
+    <meta name="description" content={pageDescription} />
+    <meta name="keywords" content="Fernando Feijoo, drawings, sketches, illustration, contemporary art" />
+    <link rel="canonical" href={pageUrl} />
+    
+    <!-- Open Graph Tags -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:url" content={pageUrl} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:site_name" content="Fernando Feijoo" />
+    
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={pageDescription} />
+    <meta name="twitter:image" content={ogImage} />
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "name": "Drawings Collection",
+      "description": pageDescription,
+      "url": pageUrl,
+      "creator": {
+        "@type": "Person",
+        "name": "Fernando Feijoo",
+        "url": "https://fernandofeijoo.com"
+      },
+      "numberOfItems": drawingsCategory.works?.length || 0
+    })} />
+  </Fragment>
   <SectionContainer id="drawings">
     <main>
       <PageBanner
@@ -72,7 +113,7 @@ const bannerBackgroundImage =
           {drawingsCategory.works && drawingsCategory.works.length > 0 ? (
             <div>
               <TitleSection title="Drawing Collection" class="text-center mb-8" />
-              <div class="grid grid-cols-3 gap-1 md:gap-2 w-full max-w-7xl mx-auto">
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1 md:gap-2 w-full max-w-7xl mx-auto">
                 {drawingsCategory.works.map((work) => {
                   if (!work || !work.slug) return null;
 
@@ -96,6 +137,8 @@ const bannerBackgroundImage =
                               class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                               loading="lazy"
                               decoding="async"
+                              width="400"
+                              height="400"
                             />
                           ) : (
                             <div class="w-full h-full flex items-center justify-center bg-gray-50">
@@ -109,10 +152,10 @@ const bannerBackgroundImage =
                           )}
 
                           <!-- Hover overlay -->
-                          <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300 flex items-center justify-center">
+                          <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-70 transition-all duration-300 flex items-center justify-center">
                             <div class="text-white text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                              <h3 class="text-sm md:text-lg font-medium mb-1">{work.title}</h3>
-                              <p class="text-xs opacity-80">{work.medium}</p>
+                              <h3 class="text-3xl font-medium mb-1">{work.title}</h3>
+                              <p class="text-md opacity-80">View Details</p>
                             </div>
                           </div>
                         </div>

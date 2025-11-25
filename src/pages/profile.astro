@@ -30,7 +30,7 @@ const AWARDS_PUBLICATIONS: { year: number; title: string }[] = [
   {
     year: 2018,
     title:
-      "The Artist’s Eye Award by Printmaking Today Magazine on artist book RUN",
+      "The Artist's Eye Award by Printmaking Today Magazine on artist book RUN",
   },
   {
     year: 2018,
@@ -60,7 +60,7 @@ const AWARDS_PUBLICATIONS: { year: number; title: string }[] = [
   {
     year: 2004,
     title:
-      "Winner of the ‘Design a Book of Fables’ competition in association with the FPBA",
+      "Winner of the 'Design a Book of Fables' competition in association with the FPBA",
   },
 ];
 
@@ -69,115 +69,292 @@ const RESIDENCES: string[] = [
   "La Curtiduria Arts Centre Oaxaca, Mexico",
   "London Print Studio, London UK",
 ];
+
+const STUDIO_IMAGES = [
+  {
+    src: "/profile/cutting-line.avif",
+    alt: "Cutting line process in Fernando Feijoo's studio",
+  },
+  {
+    src: "/profile/inking-up.avif",
+    alt: "Inking up the printing press",
+  },
+  {
+    src: "/profile/polishing.avif",
+    alt: "Polishing artwork in the studio",
+  },
+  {
+    src: "/profile/rollin.avif",
+    alt: "Rolling process during printmaking",
+  },
+];
+
+const pageDescription =
+  "Fernando Feijoo is a multi-disciplinary artist exploring printmaking, drawing, painting, artist books and ceramics. MA in Fine Art Printmaking, Honorary member of the Royal Society of Painters & Printmakers London UK.";
 ---
 
-<Layout title="Profile">
+<Layout title="Profile - Fernando Feijoo" description={pageDescription}>
   <SectionContainer>
     <PageBanner title="Profile" />
     <div
-      class="container mx-auto px-4 max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-6"
+      class="container mx-auto px-4 max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8"
     >
       <figure class="mx-auto w-full">
         <SliderImg client:load />
       </figure>
       <article class="flex flex-col justify-center mx-auto text-gray-800">
         <TitleSection title="Fernando Feijoo" id="profile" />
-        <p class="text-sm md:text-base mt-4">
-          Feijoo has an MA in Fine Art Printmaking from Winchester Art School
-          and a BA in Illustration from Maidstone Kent. He trained as master
-          printer at the Curwen Studio before moving into Art education. Feijoo
-          is a multi-disciplinary artist who explores a wide range of medium
-          with his work such as printmaking, drawing, painting, artist books and
-          ceramics. Feijoo has exhibited work internationally and has won many
-          prestigious prizes and awards, with work acquired in many permanent
-          collections. He is also an Honorary member of the Royal Society of
-          Painters & Printmakers London UK.
+        <p class="text-sm md:text-base mt-4 leading-relaxed">
+          Feijoo holds an MA in Fine Art Printmaking from Winchester Art School
+          and a BA in Illustration from Maidstone, Kent. He solidified his
+          technical expertise training as a master printer at the renowned
+          Curwen Studio before transitioning into the field of Art education. <br
+          />
+
+          As a multi-disciplinary artist, Feijoo’s practice fluidly explores a
+          wide range of media, creating a dialogue between printmaking, drawing,
+          painting, artist books, and ceramics. He has exhibited his work
+          internationally, winning many prestigious prizes and awards, with his
+          pieces acquired by numerous permanent collections. Currently, he is
+          also a distinguished Honorary member of the Royal Society of Painters
+          & Printmakers in London.
         </p>
         <Cta href="/contact" label="Contact me" isDark class="mt-6" />
       </article>
     </div>
-
-    <section
-      class="container mx-auto px-4 max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-6 mt-12"
-      aria-label="Collections and Awards"
-    >
-      <div>
-        <TitleSection title="Collections" id="collections" />
-        <ul class="space-y-4 mb-8">
-          {
-            COLLECTIONS.map((collection) => (
-              <li class="flex items-center gap-3">
-                <MapIcon aria-hidden="true" class="w-5 h-5 text-gray-600" />
-                <p class="text-sm md:text-base">{collection}</p>
-              </li>
-            ))
-          }
-        </ul>
-        <TitleSection title="Residences" id="residences" />
-        <ul class="space-y-4">
-          {
-            RESIDENCES.map((residence) => (
-              <li class="flex items-center gap-3 italic">
-                <RightArrowIcon
-                  aria-hidden="true"
-                  class="w-5 h-5 text-gray-600"
-                />
-                <p class="text-sm md:text-base">{residence}</p>
-              </li>
-            ))
-          }
-        </ul>
-      </div>
-
-      <div>
-        <TitleSection title="Awards & Publications" id="awards" />
-        <ul class="space-y-4">
-          {
-            AWARDS_PUBLICATIONS.map((award) => (
-              <li class="flex items-start gap-6">
-                <span class="bg-black text-white text-md font-semibold px-2 py-1">
-                  {award.year}
-                </span>
-                <p class="text-sm md:text-base">{award.title}</p>
-              </li>
-            ))
-          }
-        </ul>
-      </div>
-    </section>
-
-    <section
-      class="container px-4 max-w-6xl mt-12"
-      aria-label="Artist's statement"
-    >
-      <TitleSection
-        title="Artist's statement"
-        class="text-left"
-        id="statement"
-      />
-      <p class="text-base md:text-xl mt-4 mx-auto">
-        My work has a sense of humor within it even though sometimes I make
-        images which reflect the darker side of human nature. I am interested in
-        <em>social and political issues</em> and reflect these themes within my work.
-        My narrative images have hidden layers of information within them which the
-        viewer can find each time they return to the work. The closer you are drawn
-        into the image, the more you understand about the characters and the lives
-        they lead. The process of drawing is fundamental for me. I enjoy how it translates
-        through different print processes and creates alternate styles of work. I
-        see myself as a journeyman: travelling around, absorbing all the variety
-        of cultural differences and architectural styles when I visit a new city,
-        exploring people’s lives and conditions in the twenty first century. These
-        observations are then reflected throughout my work as a series of sequential
-        narrative images. I enjoy exploring new ways of making work through combining
-        different media together, working with the interactions and juxtapositions
-        of materials and techniques, which encourage fresh viewpoints and outcomes.
-        Drawing is a powerful medium which allows me to push my ideas into different
-        directions and create the fantastic. There are no rules to be followed: just
-        pure experimentation and fun to be had.
-      </p>
-      <p class="text-2xl md:text-3xl italic mt-6">Fernando Feijoo - Artist</p>
-    </section>
-
-    <ContactBanner />
   </SectionContainer>
+
+  <section
+    class="container mx-auto px-4 max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mt-12 md:mt-16"
+    aria-label="Collections and Awards"
+  >
+    <div>
+      <TitleSection title="Collections" id="collections" />
+      <ul class="space-y-4 mb-8" role="list">
+        {
+          COLLECTIONS.map((collection) => (
+            <li class="flex items-start gap-3">
+              <MapIcon
+                aria-hidden="true"
+                class="w-5 h-5 text-gray-600 flex-shrink-0 mt-0.5"
+              />
+              <p class="text-sm md:text-base">{collection}</p>
+            </li>
+          ))
+        }
+      </ul>
+      <TitleSection title="Residences" id="residences" />
+      <ul class="space-y-4" role="list">
+        {
+          RESIDENCES.map((residence) => (
+            <li class="flex items-start gap-3 italic">
+              <RightArrowIcon
+                aria-hidden="true"
+                class="w-5 h-5 text-gray-600 flex-shrink-0 mt-0.5"
+              />
+              <p class="text-sm md:text-base">{residence}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div>
+      <TitleSection title="Awards & Publications" id="awards" />
+      <ul class="space-y-4" role="list">
+        {
+          AWARDS_PUBLICATIONS.map((award) => (
+            <li class="flex items-start gap-4 md:gap-6">
+              <span class="bg-black text-white text-sm md:text-md font-semibold px-2 py-1 flex-shrink-0">
+                {award.year}
+              </span>
+              <p class="text-sm md:text-base">{award.title}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section
+    class="container mx-auto px-4 max-w-6xl mt-12 md:mt-16"
+    aria-label="Studio Gallery"
+  >
+    <TitleSection title="Studio" class="text-left" id="studio" />
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-1 mt-6">
+      {
+        STUDIO_IMAGES.map((image, index) => (
+          <figure
+            class="relative overflow-hidden bg-gray-100 aspect-square group cursor-pointer studio-image"
+            data-index={index}
+          >
+            <img
+              src={image.src}
+              alt={image.alt}
+              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+              loading="lazy"
+              decoding="async"
+            />
+          </figure>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- Lightbox Modal -->
+  <div id="lightbox" class="lightbox">
+    <button
+      id="lightbox-close"
+      class="lightbox-close"
+      aria-label="Close lightbox">&times;</button
+    >
+    <img id="lightbox-img" src="" alt="" class="lightbox-content" />
+  </div>
+
+  <style>
+    .lightbox {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.95);
+      align-items: center;
+      justify-content: center;
+    }
+
+    .lightbox.active {
+      display: flex;
+    }
+
+    .lightbox-content {
+      max-width: 90%;
+      max-height: 90%;
+      object-fit: contain;
+      animation: zoom 0.3s;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 20px;
+      right: 35px;
+      color: #fff;
+      font-size: 40px;
+      font-weight: bold;
+      background: none;
+      border: none;
+      cursor: pointer;
+      transition: 0.3s;
+      z-index: 10000;
+    }
+
+    .lightbox-close:hover,
+    .lightbox-close:focus {
+      color: #bbb;
+    }
+
+    @keyframes zoom {
+      from {
+        transform: scale(0.8);
+        opacity: 0;
+      }
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+  </style>
+
+  <script>
+    const studioImages = document.querySelectorAll(".studio-image");
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImg = document.getElementById("lightbox-img");
+    const lightboxClose = document.getElementById("lightbox-close");
+
+    const images = [
+      {
+        src: "/profile/cutting-line.avif",
+        alt: "Cutting line process in Fernando Feijoo's studio",
+      },
+      {
+        src: "/profile/inking-up.avif",
+        alt: "Inking up the printing press",
+      },
+      {
+        src: "/profile/polishing.avif",
+        alt: "Polishing artwork in the studio",
+      },
+      {
+        src: "/profile/rollin.avif",
+        alt: "Rolling process during printmaking",
+      },
+    ];
+
+    studioImages.forEach((figure) => {
+      figure.addEventListener("click", () => {
+        const index = parseInt(figure.getAttribute("data-index") || "0");
+        const image = images[index];
+        if (lightboxImg && lightbox) {
+          lightboxImg.src = image.src;
+          lightboxImg.alt = image.alt;
+          lightbox.classList.add("active");
+        }
+      });
+    });
+
+    if (lightboxClose) {
+      lightboxClose.addEventListener("click", () => {
+        if (lightbox) {
+          lightbox.classList.remove("active");
+        }
+      });
+    }
+
+    if (lightbox) {
+      lightbox.addEventListener("click", (e) => {
+        if (e.target === lightbox) {
+          lightbox.classList.remove("active");
+        }
+      });
+    }
+
+    // Close on Escape key
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && lightbox?.classList.contains("active")) {
+        lightbox.classList.remove("active");
+      }
+    });
+  </script>
+
+  <section
+    class="container mx-auto px-4 max-w-6xl my-12 md:mt-16"
+    aria-label="Artist's statement"
+  >
+    <TitleSection title="Artist's statement" class="text-left" id="statement" />
+    <p class="text-base md:text-xl mt-4 mx-auto leading-relaxed">
+      My work has a sense of humor within it even though sometimes I make images
+      which reflect the darker side of human nature. I am interested in
+      <em>social and political issues</em> and reflect these themes within my work.
+      My narrative images have hidden layers of information within them which the
+      viewer can find each time they return to the work. The closer you are drawn
+      into the image, the more you understand about the characters and the lives
+      they lead. The process of drawing is fundamental for me. I enjoy how it translates
+      through different print processes and creates alternate styles of work. I see
+      myself as a journeyman: travelling around, absorbing all the variety of cultural
+      differences and architectural styles when I visit a new city, exploring people's
+      lives and conditions in the twenty first century. These observations are then
+      reflected throughout my work as a series of sequential narrative images. I
+      enjoy exploring new ways of making work through combining different media together,
+      working with the interactions and juxtapositions of materials and techniques,
+      which encourage fresh viewpoints and outcomes. Drawing is a powerful medium
+      which allows me to push my ideas into different directions and create the fantastic.
+      There are no rules to be followed: just pure experimentation and fun to be
+      had.
+    </p>
+    <p class="text-2xl md:text-3xl italic mt-6">Fernando Feijoo - Artist</p>
+  </section>
+
+  <ContactBanner />
 </Layout>

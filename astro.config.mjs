@@ -6,6 +6,7 @@ import vue from "@astrojs/vue";
 // https://astro.build/config
 export default defineConfig({
   site: "https://fernando-feijoo.com",
+  output: "static",
   integrations: [tailwind({ applyBaseStyles: false }), vue()],
   vite: {
     ssr: {

@@ -3,6 +3,7 @@ import Socials from "@components/Hero/Socials.astro";
 import SliderHero from "@components/SliderHero.vue";
 import ContactBanner from "@components/Hero/ContactBanner.astro";
 import { WORKS } from "@data/works";
+import Cta from "@components/Cta.astro";
 
 // Helper function to process image URLs
 function processImageUrl(imageUrl: string): string {
@@ -58,82 +59,77 @@ const gallery = WORKS.map((category) => {
 }).filter((category) => category.items.length > 0);
 ---
 
-<section class="w-full px-4 mx-auto py-16 flex flex-col items-center">
-  <SliderHero client:load />
-  <Socials />
+<section class="w-full mx-auto flex flex-col items-center">
+  <div class="w-full md:px-4 md:py-16">
+    <SliderHero client:load />
+  </div>
 
-  <section class="flex flex-col items-center gap-20 w-full mb-20">
-    {
-      gallery.map(({ id, title, items }) => (
-        <section id={id} class="w-full max-w-7xl">
-          <h2 class="text-3xl md:text-4xl font-semibold mb-12 tracking-tight text-zinc-900 text-center">
-            {title}
-          </h2>
-          <div class="grid grid-cols-3 gap-1 md:gap-2 w-full">
-            {items.map((work) => {
-              const workImageUrls = work.imageUrls || [];
-              const hasImages = workImageUrls.length > 0;
-              const firstImageUrl = hasImages
-                ? processImageUrl(workImageUrls[0])
-                : "";
+  <div class="w-full px-4  flex flex-col items-center gap-20">
+    <Socials />
+    <section class="flex flex-col items-center gap-10 md:gap-20 w-full mb-10 md:mb-20">
+      {
+        gallery.map(({ id, title, items }) => (
+          <section id={id} class="w-full max-w-7xl">
+            <h2 class="text-3xl md:text-4xl font-semibold mb-12 tracking-tight text-zinc-900 text-center">
+              {title}
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1 md:gap-2 w-full">
+              {items.map((work) => {
+                const workImageUrls = work.imageUrls || [];
+                const hasImages = workImageUrls.length > 0;
+                const firstImageUrl = hasImages
+                  ? processImageUrl(workImageUrls[0])
+                  : "";
 
-              return (
-                <a
-                  href={`/works/${work.slug}`}
-                  class="group block relative bg-white transition-transform duration-300 hover:scale-[1.02]"
-                  aria-label={`View details for ${work.title}`}
-                >
-                  <div class="aspect-square relative overflow-hidden bg-gray-100">
-                    {hasImages && firstImageUrl ? (
-                      <img
-                        src={firstImageUrl}
-                        alt={work.title}
-                        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                        loading="lazy"
-                        decoding="async"
-                      />
-                    ) : (
-                      <div class="w-full h-full flex items-center justify-center bg-gray-50">
-                        <div class="text-center p-4">
-                          <div class="text-gray-400 text-2xl md:text-4xl mb-2">🖼️</div>
-                          <h3 class="text-xs md:text-sm font-medium text-gray-600 line-clamp-2">
-                            {work.title}
-                          </h3>
+                return (
+                  <a
+                    href={`/works/${work.slug}`}
+                    class="group block relative bg-white transition-transform duration-300 hover:scale-[1.02]"
+                    aria-label={`View details for ${work.title}`}
+                  >
+                    <div class="aspect-square relative overflow-hidden bg-gray-100">
+                      {hasImages && firstImageUrl ? (
+                        <img
+                          src={firstImageUrl}
+                          alt={work.title}
+                          class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      ) : (
+                        <div class="w-full h-full flex items-center justify-center bg-gray-50">
+                          <div class="text-center p-4">
+                            <div class="text-gray-400 text-2xl md:text-4xl mb-2">🖼️</div>
+                            <h3 class="text-xs md:text-sm font-medium text-gray-600 line-clamp-2">
+                              {work.title}
+                            </h3>
+                          </div>
+                        </div>
+                      )}
+
+                      <!-- Hover overlay -->
+                      <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-70 transition-all duration-300 flex items-center justify-center">
+                        <div class="text-white text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                          <h3 class="text-3xl font-medium mb-1">{work.title}</h3>
+                          <p class="text-md opacity-80">View Details</p>
                         </div>
                       </div>
-                    )}
-
-                    <!-- Hover overlay -->
-                    <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300 flex items-center justify-center">
-                      <div class="text-white text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <h3 class="text-sm md:text-lg font-medium mb-1">{work.title}</h3>
-                        <p class="text-xs opacity-80">View Details</p>
-                      </div>
                     </div>
-                  </div>
-                </a>
-              );
-            })}
-          </div>
+                  </a>
+                );
+              })}
+            </div>
 
-          {/* View All Button */}
-          <div class="text-center mt-8">
-            <a
-              href={`/works${id === 'prints' ? '' : `/${id}`}`}
-              class="inline-flex items-center px-6 py-3 text-sm font-medium text-gray-900 bg-white hover:bg-gray-100 border border-gray-200 hover:border-gray-300 transition-all duration-200"
-            >
-              View All {title}
-              <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-              </svg>
-            </a>
-          </div>
-        </section>
-      ))
-    }
-  </section>
-
-  <ContactBanner />
+            {/* View All Button */}
+            <div class="text-center my-8">
+              <Cta href={`/works/${id}`} label={`View All ${title}`} isDark={true} />
+            </div>
+          </section>
+        ))
+      }
+    </section>
+    <ContactBanner />
+  </div>
 </section>
 
 <style>

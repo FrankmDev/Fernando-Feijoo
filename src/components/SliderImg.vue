@@ -21,16 +21,73 @@ const plugin = Autoplay({
     class="relative w-full max-w-[500px]"
     :plugins="[plugin]"
     @mouseenter="plugin.stop"
-    @mouseleave="[plugin.reset(), plugin.play(), console.log('Running')]"
+    @mouseleave="[plugin.reset(), plugin.play()]"
   >
     <CarouselContent>
-      <CarouselItem v-for="(_, index) in 5" :key="index">
+      <CarouselItem>
         <div class="p-1">
           <Card>
             <CardContent
-              class="bg-red-500 flex aspect-square items-center justify-center p-6"
+              class="flex aspect-square items-center justify-center p-0 overflow-hidden"
             >
-              <span class="text-4xl font-semibold">{{ index + 1 }}</span>
+              <img
+                src="/profile/studio.avif"
+                alt="Fernando Feijoo in his studio workspace"
+                class="w-full h-full object-cover"
+                loading="lazy"
+                decoding="async"
+              />
+            </CardContent>
+          </Card>
+        </div>
+      </CarouselItem>
+      <CarouselItem>
+        <div class="p-1">
+          <Card>
+            <CardContent
+              class="flex aspect-square items-center justify-center p-0 overflow-hidden"
+            >
+              <img
+                src="/profile/columbian.avif"
+                alt="Fernando Feijoo working with Columbian printing press"
+                class="w-full h-full object-cover"
+                loading="lazy"
+                decoding="async"
+              />
+            </CardContent>
+          </Card>
+        </div>
+      </CarouselItem>
+      <CarouselItem>
+        <div class="p-1">
+          <Card>
+            <CardContent
+              class="flex aspect-square items-center justify-center p-0 overflow-hidden"
+            >
+              <img
+                src="/profile/printing.avif"
+                alt="Fernando Feijoo during the printing process"
+                class="w-full h-full object-cover"
+                loading="lazy"
+                decoding="async"
+              />
+            </CardContent>
+          </Card>
+        </div>
+      </CarouselItem>
+      <CarouselItem>
+        <div class="p-1">
+          <Card>
+            <CardContent
+              class="flex aspect-square items-center justify-center p-0 overflow-hidden"
+            >
+              <img
+                src="/profile/working.avif"
+                alt="Fernando Feijoo working on an art piece"
+                class="w-full h-full object-cover"
+                loading="lazy"
+                decoding="async"
+              />
             </CardContent>
           </Card>
         </div>

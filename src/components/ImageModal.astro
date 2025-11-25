@@ -98,7 +98,7 @@ const { id = "imageModal" } = Astro.props;
   </div>
 </div>
 
-<script>
+<script lang="ts">
   class ImageModal {
     private modal: HTMLElement;
     private modalImage!: HTMLImageElement;
@@ -115,10 +115,10 @@ const { id = "imageModal" } = Astro.props;
       if (!this.modal) return;
 
       this.modalImage = this.modal.querySelector(
-        ".modal-image",
+        ".modal-image"
       ) as HTMLImageElement;
       this.modalCurrent = this.modal.querySelector(
-        ".modal-current",
+        ".modal-current"
       ) as HTMLElement;
       this.modalTotal = this.modal.querySelector(".modal-total") as HTMLElement;
       this.closeBtn = this.modal.querySelector(".modal-close") as HTMLElement;

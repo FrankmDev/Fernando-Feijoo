@@ -24,16 +24,25 @@ const slides = [
 
 <template>
   <Carousel
-    class="relative w-full"
+    class="relative w-full h-[50vh] md:h-auto"
     :plugins="[plugin]"
+    :opts="{
+      loop: true,
+    }"
     @mouseenter="plugin.stop"
     @mouseleave="[plugin.reset(), plugin.play()]"
   >
-    <CarouselContent>
-      <CarouselItem v-for="slide in slides" :key="slide.id">
-        <div class="p-1">
-          <Card>
-            <CardContent class="flex items-center justify-center">
+    <CarouselContent class="h-full md:h-auto -ml-4">
+      <CarouselItem
+        v-for="slide in slides"
+        :key="slide.id"
+        class="h-full md:h-auto pl-4"
+      >
+        <div class="p-1 h-full md:h-auto">
+          <Card class="h-full md:h-auto">
+            <CardContent
+              class="flex items-center justify-center h-full md:h-auto p-6 pt-0"
+            >
               <img
                 :src="slide.src"
                 :alt="slide.alt"
@@ -41,7 +50,8 @@ const slides = [
                 :fetchpriority="slide.id === 1 ? 'high' : 'auto'"
                 decoding="async"
                 sizes="100vw"
-                class="w-full h-auto object-cover"
+                draggable="false"
+                class="w-full h-full object-cover select-none animate-ken-burns"
               />
             </CardContent>
           </Card>
@@ -50,3 +60,18 @@ const slides = [
     </CarouselContent>
   </Carousel>
 </template>
+
+<style scoped>
+@keyframes ken-burns {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.15);
+  }
+}
+
+.animate-ken-burns {
+  animation: ken-burns 20s ease-out infinite alternate;
+}
+</style>

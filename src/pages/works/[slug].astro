@@ -3,7 +3,8 @@ import "@styles/general.css";
 import Layout from "@layouts/Layout.astro";
 import SectionContainer from "@components/SectionContainer.astro";
 import PageBanner from "@components/PageBanner.astro";
-import WorkImageSlider from "@components/WorkImageSlider.vue";
+import TitleSection from "@components/TitleSection.astro";
+import Cta from "@components/Cta.astro";
 import ImageModal from "@components/ImageModal.astro";
 import ContactBanner from "@components/Hero/ContactBanner.astro";
 import { WORKS } from "@data/works";
@@ -77,14 +78,28 @@ if (!work) {
 const allWorks = WORKS.flatMap((category) =>
   category.works
     ? category.works.map((w) => ({
-        ...w,
+        slug: w.slug,
+        title: w.title,
+        description: w.description,
+        medium: w.medium,
+        imageUrls: w.imageUrls,
+        dimensions: w.dimensions,
+        edition: w.edition,
+        price: w.price,
         categorySlug: category.slug,
         categoryTitle: category.title,
       }))
     : category.collections
       ? category.collections.flatMap((collection) =>
           collection.works.map((w) => ({
-            ...w,
+            slug: w.slug,
+            title: w.title,
+            description: w.description,
+            medium: w.medium,
+            imageUrls: w.imageUrls,
+            dimensions: w.dimensions,
+            edition: w.edition,
+            price: w.price,
             categorySlug: category.slug,
             categoryTitle: category.title,
             collectionSlug: collection.slug,
@@ -115,7 +130,7 @@ if (relatedWorks.length < 6) {
     )
     .slice(0, 6 - relatedWorks.length);
 
-  relatedWorks = [...relatedWorks, ...categoryWorks];
+  relatedWorks = relatedWorks.concat(categoryWorks);
 }
 
 // Get the first image for the banner background
@@ -164,132 +179,108 @@ const pageTitle = `${work?.title || 'Work'} by Fernando Feijoo`;
               <span class="text-gray-900">{work.title}</span>
             </nav>
 
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mt-16">
+            <div class="flex flex-col lg:flex-row gap-12 lg:gap-10 mt-16 items-stretch">
               <!-- Main Image Section -->
-              <div class="space-y-4">
-                <WorkImageSlider
-                  imageUrls={work.imageUrls || []}
-                  title={work.title}
-                  autoplay={false}
-                  showControls={work.imageUrls && work.imageUrls.length > 1}
-                  client:load
-                />
+              <div class="w-full lg:w-1/2 flex flex-col">
+                <div class="relative flex-grow w-full overflow-hidden bg-gray-100 rounded-lg group">
+                  {work.imageUrls && work.imageUrls.length > 0 ? (
+                    <img
+                      id="main-work-image"
+                      src={processImageUrl(work.imageUrls[0])}
+                      alt={work.title}
+                      class="w-full h-full object-cover cursor-pointer hover:opacity-95 transition-opacity absolute inset-0"
+                      loading="eager"
+                      fetchpriority="high"
+                      decoding="async"
+                      data-images={JSON.stringify(processedImageUrls)}
+                    />
+                  ) : (
+                    <div class="w-full h-full flex items-center justify-center min-h-[500px]">
+                      <div class="text-center p-4">
+                        <div class="text-gray-400 text-4xl mb-2">🖼️</div>
+                        <p class="text-gray-500">No image available</p>
+                      </div>
+                    </div>
+                  )}
+                  
+                  <!-- Zoom hint overlay -->
+                  {work.imageUrls && work.imageUrls.length > 0 && (
+                    <div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <div class="bg-black/50 text-white px-4 py-2 rounded-full backdrop-blur-sm text-sm font-medium">
+                        Click to expand
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
 
               <!-- Information Section -->
-              <div class="space-y-6">
+              <div class="w-full lg:w-1/2 space-y-8 flex flex-col justify-center py-4">
                 <header>
-                  <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
+                  <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-3 leading-tight">
                     {work.title}
                   </h1>
-                  <p class="text-lg text-gray-600 mb-4">
+                  <p class="text-xl text-gray-600">
                     {categoryTitle}{collectionTitle && ` • ${collectionTitle}`}
                   </p>
                 </header>
 
-                <div class="prose max-w-none">
-                  {work.description && work.description.trim() !== "" && (
-                    <div class="mb-6">
-                      <h2 class="text-xl font-semibold mb-3 text-gray-900">Description</h2>
-                      <p class="text-gray-700 leading-relaxed">{work.description}</p>
+                <!-- Description -->
+                {work.description && work.description.trim() !== "" && (
+                  <div class="prose max-w-none">
+                    <p class="text-gray-700 leading-relaxed text-lg">{work.description}</p>
+                  </div>
+                )}
+
+                <!-- Details -->
+                <div class="space-y-6 border-t border-gray-200 pt-6">
+                  <div>
+                    <h3 class="text-sm font-medium text-gray-500 uppercase tracking-wider mb-2">Medium</h3>
+                    <p class="text-gray-900 text-lg">{work.medium || `Mixed media`}</p>
+                  </div>
+
+                  {work.dimensions && (
+                    <div>
+                      <h3 class="text-sm font-medium text-gray-500 uppercase tracking-wider mb-2">Dimensions</h3>
+                      <p class="text-gray-900 text-lg">{work.dimensions}</p>
                     </div>
                   )}
 
-                  <div class="space-y-4">
+                  {work.edition && (
                     <div>
-                      <h3 class="text-sm font-medium text-gray-500 uppercase tracking-wider">Medium</h3>
-                      <p class="mt-1 text-gray-900">{work.medium || `Mixed media`}</p>
+                      <h3 class="text-sm font-medium text-gray-500 uppercase tracking-wider mb-2">Edition</h3>
+                      <p class="text-gray-900 text-lg">{work.edition}</p>
                     </div>
-
-                    {work.dimensions && (
-                      <div>
-                        <h3 class="text-sm font-medium text-gray-500 uppercase tracking-wider">Dimensions</h3>
-                        <p class="mt-1 text-gray-900">{work.dimensions}</p>
-                      </div>
-                    )}
-
-                    {work.edition && (
-                      <div>
-                        <h3 class="text-sm font-medium text-gray-500 uppercase tracking-wider">Edition</h3>
-                        <p class="mt-1 text-gray-900">{work.edition}</p>
-                      </div>
-                    )}
-
-                    {work.price && (
-                      <div>
-                        <h3 class="text-sm font-medium text-gray-500 uppercase tracking-wider">Price</h3>
-                        <p class="mt-1 text-gray-900">{work.price}</p>
-                      </div>
-                    )}
-                  </div>
+                  )}
                 </div>
+
+                <!-- Price -->
+                {work.price && (
+                  <div class="border-t border-gray-200 pt-6">
+                    <h3 class="text-sm font-medium text-gray-500 uppercase tracking-wider mb-2">Price</h3>
+                    <p class="text-4xl font-bold text-gray-900">{work.price}</p>
+                  </div>
+                )}
 
                 <!-- Contact Button -->
-                <div class="pt-6">
-                  <a
-                    href="/contact"
-                    class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium text-white bg-gray-900 hover:bg-gray-800 transition-colors duration-200"
-                  >
-                    Inquire About This Work
-                  </a>
-                </div>
+                <Cta 
+                  href={`mailto:contact@fernandofeijoo.com?subject=Inquiry about ${encodeURIComponent(work.title)}`}
+                  label="Inquire About This Work"
+                  isDark={true}
+                />
               </div>
             </div>
 
-            <!-- Full Width Image Gallery -->
-            {work.imageUrls && work.imageUrls.length > 0 && (
-              <div class="mt-16 border-t border-gray-200 pt-12">
-                <h2 class="text-2xl font-bold text-gray-900 mb-8 text-center">
-                  {work.imageUrls.length === 1 ? 'Artwork' : 'Gallery'}
-                </h2>
 
-                <!-- Full width gallery container -->
-                <div class="w-full overflow-hidden">
-                  <div class={`grid gap-1 md:gap-2 w-full max-w-7xl mx-auto ${
-                    work.imageUrls.length === 1 ? 'grid-cols-1 justify-center max-w-2xl' :
-                    work.imageUrls.length === 2 ? 'grid-cols-2' :
-                    work.imageUrls.length === 3 ? 'grid-cols-3' :
-                    'grid-cols-3'
-                  }`}>
-                    {work.imageUrls.map((imageUrl: string, index: number) => {
-                      const processedUrl = processImageUrl(imageUrl);
-                      return (
-                        <button
-                          class="gallery-image group relative overflow-hidden bg-gray-200 hover:opacity-90 transition-all cursor-pointer aspect-square"
-                          onclick={`openImageModal(${JSON.stringify(processedImageUrls)}, ${index})`}
-                          aria-label={`Open image ${index + 1} in gallery`}
-                          type="button"
-                        >
-                          <img
-                            src={processedUrl}
-                            alt={`${work.title} - Image ${index + 1}`}
-                            class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                            loading="lazy"
-                            decoding="async"
-                          />
-
-                          <!-- Hover overlay -->
-                          <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-opacity duration-300 flex items-center justify-center">
-                            <div class="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                              <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"></path>
-                              </svg>
-                            </div>
-                          </div>
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-              </div>
-            )}
 
             <!-- Related Works -->
             {relatedWorks.length > 0 && (
               <div class="mt-16 border-t border-gray-200 pt-12">
-                <h2 class="text-2xl font-bold text-gray-900 mb-8 text-center">
-                  {collectionTitle ? `More from ${collectionTitle}` : `More ${categoryTitle}`}
-                </h2>
+                <TitleSection 
+                  title={collectionTitle ? `More from ${collectionTitle}` : `More ${categoryTitle}`}
+                  align="center"
+                  size="md"
+                />
                 <div class="grid grid-cols-3 gap-1 md:gap-2 w-full max-w-7xl mx-auto">
                   {relatedWorks.map((relatedWork: any) => {
                     if (!relatedWork || !relatedWork.slug) return null;
@@ -364,41 +355,59 @@ const pageTitle = `${work?.title || 'Work'} by Fernando Feijoo`;
   <!-- Image Modal -->
   <ImageModal id="imageModal" />
 
+  <!-- Structured Data -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "VisualArtwork",
+    "name": work.title,
+    "image": processedImageUrls[0] ? `https://fernando-feijoo.com${processedImageUrls[0]}` : undefined,
+    "description": work.description,
+    "artist": {
+      "@type": "Person",
+      "name": "Fernando Feijoo"
+    },
+    "artMedium": work.medium,
+    "artForm": categoryTitle,
+    "width": work.dimensions ? { "@type": "Distance", "name": work.dimensions } : undefined,
+    "offers": work.price ? {
+      "@type": "Offer",
+      "price": work.price.replace(/[^0-9.]/g, ''),
+      "priceCurrency": "GBP",
+      "availability": "https://schema.org/InStock"
+    } : undefined
+  })} />
+
   <!-- Modal Script -->
   <script>
-    // Global function to open image modal
-    window.openImageModal = function(images: any, startIndex = 0) {
-      if (window.imageModal && typeof window.imageModal.openModal === 'function') {
-        window.imageModal.openModal(images, startIndex);
-      } else {
-        // Fallback: wait for modal to be initialized
-        setTimeout(() => {
-          if (window.imageModal && typeof window.imageModal.openModal === 'function') {
-            window.imageModal.openModal(images, startIndex);
+    function setupImageModal() {
+      const mainImage = document.getElementById('main-work-image');
+      
+      if (mainImage) {
+        mainImage.addEventListener('click', () => {
+          const imagesData = mainImage.getAttribute('data-images');
+          if (imagesData) {
+            try {
+              const images = JSON.parse(imagesData);
+              // @ts-ignore
+              if (window.imageModal && typeof window.imageModal.openModal === 'function') {
+                // @ts-ignore
+                window.imageModal.openModal(images, 0);
+              } else {
+                console.warn('Image modal not initialized');
+              }
+            } catch (e) {
+              console.error('Error parsing image data', e);
+            }
           }
-        }, 100);
+        });
       }
-    };
+    }
 
-    // Ensure modal is properly initialized
-    document.addEventListener('DOMContentLoaded', function() {
-      // Small delay to ensure all components are loaded
-      setTimeout(() => {
-        if (!window.imageModal) {
-          console.warn('Image modal not initialized');
-        }
-      }, 500);
-    });
-
-    // Handle Astro page transitions
-    document.addEventListener('astro:page-load', function() {
-      // Reinitialize modal after page transitions
-      setTimeout(() => {
-        if (window.imageModal) {
-          console.log('Image modal ready after page transition');
-        }
-      }, 100);
-    });
+    // Setup on load
+    document.addEventListener('DOMContentLoaded', setupImageModal);
+    
+    // Setup on view transitions
+    document.addEventListener('astro:page-load', setupImageModal);
   </script>
 </Layout>
 
