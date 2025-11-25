@@ -267,12 +267,10 @@ const pageDescription =
     }
   </style>
 
-  <script lang="ts">
+  <script is:inline>
     const studioImages = document.querySelectorAll(".studio-image");
     const lightbox = document.getElementById("lightbox");
-    const lightboxImg = document.getElementById(
-      "lightbox-img"
-    ) as HTMLImageElement;
+    const lightboxImg = document.getElementById("lightbox-img");
     const lightboxClose = document.getElementById("lightbox-close");
 
     const images = [
