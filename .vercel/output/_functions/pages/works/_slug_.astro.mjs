@@ -40,10 +40,10 @@ const $$slug = createComponent(($$result, $$props, $$slots) => {
     }
     return "/" + imageUrl;
   }
-  function findWorkBySlug(slug2) {
+  function findWorkBySlug(slugToFind) {
     for (const category of WORKS) {
       if (category.works) {
-        const work2 = category.works.find((w) => w.slug === slug2);
+        const work2 = category.works.find((w) => w.slug === slugToFind);
         if (work2) {
           return {
             work: work2,
@@ -54,7 +54,7 @@ const $$slug = createComponent(($$result, $$props, $$slots) => {
       }
       if (category.collections) {
         for (const collection of category.collections) {
-          const work2 = collection.works.find((w) => w.slug === slug2);
+          const work2 = collection.works.find((w) => w.slug === slugToFind);
           if (work2) {
             return {
               work: work2,
@@ -69,10 +69,12 @@ const $$slug = createComponent(($$result, $$props, $$slots) => {
     }
     return null;
   }
-  const slug = Astro2.params.slug;
+  const { slug } = Astro2.params;
+  if (!slug) {
+    return Astro2.redirect("/404");
+  }
   const result = findWorkBySlug(slug);
   if (!result) {
-    console.error(`Work not found for slug: ${slug}`);
     return Astro2.redirect("/404");
   }
   const { work, categorySlug, categoryTitle, collectionSlug, collectionTitle } = result;
@@ -105,10 +107,13 @@ const $$slug = createComponent(($$result, $$props, $$slots) => {
       }))
     ) : []
   );
-  let relatedWorks = [];
-  if (collectionSlug) {
-    relatedWorks = allWorks.filter((w) => w.slug !== work.slug && w.collectionSlug === collectionSlug).slice(0, 6);
-  }
+  let relatedWorks = allWorks.filter((w) => {
+    if (w.slug === work.slug) return false;
+    if (collectionSlug) {
+      return w.categorySlug === categorySlug;
+    }
+    return w.categorySlug === categorySlug;
+  }).slice(0, 6);
   if (relatedWorks.length < 6) {
     const categoryWorks = allWorks.filter(
       (w) => w.slug !== work.slug && w.categorySlug === categorySlug && !relatedWorks.some((rw) => rw.slug === w.slug)

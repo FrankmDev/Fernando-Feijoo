@@ -29,11 +29,11 @@ function processImageUrl(imageUrl: string): string {
 }
 
 // Helper function to find work by slug
-function findWorkBySlug(slug: string): any {
+function findWorkBySlug(slugToFind: string) {
   for (const category of WORKS) {
     // Check direct works in category
     if (category.works) {
-      const work = category.works.find(w => w.slug === slug);
+      const work = category.works.find(w => w.slug === slugToFind);
       if (work) {
         return {
           work,
@@ -46,7 +46,7 @@ function findWorkBySlug(slug: string): any {
     // Check works in collections
     if (category.collections) {
       for (const collection of category.collections) {
-        const work = collection.works.find(w => w.slug === slug);
+        const work = collection.works.find(w => w.slug === slugToFind);
         if (work) {
           return {
             work,
@@ -64,13 +64,16 @@ function findWorkBySlug(slug: string): any {
 }
 
 // Get the slug from URL params
-const slug = Astro.params.slug as string;
+const { slug } = Astro.params;
 
 // Find the work
+if (!slug) {
+  return Astro.redirect('/404');
+}
+
 const result = findWorkBySlug(slug);
 
 if (!result) {
-  console.error(`Work not found for slug: ${slug}`);
   return Astro.redirect('/404');
 }
 
@@ -106,23 +109,22 @@ const allWorks = WORKS.flatMap((category) =>
             categoryTitle: category.title,
             collectionSlug: collection.slug,
             collectionTitle: collection.title,
-          })),
+          }))
         )
       : [],
 );
 
-// Get related works (prioritize same collection, then same category)
-let relatedWorks: any[] = [];
+// Filter related works (exclude current work and show from same category/collection)
+let relatedWorks = allWorks.filter((w) => {
+  if (w.slug === work.slug) return false;
+  
+  if (collectionSlug) {
+    return w.categorySlug === categorySlug;
+  }
+  
+  return w.categorySlug === categorySlug;
+}).slice(0, 6);
 
-// First, try to get works from the same collection if it exists
-if (collectionSlug) {
-  relatedWorks = allWorks
-    .filter((w) => w.slug !== work.slug && (w as any).collectionSlug === collectionSlug)
-    .slice(0, 6);
-}
-
-// If we don't have enough works from the collection (or no collection),
-// fill with works from the same category
 if (relatedWorks.length < 6) {
   const categoryWorks = allWorks
     .filter((w) =>
