@@ -2,11 +2,13 @@
 import { defineConfig } from "astro/config";
 import tailwind from "@astrojs/tailwind";
 import vue from "@astrojs/vue";
+import vercel from "@astrojs/vercel/serverless";
 
 // https://astro.build/config
 export default defineConfig({
   site: "https://fernando-feijoo.com",
-  output: "static",
+  output: "server",
+  adapter: vercel(),
   integrations: [tailwind({ applyBaseStyles: false }), vue()],
   vite: {
     ssr: {
