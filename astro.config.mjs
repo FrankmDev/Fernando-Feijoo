@@ -3,7 +3,6 @@ import { defineConfig } from "astro/config";
 import tailwind from "@astrojs/tailwind";
 import vue from "@astrojs/vue";
 
-
 // https://astro.build/config
 export default defineConfig({
   site: "https://fernando-feijoo.com",
@@ -17,7 +16,13 @@ export default defineConfig({
       include: ["zod", "radix-vue", "@vueuse/core"],
     },
   },
-  build: {
-    format: "file",
+  build: {},
+  devOptions: {
+    port: 4321,
+    host: true,
+    headers: {
+      "Cache-Control":
+        "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0",
+    },
   },
 });

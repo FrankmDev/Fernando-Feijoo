@@ -5,27 +5,44 @@
  * @param imageUrl - The image URL that may start with @assets/
  * @returns Processed URL that can be used in img src attributes
  */
+const BUILD_VERSION = String(Date.now());
+
+function appendVersion(url: string): string {
+  return url.includes("?") ? `${url}&v=${BUILD_VERSION}` : `${url}?v=${BUILD_VERSION}`;
+}
+
 export function processImageUrl(imageUrl: string): string {
   if (!imageUrl) return "";
 
   // Handle @assets/ paths - convert to public directory structure
   if (imageUrl.startsWith("@assets/")) {
     // Convert @assets/works/... to /works/...
-    return imageUrl.replace("@assets/", "/");
+    const p = imageUrl.replace("@assets/", "/");
+    return appendVersion(p);
   }
 
   // Handle @ prefix (legacy support)
   if (imageUrl.startsWith("@")) {
-    return imageUrl.substring(1);
+    const p = imageUrl.substring(1);
+    return p.startsWith("/") ? appendVersion(p) : p;
   }
 
   // If it's already a proper path, return as is
-  if (imageUrl.startsWith("/") || imageUrl.startsWith("http")) {
+  if (imageUrl.startsWith("/")) {
+    return appendVersion(imageUrl);
+  }
+  if (
+    imageUrl.startsWith("https://fernandofeijoo.com") ||
+    imageUrl.startsWith("http://fernandofeijoo.com")
+  ) {
+    return appendVersion(imageUrl);
+  }
+  if (imageUrl.startsWith("http")) {
     return imageUrl;
   }
 
   // For relative paths, assume they're in the public directory
-  return "/" + imageUrl;
+  return appendVersion("/" + imageUrl);
 }
 
 /**

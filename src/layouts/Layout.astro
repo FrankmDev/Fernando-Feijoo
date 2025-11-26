@@ -59,6 +59,12 @@ const pageStructuredData = structuredData;
       content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
     />
     <meta name="generator" content={Astro.generator} />
+    <meta
+      http-equiv="Cache-Control"
+      content="no-cache, no-store, must-revalidate"
+    />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
 
     <!-- Primary Meta Tags -->
     <title>{title}</title>
@@ -214,18 +220,17 @@ const pageStructuredData = structuredData;
     </script>
 
     <!-- Service Worker registration -->
+    <!-- Service Worker unregistration to fix caching issues -->
     <script>
       if ("serviceWorker" in navigator) {
-        window.addEventListener("load", () => {
-          navigator.serviceWorker
-            .register("/sw.js")
-            .then((registration) => {
-              console.log("SW registered: ", registration);
-            })
-            .catch((registrationError) => {
-              console.log("SW registration failed: ", registrationError);
-            });
-        });
+        navigator.serviceWorker
+          .getRegistrations()
+          .then(function (registrations) {
+            for (let registration of registrations) {
+              registration.unregister();
+              console.log("Service Worker unregistered");
+            }
+          });
       }
     </script>
   </body>

@@ -9,6 +9,7 @@ import ContactBanner from "@components/Hero/ContactBanner.astro";
 import Cta from "@components/Cta.astro";
 import MapIcon from "@icons/map-icon.astro";
 import RightArrowIcon from "@icons/rightArrow-icon.astro";
+import { processImageUrl } from "../utils/imageUtils";
 
 const COLLECTIONS: string[] = [
   "Ashmolean Museum, Oxford, England",
@@ -72,19 +73,19 @@ const RESIDENCES: string[] = [
 
 const STUDIO_IMAGES = [
   {
-    src: "/profile/cutting-line.avif",
+    src: processImageUrl("/profile/cutting-line.avif"),
     alt: "Cutting line process in Fernando Feijoo's studio",
   },
   {
-    src: "/profile/inking-up.avif",
+    src: processImageUrl("/profile/inking-up.avif"),
     alt: "Inking up the printing press",
   },
   {
-    src: "/profile/polishing.avif",
+    src: processImageUrl("/profile/polishing.avif"),
     alt: "Polishing artwork in the studio",
   },
   {
-    src: "/profile/rollin.avif",
+    src: processImageUrl("/profile/rollin.avif"),
     alt: "Rolling process during printmaking",
   },
 ];
@@ -273,24 +274,7 @@ const pageDescription =
     const lightboxImg = document.getElementById("lightbox-img");
     const lightboxClose = document.getElementById("lightbox-close");
 
-    const images = [
-      {
-        src: "/profile/cutting-line.avif",
-        alt: "Cutting line process in Fernando Feijoo's studio",
-      },
-      {
-        src: "/profile/inking-up.avif",
-        alt: "Inking up the printing press",
-      },
-      {
-        src: "/profile/polishing.avif",
-        alt: "Polishing artwork in the studio",
-      },
-      {
-        src: "/profile/rollin.avif",
-        alt: "Rolling process during printmaking",
-      },
-    ];
+    const images = Array.from(document.querySelectorAll('.studio-image img')).map((img) => ({ src: (img).src, alt: (img).alt }));
 
     studioImages.forEach((figure) => {
       figure.addEventListener("click", () => {

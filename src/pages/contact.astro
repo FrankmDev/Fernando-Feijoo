@@ -10,6 +10,7 @@ import MapIcon from "@icons/map-icon.astro";
 import PhoneIcon from "@icons/phone-icon.astro";
 import TitleSection from "@/components/TitleSection.astro";
 import Cta from "@/components/Cta.astro";
+import { processImageUrl } from "../utils/imageUtils";
 
 const contactData = [
   {
@@ -63,7 +64,7 @@ const pageDescription =
           aria-label="Fernando Feijoo working with Columbian printing press"
         >
           <img
-            src="/profile/columbian.avif"
+            src={processImageUrl("/profile/columbian.avif")}
             alt="Fernando Feijoo working with a Columbian printing press in his studio"
             class="w-full max-h-[450px] object-cover object-top rounded-lg shadow-lg md:max-h-[700px]"
             loading="eager"
