@@ -9,56 +9,49 @@ import Cta from "@components/Cta.astro";
 import ImageModal from "@components/ImageModal.astro";
 import ContactBanner from "@components/Hero/ContactBanner.astro";
 
-// Get the slug from URL params
-const { slug } = Astro.params;
-
-// Helper function to find work by slug
-function findWorkBySlug(slugToFind: string) {
+// Generate static paths for all works
+export async function getStaticPaths() {
+  const paths = [];
+  
   for (const category of WORKS) {
-    // Check direct works in category
+    // Add direct works in category
     if (category.works) {
-      const work = category.works.find(w => w.slug === slugToFind);
-      if (work) {
-        return {
-          work,
-          categorySlug: category.slug,
-          categoryTitle: category.title
-        };
+      for (const work of category.works) {
+        paths.push({
+          params: { slug: work.slug },
+          props: { 
+            work,
+            categorySlug: category.slug,
+            categoryTitle: category.title
+          }
+        });
       }
     }
     
-    // Check works in collections
+    // Add works in collections
     if (category.collections) {
       for (const collection of category.collections) {
-        const work = collection.works.find(w => w.slug === slugToFind);
-        if (work) {
-          return {
-            work,
-            categorySlug: category.slug,
-            categoryTitle: category.title,
-            collectionSlug: collection.slug,
-            collectionTitle: collection.title
-          };
+        for (const work of collection.works) {
+          paths.push({
+            params: { slug: work.slug },
+            props: { 
+              work,
+              categorySlug: category.slug,
+              categoryTitle: category.title,
+              collectionSlug: collection.slug,
+              collectionTitle: collection.title
+            }
+          });
         }
       }
     }
   }
   
-  return null;
+  return paths;
 }
 
-// Find the work
-if (!slug) {
-  return Astro.redirect('/404');
-}
-
-const result = findWorkBySlug(slug);
-
-if (!result) {
-  return Astro.redirect('/404');
-}
-
-const { work, categorySlug, categoryTitle, collectionSlug, collectionTitle } = result;
+// Get the work data from props (provided by getStaticPaths)
+const { work, categorySlug, categoryTitle, collectionSlug, collectionTitle } = Astro.props;
 
 // Helper function to process image URLs
 function processImageUrl(imageUrl: string): string {
@@ -85,21 +78,19 @@ const mainImage = processedImageUrls.length > 0 ? processedImageUrls[0] : '';
 
 // Find related works from the same category/collection
 const relatedWorks = [];
-if (result) {
-  for (const category of WORKS) {
-    if (category.slug === categorySlug) {
-      if (collectionSlug && category.collections) {
-        // Get other works from the same collection
-        const collection = category.collections.find(c => c.slug === collectionSlug);
-        if (collection) {
-          relatedWorks.push(...collection.works.filter(w => w.slug !== slug));
-        }
-      } else if (category.works) {
-        // Get other works from the same category
-        relatedWorks.push(...category.works.filter(w => w.slug !== slug));
+for (const category of WORKS) {
+  if (category.slug === categorySlug) {
+    if (collectionSlug && category.collections) {
+      // Get other works from the same collection
+      const collection = category.collections.find(c => c.slug === collectionSlug);
+      if (collection) {
+        relatedWorks.push(...collection.works.filter(w => w.slug !== work.slug));
       }
-      break;
+    } else if (category.works) {
+      // Get other works from the same category
+      relatedWorks.push(...category.works.filter(w => w.slug !== work.slug));
     }
+    break;
   }
 }
 

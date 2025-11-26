@@ -1,5 +1,4 @@
 ---
-import Analytics from "@vercel/analytics/astro";
 import { ClientRouter } from "astro:transitions";
 interface Props {
   title: string;
@@ -167,7 +166,6 @@ const pageStructuredData = structuredData;
 
     <main id="main-content" class="flex-1 w-full" role="main">
       <slot />
-      <Analytics />
     </main>
 
     <Footer />
