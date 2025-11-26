@@ -50,6 +50,8 @@ export async function getStaticPaths() {
   return paths;
 }
 
+export const prerender = true;
+
 // Get the work data from props (provided by getStaticPaths)
 const { work, categorySlug, categoryTitle, collectionSlug, collectionTitle } = Astro.props;
 
