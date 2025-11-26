@@ -219,18 +219,19 @@ const pageStructuredData = structuredData;
       });
     </script>
 
-    <!-- Service Worker registration -->
-    <!-- Service Worker unregistration to fix caching issues -->
+    <!-- Service Worker Registration (Kill Switch) -->
     <script>
       if ("serviceWorker" in navigator) {
-        navigator.serviceWorker
-          .getRegistrations()
-          .then(function (registrations) {
-            for (let registration of registrations) {
-              registration.unregister();
-              console.log("Service Worker unregistered");
-            }
-          });
+        window.addEventListener("load", () => {
+          navigator.serviceWorker
+            .register("/sw.js")
+            .then((registration) => {
+              console.log("Kill Switch SW registered: ", registration);
+            })
+            .catch((registrationError) => {
+              console.log("SW registration failed: ", registrationError);
+            });
+        });
       }
     </script>
   </body>
