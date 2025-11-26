@@ -1,5 +1,4 @@
 ---
-import { ClientRouter } from "astro:transitions";
 interface Props {
   title: string;
   description?: string;
@@ -146,9 +145,6 @@ const pageStructuredData = structuredData;
 
     <!-- Security -->
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
-
-    <!-- Astro transitions -->
-    <ClientRouter />
   </head>
 
   <body
