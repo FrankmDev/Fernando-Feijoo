@@ -1,32 +1,16 @@
 ---
 import "@styles/general.css";
 import Layout from "@layouts/Layout.astro";
+import { WORKS } from "@data/works";
 import SectionContainer from "@components/SectionContainer.astro";
 import PageBanner from "@components/PageBanner.astro";
 import TitleSection from "@components/TitleSection.astro";
 import Cta from "@components/Cta.astro";
 import ImageModal from "@components/ImageModal.astro";
 import ContactBanner from "@components/Hero/ContactBanner.astro";
-import { WORKS } from "@data/works";
 
-// Helper function to process image URLs
-function processImageUrl(imageUrl: string): string {
-  if (!imageUrl) return "";
-
-  if (imageUrl.startsWith("@assets/")) {
-    return imageUrl.replace("@assets/", "/");
-  }
-
-  if (imageUrl.startsWith("@")) {
-    return imageUrl.substring(1);
-  }
-
-  if (imageUrl.startsWith("/") || imageUrl.startsWith("http")) {
-    return imageUrl;
-  }
-
-  return "/" + imageUrl;
-}
+// Get the slug from URL params
+const { slug } = Astro.params;
 
 // Helper function to find work by slug
 function findWorkBySlug(slugToFind: string) {
@@ -63,9 +47,6 @@ function findWorkBySlug(slugToFind: string) {
   return null;
 }
 
-// Get the slug from URL params
-const { slug } = Astro.params;
-
 // Find the work
 if (!slug) {
   return Astro.redirect('/404');
@@ -79,75 +60,54 @@ if (!result) {
 
 const { work, categorySlug, categoryTitle, collectionSlug, collectionTitle } = result;
 
-// Get all works for related works section
-const allWorks = WORKS.flatMap((category) =>
-  category.works
-    ? category.works.map((w) => ({
-        slug: w.slug,
-        title: w.title,
-        description: w.description,
-        medium: w.medium,
-        imageUrls: w.imageUrls,
-        dimensions: w.dimensions,
-        edition: w.edition,
-        price: w.price,
-        categorySlug: category.slug,
-        categoryTitle: category.title,
-      }))
-    : category.collections
-      ? category.collections.flatMap((collection) =>
-          collection.works.map((w) => ({
-            slug: w.slug,
-            title: w.title,
-            description: w.description,
-            medium: w.medium,
-            imageUrls: w.imageUrls,
-            dimensions: w.dimensions,
-            edition: w.edition,
-            price: w.price,
-            categorySlug: category.slug,
-            categoryTitle: category.title,
-            collectionSlug: collection.slug,
-            collectionTitle: collection.title,
-          }))
-        )
-      : [],
-);
+// Helper function to process image URLs
+function processImageUrl(imageUrl: string): string {
+  if (!imageUrl) return "";
 
-// Filter related works (exclude current work and show from same category/collection)
-let relatedWorks = allWorks.filter((w) => {
-  if (w.slug === work.slug) return false;
-  
-  if (collectionSlug) {
-    return w.categorySlug === categorySlug;
+  if (imageUrl.startsWith("@assets/")) {
+    return imageUrl.replace("@assets/", "/");
   }
-  
-  return w.categorySlug === categorySlug;
-}).slice(0, 6);
 
-if (relatedWorks.length < 6) {
-  const categoryWorks = allWorks
-    .filter((w) =>
-      w.slug !== work.slug &&
-      w.categorySlug === categorySlug &&
-      !relatedWorks.some((rw: any) => rw.slug === w.slug) // Avoid duplicates
-    )
-    .slice(0, 6 - relatedWorks.length);
+  if (imageUrl.startsWith("@")) {
+    return imageUrl.substring(1);
+  }
 
-  relatedWorks = relatedWorks.concat(categoryWorks);
+  if (imageUrl.startsWith("/") || imageUrl.startsWith("http")) {
+    return imageUrl;
+  }
+
+  return "/" + imageUrl;
 }
 
-// Get the first image for the banner background
-const bannerBackgroundImage = work?.imageUrls && work.imageUrls.length > 0
-  ? processImageUrl(work.imageUrls[0])
-  : null;
-
-// Process all image URLs for the modal
+// Process image URLs
 const processedImageUrls = work?.imageUrls ? work.imageUrls.map((url: string) => processImageUrl(url)) : [];
+const mainImage = processedImageUrls.length > 0 ? processedImageUrls[0] : '';
+
+// Find related works from the same category/collection
+const relatedWorks = [];
+if (result) {
+  for (const category of WORKS) {
+    if (category.slug === categorySlug) {
+      if (collectionSlug && category.collections) {
+        // Get other works from the same collection
+        const collection = category.collections.find(c => c.slug === collectionSlug);
+        if (collection) {
+          relatedWorks.push(...collection.works.filter(w => w.slug !== slug));
+        }
+      } else if (category.works) {
+        // Get other works from the same category
+        relatedWorks.push(...category.works.filter(w => w.slug !== slug));
+      }
+      break;
+    }
+  }
+}
+
+// Banner background image
+const bannerBackgroundImage = mainImage || '/images/default-banner.jpg';
 
 // SEO metadata
 const pageTitle = `${work?.title || 'Work'} by Fernando Feijoo`;
-
 ---
 
 <Layout title={pageTitle}>
