@@ -1,22 +1,23 @@
 ---
 import "@styles/general.css";
-import SectionContainer from "@components/SectionContainer.astro";
-import TitleSection from "@components/TitleSection.astro";
-import Layout from "@layouts/Layout.astro";
-import SliderImg from "@components/SliderImg.vue";
-import PageBanner from "@components/PageBanner.astro";
-import ContactBanner from "@components/Hero/ContactBanner.astro";
 import Cta from "@components/Cta.astro";
+import ContactBanner from "@components/Hero/ContactBanner.astro";
+import PageBanner from "@components/PageBanner.astro";
+import SectionContainer from "@components/SectionContainer.astro";
+import SliderImg from "@components/SliderImg.vue";
+import TitleSection from "@components/TitleSection.astro";
 import MapIcon from "@icons/map-icon.astro";
 import RightArrowIcon from "@icons/rightArrow-icon.astro";
+import Layout from "@layouts/Layout.astro";
 import { processImageUrl } from "../utils/imageUtils";
 
 const COLLECTIONS: string[] = [
-  "Ashmolean Museum, Oxford, England",
   "Bodleian Library, Oxford University, England",
   "British Museum, London, England",
   "The Pallant House Prints and Drawings Collection, Chichester, West Sussex, England",
   "Jiangsu Museum of Contemporary Art, China",
+  "RE Diploma Collection, London, England",
+  "Tufts University Special rare books collection, USA",
   "V&A Print collection London, England",
   "University of Wales Aberystwyth, Wales",
   "Winchester School of Art Library, England",
@@ -120,7 +121,6 @@ const pageDescription =
           also a distinguished Honorary member of the Royal Society of Painters
           & Printmakers in London.
         </p>
-        <Cta href="/contact" label="Contact me" isDark class="mt-6" />
       </article>
     </div>
   </SectionContainer>
@@ -250,7 +250,6 @@ const pageDescription =
       transition: 0.3s;
       z-index: 10000;
     }
-
     .lightbox-close:hover,
     .lightbox-close:focus {
       color: #bbb;
@@ -274,7 +273,9 @@ const pageDescription =
     const lightboxImg = document.getElementById("lightbox-img");
     const lightboxClose = document.getElementById("lightbox-close");
 
-    const images = Array.from(document.querySelectorAll('.studio-image img')).map((img) => ({ src: (img).src, alt: (img).alt }));
+    const images = Array.from(
+      document.querySelectorAll(".studio-image img"),
+    ).map((img) => ({ src: img.src, alt: img.alt }));
 
     studioImages.forEach((figure) => {
       figure.addEventListener("click", () => {
@@ -318,6 +319,39 @@ const pageDescription =
   >
     <TitleSection title="Artist's statement" class="text-left" id="statement" />
     <p class="text-base md:text-xl mt-4 mx-auto leading-relaxed">
+      Collaborating with Fernando Feijoo is always the most stimulating
+      challenge! From initial bouncing of ideas based on an immense variety of
+      inspirations -from contemporary events, world calamities, political
+      shenanigans and corruptions, to literary or artistic influences, and
+      animated discussions. Often it is just word play and sometimes
+      misunderstandings which are thought provoking and/or hilarious. Research
+      follows. Drafts are tentatively produced. Fragments are extracted,
+      sketches made. Talking and writing and drawing all at the same time. A
+      structure emerges. Then there can be a long process of determining the
+      layout and composition, the detailed honing of particular skills in lino,
+      or etching or whatever is right for this subject, and the layers and
+      layers of printmaking undertaken in the small hours. Sometimes it is hours
+      of reading through existing texts and trying to find our angle. Sometimes
+      it is an existing structure such as an alphabet that is created on a
+      theme. Often it is the joint creation of a new or different style of word
+      making and print making. The writer has to go for frequent walks to let
+      the words move around in the brain and be said aloud. The artist observes
+      and sketches, and draws the line in the lino or the plate. Two processes
+      merge into the final work. In most of our collaborations my work as a
+      writer is in the early stages and then it is all handed over to the
+      artist. Only a little tweaking is needed later. We both delight in the
+      sudden fizzes of getting something right and share the greatest respect
+      and appreciation of each other’s skills.
+    </p>
+    <p class="text-2xl md:text-3xl italic mt-6">Fernando Feijoo - Artist</p>
+  </section>
+
+  <section
+    class="container mx-auto px-4 max-w-6xl my-12 md:mt-16"
+    aria-label="Collaboration"
+  >
+    <TitleSection title="Collaboration" class="text-left" id="collaboration" />
+    <p class="text-base md:text-xl mt-4 mx-auto leading-relaxed">
       My work has a sense of humor within it even though sometimes I make images
       which reflect the darker side of human nature. I am interested in
       <em>social and political issues</em> and reflect these themes within my work.
@@ -337,8 +371,85 @@ const pageDescription =
       There are no rules to be followed: just pure experimentation and fun to be
       had.
     </p>
-    <p class="text-2xl md:text-3xl italic mt-6">Fernando Feijoo - Artist</p>
+    <p class="text-2xl md:text-3xl italic mt-6">Pat Francis - Writer</p>
   </section>
-
-  <ContactBanner />
+  <section
+    class="container mx-auto px-4 max-w-6xl my-12 md:mt-16"
+    aria-label="Review of the work of Fernando Feijoo"
+  >
+    <TitleSection
+      title="Review of the work of Fernando Feijoo"
+      class="text-left"
+      id="review"
+    />
+    <p class="text-base md:text-xl mt-4 mx-auto leading-relaxed">
+      Review of the work of Fernando Feijoo We are now approaching the 3rd
+      decade of the 21st century, living in what not so many years ago was
+      called ‘the future’. There are, to be certain, some things about our world
+      that resemble the visions of Science Fiction writers, but much of daily
+      life is still about people doing what they can to make a living in an
+      increasingly divided world. It is that world that is the source of the
+      inspiration and subject matter for the challenging, entertaining, visceral
+      and unique work of Fernando Feijoo. To begin with, his art is extremely
+      well made, technically flawless but, unlike some artists in the
+      international printmaking community for whom technical perfection seems to
+      be the primary goal, it goes much further than that. The high degree of
+      skill that he has in his hands is inseparable from the originality and
+      acuteness of his observation of the urban world around him, as well as his
+      desire to ensure that his work should relate strongly to the times in
+      which we live. In his work he holds up a mirror to the world around him
+      and shows us its reflection. As with all reflections there are sometimes
+      distortions and exaggerations, but these only serve to heighten the drama
+      of his subject matter. The world that is reflected is seldom a pretty
+      place: it is by turns perplexing, hard, comical, tragic, and melancholic,
+      but his work is always respectful of the people and situations it depicts.
+      Further than that it can be brutally honest in its portrayal of parts of
+      our world that are far from being perfect, and from which many people turn
+      away. There are echoes in his work, as the artist gladly acknowledges, of
+      artists such as Hogarth and Goya, and also Daumier, Masereel and Posada
+      among others, all of whom used the techniques of printmaking and its
+      inherent reproducibility to comment on their world. While their work did
+      not by itself succeed in changing the course of history, such artists did
+      have a powerful effect on the thinking of some of those who saw their work
+      and that in its turn led towards some improvement in the societies in
+      which they lived. In this sense Fernando Feijoo’s work and approach makes
+      him heir to a long and honourable tradition of socially engaged artists.
+      Just as his antecedents made use of the opportunities and materials
+      available to them, so also does Feijoo. The difference is that the
+      media-rich world in which we live affords him a far greater range of
+      mediums, materials and means for sharing than were ever available in the
+      past. This artist works across many artistic mediums, from drawing through
+      painting and sculpture to books and illustration, selecting not only the
+      appropriate medium (or mediums) for the expression of his ideas, but also
+      the materials with which to render them to the best advantage and in his
+      distinctive style. One of the strong points in this artist’s work is that
+      much of it is based on the ideas, sketches and references that he records
+      in his notebooks, one or more of which travels everywhere with him. Many
+      artists these days use a smartphone or perhaps a digital camera to make a
+      record of some of the things that have caught their eye and which could be
+      incorporated in a future work. Feijoo prefers to use a sketchbook, a
+      time-honoured process-rich means of making connections. To have the
+      privilege of seeing an artist’s sketchbooks within the context of an
+      exhibition adds considerably to the enjoyment of the work – it makes the
+      connections visible. Drawing has become under-rated in our tech-rich
+      lives, but is still a potent medium. This is evident in his sketchbooks,
+      but also in to richness of line in his prints, and in his other works.
+      They are compositionally complex, creating visions of an ‘other’ world
+      through which the viewer’s eyes can wander, seeking out the secrets or
+      guessing at what is going on. To pay due respect to Feijoo’s work requires
+      a sense of engagement and complicity from the viewer, and the time spent
+      is well-rewarded. Many of his works are in stark black and white,
+      sometimes combining with great skill within the same image, areas that
+      appear to be in negative and others in positive, adding a richness to the
+      whole piece. His use of colour, when it happens, is closer to comic book
+      than limpid watercolour, and all the more appropriate for that. In all of
+      his works there are layers of visual mastery, trickery even, that make the
+      act of looking at them both an adventure and an excitement, with an
+      aftermath of thought-provoking satisfaction.
+    </p>
+    <p class="text-2xl md:text-3xl italic mt-6">
+      Richard Noyce - Writer and Artist
+    </p>
+  </section>
 </Layout>
+<ContactBanner />
