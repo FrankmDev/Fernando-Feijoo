@@ -274,7 +274,7 @@ const pageDescription =
     const lightboxClose = document.getElementById("lightbox-close");
 
     const images = Array.from(
-      document.querySelectorAll(".studio-image img"),
+      document.querySelectorAll(".studio-image img")
     ).map((img) => ({ src: img.src, alt: img.alt }));
 
     studioImages.forEach((figure) => {
