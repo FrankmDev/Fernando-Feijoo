@@ -1,15 +1,9 @@
 ---
 import "@styles/general.css";
 import Layout from "@layouts/Layout.astro";
-import SectionContainer from "@components/SectionContainer.astro";
 import PageBanner from "@components/PageBanner.astro";
-import Form from "@components/Form.vue";
-import Socials from "@components/Hero/Socials.astro";
 import MailIcon from "@icons/mail-icon.astro";
 import MapIcon from "@icons/map-icon.astro";
-import PhoneIcon from "@icons/phone-icon.astro";
-import TitleSection from "@/components/TitleSection.astro";
-import Cta from "@/components/Cta.astro";
 import { processImageUrl } from "../utils/imageUtils";
 
 const contactData = [
@@ -17,151 +11,745 @@ const contactData = [
     icon: MailIcon,
     text: "info@fernandofeijoo.com",
     href: "mailto:info@fernandofeijoo.com",
-    ariaLabel: "Send email to Fernando Feijoo",
-    label: "EMAIL",
-    itemprop: "email",
+    label: "Email",
   },
   {
     icon: MapIcon,
-    text: "Cambridge",
+    text: "Cambridge, UK",
     href: "https://www.google.com/maps/place/Cambridge,+UK",
-    ariaLabel: "View location in Cambridge, UK",
-    label: "LOCATION",
-    itemprop: "address",
-  },
-  {
-    icon: PhoneIcon,
-    text: "+44 1223 123456",
-    href: "tel:+441223123456",
-    ariaLabel: "Call Fernando Feijoo",
-    label: "PHONE",
-    itemprop: "telephone",
+    label: "Location",
   },
 ];
 
 const pageDescription =
-  "Get in touch with Fernando Feijoo. Contact information, location in Cambridge, UK, and inquiry form for commissions, exhibitions, and collaborations.";
+  "Get in touch with Fernando Feijoo. Contact information, location in Cambridge, UK, for commissions, exhibitions, and collaborations.";
 ---
 
 <Layout title="Contact - Fernando Feijoo" description={pageDescription}>
-  <SectionContainer id="contact">
-    <main>
-      <PageBanner title="Contact" />
-      <blockquote class="text-4xl px-10 text-center italic my-20" lang="en">
-        "The world is full of conflict and confusion. In my work I try to
-        interpret the chaos in positive, humorous and imaginative ways."
-      </blockquote>
-      <section
-        class="container mx-auto px-4 max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-16 items-center"
-        aria-labelledby="contact-heading"
-        itemscope
-        itemtype="https://schema.org/ContactPoint"
-      >
-        <!-- Left side: Static Image -->
-        <figure
-          class="w-full order-2 md:order-1"
-          role="figure"
-          aria-label="Fernando Feijoo working with Columbian printing press"
-        >
-          <img
-            src={processImageUrl("/profile/columbian.avif")}
-            alt="Fernando Feijoo working with a Columbian printing press in his studio"
-            class="w-full max-h-[450px] object-cover object-top rounded-lg shadow-lg md:max-h-[700px]"
-            loading="eager"
-            fetchpriority="high"
-            decoding="async"
-            width="600"
-            height="700"
-          />
-        </figure>
+  <main class="contact-page">
+    <PageBanner title="Contact" />
 
-        <!-- Right side: Contact Information -->
-        <div
-          class="flex flex-col items-start justify-center gap-6 order-1 md:order-2"
-        >
-          <div>
-            <TitleSection title="Get in Touch" />
-            <p class="text-lg text-gray-700 leading-relaxed">
-              I'd love to hear from you. Whether you're interested in
-              commissioning a piece, discussing a collaboration, or simply want
-              to learn more about my work, please don't hesitate to reach out.
+    <!-- Hero Quote -->
+    <section class="hero-quote">
+      <div class="quote-container">
+        <blockquote class="quote reveal">
+          <div class="quote-decoration" aria-hidden="true">
+            <span class="quote-line"></span>
+            <span class="quote-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M10 8H6a2 2 0 00-2 2v4a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H6v-2h4V8zm10 0h-4a2 2 0 00-2 2v4a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2h-2v-2h4V8z"
+                  fill="currentColor"></path>
+              </svg>
+            </span>
+            <span class="quote-line"></span>
+          </div>
+          <p>
+            The world is full of conflict and confusion. In my work I try to
+            interpret the chaos in positive, humorous and imaginative ways.
+          </p>
+          <footer class="quote-author">
+            <span class="author-line" aria-hidden="true"></span>
+            <span class="author-name">Fernando Feijoo</span>
+          </footer>
+        </blockquote>
+      </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="main-section">
+      <div class="main-container">
+        <!-- Left: Image -->
+        <div class="image-column reveal-left">
+          <figure class="main-image">
+            <img
+              src={processImageUrl("/profile/columbian.avif")}
+              alt="Fernando Feijoo working with a Columbian printing press"
+              loading="eager"
+              decoding="async"
+            />
+          </figure>
+        </div>
+
+        <!-- Right: Content -->
+        <div class="content-column">
+          <!-- Contact Info -->
+          <div class="contact-block reveal-right" style="--delay: 0.1s">
+            <span class="block-label">Get in Touch</span>
+            <h2 class="block-title">Let's Create Together</h2>
+            <p class="block-text">
+              Whether you're interested in commissioning a piece, discussing a
+              collaboration, or simply want to learn more about my work — I'd
+              love to hear from you.
             </p>
+
+            <div class="contact-items">
+              {
+                contactData.map((item, i) => (
+                  <a
+                    href={item.href}
+                    class="contact-item"
+                    style={`--i: ${i}`}
+                    target={item.href.startsWith("http") ? "_blank" : undefined}
+                    rel={
+                      item.href.startsWith("http")
+                        ? "noopener noreferrer"
+                        : undefined
+                    }
+                  >
+                    <span class="item-icon">
+                      <item.icon aria-hidden="true" />
+                    </span>
+                    <span class="item-content">
+                      <span class="item-label">{item.label}</span>
+                      <span class="item-text">{item.text}</span>
+                    </span>
+                  </a>
+                ))
+              }
+            </div>
           </div>
 
-          <!-- Contact Details -->
-          <div class="flex flex-col gap-6 w-full">
-            {
-              contactData.map(
-                ({ icon: Icon, text, href, ariaLabel, label, itemprop }) => (
-                  <address class="flex gap-4 items-center group not-italic">
-                    <figure
-                      class="bg-black border-2 border-black rounded-full p-3 group-hover:bg-white transition duration-300 ease-in-out flex-shrink-0"
-                      role="img"
-                      aria-label={`${label} icon`}
-                    >
-                      <Icon class="group-hover:text-black transition duration-300 ease-in-out" />
-                    </figure>
-                    <div class="flex flex-col">
-                      <span class="text-sm font-medium text-gray-600 tracking-wider uppercase mb-1">
-                        {label}
-                      </span>
-                      <a
-                        href={href}
-                        class="text-xl md:text-2xl relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-black after:transition-all after:duration-300 after:ease-in-out hover:after:w-full"
-                        aria-label={ariaLabel}
-                        rel={
-                          href.startsWith("mailto:") || href.startsWith("tel:")
-                            ? "nofollow"
-                            : "nofollow noopener noreferrer"
-                        }
-                        target={href.startsWith("http") ? "_blank" : undefined}
-                        itemprop={itemprop}
-                      >
-                        {text}
-                      </a>
-                    </div>
-                  </address>
-                )
-              )
-            }
-          </div>
+          <!-- Studio Section -->
+          <div class="studio-block reveal-right" style="--delay: 0.2s">
+            <span class="block-label">Follow the Studio</span>
 
-          <Cta href="#" label="Explore my CV" isDark={true} />
-          <!-- Social Links -->
-          <div class="mt-4">
-            <h3
-              class="text-sm font-medium text-gray-600 tracking-wider uppercase mb-4"
+            <a
+              href="https://www.instagram.com/minotaurpress/"
+              class="studio-link"
+              target="_blank"
+              rel="noopener noreferrer"
             >
-              Follow Me
-            </h3>
-            <Socials />
+              <figure class="studio-avatar">
+                <img
+                  src={processImageUrl("/minotaurpress.avif")}
+                  alt="Minotaur Press Studio"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </figure>
+              <div class="studio-info">
+                <span class="studio-name">@minotaurpress</span>
+                <span class="studio-platform">Instagram</span>
+              </div>
+              <span class="studio-arrow">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M5 10h10M11 6l4 4-4 4"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+                </svg>
+              </span>
+            </a>
+          </div>
+
+          <!-- Divider -->
+          <div class="divider reveal-fade" style="--delay: 0.25s"></div>
+
+          <!-- CV Download -->
+          <div class="cv-block reveal-right" style="--delay: 0.3s">
+            <a href="#" class="cv-button">
+              <span>Download CV</span>
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 18 18"
+                fill="none"
+                aria-hidden="true"
+              >
+                <path
+                  d="M9 3v9M5 8l4 4 4-4M4 14h10"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"></path>
+              </svg>
+            </a>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <!-- Contact Form Section -->
-      <section
-        class="container mx-auto px-4 max-w-6xl py-16"
-        aria-labelledby="form-heading"
-      >
-        <h3 id="form-heading" class="sr-only">Contact Form</h3>
-        <Form client:load />
-      </section>
-    </main>
-  </SectionContainer>
+    <!-- Newsletter Section -->
+    <section class="newsletter-section">
+      <div class="newsletter-container reveal">
+        <div class="newsletter-content">
+          <span class="newsletter-label">Stay Updated</span>
+          <h2 class="newsletter-title">Join the Newsletter</h2>
+          <p class="newsletter-text">
+            Get updates on new works, exhibitions, and studio news delivered to
+            your inbox.
+          </p>
+        </div>
+
+        <form
+          action="https://fernandofeijoo.us21.list-manage.com/subscribe/post"
+          method="POST"
+          class="newsletter-form"
+          id="mc-embedded-subscribe-form"
+          name="mc-embedded-subscribe-form"
+          target="_blank"
+        >
+          <!-- Mailchimp hidden fields - update these with your actual values -->
+          <input type="hidden" name="u" value="YOUR_MAILCHIMP_U_VALUE" />
+          <input type="hidden" name="id" value="YOUR_MAILCHIMP_ID_VALUE" />
+
+          <div class="form-row">
+            <div class="input-wrapper">
+              <input
+                type="email"
+                name="EMAIL"
+                id="mce-EMAIL"
+                placeholder="Enter your email"
+                required
+                autocomplete="email"
+                class="email-input"
+              />
+            </div>
+            <button type="submit" class="submit-button">
+              <span>Subscribe</span>
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+                aria-hidden="true"
+              >
+                <path
+                  d="M3 8h10M9 4l4 4-4 4"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"></path>
+              </svg>
+            </button>
+          </div>
+
+          <p class="form-note">No spam, unsubscribe anytime.</p>
+
+          <!-- Bot protection -->
+          <div style="position: absolute; left: -5000px;" aria-hidden="true">
+            <input
+              type="text"
+              name="b_YOUR_MAILCHIMP_U_VALUE_YOUR_MAILCHIMP_ID_VALUE"
+              tabindex="-1"
+              value=""
+            />
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
 </Layout>
 
 <style>
-  /* Screen reader only utility */
-  .sr-only {
-    position: absolute;
-    width: 1px;
+  .contact-page {
+    width: 100%;
+  }
+
+  /* Hero Quote */
+  .hero-quote {
+    padding: 6rem 1.5rem;
+    background: linear-gradient(to bottom, #fafafa 0%, #fff 100%);
+  }
+
+  .quote-container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .quote {
+    text-align: center;
+  }
+
+  .quote-decoration {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .quote-line {
+    flex: 1;
+    max-width: 80px;
     height: 1px;
-    padding: 0;
-    margin: -1px;
+    background: linear-gradient(to var(--dir, right), #ddd, transparent);
+  }
+
+  .quote-line:last-child {
+    --dir: left;
+  }
+
+  .quote-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    color: #ccc;
+  }
+
+  .quote p {
+    font-size: clamp(1.375rem, 4vw, 2rem);
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1.6;
+    color: #1a1a1a;
+    letter-spacing: -0.02em;
+    margin: 0;
+  }
+
+  .quote-author {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .author-line {
+    width: 32px;
+    height: 1px;
+    background: #000;
+  }
+
+  .author-name {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #000;
+  }
+
+  /* Main Section */
+  .main-section {
+    padding: 5rem 1.5rem;
+  }
+
+  .main-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 4rem;
+  }
+
+  .image-column {
+    order: 2;
+  }
+
+  .main-image {
+    margin: 0;
+    aspect-ratio: 4/5;
     overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
+  }
+
+  .main-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+  }
+
+  .content-column {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    order: 1;
+  }
+
+  /* Block Styles */
+  .block-label {
+    display: block;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #888;
+    margin-bottom: 1rem;
+  }
+
+  .block-title {
+    font-size: clamp(1.75rem, 4vw, 2.25rem);
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    color: #000;
+    margin: 0 0 1rem;
+    line-height: 1.15;
+  }
+
+  .block-text {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #555;
+    margin: 0;
+  }
+
+  /* Contact Items */
+  .contact-items {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-top: 2rem;
+  }
+
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem 0;
+    text-decoration: none;
+    color: inherit;
+    border-bottom: 1px solid #f0f0f0;
+    transition: padding 0.3s ease;
+  }
+
+  .contact-item:first-child {
+    border-top: 1px solid #f0f0f0;
+  }
+
+  .contact-item:hover {
+    padding-left: 0.5rem;
+  }
+
+  .item-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    background: #000;
+    border-radius: 50%;
+    color: #fff;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+  }
+
+  .contact-item:hover .item-icon {
+    transform: scale(1.08);
+  }
+
+  .item-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+  }
+
+  .item-label {
+    font-size: 0.625rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #999;
+  }
+
+  .item-text {
+    font-size: 1.0625rem;
+    font-weight: 500;
+    color: #000;
+  }
+
+  /* Divider */
+  .divider {
+    height: 1px;
+    background: #eee;
+  }
+
+  /* Studio Block */
+  .studio-link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    margin: -1rem;
+    text-decoration: none;
+    color: inherit;
+    border-radius: 8px;
+    transition: background 0.3s ease;
+  }
+
+  .studio-link:hover {
+    background: #f8f8f8;
+  }
+
+  .studio-avatar {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0;
+    flex-shrink: 0;
+    border: 2px solid #f0f0f0;
+    transition: border-color 0.3s ease;
+  }
+
+  .studio-link:hover .studio-avatar {
+    border-color: #ddd;
+  }
+
+  .studio-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .studio-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+  }
+
+  .studio-name {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #000;
+  }
+
+  .studio-platform {
+    font-size: 0.75rem;
+    color: #888;
+  }
+
+  .studio-arrow {
+    color: #ccc;
+    transition:
+      color 0.3s ease,
+      transform 0.3s ease;
+  }
+
+  .studio-link:hover .studio-arrow {
+    color: #000;
+    transform: translateX(4px);
+  }
+
+  /* CV Block */
+  .cv-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 1.75rem;
+    background: #000;
+    color: #fff;
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    transition:
+      background 0.3s ease,
+      transform 0.3s ease;
+  }
+
+  .cv-button:hover {
+    background: #222;
+    transform: translateY(-2px);
+  }
+
+  .cv-button svg {
+    transition: transform 0.3s ease;
+  }
+
+  .cv-button:hover svg {
+    transform: translateY(3px);
+  }
+
+  /* Newsletter Section */
+  .newsletter-section {
+    padding: 6rem 1.5rem;
+    background: #000;
+  }
+
+  .newsletter-container {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .newsletter-content {
+    margin-bottom: 2.5rem;
+  }
+
+  .newsletter-label {
+    display: block;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 1rem;
+  }
+
+  .newsletter-title {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    color: #fff;
+    margin: 0 0 1rem;
+  }
+
+  .newsletter-text {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0;
+  }
+
+  /* Newsletter Form */
+  .newsletter-form {
+    position: relative;
+  }
+
+  .form-row {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .input-wrapper {
+    flex: 1;
+  }
+
+  .email-input {
+    width: 100%;
+    padding: 1rem 1.25rem;
+    font-size: 1rem;
+    font-family: inherit;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    outline: none;
+    transition:
+      border-color 0.3s ease,
+      background 0.3s ease;
+  }
+
+  .email-input::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  .email-input:focus {
+    border-color: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.15);
+  }
+
+  .submit-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+    background: #fff;
+    color: #000;
+    font-size: 0.875rem;
+    font-weight: 600;
+    font-family: inherit;
+    border: none;
+    cursor: pointer;
+    transition:
+      background 0.3s ease,
+      transform 0.3s ease;
+  }
+
+  .submit-button:hover {
+    background: #f0f0f0;
+    transform: translateY(-2px);
+  }
+
+  .submit-button svg {
+    transition: transform 0.3s ease;
+  }
+
+  .submit-button:hover svg {
+    transform: translateX(3px);
+  }
+
+  .form-note {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.4);
+    margin: 1rem 0 0;
+  }
+
+  /* Responsive */
+  @media (min-width: 640px) {
+    .form-row {
+      flex-direction: row;
+    }
+
+    .submit-button {
+      flex-shrink: 0;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .hero-quote {
+      padding: 6rem 2rem;
+    }
+
+    .main-section {
+      padding: 6rem 2rem;
+    }
+
+    .main-container {
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .image-column {
+      order: 1;
+      position: sticky;
+      top: 6rem;
+    }
+
+    .content-column {
+      order: 2;
+    }
+
+    .newsletter-section {
+      padding: 8rem 2rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .main-container {
+      gap: 6rem;
+    }
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .contact-item,
+    .item-icon,
+    .studio-link,
+    .studio-avatar,
+    .studio-arrow,
+    .cv-button,
+    .cv-button svg,
+    .email-input,
+    .submit-button,
+    .submit-button svg {
+      transition: none;
+    }
+  }
+
+  /* Print */
+  @media print {
+    .newsletter-section {
+      display: none;
+    }
+
+    .main-image {
+      max-height: 300px;
+    }
   }
 </style>

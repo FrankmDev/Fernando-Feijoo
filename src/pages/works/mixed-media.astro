@@ -1,280 +1,78 @@
 ---
-import "@styles/general.css";
-import Layout from "@layouts/Layout.astro";
-import SectionContainer from "@components/SectionContainer.astro";
-import PageBanner from "@components/PageBanner.astro";
-import TitleSection from "@components/TitleSection.astro";
-import ContactBanner from "@components/Hero/ContactBanner.astro";
+import WorksLayout from "@components/WorksLayout.astro";
+import WorkCard from "@components/WorkCard.astro";
 import { WORKS } from "@data/works";
+import { processImageUrl } from "@utils/imageUtils";
 
-// Helper function to process image URLs
-function processImageUrl(imageUrl: string): string {
-  if (!imageUrl) return "";
+const mixedMediaCategory = WORKS.find(
+  (category) => category.slug === "mixed-media"
+);
+if (!mixedMediaCategory) throw new Error("Mixed Media category not found");
 
-  if (imageUrl.startsWith("@assets/")) {
-    return imageUrl.replace("@assets/", "/");
-  }
+const works = mixedMediaCategory.works || [];
+const bannerImage = works[0]?.imageUrls?.[0]
+  ? processImageUrl(works[0].imageUrls[0])
+  : undefined;
 
-  if (imageUrl.startsWith("@")) {
-    return imageUrl.substring(1);
-  }
-
-  if (imageUrl.startsWith("/") || imageUrl.startsWith("http")) {
-    return imageUrl;
-  }
-
-  return "/" + imageUrl;
-}
-
-// Get the mixed media category
-const mixedMediaCategory = WORKS.find((category) => category.slug === "mixed-media");
-
-if (!mixedMediaCategory) {
-  throw new Error("Mixed Media category not found");
-}
-
-// Get the first image for the banner background
-const bannerBackgroundImage =
-  mixedMediaCategory.works && mixedMediaCategory.works.length > 0 && mixedMediaCategory.works[0].imageUrls && mixedMediaCategory.works[0].imageUrls.length > 0
-    ? processImageUrl(mixedMediaCategory.works[0].imageUrls[0])
-    : null;
-
-// SEO metadata
-const pageTitle = "Mixed Media - Fernando Feijoo | Artist & Printmaker";
-const pageDescription = `Explore Fernando Feijoo's mixed media collection featuring ${mixedMediaCategory.works?.length || 0} unique pieces that combine various artistic techniques and materials in innovative ways.`;
-const pageUrl = "https://fernandofeijoo.com/works/mixed-media";
-const ogImage = bannerBackgroundImage ? `https://fernandofeijoo.com${bannerBackgroundImage}` : "https://fernandofeijoo.com/og-image.jpg";
+const description = `Explore Fernando Feijoo's mixed media collection featuring ${works.length} unique ${works.length === 1 ? "piece" : "pieces"} that combine various artistic techniques and materials in innovative ways.`;
 ---
 
-<Layout title={pageTitle}>
-  <Fragment slot="head">
-    <!-- SEO Meta Tags -->
-    <meta name="description" content={pageDescription} />
-    <meta name="keywords" content="Fernando Feijoo, mixed media, contemporary art, multimedia art, collage" />
-    <link rel="canonical" href={pageUrl} />
-    
-    <!-- Open Graph Tags -->
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content={pageTitle} />
-    <meta property="og:description" content={pageDescription} />
-    <meta property="og:url" content={pageUrl} />
-    <meta property="og:image" content={ogImage} />
-    <meta property="og:site_name" content="Fernando Feijoo" />
-    
-    <!-- Twitter Card Tags -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={pageTitle} />
-    <meta name="twitter:description" content={pageDescription} />
-    <meta name="twitter:image" content={ogImage} />
-    
-    <!-- Structured Data -->
-    <script type="application/ld+json" is:inline set:html={JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "CollectionPage",
-      "name": "Mixed Media Collection",
-      "description": pageDescription,
-      "url": pageUrl,
-      "creator": {
-        "@type": "Person",
-        "name": "Fernando Feijoo",
-        "url": "https://fernandofeijoo.com"
-      },
-      "numberOfItems": mixedMediaCategory.works?.length || 0
-    })} />
-  </Fragment>
-  <SectionContainer id="mixed-media">
-    <main>
-      <PageBanner
-        title="Mixed Media"
-        backgroundImage={bannerBackgroundImage}
-      />
-
-      <section class="py-12">
-        <div class="container mx-auto px-4">
-          <!-- Breadcrumb -->
-          <nav class="flex items-center space-x-2 text-sm text-gray-500 mb-8">
-            <a href="/" class="hover:text-gray-700 transition-colors">Home</a>
-            <span>/</span>
-            <a href="/works" class="hover:text-gray-700 transition-colors">Works</a>
-            <span>/</span>
-            <span class="text-gray-900">Mixed Media</span>
-          </nav>
-
-          <!-- Category Description -->
-          <div class="text-center mb-12">
-            <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-              Explore Fernando Feijoo's mixed media collection featuring
-              {mixedMediaCategory.works?.length || 0} unique {mixedMediaCategory.works?.length === 1 ? 'piece' : 'pieces'}
-              that combine various artistic techniques and materials in innovative ways.
-            </p>
-          </div>
-
-          <!-- Works Grid -->
-          {mixedMediaCategory.works && mixedMediaCategory.works.length > 0 ? (
-            <div>
-              <TitleSection title="Mixed Media Works" class="text-center mb-8" />
-              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1 md:gap-2 w-full max-w-7xl mx-auto">
-                {mixedMediaCategory.works.map((work) => {
-                  if (!work || !work.slug) return null;
-
-                  const workImageUrls = work.imageUrls || [];
-                  const hasImages = workImageUrls.length > 0;
-                  const firstImageUrl = hasImages ? processImageUrl(workImageUrls[0]) : "";
-
-                  return (
-                    <a
-                      href={`/works/${work.slug}`}
-                      class="group block relative bg-white transition-transform duration-300 hover:scale-[1.02]"
-                      aria-label={`View details for ${work.title}`}
-                    >
-                      <article class="w-full">
-                        <!-- Image Container -->
-                        <div class="aspect-square relative overflow-hidden bg-gray-100">
-                          {hasImages && firstImageUrl ? (
-                            <img
-                              src={firstImageUrl}
-                              alt={`${work.title} by Fernando Feijoo`}
-                              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                              loading="lazy"
-                              decoding="async"
-                              width="400"
-                              height="400"
-                            />
-                          ) : (
-                            <div class="w-full h-full flex items-center justify-center bg-gray-50">
-                              <div class="text-center p-4">
-                                <div class="text-gray-400 text-2xl md:text-4xl mb-2">🎨</div>
-                                <h3 class="text-xs md:text-sm font-medium text-gray-600 line-clamp-2">
-                                  {work.title}
-                                </h3>
-                              </div>
-                            </div>
-                          )}
-
-                          <!-- Hover overlay -->
-                          <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-70 transition-all duration-300 flex items-center justify-center">
-                            <div class="text-white text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                              <h3 class="text-3xl font-medium mb-1">{work.title}</h3>
-                              <p class="text-md opacity-80">View Details</p>
-                            </div>
-                          </div>
-                        </div>
-                      </article>
-                    </a>
-                  );
-                })}
-              </div>
-            </div>
-          ) : (
-            <div class="text-center py-12">
-              <div class="text-6xl mb-4">🎨</div>
-              <h2 class="text-2xl font-bold text-gray-900 mb-4">No Mixed Media Works Available</h2>
-              <p class="text-gray-600 mb-6">
-                This collection is currently being updated. Please check back soon.
-              </p>
-              <a
-                href="/works"
-                class="inline-flex items-center px-6 py-3 text-base font-medium text-white bg-gray-900 hover:bg-gray-700 transition-colors duration-200"
-              >
-                View Other Collections
-              </a>
-            </div>
-          )}
-        </div>
-      </section>
-
-      <!-- Contact Banner -->
-      <ContactBanner />
-    </main>
-  </SectionContainer>
-</Layout>
+<WorksLayout
+  title="Mixed Media"
+  description={description}
+  bannerImage={bannerImage}
+  breadcrumbs={[
+    { label: "Home", href: "/" },
+    { label: "Works", href: "/works" },
+    { label: "Mixed Media" },
+  ]}
+  introText={description}
+  sectionTitle={works.length > 0 ? `${works.length} Works` : undefined}
+  showEmpty={works.length === 0}
+  emptyIcon="🎨"
+  emptyTitle="No Mixed Media Works Available"
+>
+  {
+    works.map((work, index) => (
+      <div class="grid-item" style={`--delay: ${0.2 + index * 0.08}s`}>
+        <WorkCard
+          href={`/works/${work.slug}`}
+          title={work.title}
+          subtitle={work.medium}
+          imageUrl={
+            work.imageUrls?.[0] ? processImageUrl(work.imageUrls[0]) : ""
+          }
+          imageAlt={work.title}
+          isAboveFold={index < 3}
+        />
+      </div>
+    ))
+  }
+</WorksLayout>
 
 <style>
-  .container {
-    max-width: 1200px;
+  .grid-item {
+    opacity: 0;
+    animation: fadeInUp 0.6s var(--ease-out-expo, cubic-bezier(0.16, 1, 0.3, 1))
+      forwards;
+    animation-delay: var(--delay, 0s);
   }
 
-  /* Line clamp utility */
-  .line-clamp-2 {
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-
-  /* Ensure consistent aspect ratios */
-  .aspect-square {
-    aspect-ratio: 1 / 1;
-  }
-
-  /* Responsive grid - always 3 columns but with different gaps */
-  @media (max-width: 480px) {
-    .grid {
-      gap: 1px;
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
     }
   }
 
-  @media (min-width: 481px) and (max-width: 768px) {
-    .grid {
-      gap: 0.125rem; /* 2px */
+  @media (prefers-reduced-motion: reduce) {
+    .grid-item {
+      opacity: 1;
+      animation: none;
     }
-  }
-
-  @media (min-width: 769px) {
-    .grid {
-      gap: 0.5rem; /* 8px */
-    }
-  }
-
-  /* Smooth transitions */
-  .transition-transform {
-    transition-property: transform;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    transition-duration: 300ms;
-  }
-
-  .transition-all {
-    transition-property: all;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    transition-duration: 300ms;
-  }
-
-  .transition-colors {
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    transition-duration: 200ms;
-  }
-
-  /* Hover effects */
-  .hover\:scale-\[1\.02\]:hover {
-    --tw-scale-x: 1.02;
-    --tw-scale-y: 1.02;
-    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-  }
-
-  .group:hover .group-hover\:scale-110 {
-    --tw-scale-x: 1.1;
-    --tw-scale-y: 1.1;
-    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-  }
-
-  /* Remove any unwanted borders or shadows */
-  .grid > * {
-    border: none;
-    box-shadow: none;
-  }
-
-  /* Ensure full width utilization */
-  .max-w-7xl {
-    max-width: 1280px;
-  }
-
-  /* Performance optimization */
-  .group {
-    will-change: transform;
-  }
-
-  .group img {
-    will-change: transform;
   }
 </style>

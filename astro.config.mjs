@@ -17,7 +17,7 @@ export default defineConfig({
     },
   },
   build: {},
-  devOptions: {
+  server: {
     port: 4321,
     host: true,
     headers: {

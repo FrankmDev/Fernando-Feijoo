@@ -24,6 +24,7 @@ const imageUrl = image.startsWith("http") ? image : `${siteUrl}${image}`;
 
 import Header from "@sections/Header/Header.astro";
 import Footer from "@sections/Footer/Footer.astro";
+import { ClientRouter } from "astro:transitions";
 
 // Generate structured data
 const structuredData = {
@@ -145,12 +146,18 @@ const pageStructuredData = structuredData;
     <!-- Scripts -->
     <script src="/components/scripts/mobile-menu.js" is:inline defer></script>
 
+    <!-- Scroll Reveal Animation -->
+    <script src="../scripts/scroll-reveal.ts"></script>
+
     <!-- Performance optimizations -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="format-detection" content="telephone=no" />
 
     <!-- Security -->
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+
+    <!-- View Transitions -->
+    <ClientRouter />
   </head>
 
   <body
@@ -339,5 +346,69 @@ const pageStructuredData = structuredData;
   /* Dark mode support (if needed in future) */
   @media (prefers-color-scheme: dark) {
     /* Add dark mode styles here if needed */
+  }
+
+  /* ===== VIEW TRANSITIONS ===== */
+
+  /* Page transition keyframes */
+  @keyframes page-fade-out {
+    from {
+      opacity: 1;
+      filter: blur(0);
+    }
+    to {
+      opacity: 0;
+      filter: blur(4px);
+    }
+  }
+
+  @keyframes page-fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+      filter: blur(4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0);
+    }
+  }
+
+  /* Root transitions - smooth page change */
+  ::view-transition-old(root) {
+    animation: page-fade-out 0.25s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+
+  ::view-transition-new(root) {
+    animation: page-fade-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation-delay: 0.1s;
+  }
+
+  /* Header stays stable */
+  ::view-transition-old(header),
+  ::view-transition-new(header) {
+    animation: none;
+    mix-blend-mode: normal;
+  }
+
+  /* Footer subtle transition */
+  ::view-transition-old(footer) {
+    animation: page-fade-out 0.2s ease forwards;
+  }
+
+  ::view-transition-new(footer) {
+    animation: page-fade-in 0.3s ease 0.15s forwards;
+  }
+
+  /* Transition group isolation */
+  ::view-transition-group(header),
+  ::view-transition-group(footer) {
+    isolation: isolate;
+  }
+
+  /* Image transitions for smoother feel */
+  ::view-transition-image-pair(root) {
+    isolation: isolate;
   }
 </style>

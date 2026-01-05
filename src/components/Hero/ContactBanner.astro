@@ -1,137 +1,426 @@
 ---
 import { Image } from "astro:assets";
-import Cta from "@components/Cta.astro";
-
-// Importamos la imagen desde /public como un asset optimizado
-import BannerImg from "/public/bannerimg.jpg";
-
-// SEO and accessibility improvements
-const sectionTitle = "Get In Touch";
-const sectionDescription =
-  "Ready to discuss your next project? Let's create something extraordinary together. Contact Fernando Feijoo to explore custom artworks, commissions, or inquire about existing pieces.";
+import BannerImg from "/public/bannerimg.avif";
 ---
 
-<section
-  class="my-6 mx-auto max-w-7xl"
-  aria-label="Contact and introduction"
-  role="region"
->
-  <div
-    class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-0 overflow-hidden"
-  >
-    <!-- Content Section -->
-    <article
-      class="bg-black text-white p-8 md:p-12 flex flex-col justify-center order-2 md:order-1"
-    >
-      <header class="mb-6">
-        <h2
-          class="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 leading-tight"
-        >
-          {sectionTitle}
-        </h2>
-        <p class="text-base md:text-lg leading-relaxed text-gray-100">
-          {sectionDescription}
-        </p>
-      </header>
-
-      <div class="mt-auto pt-6">
-        <Cta href="/contact" label="Contact Fernando" isDark={false} />
-      </div>
-    </article>
-
-    <!-- Image Section -->
-    <figure class="relative aspect-[4/3] md:aspect-auto order-1 md:order-2">
+<section class="contact-banner reveal">
+  <div class="banner-inner">
+    <!-- Image Side -->
+    <div class="banner-image">
       <Image
         src={BannerImg}
-        alt="Fernando Feijoo working in his studio, hands crafting ceramic artwork"
+        alt="Fernando Feijoo in his studio"
         width={800}
-        height={600}
-        class="w-full h-full object-cover"
+        height={900}
+        class="image"
         loading="lazy"
         decoding="async"
         quality={85}
         format="webp"
       />
+      <div class="image-overlay"></div>
+    </div>
 
-      <!-- Subtle overlay for better text readability on mobile -->
-      <div
-        class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent md:hidden"
-        aria-hidden="true"
-      >
+    <!-- Content Side -->
+    <div class="banner-content">
+      <div class="content-inner">
+        <div class="content-header">
+          <span class="label">
+            <span class="label-line"></span>
+            <span class="label-text">Let's Connect</span>
+          </span>
+        </div>
+
+        <h2 class="title">
+          <span class="title-line">Ready to create</span>
+          <span class="title-line">something together?</span>
+        </h2>
+
+        <p class="description">
+          Whether you're interested in commissioning a piece, acquiring existing
+          work, or simply want to discuss art — I'd love to hear from you.
+        </p>
+
+        <div class="cta-wrapper">
+          <a href="/contact" class="cta">
+            <span class="cta-text">Get in Touch</span>
+            <span class="cta-arrow">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+                fill="none"
+                aria-hidden="true"
+              >
+                <path
+                  d="M4 10h12M12 6l4 4-4 4"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"></path>
+              </svg>
+            </span>
+          </a>
+
+          <a href="mailto:contact@fernandofeijoo.com" class="cta-secondary">
+            <span class="cta-secondary-icon">
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+              >
+                <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+              </svg>
+            </span>
+            <span class="cta-secondary-text">contact@fernandofeijoo.com</span>
+          </a>
+        </div>
       </div>
-    </figure>
+
+      <!-- Decorative Element -->
+      <div class="decor-corner"></div>
+    </div>
   </div>
 </section>
 
 <style>
-  /* Ensure proper responsive behavior */
-  .container {
-    max-width: 1280px;
+  .contact-banner {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 4rem 1rem;
   }
 
-  /* Smooth transitions for interactive elements */
-  article {
-    transition: background-color 0.3s ease;
+  .banner-inner {
+    display: grid;
+    grid-template-columns: 1fr;
+    min-height: 500px;
+    position: relative;
   }
 
-  /* Optimize for different screen sizes */
-  @media (max-width: 768px) {
-    article {
-      padding: 2rem 1.5rem;
-      min-height: 300px;
+  /* Image */
+  .banner-image {
+    position: relative;
+    aspect-ratio: 4/3;
+    overflow: hidden;
+    order: 1;
+  }
+
+  .image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .banner-inner:hover .image {
+    transform: scale(1.03);
+  }
+
+  .image-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      135deg,
+      rgba(0, 0, 0, 0.1) 0%,
+      rgba(0, 0, 0, 0) 50%
+    );
+    pointer-events: none;
+  }
+
+  /* Content */
+  .banner-content {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: #000;
+    padding: 3rem 1.5rem;
+    order: 2;
+    overflow: hidden;
+  }
+
+  .content-inner {
+    max-width: 500px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .content-header {
+    margin-bottom: 2rem;
+  }
+
+  .label {
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .label-line {
+    display: block;
+    width: 40px;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.3);
+  }
+
+  .label-text {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  .title {
+    font-size: clamp(1.75rem, 5vw, 3rem);
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    color: #fff;
+    margin: 0 0 1.5rem;
+  }
+
+  .title-line {
+    display: block;
+  }
+
+  .description {
+    font-size: 1rem;
+    line-height: 1.75;
+    color: rgba(255, 255, 255, 0.6);
+    margin: 0 0 2.5rem;
+    max-width: 420px;
+  }
+
+  /* CTA Wrapper */
+  .cta-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  /* Primary CTA */
+  .cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.75rem;
+    background: #fff;
+    color: #000;
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    position: relative;
+    overflow: hidden;
+    transition: color 0.4s ease;
+  }
+
+  .cta::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: #000;
+    transform: translateX(-101%);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .cta:hover::before {
+    transform: translateX(0);
+  }
+
+  .cta:hover {
+    color: #fff;
+  }
+
+  .cta-text,
+  .cta-arrow {
+    position: relative;
+    z-index: 1;
+  }
+
+  .cta-arrow {
+    display: flex;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .cta:hover .cta-arrow {
+    transform: translateX(4px);
+  }
+
+  .cta:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 4px;
+  }
+
+  /* Secondary CTA */
+  .cta-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: rgba(255, 255, 255, 0.5);
+    text-decoration: none;
+    font-size: 0.8125rem;
+    transition: color 0.3s ease;
+  }
+
+  .cta-secondary:hover {
+    color: #fff;
+  }
+
+  .cta-secondary-icon {
+    display: flex;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+  }
+
+  .cta-secondary:hover .cta-secondary-icon {
+    opacity: 1;
+  }
+
+  .cta-secondary-text {
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s ease;
+  }
+
+  .cta-secondary:hover .cta-secondary-text {
+    border-bottom-color: rgba(255, 255, 255, 0.3);
+  }
+
+  /* Decorative Corner */
+  .decor-corner {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 120px;
+    height: 120px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: none;
+    border-right: none;
+    pointer-events: none;
+  }
+
+  /* Desktop */
+  @media (min-width: 768px) {
+    .contact-banner {
+      padding: 6rem 2rem;
     }
 
-    figure {
-      min-height: 250px;
+    .banner-inner {
+      grid-template-columns: 1fr 1fr;
+      min-height: 550px;
     }
-  }
 
-  @media (min-width: 769px) and (max-width: 1024px) {
-    article {
-      padding: 3rem 2.5rem;
+    .banner-image {
+      aspect-ratio: auto;
+      order: 2;
     }
-  }
 
-  @media (min-width: 1025px) {
-    article {
+    .banner-content {
       padding: 4rem 3rem;
+      order: 1;
+    }
+
+    .description {
+      font-size: 1.0625rem;
+    }
+
+    .cta-wrapper {
+      flex-direction: row;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .decor-corner {
+      width: 150px;
+      height: 150px;
     }
   }
 
-  /* Performance optimizations */
-  figure {
-    will-change: transform;
+  @media (min-width: 1024px) {
+    .banner-content {
+      padding: 5rem 4rem;
+    }
+
+    .content-header {
+      margin-bottom: 2.5rem;
+    }
+
+    .label-line {
+      width: 60px;
+    }
+
+    .description {
+      margin-bottom: 3rem;
+    }
+
+    .decor-corner {
+      width: 180px;
+      height: 180px;
+    }
   }
 
-  /* Accessibility improvements */
+  /* Reduced motion */
   @media (prefers-reduced-motion: reduce) {
-    * {
-      transition-duration: 0.01ms !important;
+    .image,
+    .cta,
+    .cta::before,
+    .cta-arrow,
+    .cta-secondary,
+    .cta-secondary-icon,
+    .cta-secondary-text {
+      transition: none;
+    }
+
+    .banner-inner:hover .image {
+      transform: none;
+    }
+
+    .cta:hover::before {
+      transform: translateX(-101%);
+    }
+
+    .cta:hover .cta-arrow {
+      transform: none;
     }
   }
 
-  /* High contrast mode support */
-  @media (prefers-contrast: high) {
-    article {
-      border: 2px solid white;
-    }
-  }
-
-  /* Print styles */
+  /* Print */
   @media print {
-    section {
+    .contact-banner {
       break-inside: avoid;
-      margin: 1rem 0;
+      padding: 2rem 0;
     }
 
-    figure {
+    .banner-image,
+    .decor-corner {
       display: none;
     }
 
-    article {
-      background: white !important;
-      color: black !important;
-      border: 1px solid black;
+    .banner-inner {
+      grid-template-columns: 1fr;
+    }
+
+    .banner-content {
+      background: #fff;
+      border: 1px solid #000;
+    }
+
+    .title,
+    .description,
+    .label-text {
+      color: #000;
+    }
+
+    .cta {
+      border: 1px solid #000;
+    }
+
+    .cta-secondary {
+      color: #000;
     }
   }
 </style>

@@ -1,0 +1,184 @@
+---
+import "@styles/general.css";
+import Layout from "@layouts/Layout.astro";
+import PageBanner from "@components/PageBanner.astro";
+import ContactBanner from "@components/Hero/ContactBanner.astro";
+import Breadcrumb from "@components/Breadcrumb.astro";
+import Cta from "@components/Cta.astro";
+
+interface BreadcrumbItem {
+  label: string;
+  href?: string;
+}
+
+interface Props {
+  title: string;
+  pageTitle?: string;
+  description: string;
+  bannerImage?: string;
+  breadcrumbs: BreadcrumbItem[];
+  introText: string;
+  sectionTitle?: string;
+  emptyIcon?: string;
+  emptyTitle?: string;
+  emptyText?: string;
+  showEmpty?: boolean;
+}
+
+const {
+  title,
+  pageTitle,
+  description,
+  bannerImage,
+  breadcrumbs,
+  introText,
+  sectionTitle,
+  emptyIcon = "🎨",
+  emptyTitle = "No Works Available",
+  emptyText = "This collection is currently being updated. Please check back soon.",
+  showEmpty = false,
+} = Astro.props;
+---
+
+<Layout
+  title={pageTitle || `${title} - Fernando Feijoo`}
+  description={description}
+>
+  <main>
+    <PageBanner title={title} backgroundImage={bannerImage} />
+
+    <section class="works-section">
+      <div class="container">
+        <div class="animate-fade-in">
+          <Breadcrumb items={breadcrumbs} />
+        </div>
+
+        <p class="intro-text animate-fade-in" style="--delay: 0.1s">
+          {introText}
+        </p>
+
+        {
+          showEmpty ? (
+            <div class="empty-state animate-fade-in" style="--delay: 0.2s">
+              <span class="empty-icon">{emptyIcon}</span>
+              <h2>{emptyTitle}</h2>
+              <p>{emptyText}</p>
+            </div>
+          ) : (
+            <>
+              {sectionTitle && (
+                <h2
+                  class="section-title animate-fade-in"
+                  style="--delay: 0.15s"
+                >
+                  {sectionTitle}
+                </h2>
+              )}
+              <div class="grid">
+                <slot />
+              </div>
+            </>
+          )
+        }
+
+        <div class="cta-section animate-fade-in" style="--delay: 0.4s">
+          <Cta href="/works" label="← Back to All Works" isDark={false} />
+        </div>
+      </div>
+    </section>
+
+    <ContactBanner />
+  </main>
+</Layout>
+
+<style>
+  .works-section {
+    padding: 4rem 1rem;
+  }
+
+  .container {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .intro-text {
+    font-size: 1.125rem;
+    color: var(--color-gray-500, #666);
+    text-align: center;
+    max-width: 640px;
+    margin: 0 auto 3rem;
+    line-height: 1.7;
+  }
+
+  .section-title {
+    font-size: clamp(1.75rem, 5vw, 2.5rem);
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    color: var(--color-black, #000);
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3px;
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 4rem 1rem;
+  }
+
+  .empty-icon {
+    font-size: 4rem;
+    display: block;
+    margin-bottom: 1rem;
+  }
+
+  .empty-state h2 {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--color-black, #000);
+    margin-bottom: 0.5rem;
+  }
+
+  .empty-state p {
+    color: var(--color-gray-500, #666);
+  }
+
+  .cta-section {
+    text-align: center;
+    margin-top: 4rem;
+  }
+
+  @media (min-width: 640px) {
+    .grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 4px;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .works-section {
+      padding: 5rem 2rem;
+    }
+
+    .grid {
+      gap: 6px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate-fade-in {
+      opacity: 1;
+      animation: none;
+    }
+  }
+</style>

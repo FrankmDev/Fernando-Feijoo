@@ -2,10 +2,67 @@
 import "@styles/general.css";
 import Layout from "@layouts/Layout.astro";
 import Hero from "@sections/Hero/Hero.astro";
+
+// Homepage-specific structured data for rich snippets
+const homePageSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "@id": "https://fernando-feijoo.com/#webpage",
+  url: "https://fernando-feijoo.com",
+  name: "Fernando Feijoo | Artist & Printmaker",
+  description:
+    "Explore the portfolio of Fernando Feijoo, a multi-disciplinary artist specializing in printmaking, ceramics, drawings, and mixed media artwork.",
+  isPartOf: {
+    "@type": "WebSite",
+    "@id": "https://fernando-feijoo.com/#website",
+    url: "https://fernando-feijoo.com",
+    name: "Fernando Feijoo",
+    publisher: {
+      "@type": "Person",
+      name: "Fernando Feijoo",
+    },
+  },
+  about: {
+    "@type": "Person",
+    name: "Fernando Feijoo",
+    jobTitle: "Artist & Printmaker",
+  },
+  mainEntity: {
+    "@type": "ItemList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Prints",
+        url: "https://fernando-feijoo.com/works/prints",
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Ceramics",
+        url: "https://fernando-feijoo.com/works/ceramics",
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: "Drawings",
+        url: "https://fernando-feijoo.com/works/drawings",
+      },
+    ],
+  },
+};
 ---
 
-<Layout title="Fernando Feijoo | Artist & Printmaker">
+<Layout
+  title="Fernando Feijoo | Artist & Printmaker"
+  description="Explore the portfolio of Fernando Feijoo, a multi-disciplinary artist specializing in printmaking, ceramics, drawings, and mixed media artwork."
+>
   <main>
     <Hero />
   </main>
+
+  <script
+    type="application/ld+json"
+    set:html={JSON.stringify(homePageSchema)}
+  />
 </Layout>

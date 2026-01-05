@@ -1,170 +1,357 @@
 ---
-import "@styles/general.css";
 import Logo from "@components/Header/Logo.astro";
-const navItems = [
+
+interface NavItem {
+  href: string;
+  text: string;
+}
+
+const navItems: NavItem[] = [
   { href: "/", text: "Home" },
   { href: "/works", text: "Works" },
   { href: "/profile", text: "Profile" },
-  {
-    href: "/contact",
-    text: "Contact",
-  },
+  { href: "/contact", text: "Contact" },
 ];
+
 const currentPath = Astro.url.pathname;
+const isCurrentPage = (href: string) =>
+  href === "/" ? currentPath === "/" : currentPath.startsWith(href);
 ---
 
-<header class="w-full bg-white fixed top-0 left-0 right-0 z-50">
-  <div class="container mx-auto px-4 py-4">
-    <div class="flex items-center justify-between">
-      <Logo />
+<header class="header" id="header" transition:name="header" transition:persist>
+  <div class="header-inner">
+    <Logo />
 
-      <!-- Navegación de escritorio -->
-      <nav class="hidden md:flex items-center space-x-8">
-        {
-          navItems.map((item) => (
-            <a
-              href={item.href}
-              class:list={[
-                "text-sm font-medium py-2 transition-all duration-300 text-black",
-                currentPath === item.href
-                  ? " border-b-2 border-black"
-                  : " hover:skew-x-[-10deg]",
-              ]}
-              aria-current={currentPath === item.href ? "page" : undefined}
-            >
-              {item.text}
-            </a>
-          ))
-        }
-      </nav>
-
-      <button
-        id="mobile-menu-toggle"
-        class="md:hidden flex items-center p-2 rounded-md text-gray-600 hover:text-blue-600 hover:bg-gray-100 focus:outline-none transition-colors"
-        aria-label="Open Nav"
-        aria-expanded="false"
-        aria-controls="mobile-menu"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          width="24"
-          height="24"
-          color="#000000"
-          fill="none"
-          class="icon-mobile-nav open-icon"
-        >
-          <path
-            d="M10 5L20 5"
-            stroke="currentColor"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"></path>
-          <path
-            d="M4 12L20 12"
-            stroke="currentColor"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"></path>
-          <path
-            d="M4 19L14 19"
-            stroke="currentColor"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"></path>
-        </svg>
-      </button>
-    </div>
-  </div>
-
-  <div
-    id="mobile-menu"
-    class="fixed inset-0 bg-black z-50 flex items-center justify-center transform translate-x-full transition-transform duration-500 ease-in-out md:hidden"
-  >
-    <button
-      id="close-menu-button"
-      class="absolute top-4 right-4 p-2 text-white hover:text-gray-300 focus:outline-none"
-      aria-label="Close Nav"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        width="24"
-        height="24"
-        color="#fff"
-        fill="none"
-        class="icon-mobile-nav close-icon"
-      >
-        <path
-          d="M19.0005 4.99988L5.00049 18.9999M5.00049 4.99988L19.0005 18.9999"
-          stroke="currentColor"
-          stroke-width="1.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"></path>
-      </svg>
-    </button>
-
-    <nav
-      class="flex flex-col items-center justify-center space-y-6 w-full px-8"
-    >
+    <!-- Desktop Nav -->
+    <nav class="nav-desktop" aria-label="Main navigation">
       {
         navItems.map((item) => (
           <a
             href={item.href}
-            class:list={[
-              "text-2xl font-medium py-2 px-4 text-center transition-all duration-300 w-full ",
-              currentPath === item.href
-                ? "text-white w-min border-b-2 border-white"
-                : "text-white hover:skew-x-[-10deg]",
-            ]}
-            aria-current={currentPath === item.href ? "page" : undefined}
+            class:list={["nav-link", { active: isCurrentPage(item.href) }]}
+            aria-current={isCurrentPage(item.href) ? "page" : undefined}
           >
             {item.text}
           </a>
         ))
       }
     </nav>
+
+    <!-- Mobile Toggle -->
+    <button
+      class="menu-toggle"
+      id="menuToggle"
+      type="button"
+      aria-label="Menu"
+      aria-expanded="false"
+      aria-controls="mobileMenu"
+    >
+      <span class="toggle-bar"></span>
+      <span class="toggle-bar"></span>
+    </button>
   </div>
 </header>
 
-<div class="pt-16">
-  <slot />
+<!-- Mobile Menu Overlay -->
+<div class="mobile-overlay" id="mobileMenu" aria-hidden="true">
+  <nav class="mobile-nav">
+    {
+      navItems.map((item, i) => (
+        <a
+          href={item.href}
+          class:list={["mobile-link", { active: isCurrentPage(item.href) }]}
+          aria-current={isCurrentPage(item.href) ? "page" : undefined}
+          style={`--i: ${i}`}
+        >
+          {item.text}
+        </a>
+      ))
+    }
+  </nav>
 </div>
 
+<!-- Header Spacer -->
+<div class="header-spacer"></div>
+
 <style>
-  body.menu-open {
-    overflow: hidden;
+  /* Header Base */
+  .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: white;
+    transition:
+      background 0.3s ease,
+      box-shadow 0.3s ease;
   }
 
-  @keyframes fadeInRight {
-    from {
-      opacity: 0;
-      transform: translateX(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
+  .header.scrolled {
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.08);
   }
 
-  #mobile-menu.menu-open a {
-    animation: fadeInRight 0.5s ease forwards;
+  .header.menu-open {
+    background: black;
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 1.25rem 1.5rem;
+  }
+
+  .header-spacer {
+    height: 4.5rem;
+  }
+
+  /* Desktop Nav */
+  .nav-desktop {
+    display: none;
+    gap: 3rem;
+  }
+
+  .nav-link {
+    position: relative;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #18181b;
+    text-decoration: none;
+    padding: 0.25rem 0;
+  }
+
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 100%;
+    height: 1.5px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease;
+  }
+
+  .nav-link:hover::after,
+  .nav-link.active::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  /* Menu Toggle */
+  .menu-toggle {
+    position: relative;
+    z-index: 1001;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 48px;
+    height: 48px;
+    gap: 8px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .toggle-bar {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: #18181b;
+    transition:
+      transform 0.4s cubic-bezier(0.23, 1, 0.32, 1),
+      background 0.3s ease;
+  }
+
+  /* Toggle Open State */
+  .header.menu-open .toggle-bar {
+    background: white;
+  }
+
+  .header.menu-open .toggle-bar:first-child {
+    transform: translateY(5px) rotate(45deg);
+  }
+
+  .header.menu-open .toggle-bar:last-child {
+    transform: translateY(-5px) rotate(-45deg);
+  }
+
+  /* Mobile Overlay */
+  .mobile-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    background: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity 0.4s ease,
+      visibility 0.4s ease;
   }
 
-  #mobile-menu.menu-open a:nth-child(1) {
-    animation-delay: 0.1s;
+  .mobile-overlay.open {
+    opacity: 1;
+    visibility: visible;
   }
-  #mobile-menu.menu-open a:nth-child(2) {
-    animation-delay: 0.2s;
+
+  .mobile-nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
   }
-  #mobile-menu.menu-open a:nth-child(3) {
-    animation-delay: 0.3s;
+
+  .mobile-link {
+    font-size: clamp(2rem, 8vw, 3.5rem);
+    font-weight: 600;
+    color: white;
+    text-decoration: none;
+    padding: 0.75rem 1.5rem;
+    opacity: 0;
+    transform: translateY(30px);
+    transition:
+      opacity 0.5s ease,
+      transform 0.5s ease,
+      color 0.2s ease;
+    transition-delay: calc(var(--i) * 0.08s);
   }
-  #mobile-menu.menu-open a:nth-child(4) {
-    animation-delay: 0.4s;
+
+  .mobile-overlay.open .mobile-link {
+    opacity: 1;
+    transform: translateY(0);
   }
-  #mobile-menu.menu-open a:nth-child(5) {
-    animation-delay: 0.5s;
+
+  .mobile-link:hover,
+  .mobile-link:focus-visible {
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .mobile-link.active {
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  .mobile-link:focus-visible {
+    outline: 2px solid white;
+    outline-offset: 4px;
+  }
+
+  /* Logo color change when menu open */
+  .header.menu-open :global(a) {
+    color: white;
+  }
+
+  /* Desktop breakpoint */
+  @media (min-width: 768px) {
+    .nav-desktop {
+      display: flex;
+    }
+
+    .menu-toggle {
+      display: none;
+    }
+
+    .mobile-overlay {
+      display: none;
+    }
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .header,
+    .toggle-bar,
+    .mobile-overlay,
+    .mobile-link,
+    .nav-link::after {
+      transition: none;
+    }
+
+    .mobile-link {
+      opacity: 1;
+      transform: none;
+    }
   }
 </style>
+
+<script>
+  function initHeader() {
+    const header = document.getElementById("header");
+    const toggle = document.getElementById("menuToggle");
+    const overlay = document.getElementById("mobileMenu");
+    const links = overlay?.querySelectorAll(".mobile-link");
+
+    let isOpen = false;
+
+    function openMenu() {
+      isOpen = true;
+      header?.classList.add("menu-open");
+      overlay?.classList.add("open");
+      overlay?.setAttribute("aria-hidden", "false");
+      toggle?.setAttribute("aria-expanded", "true");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeMenu() {
+      isOpen = false;
+      header?.classList.remove("menu-open");
+      overlay?.classList.remove("open");
+      overlay?.setAttribute("aria-hidden", "true");
+      toggle?.setAttribute("aria-expanded", "false");
+      document.body.style.overflow = "";
+    }
+
+    function toggleMenu() {
+      isOpen ? closeMenu() : openMenu();
+    }
+
+    // Toggle click
+    toggle?.addEventListener("click", toggleMenu);
+
+    // Close on link click
+    links?.forEach((link) => {
+      link.addEventListener("click", closeMenu);
+    });
+
+    // Close on Escape
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && isOpen) closeMenu();
+    });
+
+    // Scroll shadow
+    function updateScrollState() {
+      if (window.scrollY > 10) {
+        header?.classList.add("scrolled");
+      } else {
+        header?.classList.remove("scrolled");
+      }
+    }
+
+    let ticking = false;
+    window.addEventListener("scroll", () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          updateScrollState();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    });
+
+    // Initial check
+    updateScrollState();
+  }
+
+  // Run on initial load
+  initHeader();
+
+  // Run after View Transitions navigation
+  document.addEventListener("astro:after-swap", initHeader);
+</script>

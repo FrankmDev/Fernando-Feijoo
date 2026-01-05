@@ -1,39 +1,214 @@
 ---
-import XIcon from "@icons/x-icon.astro";
-import InstagramIcon from "@icons/instagram-icon.astro";
-import VimeoIcon from "@icons/vimeo-icon.astro";
+interface Props {
+  variant?: "default" | "minimal" | "light";
+}
+
+const { variant = "default" } = Astro.props;
+
+const socialLinks = [
+  {
+    href: "https://www.instagram.com/fernandofeijoo/",
+    label: "Instagram",
+    icon: "instagram",
+  },
+  {
+    href: "https://x.com/fernando_feijoo",
+    label: "X",
+    icon: "x",
+  },
+  {
+    href: "https://vimeo.com/573857181",
+    label: "Vimeo",
+    icon: "vimeo",
+  },
+];
 ---
 
-<section class="flex flex-col items-center justify-center gap-2">
-  <div class="flex center gap-4">
-    <a
-      href="https://x.com/fernando_feijoo"
-      class="bg-black rounded-full p-1 text-white"
-      aria-label="Fernando Feijoo on X"
-      title="Fernando Feijoo on X"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      <XIcon aria-hidden="true" focusable="false" />
-    </a>
-    <a
-      href="https://www.instagram.com/fernandofeijoo/"
-      aria-label="Fernando Feijoo on Instagram"
-      title="Fernando Feijoo on Instagram"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      <InstagramIcon aria-hidden="true" focusable="false" />
-    </a>
-    <a
-      href="https://vimeo.com/573857181?/"
-      class="bg-black rounded-full p-1 text-white"
-      aria-label="Fernando Feijoo on Vimeo"
-      title="Fernando Feijoo on Vimeo"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      <VimeoIcon aria-hidden="true" focusable="false" />
-    </a>
-  </div>
-</section>
+<div class:list={["socials", variant]}>
+  {
+    socialLinks.map((link, i) => (
+      <a
+        href={link.href}
+        class="social-btn"
+        aria-label={`Follow on ${link.label}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        style={`--i: ${i}`}
+      >
+        <span class="btn-bg" aria-hidden="true" />
+        <span class="btn-icon">
+          {link.icon === "instagram" && (
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <rect x="2" y="2" width="20" height="20" rx="5" />
+              <circle cx="12" cy="12" r="4" />
+              <circle
+                cx="17.5"
+                cy="6.5"
+                r="1.5"
+                fill="currentColor"
+                stroke="none"
+              />
+            </svg>
+          )}
+          {link.icon === "x" && (
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+            </svg>
+          )}
+          {link.icon === "vimeo" && (
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M23.977 6.416c-.105 2.338-1.739 5.543-4.894 9.609-3.268 4.247-6.026 6.37-8.29 6.37-1.409 0-2.578-1.294-3.553-3.881L5.322 11.4C4.603 8.816 3.834 7.522 3.01 7.522c-.179 0-.806.378-1.881 1.132L0 7.197c1.185-1.044 2.351-2.084 3.501-3.128C5.08 2.701 6.266 1.984 7.055 1.91c1.867-.18 3.016 1.1 3.447 3.838.465 2.953.789 4.789.971 5.507.539 2.45 1.131 3.674 1.776 3.674.502 0 1.256-.796 2.265-2.385 1.004-1.589 1.54-2.797 1.612-3.628.144-1.371-.395-2.061-1.614-2.061-.574 0-1.167.121-1.777.391 1.186-3.868 3.434-5.757 6.762-5.637 2.473.06 3.628 1.664 3.493 4.797l-.013.01z" />
+            </svg>
+          )}
+        </span>
+      </a>
+    ))
+  }
+</div>
+
+<style>
+  .socials {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .social-btn {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    color: #fff;
+    text-decoration: none;
+    opacity: 0;
+    animation: pop-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: calc(var(--i) * 0.08s);
+  }
+
+  @keyframes pop-in {
+    from {
+      opacity: 0;
+      transform: scale(0.5) translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
+
+  .btn-bg {
+    position: absolute;
+    inset: 0;
+    background: #000;
+    border-radius: 50%;
+    transition:
+      transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+      box-shadow 0.3s ease;
+  }
+
+  .social-btn:hover .btn-bg {
+    transform: scale(1.1);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  }
+
+  .btn-icon {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .btn-icon svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .social-btn:hover .btn-icon {
+    transform: scale(1.15) rotate(-5deg);
+  }
+
+  .social-btn:focus-visible {
+    outline: none;
+  }
+
+  .social-btn:focus-visible .btn-bg {
+    box-shadow:
+      0 0 0 3px #fff,
+      0 0 0 5px #000;
+  }
+
+  /* Minimal variant */
+  .socials.minimal {
+    gap: 0.5rem;
+  }
+
+  .socials.minimal .social-btn {
+    width: 44px;
+    height: 44px;
+    color: #666;
+  }
+
+  .socials.minimal .btn-bg {
+    background: transparent;
+    border: 1px solid #e0e0e0;
+  }
+
+  .socials.minimal .btn-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .socials.minimal .social-btn:hover {
+    color: #fff;
+  }
+
+  .socials.minimal .social-btn:hover .btn-bg {
+    background: #000;
+    border-color: #000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Light variant (for dark backgrounds) */
+  .socials.light .social-btn {
+    color: #000;
+  }
+
+  .socials.light .btn-bg {
+    background: #fff;
+  }
+
+  .socials.light .social-btn:hover .btn-bg {
+    box-shadow: 0 8px 24px rgba(255, 255, 255, 0.3);
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .social-btn {
+      animation: none;
+      opacity: 1;
+    }
+
+    .btn-bg,
+    .btn-icon {
+      transition: none;
+    }
+  }
+
+  /* Print */
+  @media print {
+    .socials {
+      display: none;
+    }
+  }
+</style>

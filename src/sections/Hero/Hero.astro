@@ -4,210 +4,355 @@ import SliderHero from "@components/SliderHero.vue";
 import ContactBanner from "@components/Hero/ContactBanner.astro";
 import { WORKS } from "@data/works";
 import Cta from "@components/Cta.astro";
+import type { Category, Work } from "@data/works";
 
-// Helper function to process image URLs
-function processImageUrl(imageUrl: string): string {
-  if (!imageUrl) return "";
-
-  if (imageUrl.startsWith("@assets/")) {
-    return imageUrl.replace("@assets/", "/");
-  }
-
-  if (imageUrl.startsWith("@")) {
-    return imageUrl.substring(1);
-  }
-
-  if (imageUrl.startsWith("/") || imageUrl.startsWith("http")) {
-    return imageUrl;
-  }
-
-  return "/" + imageUrl;
+interface ProcessedWork extends Work {
+  categorySlug: string;
+  categoryTitle: string;
+  collectionSlug?: string;
+  collectionTitle?: string;
 }
 
-// Get all works from all categories
-const allWorks = WORKS.flatMap((category) =>
-  category.works
-    ? category.works.map((work) => ({
+interface GallerySection {
+  id: string;
+  title: string;
+  items: ProcessedWork[];
+}
+
+const processImageUrl = (imageUrl: string): string => {
+  if (!imageUrl) return "";
+  if (imageUrl.startsWith("@assets/")) return imageUrl.replace("@assets/", "/");
+  if (imageUrl.startsWith("@")) return imageUrl.substring(1);
+  if (imageUrl.startsWith("/") || imageUrl.startsWith("http")) return imageUrl;
+  return `/${imageUrl}`;
+};
+
+const allWorks: ProcessedWork[] = WORKS.flatMap((category: Category) => {
+  if (category.works) {
+    return category.works.map((work) => ({
+      ...work,
+      categorySlug: category.slug,
+      categoryTitle: category.title,
+    }));
+  }
+
+  if (category.collections) {
+    return category.collections.flatMap((collection) =>
+      collection.works.map((work) => ({
         ...work,
         categorySlug: category.slug,
         categoryTitle: category.title,
+        collectionSlug: collection.slug,
+        collectionTitle: collection.title,
       }))
-    : category.collections
-      ? category.collections.flatMap((collection) =>
-          collection.works.map((work) => ({
-            ...work,
-            categorySlug: category.slug,
-            categoryTitle: category.title,
-            collectionSlug: collection.slug,
-            collectionTitle: collection.title,
-          })),
-        )
-      : [],
-);
+    );
+  }
 
-// Organize works by category for gallery
-const gallery = WORKS.map((category) => {
-  const categoryWorks = allWorks
+  return [];
+});
+
+const MAX_ITEMS_PER_CATEGORY = 9;
+
+const gallery: GallerySection[] = WORKS.map((category: Category) => ({
+  id: category.slug,
+  title: category.title,
+  items: allWorks
     .filter((work) => work.categorySlug === category.slug)
-    .slice(0, 9); // Changed to 9 to fill 3x3 grid better
-
-  return {
-    id: category.slug,
-    title: category.title,
-    items: categoryWorks,
-  };
-}).filter((category) => category.items.length > 0);
+    .slice(0, MAX_ITEMS_PER_CATEGORY),
+})).filter((section) => section.items.length > 0);
 ---
 
-<section class="w-full mx-auto flex flex-col items-center">
-  <div class="w-full md:px-4 md:py-16">
+<section class="hero">
+  <div class="slider-wrapper">
     <SliderHero client:load />
   </div>
 
-  <div class="w-full px-4  flex flex-col items-center gap-20">
+  <div class="content">
     <Socials />
-    <section class="flex flex-col items-center gap-10 md:gap-20 w-full mb-10 md:mb-20">
+
+    <div class="gallery-sections">
       {
-        gallery.map(({ id, title, items }) => (
-          <section id={id} class="w-full max-w-7xl">
-            <h2 class="text-3xl md:text-4xl font-semibold mb-12 tracking-tight text-zinc-900 text-center">
-              {title}
-            </h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1 md:gap-2 w-full">
-              {items.map((work) => {
-                const workImageUrls = work.imageUrls || [];
-                const hasImages = workImageUrls.length > 0;
-                const firstImageUrl = hasImages
-                  ? processImageUrl(workImageUrls[0])
+        gallery.map(({ id, title, items }, sectionIndex) => (
+          <section id={id} class="gallery reveal">
+            <h2 class="gallery-title">{title}</h2>
+
+            <div class="grid reveal-stagger">
+              {items.map((work, index) => {
+                const imageUrl = work.imageUrls?.[0]
+                  ? processImageUrl(work.imageUrls[0])
                   : "";
+                const isAboveFold = sectionIndex === 0 && index < 3;
+                const collection = work.collectionTitle || work.categoryTitle;
 
                 return (
-                  <a
-                    href={`/works/${work.slug}`}
-                    class="group block relative bg-white transition-transform duration-300 hover:scale-[1.02]"
-                    aria-label={`View details for ${work.title}`}
-                  >
-                    <div class="aspect-square relative overflow-hidden bg-gray-100">
-                      {hasImages && firstImageUrl ? (
-                        <img
-                          src={firstImageUrl}
-                          alt={work.title}
-                          class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                          loading="lazy"
-                          decoding="async"
-                        />
-                      ) : (
-                        <div class="w-full h-full flex items-center justify-center bg-gray-50">
-                          <div class="text-center p-4">
-                            <div class="text-gray-400 text-2xl md:text-4xl mb-2">🖼️</div>
-                            <h3 class="text-xs md:text-sm font-medium text-gray-600 line-clamp-2">
-                              {work.title}
-                            </h3>
-                          </div>
-                        </div>
-                      )}
+                  <a href={`/works/${work.slug}`} class="card reveal">
+                    {imageUrl ? (
+                      <img
+                        src={imageUrl}
+                        alt={work.title}
+                        width="400"
+                        height="400"
+                        loading={isAboveFold ? "eager" : "lazy"}
+                        decoding="async"
+                        class="card-img"
+                      />
+                    ) : (
+                      <div class="card-empty">{work.title}</div>
+                    )}
 
-                      <!-- Hover overlay -->
-                      <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-70 transition-all duration-300 flex items-center justify-center">
-                        <div class="text-white text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                          <h3 class="text-3xl font-medium mb-1">{work.title}</h3>
-                          <p class="text-md opacity-80">View Details</p>
-                        </div>
-                      </div>
+                    <div class="card-overlay" />
+
+                    <div class="card-content">
+                      <span class="card-collection">{collection}</span>
+                      <h3 class="card-title">{work.title}</h3>
                     </div>
                   </a>
                 );
               })}
             </div>
 
-            {/* View All Button */}
-            <div class="text-center my-8">
-              <Cta href={`/works/${id}`} label={`View All ${title}`} isDark={true} />
+            <div class="gallery-cta reveal">
+              <Cta
+                href={`/works/${id}`}
+                label={`View All ${title}`}
+                isDark={true}
+              />
             </div>
           </section>
         ))
       }
-    </section>
+    </div>
+
     <ContactBanner />
   </div>
 </section>
 
 <style>
-  /* Ensure proper aspect ratio for square images */
-  .aspect-square {
-    aspect-ratio: 1 / 1;
+  .hero {
+    width: 100%;
   }
 
-  /* Line clamp utility */
-  .line-clamp-2 {
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+  .slider-wrapper {
+    width: 100%;
+    padding: 0 1rem;
   }
 
-  /* Responsive grid - always 3 columns but with different gaps */
-  @media (max-width: 480px) {
-    .grid {
-      gap: 1px;
-    }
+  .content {
+    width: 100%;
+    padding: 0 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4rem;
   }
 
-  @media (min-width: 481px) and (max-width: 768px) {
-    .grid {
-      gap: 0.125rem; /* 2px */
-    }
+  .gallery-sections {
+    display: flex;
+    flex-direction: column;
+    gap: 5rem;
+    width: 100%;
   }
 
-  @media (min-width: 769px) {
-    .grid {
-      gap: 0.5rem; /* 8px */
-    }
-  }
-
-  /* Smooth transitions */
-  .transition-transform {
-    transition-property: transform;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    transition-duration: 300ms;
-  }
-
-  .transition-all {
-    transition-property: all;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    transition-duration: 300ms;
-  }
-
-  /* Hover effects */
-  .hover\:scale-\[1\.02\]:hover {
-    --tw-scale-x: 1.02;
-    --tw-scale-y: 1.02;
-    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-  }
-
-  .group:hover .group-hover\:scale-110 {
-    --tw-scale-x: 1.1;
-    --tw-scale-y: 1.1;
-    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-  }
-
-  /* Remove any unwanted borders or shadows */
-  .grid > * {
-    border: none;
-    box-shadow: none;
-  }
-
-  /* Ensure full width utilization */
-  .max-w-7xl {
+  .gallery {
+    width: 100%;
     max-width: 1280px;
+    margin: 0 auto;
   }
 
-  /* Performance optimization */
-  .group {
-    will-change: transform;
+  .gallery-title {
+    font-size: clamp(1.75rem, 5vw, 2.5rem);
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    color: #000;
+    text-align: center;
+    margin-bottom: 2.5rem;
   }
 
-  .group img {
-    will-change: transform;
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3px;
+  }
+
+  /* Card */
+  .card {
+    position: relative;
+    display: block;
+    aspect-ratio: 1;
+    overflow: hidden;
+    background: #111;
+    text-decoration: none;
+  }
+
+  .card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition:
+      transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+      opacity 0.5s ease;
+  }
+
+  .card:hover .card-img {
+    transform: scale(1.1);
+    opacity: 0.4;
+  }
+
+  .card-empty {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.875rem;
+    color: #666;
+    background: #f0f0f0;
+  }
+
+  /* Overlay */
+  .card-overlay {
+    position: absolute;
+    inset: 0;
+    background: black;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+
+  .card:hover .card-overlay {
+    opacity: 0.5;
+  }
+
+  /* Content */
+  .card-content {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  .card:hover .card-content,
+  .card:focus-visible .card-content {
+    opacity: 1;
+  }
+
+  .card-collection {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 0.75rem;
+    transform: translateY(15px);
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.1s;
+  }
+
+  .card:hover .card-collection {
+    transform: translateY(0);
+  }
+
+  .card-title {
+    font-size: clamp(1.25rem, 4vw, 1.75rem);
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    margin: 0;
+    transform: translateY(15px);
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .card:hover .card-title {
+    transform: translateY(0);
+  }
+
+  .card:focus-visible {
+    outline: 2px solid #000;
+    outline-offset: 2px;
+  }
+
+  .card:focus-visible .card-collection,
+  .card:focus-visible .card-title {
+    transform: translateY(0);
+  }
+
+  .gallery-cta {
+    text-align: center;
+    margin-top: 2.5rem;
+  }
+
+  /* Responsive */
+  @media (min-width: 640px) {
+    .grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 4px;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .slider-wrapper {
+      padding: 1rem 1rem 4rem;
+    }
+
+    .content {
+      gap: 5rem;
+    }
+
+    .gallery-sections {
+      gap: 6rem;
+    }
+
+    .grid {
+      gap: 6px;
+    }
+
+    .card-collection {
+      font-size: 0.75rem;
+      margin-bottom: 1rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .card-img,
+    .card-overlay,
+    .card-content,
+    .card-collection,
+    .card-title {
+      transition: none;
+    }
+
+    .card:hover .card-img {
+      transform: none;
+    }
+
+    .card-content {
+      opacity: 1;
+    }
+
+    .card-collection,
+    .card-title {
+      transform: none;
+    }
+  }
+
+  /* Print */
+  @media print {
+    .slider-wrapper,
+    .card-overlay,
+    .card-content {
+      display: none;
+    }
   }
 </style>

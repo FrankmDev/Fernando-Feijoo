@@ -1,19 +1,432 @@
 ---
+import "@styles/general.css";
 import Layout from "@layouts/Layout.astro";
-import SectionContainer from "@components/SectionContainer.astro";
 ---
 
-<Layout title="Page Not Found">
-  <SectionContainer id="not-found">
-    <main class="min-h-screen flex items-center justify-center">
-      <div class="text-center">
-        <h1 class="text-6xl font-bold mb-4">404</h1>
-        <h2 class="text-2xl mb-4">Page Not Found</h2>
-        <p class="text-gray-600 mb-8">The page you're looking for doesn't exist.</p>
-        <a href="/" class="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors">
-          Go Home
-        </a>
+<Layout title="Page Not Found - Fernando Feijoo" noindex={true}>
+  <section class="not-found-page">
+    <div class="container">
+      <!-- Visual Element -->
+      <div class="visual">
+        <div class="number-wrap">
+          <span class="number n1">4</span>
+          <span class="number n0">
+            <span class="circle"></span>
+          </span>
+          <span class="number n2">4</span>
+        </div>
+        <div class="line-decor"></div>
       </div>
-    </main>
-  </SectionContainer>
+
+      <!-- Content -->
+      <div class="content">
+        <h1 class="title">Lost in the Gallery</h1>
+        <p class="description">
+          The artwork you're searching for seems to have wandered off. Let's
+          guide you back to the collection.
+        </p>
+
+        <!-- Navigation Options -->
+        <nav class="nav-options">
+          <a href="/" class="nav-item primary">
+            <span class="nav-icon">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+              >
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+              </svg>
+            </span>
+            <span class="nav-text">
+              <span class="nav-label">Return Home</span>
+              <span class="nav-hint">Back to the beginning</span>
+            </span>
+            <span class="nav-arrow">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M5 12h14M12 5l7 7-7 7"></path>
+              </svg>
+            </span>
+          </a>
+
+          <a href="/works" class="nav-item">
+            <span class="nav-icon">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+              >
+                <rect x="3" y="3" width="7" height="7"></rect>
+                <rect x="14" y="3" width="7" height="7"></rect>
+                <rect x="14" y="14" width="7" height="7"></rect>
+                <rect x="3" y="14" width="7" height="7"></rect>
+              </svg>
+            </span>
+            <span class="nav-text">
+              <span class="nav-label">View Works</span>
+              <span class="nav-hint">Explore the collection</span>
+            </span>
+            <span class="nav-arrow">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M5 12h14M12 5l7 7-7 7"></path>
+              </svg>
+            </span>
+          </a>
+
+          <a href="/contact" class="nav-item">
+            <span class="nav-icon">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+              >
+                <path
+                  d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+                ></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
+              </svg>
+            </span>
+            <span class="nav-text">
+              <span class="nav-label">Contact</span>
+              <span class="nav-hint">Get in touch</span>
+            </span>
+            <span class="nav-arrow">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M5 12h14M12 5l7 7-7 7"></path>
+              </svg>
+            </span>
+          </a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Background -->
+    <div class="bg-element" aria-hidden="true"></div>
+  </section>
 </Layout>
+
+<style>
+  .not-found-page {
+    min-height: calc(100vh - 200px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 1rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .container {
+    width: 100%;
+    max-width: 600px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Visual Element */
+  .visual {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .number-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .number {
+    font-size: clamp(4rem, 15vw, 8rem);
+    font-weight: 300;
+    letter-spacing: -0.05em;
+    line-height: 1;
+    color: #000;
+    opacity: 0;
+    animation: number-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .n1 {
+    animation-delay: 0.1s;
+  }
+  .n0 {
+    animation-delay: 0.2s;
+  }
+  .n2 {
+    animation-delay: 0.3s;
+  }
+
+  .n0 {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .circle {
+    width: clamp(3rem, 12vw, 6rem);
+    height: clamp(3rem, 12vw, 6rem);
+    border: 2px solid #000;
+    border-radius: 50%;
+    position: relative;
+  }
+
+  .circle::after {
+    content: "";
+    position: absolute;
+    inset: 6px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 50%;
+  }
+
+  .line-decor {
+    width: 60px;
+    height: 1px;
+    background: #000;
+    margin: 0 auto;
+    opacity: 0;
+    animation: fade-in 0.6s ease 0.5s forwards;
+  }
+
+  /* Content */
+  .content {
+    text-align: center;
+    opacity: 0;
+    animation: content-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
+  }
+
+  .title {
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    color: #000;
+    margin: 0 0 1rem;
+  }
+
+  .description {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #666;
+    margin: 0 0 3rem;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Navigation Options */
+  .nav-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem 1.5rem;
+    background: #fafafa;
+    text-decoration: none;
+    border: 1px solid #eee;
+    transition: all 0.3s ease;
+  }
+
+  .nav-item:hover {
+    background: #fff;
+    border-color: #000;
+  }
+
+  .nav-item.primary {
+    background: #000;
+    border-color: #000;
+  }
+
+  .nav-item.primary:hover {
+    background: #222;
+  }
+
+  .nav-item.primary .nav-icon,
+  .nav-item.primary .nav-label,
+  .nav-item.primary .nav-hint,
+  .nav-item.primary .nav-arrow {
+    color: #fff;
+  }
+
+  .nav-item.primary .nav-hint {
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .nav-icon {
+    flex-shrink: 0;
+    display: flex;
+    color: #666;
+    transition: color 0.3s ease;
+  }
+
+  .nav-item:hover .nav-icon {
+    color: #000;
+  }
+
+  .nav-text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.125rem;
+  }
+
+  .nav-label {
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: #000;
+    transition: color 0.3s ease;
+  }
+
+  .nav-hint {
+    font-size: 0.75rem;
+    color: #999;
+    transition: color 0.3s ease;
+  }
+
+  .nav-item:hover .nav-hint {
+    color: #666;
+  }
+
+  .nav-arrow {
+    flex-shrink: 0;
+    display: flex;
+    color: #ccc;
+    transition: all 0.3s ease;
+  }
+
+  .nav-item:hover .nav-arrow {
+    color: #000;
+    transform: translateX(4px);
+  }
+
+  .nav-item.primary .nav-arrow {
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  .nav-item.primary:hover .nav-arrow {
+    color: #fff;
+    transform: translateX(4px);
+  }
+
+  /* Background Element */
+  .bg-element {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(
+      circle,
+      rgba(0, 0, 0, 0.02) 0%,
+      transparent 70%
+    );
+    pointer-events: none;
+  }
+
+  /* Animations */
+  @keyframes number-in {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes content-in {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  /* Responsive */
+  @media (min-width: 640px) {
+    .not-found-page {
+      padding: 6rem 2rem;
+    }
+
+    .nav-options {
+      gap: 1rem;
+    }
+
+    .nav-item {
+      padding: 1.5rem 2rem;
+    }
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .number,
+    .content,
+    .line-decor {
+      animation: none;
+      opacity: 1;
+    }
+
+    .nav-item,
+    .nav-icon,
+    .nav-arrow,
+    .nav-hint {
+      transition: none;
+    }
+
+    .nav-item:hover .nav-arrow,
+    .nav-item.primary:hover .nav-arrow {
+      transform: none;
+    }
+  }
+</style>

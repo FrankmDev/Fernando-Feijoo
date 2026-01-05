@@ -1,0 +1,173 @@
+---
+interface Props {
+  href: string;
+  title: string;
+  subtitle?: string;
+  imageUrl?: string;
+  imageAlt?: string;
+  isAboveFold?: boolean;
+}
+
+const {
+  href,
+  title,
+  subtitle,
+  imageUrl,
+  imageAlt,
+  isAboveFold = false,
+} = Astro.props;
+---
+
+<a href={href} class="card">
+  {
+    imageUrl ? (
+      <img
+        src={imageUrl}
+        alt={imageAlt || title}
+        width="400"
+        height="400"
+        loading={isAboveFold ? "eager" : "lazy"}
+        decoding="async"
+        class="card-img"
+      />
+    ) : (
+      <div class="card-empty">{title}</div>
+    )
+  }
+
+  <div class="card-overlay"></div>
+
+  <div class="card-content">
+    {subtitle && <span class="card-collection">{subtitle}</span>}
+    <h3 class="card-title">{title}</h3>
+  </div>
+</a>
+
+<style>
+  .card {
+    position: relative;
+    display: block;
+    aspect-ratio: 1;
+    overflow: hidden;
+    background: #111;
+    text-decoration: none;
+  }
+
+  .card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition:
+      transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+      opacity 0.5s ease;
+  }
+
+  .card:hover .card-img {
+    transform: scale(1.1);
+    opacity: 0.4;
+  }
+
+  .card-empty {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.875rem;
+    color: #666;
+    background: #f0f0f0;
+  }
+
+  .card-overlay {
+    position: absolute;
+    inset: 0;
+    background: black;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+
+  .card:hover .card-overlay {
+    opacity: 0.5;
+  }
+
+  .card-content {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  .card:hover .card-content,
+  .card:focus-visible .card-content {
+    opacity: 1;
+  }
+
+  .card-collection {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 0.75rem;
+    transform: translateY(15px);
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.1s;
+  }
+
+  .card:hover .card-collection {
+    transform: translateY(0);
+  }
+
+  .card-title {
+    font-size: clamp(1.25rem, 4vw, 1.75rem);
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    margin: 0;
+    transform: translateY(15px);
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .card:hover .card-title {
+    transform: translateY(0);
+  }
+
+  .card:focus-visible {
+    outline: 2px solid #000;
+    outline-offset: 2px;
+  }
+
+  .card:focus-visible .card-collection,
+  .card:focus-visible .card-title {
+    transform: translateY(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .card-img,
+    .card-overlay,
+    .card-content,
+    .card-collection,
+    .card-title {
+      transition: none;
+    }
+
+    .card:hover .card-img {
+      transform: none;
+    }
+
+    .card-content {
+      opacity: 1;
+    }
+
+    .card-collection,
+    .card-title {
+      transform: none;
+    }
+  }
+</style>
