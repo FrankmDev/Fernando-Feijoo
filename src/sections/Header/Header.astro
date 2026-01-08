@@ -14,8 +14,18 @@ const navItems: NavItem[] = [
 ];
 
 const currentPath = Astro.url.pathname;
-const isCurrentPage = (href: string) =>
-  href === "/" ? currentPath === "/" : currentPath.startsWith(href);
+
+// Normalize path by removing trailing slash (except for root)
+const normalizedPath =
+  currentPath === "/" ? "/" : currentPath.replace(/\/$/, "");
+
+const isCurrentPage = (href: string) => {
+  if (href === "/") {
+    return normalizedPath === "/";
+  }
+  // Check if current path starts with the nav href
+  return normalizedPath === href || normalizedPath.startsWith(href + "/");
+};
 ---
 
 <header class="header" id="header" transition:name="header" transition:persist>
@@ -349,9 +359,67 @@ const isCurrentPage = (href: string) =>
     updateScrollState();
   }
 
+  // Update active nav link based on current URL
+  function updateActiveNav() {
+    const currentPath = window.location.pathname;
+    const normalizedPath =
+      currentPath === "/" ? "/" : currentPath.replace(/\/$/, "");
+
+    // Update desktop nav
+    const desktopLinks = document.querySelectorAll(".nav-link");
+    desktopLinks.forEach((link) => {
+      const href = link.getAttribute("href") || "";
+      let isActive = false;
+
+      if (href === "/") {
+        isActive = normalizedPath === "/";
+      } else {
+        isActive =
+          normalizedPath === href || normalizedPath.startsWith(href + "/");
+      }
+
+      if (isActive) {
+        link.classList.add("active");
+        link.setAttribute("aria-current", "page");
+      } else {
+        link.classList.remove("active");
+        link.removeAttribute("aria-current");
+      }
+    });
+
+    // Update mobile nav
+    const mobileLinks = document.querySelectorAll(".mobile-link");
+    mobileLinks.forEach((link) => {
+      const href = link.getAttribute("href") || "";
+      let isActive = false;
+
+      if (href === "/") {
+        isActive = normalizedPath === "/";
+      } else {
+        isActive =
+          normalizedPath === href || normalizedPath.startsWith(href + "/");
+      }
+
+      if (isActive) {
+        link.classList.add("active");
+        link.setAttribute("aria-current", "page");
+      } else {
+        link.classList.remove("active");
+        link.removeAttribute("aria-current");
+      }
+    });
+  }
+
   // Run on initial load
   initHeader();
+  updateActiveNav();
 
   // Run after View Transitions navigation
-  document.addEventListener("astro:after-swap", initHeader);
+  document.addEventListener("astro:after-swap", () => {
+    initHeader();
+    updateActiveNav();
+  });
+
+  // Also update on page show (for back/forward navigation)
+  document.addEventListener("astro:page-load", updateActiveNav);
 </script>
