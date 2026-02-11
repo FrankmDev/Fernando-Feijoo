@@ -1,27 +1,6 @@
-export interface Work {
-  slug: string;
-  title: string;
-  description: string;
-  medium: string;
-  dimensions?: string;
-  edition?: number;
-  price?: string;
-  imageUrls: string[];
-}
+import type { Work, Collection, Category } from "@/types";
 
-export interface Collection {
-  slug: string;
-  title: string;
-  description?: string;
-  works: Work[];
-}
-
-export interface Category {
-  slug: string;
-  title: string;
-  collections?: Collection[];
-  works?: Work[];
-}
+export type { Work, Collection, Category };
 
 export const WORKS: Category[] = [
   {

@@ -1,48 +1,41 @@
-// Utility functions for processing image URLs in the Fernando Feijoo project
+/**
+ * Image processing utilities
+ * Consolidated image URL processing functions
+ */
+
+import { IMAGE_CONFIG } from "@/constants";
 
 /**
  * Converts @assets paths to proper public URLs for Astro
  * @param imageUrl - The image URL that may start with @assets/
  * @returns Processed URL that can be used in img src attributes
  */
-const BUILD_VERSION = String(Date.now());
-
-function appendVersion(url: string): string {
-  return url.includes("?") ? `${url}&v=${BUILD_VERSION}` : `${url}?v=${BUILD_VERSION}`;
-}
-
 export function processImageUrl(imageUrl: string): string {
   if (!imageUrl) return "";
 
   // Handle @assets/ paths - convert to public directory structure
   if (imageUrl.startsWith("@assets/")) {
-    // Convert @assets/works/... to /works/...
-    const p = imageUrl.replace("@assets/", "/");
-    return appendVersion(p);
+    return imageUrl.replace("@assets/", "/");
   }
 
   // Handle @ prefix (legacy support)
   if (imageUrl.startsWith("@")) {
     const p = imageUrl.substring(1);
-    return p.startsWith("/") ? appendVersion(p) : p;
+    return p.startsWith("/") ? p : `/${p}`;
   }
 
   // If it's already a proper path, return as is
   if (imageUrl.startsWith("/")) {
-    return appendVersion(imageUrl);
+    return imageUrl;
   }
-  if (
-    imageUrl.startsWith("https://fernandofeijoo.com") ||
-    imageUrl.startsWith("http://fernandofeijoo.com")
-  ) {
-    return appendVersion(imageUrl);
-  }
+
+  // Handle absolute URLs
   if (imageUrl.startsWith("http")) {
     return imageUrl;
   }
 
   // For relative paths, assume they're in the public directory
-  return appendVersion("/" + imageUrl);
+  return "/" + imageUrl;
 }
 
 /**
@@ -51,7 +44,7 @@ export function processImageUrl(imageUrl: string): string {
  * @returns Array of processed URLs
  */
 export function processImageUrls(imageUrls: string[]): string[] {
-  if (!imageUrls || imageUrls.length === 0) return [];
+  if (!imageUrls?.length) return [];
   return imageUrls.map((url) => processImageUrl(url));
 }
 
@@ -61,8 +54,8 @@ export function processImageUrls(imageUrls: string[]): string[] {
  * @returns First valid image URL or empty string
  */
 export function getFirstImageUrl(imageUrls: string[]): string {
-  const processedUrls = processImageUrls(imageUrls);
-  return processedUrls.length > 0 ? processedUrls[0] : "";
+  if (!imageUrls?.length) return "";
+  return processImageUrl(imageUrls[0]);
 }
 
 /**
@@ -71,7 +64,7 @@ export function getFirstImageUrl(imageUrls: string[]): string {
  * @returns Boolean indicating if there are multiple images
  */
 export function hasMultipleImages(imageUrls: string[]): boolean {
-  return imageUrls && imageUrls.length > 1;
+  return imageUrls?.length > 1;
 }
 
 /**
@@ -81,18 +74,7 @@ export function hasMultipleImages(imageUrls: string[]): boolean {
  */
 export function getAdditionalImageUrls(imageUrls: string[]): string[] {
   if (!imageUrls || imageUrls.length <= 1) return [];
-
   return processImageUrls(imageUrls.slice(1));
-}
-
-/**
- * Creates a fallback image URL for works without images
- * @param title - Title of the work
- * @returns Placeholder image URL or data URL
- */
-export function getFallbackImageUrl(): string {
-  // Return empty string to show CSS placeholder instead
-  return "";
 }
 
 /**
@@ -103,21 +85,11 @@ export function getFallbackImageUrl(): string {
 export function isValidImageUrl(imageUrl: string): boolean {
   if (!imageUrl) return false;
 
-  // Check for common image extensions
-  const imageExtensions = [
-    ".jpg",
-    ".jpeg",
-    ".png",
-    ".gif",
-    ".webp",
-    ".avif",
-    ".svg",
-  ];
-  const hasImageExtension = imageExtensions.some((ext) =>
-    imageUrl.toLowerCase().includes(ext),
+  const hasImageExtension = IMAGE_CONFIG.formats.some((ext) =>
+    imageUrl.toLowerCase().includes(ext)
   );
 
-  return hasImageExtension;
+  return hasImageExtension || imageUrl.startsWith("data:image/");
 }
 
 /**
@@ -128,15 +100,36 @@ export function isValidImageUrl(imageUrl: string): boolean {
  * @returns A placeholder image URL
  */
 export function createPlaceholderImageUrl(
-  width: number = 400,
-  height: number = 300,
-  text: string = "Image",
+  width: number = IMAGE_CONFIG.defaultWidth,
+  height: number = IMAGE_CONFIG.defaultHeight,
+  text: string = "Image"
 ): string {
-  // Create a simple SVG placeholder
   const svg = `<svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg">
-    <rect width="100%" height="100%" fill="#f3f4f6"/>
+    <rect width="100%" height="100%" fill="${IMAGE_CONFIG.placeholderColor}"/>
     <text x="50%" y="50%" text-anchor="middle" dy="0.3em" fill="#6b7280" font-family="Arial, sans-serif" font-size="16">${text}</text>
   </svg>`;
 
   return `data:image/svg+xml;base64,${btoa(svg)}`;
+}
+
+/**
+ * Extracts the first image from a category or collection
+ * @param category - The category object with works or collections
+ * @returns The first image URL found or empty string
+ */
+export function getFirstImageFromCategory(category: {
+  works?: { imageUrls?: string[] }[];
+  collections?: { works?: { imageUrls?: string[] }[] }[];
+}): string {
+  // Check direct works
+  if (category.works?.[0]?.imageUrls?.[0]) {
+    return processImageUrl(category.works[0].imageUrls[0]);
+  }
+
+  // Check collections
+  if (category.collections?.[0]?.works?.[0]?.imageUrls?.[0]) {
+    return processImageUrl(category.collections[0].works[0].imageUrls[0]);
+  }
+
+  return "";
 }

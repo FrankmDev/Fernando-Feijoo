@@ -1,9 +1,10 @@
 ---
 import Socials from "@components/Hero/Socials.astro";
-import SliderHero from "@components/SliderHero.vue";
+import SliderHero from "@components/SliderHero.astro";
 import ContactBanner from "@components/Hero/ContactBanner.astro";
 import { WORKS } from "@data/works";
 import Cta from "@components/Cta.astro";
+import { processImageUrl } from "@utils/images";
 import type { Category, Work } from "@data/works";
 
 interface ProcessedWork extends Work {
@@ -18,14 +19,6 @@ interface GallerySection {
   title: string;
   items: ProcessedWork[];
 }
-
-const processImageUrl = (imageUrl: string): string => {
-  if (!imageUrl) return "";
-  if (imageUrl.startsWith("@assets/")) return imageUrl.replace("@assets/", "/");
-  if (imageUrl.startsWith("@")) return imageUrl.substring(1);
-  if (imageUrl.startsWith("/") || imageUrl.startsWith("http")) return imageUrl;
-  return `/${imageUrl}`;
-};
 
 const allWorks: ProcessedWork[] = WORKS.flatMap((category: Category) => {
   if (category.works) {
@@ -44,7 +37,7 @@ const allWorks: ProcessedWork[] = WORKS.flatMap((category: Category) => {
         categoryTitle: category.title,
         collectionSlug: collection.slug,
         collectionTitle: collection.title,
-      }))
+      })),
     );
   }
 
@@ -64,7 +57,7 @@ const gallery: GallerySection[] = WORKS.map((category: Category) => ({
 
 <section class="hero">
   <div class="slider-wrapper">
-    <SliderHero client:load />
+    <SliderHero />
   </div>
 
   <div class="content">

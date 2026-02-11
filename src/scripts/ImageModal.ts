@@ -1,147 +1,193 @@
-export class ImageModal {
-  private modal: HTMLElement;
-  private modalImage!: HTMLImageElement;
-  private modalCurrent!: HTMLElement;
-  private modalTotal!: HTMLElement;
-  private closeBtn!: HTMLElement;
-  private prevBtn!: HTMLElement;
-  private nextBtn!: HTMLElement;
-  private images: string[] = [];
-  private currentIndex: number = 0;
+/**
+ * Image Modal Controller
+ * Manages a full-screen image gallery modal with navigation
+ */
 
-  constructor(modalId: string = "imageModal") {
-    this.modal = document.getElementById(modalId) as HTMLElement;
+export class ImageModal {
+  private modal: HTMLElement | null = null;
+  private imageEl: HTMLImageElement | null = null;
+  private currentEl: HTMLElement | null = null;
+  private totalEl: HTMLElement | null = null;
+  private closeBtn: HTMLElement | null = null;
+  private prevBtn: HTMLElement | null = null;
+  private nextBtn: HTMLElement | null = null;
+  private loadingEl: HTMLElement | null = null;
+
+  private images: string[] = [];
+  private currentIndex = 0;
+  private isOpen = false;
+
+  constructor(modalId: string) {
+    this.modal = document.getElementById(modalId);
     if (!this.modal) {
-      console.warn(`Modal with id ${modalId} not found`);
+      console.error(`Modal with id "${modalId}" not found`);
       return;
     }
 
-    this.modalImage = this.modal.querySelector(
-      ".modal-image"
-    ) as HTMLImageElement;
-    this.modalCurrent = this.modal.querySelector(
-      ".modal-current"
-    ) as HTMLElement;
-    this.modalTotal = this.modal.querySelector(".modal-total") as HTMLElement;
-    this.closeBtn = this.modal.querySelector(".modal-close") as HTMLElement;
-    this.prevBtn = this.modal.querySelector(".modal-prev") as HTMLElement;
-    this.nextBtn = this.modal.querySelector(".modal-next") as HTMLElement;
+    this.imageEl = this.modal.querySelector(".modal-image");
+    this.currentEl = this.modal.querySelector(".modal-current");
+    this.totalEl = this.modal.querySelector(".modal-total");
+    this.closeBtn = this.modal.querySelector(".modal-close");
+    this.prevBtn = this.modal.querySelector(".modal-prev");
+    this.nextBtn = this.modal.querySelector(".modal-next");
+    this.loadingEl = this.modal.querySelector(".modal-loading");
 
     this.bindEvents();
-    this.setupImageEvents();
   }
 
-  private bindEvents() {
-    // Close modal events
-    this.closeBtn?.addEventListener("click", () => this.closeModal());
-    this.modal?.addEventListener("click", (e) => {
-      if (e.target === this.modal) this.closeModal();
-    });
-
-    // Navigation events
-    this.prevBtn?.addEventListener("click", () => this.showPreviousImage());
-    this.nextBtn?.addEventListener("click", () => this.showNextImage());
-
-    // Keyboard events
-    document.addEventListener("keydown", (e) => {
-      if (!this.modal.classList.contains("hidden")) {
-        switch (e.key) {
-          case "Escape":
-            this.closeModal();
-            break;
-          case "ArrowLeft":
-            this.showPreviousImage();
-            break;
-          case "ArrowRight":
-            this.showNextImage();
-            break;
-        }
-      }
-    });
-  }
-
-  private setupImageEvents() {
-    if (this.modalImage) {
-      this.modalImage.addEventListener("load", () => {
-        this.hideLoading();
-        this.modalImage.style.opacity = "1";
-      });
-
-      this.modalImage.addEventListener("error", () => {
-        this.hideLoading();
-        this.modalImage.style.opacity = "1";
-      });
-    }
-  }
-
-  private showLoading() {
-    const loading = this.modal.querySelector(".modal-loading") as HTMLElement;
-    if (loading) loading.style.display = "flex";
-    this.modalImage.style.opacity = "0";
-  }
-
-  private hideLoading() {
-    const loading = this.modal.querySelector(".modal-loading") as HTMLElement;
-    if (loading) loading.style.display = "none";
-  }
-
-  public openModal(images: string[], startIndex: number = 0) {
+  /**
+   * Opens the modal with a set of images starting at the specified index
+   */
+  openModal(images: string[], startIndex: number = 0): void {
     this.images = images;
     this.currentIndex = startIndex;
+    this.isOpen = true;
 
-    if (this.images.length === 0) return;
+    this.updateImage();
+    this.updateCounter();
+    this.show();
 
-    // Update total count
-    if (this.modalTotal) {
-      this.modalTotal.textContent = this.images.length.toString();
-    }
-
-    // Show/hide navigation buttons based on number of images
-    const showNavigation = this.images.length > 1;
-    if (this.prevBtn)
-      this.prevBtn.style.display = showNavigation ? "block" : "none";
-    if (this.nextBtn)
-      this.nextBtn.style.display = showNavigation ? "block" : "none";
-
-    this.showCurrentImage();
-    this.modal.classList.remove("hidden");
-    document.body.style.overflow = "hidden";
+    document.body.classList.add("modal-open");
+    document.addEventListener("keydown", this.handleKeydown);
   }
 
-  private showCurrentImage() {
-    if (this.currentIndex < 0 || this.currentIndex >= this.images.length)
-      return;
-
-    this.showLoading();
-
-    const imageSrc = this.images[this.currentIndex];
-    this.modalImage.src = imageSrc;
-    this.modalImage.alt = `Image ${this.currentIndex + 1} of ${this.images.length}`;
-
-    if (this.modalCurrent) {
-      this.modalCurrent.textContent = (this.currentIndex + 1).toString();
-    }
+  /**
+   * Closes the modal
+   */
+  close(): void {
+    this.isOpen = false;
+    this.hide();
+    document.body.classList.remove("modal-open");
+    document.removeEventListener("keydown", this.handleKeydown);
   }
 
-  private showPreviousImage() {
+  /**
+   * Shows the modal element
+   */
+  private show(): void {
+    this.modal?.classList.remove("hidden");
+    // Trigger reflow for transition
+    void this.modal?.offsetHeight;
+    this.modal?.classList.add("active");
+  }
+
+  /**
+   * Hides the modal element
+   */
+  private hide(): void {
+    this.modal?.classList.remove("active");
+    setTimeout(() => {
+      this.modal?.classList.add("hidden");
+    }, 300);
+  }
+
+  /**
+   * Navigates to the previous image
+   */
+  private prev(): void {
     if (this.images.length <= 1) return;
     this.currentIndex =
       this.currentIndex > 0 ? this.currentIndex - 1 : this.images.length - 1;
-    this.showCurrentImage();
+    this.updateImage();
+    this.updateCounter();
   }
 
-  private showNextImage() {
+  /**
+   * Navigates to the next image
+   */
+  private next(): void {
     if (this.images.length <= 1) return;
     this.currentIndex =
       this.currentIndex < this.images.length - 1 ? this.currentIndex + 1 : 0;
-    this.showCurrentImage();
+    this.updateImage();
+    this.updateCounter();
   }
 
-  private closeModal() {
-    this.modal.classList.add("hidden");
-    document.body.style.overflow = "";
-    this.modalImage.src = "";
-    this.hideLoading();
-    this.modalImage.style.opacity = "0";
+  /**
+   * Updates the displayed image
+   */
+  private updateImage(): void {
+    if (!this.imageEl || this.images.length === 0) return;
+
+    const src = this.images[this.currentIndex];
+    this.showLoading();
+
+    const img = new Image();
+    img.onload = () => {
+      if (this.imageEl) {
+        this.imageEl.src = src;
+        this.imageEl.classList.remove("opacity-0");
+        this.hideLoading();
+      }
+    };
+    img.onerror = () => {
+      this.hideLoading();
+    };
+    img.src = src;
+
+    this.imageEl.classList.add("opacity-0");
+  }
+
+  /**
+   * Updates the image counter display
+   */
+  private updateCounter(): void {
+    if (this.currentEl) {
+      this.currentEl.textContent = String(this.currentIndex + 1);
+    }
+    if (this.totalEl) {
+      this.totalEl.textContent = String(this.images.length);
+    }
+  }
+
+  /**
+   * Shows the loading spinner
+   */
+  private showLoading(): void {
+    if (this.loadingEl) {
+      this.loadingEl.style.display = "flex";
+    }
+  }
+
+  /**
+   * Hides the loading spinner
+   */
+  private hideLoading(): void {
+    if (this.loadingEl) {
+      this.loadingEl.style.display = "none";
+    }
+  }
+
+  /**
+   * Handles keyboard navigation
+   */
+  private handleKeydown = (e: KeyboardEvent): void => {
+    switch (e.key) {
+      case "Escape":
+        this.close();
+        break;
+      case "ArrowLeft":
+        this.prev();
+        break;
+      case "ArrowRight":
+        this.next();
+        break;
+    }
+  };
+
+  /**
+   * Binds event listeners to controls
+   */
+  private bindEvents(): void {
+    this.closeBtn?.addEventListener("click", () => this.close());
+    this.prevBtn?.addEventListener("click", () => this.prev());
+    this.nextBtn?.addEventListener("click", () => this.next());
+
+    // Close on backdrop click
+    this.modal?.addEventListener("click", (e) => {
+      if (e.target === this.modal) {
+        this.close();
+      }
+    });
   }
 }

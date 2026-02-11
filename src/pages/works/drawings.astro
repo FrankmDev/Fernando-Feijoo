@@ -2,7 +2,7 @@
 import WorksLayout from "@components/WorksLayout.astro";
 import WorkCard from "@components/WorkCard.astro";
 import { WORKS } from "@data/works";
-import { processImageUrl } from "@utils/imageUtils";
+import { processImageUrl } from "@utils/images";
 
 const drawingsCategory = WORKS.find((category) => category.slug === "drawings");
 if (!drawingsCategory) throw new Error("Drawings category not found");

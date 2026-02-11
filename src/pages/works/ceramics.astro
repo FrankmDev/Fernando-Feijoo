@@ -2,7 +2,7 @@
 import WorksLayout from "@components/WorksLayout.astro";
 import WorkCard from "@components/WorkCard.astro";
 import { WORKS } from "@data/works";
-import { processImageUrl } from "@utils/imageUtils";
+import { processImageUrl } from "@utils/images";
 
 const ceramicsCategory = WORKS.find((category) => category.slug === "ceramics");
 if (!ceramicsCategory) throw new Error("Ceramics category not found");

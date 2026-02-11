@@ -12,7 +12,10 @@
       "@icons/*": ["src/icons/*"],
       "@assets/*": ["src/assets/*"],
       "@data/*": ["src/data/*"],
-      "@utils/*": ["src/utils/*"]
+      "@utils/*": ["src/utils/*"],
+      "@constants": ["src/constants/index.ts"],
+      "@constants/*": ["src/constants/*"],
+      "@types/*": ["src/types/*"]
     },
     "jsx": "preserve",
     "types": ["astro/client"]

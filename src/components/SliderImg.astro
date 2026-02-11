@@ -1,0 +1,321 @@
+---
+interface Slide {
+  src: string;
+  alt: string;
+}
+
+const slides: Slide[] = [
+  {
+    src: "/profile/studio.avif",
+    alt: "Fernando Feijoo in his studio workspace",
+  },
+  {
+    src: "/profile/columbian.avif",
+    alt: "Fernando Feijoo working with Columbian printing press",
+  },
+  {
+    src: "/profile/printing.avif",
+    alt: "Fernando Feijoo during the printing process",
+  },
+  {
+    src: "/profile/working.avif",
+    alt: "Fernando Feijoo working on an art piece",
+  },
+];
+---
+
+<div
+  class="slider"
+  role="region"
+  aria-label="Image gallery"
+  aria-roledescription="carousel"
+  data-profile-slider
+>
+  <!-- Main Image Container -->
+  <div class="slider-viewport">
+    {
+      slides.map((slide, index) => (
+        <div
+          class={`slide ${index === 0 ? "active" : ""}`}
+          role="group"
+          aria-roledescription="slide"
+          aria-label={`${index + 1} of ${slides.length}`}
+          aria-hidden={index !== 0}
+          data-profile-slide={index}
+        >
+          <img
+            src={slide.src}
+            alt={slide.alt}
+            class="slide-image"
+            loading={index === 0 ? "eager" : "lazy"}
+            decoding="async"
+            fetchpriority={index === 0 ? "high" : "auto"}
+            width="500"
+            height="500"
+          />
+        </div>
+      ))
+    }
+
+    <!-- Navigation Arrows -->
+    <button
+      class="nav-btn nav-prev"
+      aria-label="Previous image"
+      data-profile-prev
+    >
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 20 20"
+        fill="none"
+        aria-hidden="true"
+      >
+        <path
+          d="M12 4l-6 6 6 6"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"></path>
+      </svg>
+    </button>
+
+    <button class="nav-btn nav-next" aria-label="Next image" data-profile-next>
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 20 20"
+        fill="none"
+        aria-hidden="true"
+      >
+        <path
+          d="M8 4l6 6-6 6"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"></path>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Progress Bar -->
+  <div class="progress-bar">
+    <div class="progress-fill" data-profile-progress></div>
+  </div>
+</div>
+
+<script is:inline>
+  (function () {
+    function initProfileSlider() {
+      const slider = document.querySelector("[data-profile-slider]");
+      if (!slider || slider.dataset.initialized) return;
+
+      slider.dataset.initialized = "true";
+
+      const slides = slider.querySelectorAll("[data-profile-slide]");
+      const progressBar = slider.querySelector("[data-profile-progress]");
+      const prevBtn = slider.querySelector("[data-profile-prev]");
+      const nextBtn = slider.querySelector("[data-profile-next]");
+
+      let currentIndex = 0;
+      let isTransitioning = false;
+      let autoplayInterval = null;
+      const AUTOPLAY_DELAY = 4000;
+      const TRANSITION_DURATION = 800;
+      const prefersReducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
+
+      function updateProgress() {
+        if (progressBar) {
+          const progress = ((currentIndex + 1) / slides.length) * 100;
+          progressBar.style.transform = "scaleX(" + progress / 100 + ")";
+        }
+      }
+
+      function goToSlide(index) {
+        if (isTransitioning || index === currentIndex) return;
+
+        isTransitioning = true;
+
+        slides[currentIndex].classList.remove("active");
+        slides[currentIndex].setAttribute("aria-hidden", "true");
+        slides[index].classList.add("active");
+        slides[index].setAttribute("aria-hidden", "false");
+
+        currentIndex = index;
+        updateProgress();
+
+        setTimeout(function () {
+          isTransitioning = false;
+        }, TRANSITION_DURATION);
+      }
+
+      function nextSlide() {
+        if (isTransitioning) return;
+        goToSlide((currentIndex + 1) % slides.length);
+      }
+
+      function prevSlide() {
+        if (isTransitioning) return;
+        goToSlide((currentIndex - 1 + slides.length) % slides.length);
+      }
+
+      function startAutoplay() {
+        if (autoplayInterval || prefersReducedMotion) return;
+
+        autoplayInterval = setInterval(function () {
+          nextSlide();
+        }, AUTOPLAY_DELAY);
+      }
+
+      function stopAutoplay() {
+        if (autoplayInterval) {
+          clearInterval(autoplayInterval);
+          autoplayInterval = null;
+        }
+      }
+
+      // Event listeners
+      if (prevBtn) prevBtn.addEventListener("click", prevSlide);
+      if (nextBtn) nextBtn.addEventListener("click", nextSlide);
+
+      // Pause on hover/focus
+      slider.addEventListener("mouseenter", stopAutoplay);
+      slider.addEventListener("mouseleave", startAutoplay);
+      slider.addEventListener("focusin", stopAutoplay);
+      slider.addEventListener("focusout", startAutoplay);
+
+      // Start autoplay
+      startAutoplay();
+    }
+
+    // Initialize
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", initProfileSlider);
+    } else {
+      initProfileSlider();
+    }
+
+    document.addEventListener("astro:page-load", initProfileSlider);
+  })();
+</script>
+
+<style>
+  .slider {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+  }
+
+  .slider-viewport {
+    position: relative;
+    aspect-ratio: 1;
+    overflow: hidden;
+    background: #f5f5f5;
+  }
+
+  /* Slides */
+  .slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+    will-change: opacity;
+  }
+
+  .slide.active {
+    opacity: 1;
+    z-index: 1;
+  }
+
+  .slide-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Navigation Buttons */
+  .nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .slider:hover .nav-btn,
+  .slider:focus-within .nav-btn {
+    opacity: 1;
+  }
+
+  .nav-btn:hover {
+    background: #fff;
+  }
+
+  .nav-btn:focus-visible {
+    outline: 2px solid #000;
+    outline-offset: 2px;
+    opacity: 1;
+  }
+
+  .nav-prev {
+    left: 1rem;
+  }
+
+  .nav-next {
+    right: 1rem;
+  }
+
+  /* Progress Bar */
+  .progress-bar {
+    width: 100%;
+    height: 2px;
+    background: #eee;
+    margin-top: 1.5rem;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: #000;
+    transform-origin: left;
+    transition: transform 0.5s ease;
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .slide {
+      transition: opacity 0.1s ease;
+    }
+
+    .nav-btn,
+    .progress-fill {
+      transition: none;
+    }
+  }
+
+  /* Print */
+  @media print {
+    .nav-btn,
+    .progress-bar {
+      display: none;
+    }
+
+    .slide {
+      position: static;
+      opacity: 1;
+    }
+
+    .slide:not(:first-child) {
+      display: none;
+    }
+  }
+</style>

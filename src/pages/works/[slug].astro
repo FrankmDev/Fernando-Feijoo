@@ -1,12 +1,13 @@
 ---
-import "@styles/general.css";
 import Layout from "@layouts/Layout.astro";
-import { WORKS } from "@data/works";
 import SectionContainer from "@components/SectionContainer.astro";
 import ContactBanner from "@components/Hero/ContactBanner.astro";
 import WorkCard from "@components/WorkCard.astro";
 import Cta from "@components/Cta.astro";
 import ImageModal from "@components/ImageModal.astro";
+import { WORKS } from "@data/works";
+import { processImageUrls } from "@utils/images";
+
 
 export async function getStaticPaths() {
   const paths = [];
@@ -50,15 +51,7 @@ export const prerender = true;
 
 const { work, categorySlug, categoryTitle, collectionSlug, collectionTitle } = Astro.props;
 
-const processImageUrl = (imageUrl: string): string => {
-  if (!imageUrl) return "";
-  if (imageUrl.startsWith("@assets/")) return imageUrl.replace("@assets/", "/");
-  if (imageUrl.startsWith("@")) return imageUrl.substring(1);
-  if (imageUrl.startsWith("/") || imageUrl.startsWith("http")) return imageUrl;
-  return `/${imageUrl}`;
-};
-
-const processedImageUrls = work?.imageUrls?.map((url: string) => processImageUrl(url)) || [];
+const processedImageUrls = work?.imageUrls ? processImageUrls(work.imageUrls) : [];
 const mainImage = processedImageUrls[0] || '';
 const hasMultipleImages = processedImageUrls.length > 1;
 const galleryImages = hasMultipleImages ? processedImageUrls : [];
@@ -288,7 +281,7 @@ const backLabel = collectionTitle || categoryTitle;
                     href={`/works/${relatedWork.slug}`}
                     title={relatedWork.title}
                     subtitle={relatedWork.medium}
-                    imageUrl={relatedWork.imageUrls?.[0] ? processImageUrl(relatedWork.imageUrls[0]) : ""}
+                    imageUrl={relatedWork.imageUrls?.[0] ? processImageUrls([relatedWork.imageUrls[0]])[0] : ""}
                     imageAlt={relatedWork.title}
                     isAboveFold={false}
                   />
@@ -312,32 +305,41 @@ const backLabel = collectionTitle || categoryTitle;
 
   <ImageModal id="imageModal" />
 
-  <script type="application/ld+json" is:inline set:html={JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "VisualArtwork",
-    "name": work?.title,
-    "image": processedImageUrls.map(url => `https://fernando-feijoo.com${url}`),
-    "description": work?.description,
-    "creator": {
-      "@type": "Person",
-      "name": "Fernando Feijoo",
-      "url": "https://fernando-feijoo.com"
-    },
-    "artist": {
-      "@type": "Person",
-      "name": "Fernando Feijoo"
-    },
-    "artMedium": work?.medium,
-    "artform": categoryTitle,
-    "width": work?.dimensions,
-    "offers": work?.price ? {
-      "@type": "Offer",
-      "price": work.price.replace(/[^0-9.]/g, ''),
-      "priceCurrency": "GBP",
-      "availability": "https://schema.org/InStock",
-      "url": `https://fernando-feijoo.com/works/${work?.slug}`
-    } : undefined
-  })} />
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(
+    (() => {
+      const schema: Record<string, unknown> = {
+        "@context": "https://schema.org",
+        "@type": "VisualArtwork",
+        "name": work?.title,
+        "image": processedImageUrls.map(url => `https://fernando-feijoo.com${url}`),
+        "description": work?.description,
+        "creator": {
+          "@type": "Person",
+          "name": "Fernando Feijoo",
+          "url": "https://fernando-feijoo.com"
+        },
+        "artist": {
+          "@type": "Person",
+          "name": "Fernando Feijoo"
+        },
+        "artMedium": work?.medium,
+        "artform": categoryTitle,
+        "width": work?.dimensions
+      };
+      
+      if (work?.price) {
+        schema.offers = {
+          "@type": "Offer",
+          "price": work.price.replace(/[^0-9.]/g, ''),
+          "priceCurrency": "GBP",
+          "availability": "https://schema.org/InStock",
+          "url": `https://fernando-feijoo.com/works/${work?.slug}`
+        };
+      }
+      
+      return schema;
+    })()
+  )} />
 
   <script>
     function setupWorkPage() {

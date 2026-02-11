@@ -1,31 +1,10 @@
 ---
 import Logo from "@components/Header/Logo.astro";
-
-interface NavItem {
-  href: string;
-  text: string;
-}
-
-const navItems: NavItem[] = [
-  { href: "/", text: "Home" },
-  { href: "/works", text: "Works" },
-  { href: "/profile", text: "Profile" },
-  { href: "/contact", text: "Contact" },
-];
+import { NAV_ITEMS } from "@constants";
+import { isCurrentPage } from "@utils/navigation";
 
 const currentPath = Astro.url.pathname;
 
-// Normalize path by removing trailing slash (except for root)
-const normalizedPath =
-  currentPath === "/" ? "/" : currentPath.replace(/\/$/, "");
-
-const isCurrentPage = (href: string) => {
-  if (href === "/") {
-    return normalizedPath === "/";
-  }
-  // Check if current path starts with the nav href
-  return normalizedPath === href || normalizedPath.startsWith(href + "/");
-};
 ---
 
 <header class="header" id="header" transition:name="header" transition:persist>
@@ -35,11 +14,11 @@ const isCurrentPage = (href: string) => {
     <!-- Desktop Nav -->
     <nav class="nav-desktop" aria-label="Main navigation">
       {
-        navItems.map((item) => (
+        NAV_ITEMS.map((item) => (
           <a
             href={item.href}
-            class:list={["nav-link", { active: isCurrentPage(item.href) }]}
-            aria-current={isCurrentPage(item.href) ? "page" : undefined}
+            class:list={["nav-link", { active: isCurrentPage(item.href, currentPath) }]}
+            aria-current={isCurrentPage(item.href, currentPath) ? "page" : undefined}
           >
             {item.text}
           </a>
@@ -66,11 +45,11 @@ const isCurrentPage = (href: string) => {
 <div class="mobile-overlay" id="mobileMenu" aria-hidden="true">
   <nav class="mobile-nav">
     {
-      navItems.map((item, i) => (
+      NAV_ITEMS.map((item, i) => (
         <a
           href={item.href}
-          class:list={["mobile-link", { active: isCurrentPage(item.href) }]}
-          aria-current={isCurrentPage(item.href) ? "page" : undefined}
+          class:list={["mobile-link", { active: isCurrentPage(item.href, currentPath) }]}
+          aria-current={isCurrentPage(item.href, currentPath) ? "page" : undefined}
           style={`--i: ${i}`}
         >
           {item.text}
@@ -292,134 +271,130 @@ const isCurrentPage = (href: string) => {
 </style>
 
 <script>
-  function initHeader() {
-    const header = document.getElementById("header");
-    const toggle = document.getElementById("menuToggle");
-    const overlay = document.getElementById("mobileMenu");
-    const links = overlay?.querySelectorAll(".mobile-link");
+  import { isCurrentPage } from "@utils/navigation";
 
-    let isOpen = false;
+  /**
+   * Manages the mobile menu state and interactions
+   */
+  class MobileMenuController {
+    private header: HTMLElement | null;
+    private toggle: HTMLElement | null;
+    private overlay: HTMLElement | null;
+    private links: NodeListOf<HTMLElement> | null = null;
+    private isOpen = false;
 
-    function openMenu() {
-      isOpen = true;
-      header?.classList.add("menu-open");
-      overlay?.classList.add("open");
-      overlay?.setAttribute("aria-hidden", "false");
-      toggle?.setAttribute("aria-expanded", "true");
+    constructor() {
+      this.header = document.getElementById("header");
+      this.toggle = document.getElementById("menuToggle");
+      this.overlay = document.getElementById("mobileMenu");
+      this.links = this.overlay?.querySelectorAll(".mobile-link") ?? null;
+      this.init();
+    }
+
+    private init(): void {
+      this.toggle?.addEventListener("click", () => this.toggleMenu());
+      this.links?.forEach((link) => {
+        link.addEventListener("click", () => this.close());
+      });
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && this.isOpen) this.close();
+      });
+    }
+
+    open(): void {
+      this.isOpen = true;
+      this.header?.classList.add("menu-open");
+      this.overlay?.classList.add("open");
+      this.overlay?.setAttribute("aria-hidden", "false");
+      this.toggle?.setAttribute("aria-expanded", "true");
       document.body.style.overflow = "hidden";
     }
 
-    function closeMenu() {
-      isOpen = false;
-      header?.classList.remove("menu-open");
-      overlay?.classList.remove("open");
-      overlay?.setAttribute("aria-hidden", "true");
-      toggle?.setAttribute("aria-expanded", "false");
+    close(): void {
+      this.isOpen = false;
+      this.header?.classList.remove("menu-open");
+      this.overlay?.classList.remove("open");
+      this.overlay?.setAttribute("aria-hidden", "true");
+      this.toggle?.setAttribute("aria-expanded", "false");
       document.body.style.overflow = "";
     }
 
-    function toggleMenu() {
-      isOpen ? closeMenu() : openMenu();
+    toggleMenu(): void {
+      this.isOpen ? this.close() : this.open();
     }
-
-    // Toggle click
-    toggle?.addEventListener("click", toggleMenu);
-
-    // Close on link click
-    links?.forEach((link) => {
-      link.addEventListener("click", closeMenu);
-    });
-
-    // Close on Escape
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && isOpen) closeMenu();
-    });
-
-    // Scroll shadow
-    function updateScrollState() {
-      if (window.scrollY > 10) {
-        header?.classList.add("scrolled");
-      } else {
-        header?.classList.remove("scrolled");
-      }
-    }
-
-    let ticking = false;
-    window.addEventListener("scroll", () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          updateScrollState();
-          ticking = false;
-        });
-        ticking = true;
-      }
-    });
-
-    // Initial check
-    updateScrollState();
   }
 
-  // Update active nav link based on current URL
-  function updateActiveNav() {
+  /**
+   * Manages scroll state for header styling
+   */
+  class ScrollController {
+    private header: HTMLElement | null;
+    private ticking = false;
+
+    constructor() {
+      this.header = document.getElementById("header");
+      this.init();
+    }
+
+    private init(): void {
+      window.addEventListener("scroll", () => {
+        if (!this.ticking) {
+          requestAnimationFrame(() => {
+            this.updateScrollState();
+            this.ticking = false;
+          });
+          this.ticking = true;
+        }
+      });
+      this.updateScrollState();
+    }
+
+    private updateScrollState(): void {
+      if (window.scrollY > 10) {
+        this.header?.classList.add("scrolled");
+      } else {
+        this.header?.classList.remove("scrolled");
+      }
+    }
+  }
+
+  /**
+   * Updates active state of navigation links
+   */
+  function updateActiveNavLinks(): void {
     const currentPath = window.location.pathname;
-    const normalizedPath =
-      currentPath === "/" ? "/" : currentPath.replace(/\/$/, "");
+    const navSelectors = [".nav-link", ".mobile-link"];
 
-    // Update desktop nav
-    const desktopLinks = document.querySelectorAll(".nav-link");
-    desktopLinks.forEach((link) => {
-      const href = link.getAttribute("href") || "";
-      let isActive = false;
+    navSelectors.forEach((selector) => {
+      document.querySelectorAll<HTMLElement>(selector).forEach((link) => {
+        const href = link.getAttribute("href") || "";
+        const isActive = isCurrentPage(href, currentPath);
 
-      if (href === "/") {
-        isActive = normalizedPath === "/";
-      } else {
-        isActive =
-          normalizedPath === href || normalizedPath.startsWith(href + "/");
-      }
-
-      if (isActive) {
-        link.classList.add("active");
-        link.setAttribute("aria-current", "page");
-      } else {
-        link.classList.remove("active");
-        link.removeAttribute("aria-current");
-      }
+        link.classList.toggle("active", isActive);
+        link.toggleAttribute("aria-current", isActive);
+        if (isActive) {
+          link.setAttribute("aria-current", "page");
+        } else {
+          link.removeAttribute("aria-current");
+        }
+      });
     });
+  }
 
-    // Update mobile nav
-    const mobileLinks = document.querySelectorAll(".mobile-link");
-    mobileLinks.forEach((link) => {
-      const href = link.getAttribute("href") || "";
-      let isActive = false;
-
-      if (href === "/") {
-        isActive = normalizedPath === "/";
-      } else {
-        isActive =
-          normalizedPath === href || normalizedPath.startsWith(href + "/");
-      }
-
-      if (isActive) {
-        link.classList.add("active");
-        link.setAttribute("aria-current", "page");
-      } else {
-        link.classList.remove("active");
-        link.removeAttribute("aria-current");
-      }
-    });
+  /**
+   * Initialize all header functionality
+   */
+  function initHeader(): void {
+    new MobileMenuController();
+    new ScrollController();
+    updateActiveNavLinks();
   }
 
   // Run on initial load
   initHeader();
-  updateActiveNav();
 
   // Run after View Transitions navigation
-  document.addEventListener("astro:after-swap", () => {
-    initHeader();
-    updateActiveNav();
-  });
-
-  // Also update on page show (for back/forward navigation)
-  document.addEventListener("astro:page-load", updateActiveNav);
+  document.addEventListener("astro:after-swap", initHeader);
+  document.addEventListener("astro:page-load", updateActiveNavLinks);
 </script>

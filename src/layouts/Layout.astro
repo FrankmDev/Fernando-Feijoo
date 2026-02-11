@@ -1,43 +1,33 @@
 ---
-interface Props {
-  title: string;
-  description?: string;
-  image?: string;
-  canonicalURL?: string;
-  noindex?: boolean;
-}
+import Header from "@sections/Header/Header.astro";
+import Footer from "@sections/Footer/Footer.astro";
+import { SITE_CONFIG } from "@constants";
+import type { SeoMeta } from "@/types";
+
+interface Props extends SeoMeta {}
 
 const {
   title,
-  description = "Fernando Feijoo is a multi-disciplinary artist and printmaker exploring printmaking, drawing, painting, artist books and ceramics. View his portfolio of contemporary artwork.",
+  description = SITE_CONFIG.description,
   image = "/favicon.png",
   canonicalURL,
   noindex = false,
 } = Astro.props;
 
 // Safe URL handling
-const siteUrl = Astro.site
-  ? Astro.site.toString()
-  : "https://fernando-feijoo.com";
+const siteUrl = Astro.site?.toString() || SITE_CONFIG.url;
 const currentUrl = canonicalURL || `${siteUrl}${Astro.url.pathname}`;
 const imageUrl = image.startsWith("http") ? image : `${siteUrl}${image}`;
-
-import Header from "@sections/Header/Header.astro";
-import Footer from "@sections/Footer/Footer.astro";
-import { ClientRouter } from "astro:transitions";
 
 // Generate structured data
 const structuredData = {
   "@context": "https://schema.org",
   "@type": "Person",
-  name: "Fernando Feijoo",
+  name: SITE_CONFIG.name,
   jobTitle: "Artist & Printmaker",
-  description:
-    "Multi-disciplinary artist specializing in printmaking, ceramics, drawings, and mixed media",
+  description: SITE_CONFIG.description,
   url: siteUrl,
-  sameAs: [
-    // Add social media URLs when available
-  ],
+  sameAs: [],
   knowsAbout: [
     "Printmaking",
     "Ceramics",
@@ -46,9 +36,6 @@ const structuredData = {
     "Artist Books",
   ],
 };
-
-// Page-specific structured data - keep it simple to avoid TypeScript errors
-const pageStructuredData = structuredData;
 ---
 
 <!doctype html>
@@ -71,25 +58,24 @@ const pageStructuredData = structuredData;
     <title>{title}</title>
     <meta name="title" content={title} />
     <meta name="description" content={description} />
-    <meta name="author" content="Fernando Feijoo" />
-    <meta
-      name="keywords"
-      content="Fernando Feijoo, artist, printmaker, ceramics, drawings, mixed media, artist books, contemporary art, linocut, letterpress"
-    />
+    <meta name="author" content={SITE_CONFIG.author} />
+    <meta name="keywords" content={SITE_CONFIG.keywords.join(", ")} />
 
     <!-- Robots -->
-    {noindex && <meta name="robots" content="noindex, nofollow" />}
-    {!noindex && <meta name="robots" content="index, follow" />}
+    {
+      noindex ? (
+        <meta name="robots" content="noindex, nofollow" />
+      ) : (
+        <meta name="robots" content="index, follow" />
+      )
+    }
 
     <!-- Canonical URL -->
     <link rel="canonical" href={currentUrl} />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
-    <meta
-      property="og:site_name"
-      content="Fernando Feijoo - Artist & Printmaker"
-    />
+    <meta property="og:site_name" content={SITE_CONFIG.title} />
     <meta property="og:url" content={currentUrl} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -98,7 +84,7 @@ const pageStructuredData = structuredData;
     <meta property="og:image:height" content="630" />
     <meta
       property="og:image:alt"
-      content="Fernando Feijoo - Contemporary Artist & Printmaker"
+      content={`${SITE_CONFIG.name} - Contemporary Artist & Printmaker`}
     />
     <meta property="og:locale" content="en_GB" />
 
@@ -110,7 +96,7 @@ const pageStructuredData = structuredData;
     <meta property="twitter:image" content={imageUrl} />
     <meta
       property="twitter:image:alt"
-      content="Fernando Feijoo - Contemporary Artist & Printmaker"
+      content={`${SITE_CONFIG.name} - Contemporary Artist & Printmaker`}
     />
 
     <!-- Favicons -->
@@ -140,24 +126,16 @@ const pageStructuredData = structuredData;
     <script
       type="application/ld+json"
       is:inline
-      set:html={JSON.stringify(pageStructuredData)}
+      set:html={JSON.stringify(structuredData)}
     />
-
-    <!-- Scripts -->
-    <script src="/components/scripts/mobile-menu.js" is:inline defer></script>
 
     <!-- Scroll Reveal Animation -->
     <script src="../scripts/scroll-reveal.ts"></script>
 
-    <!-- Performance optimizations -->
+    <!-- Performance & Security -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="format-detection" content="telephone=no" />
-
-    <!-- Security -->
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
-
-    <!-- View Transitions -->
-    <ClientRouter />
   </head>
 
   <body
@@ -179,72 +157,24 @@ const pageStructuredData = structuredData;
 
     <Footer />
 
-    <!-- Performance monitoring -->
-    <script>
-      // Basic performance monitoring
-      if ("performance" in window && "PerformanceObserver" in window) {
-        // Monitor basic performance metrics
+    <!-- Performance monitoring (development only) -->
+    <script is:inline>
+      if (import.meta.env?.DEV && "performance" in window) {
         window.addEventListener("load", () => {
-          const perfData = performance.getEntriesByType(
-            "navigation"
-          )[0] as PerformanceNavigationTiming;
-          if (
-            perfData &&
-            (perfData as any).loadEventEnd &&
-            (perfData as any).fetchStart
-          ) {
+          const perfData = performance.getEntriesByType("navigation")[0];
+          if (perfData?.loadEventEnd && perfData?.fetchStart) {
             console.log(
               "Page Load Time:",
-              (perfData as any).loadEventEnd - (perfData as any).fetchStart
+              perfData.loadEventEnd - perfData.fetchStart,
             );
           }
-        });
-
-        // Monitor LCP (Largest Contentful Paint)
-        try {
-          const observer = new PerformanceObserver((list) => {
-            const entries = list.getEntries();
-            const lastEntry = entries[entries.length - 1];
-            console.log("LCP:", lastEntry.startTime);
-          });
-          observer.observe({
-            type: "largest-contentful-paint",
-            buffered: true,
-          });
-        } catch (e) {
-          // PerformanceObserver not fully supported
-        }
-      }
-
-      // Error reporting
-      window.addEventListener("error", (e) => {
-        console.error("Global error:", e.error);
-      });
-
-      window.addEventListener("unhandledrejection", (e) => {
-        console.error("Unhandled promise rejection:", e.reason);
-      });
-    </script>
-
-    <!-- Service Worker Registration (Kill Switch) -->
-    <script>
-      if ("serviceWorker" in navigator) {
-        window.addEventListener("load", () => {
-          navigator.serviceWorker
-            .register("/sw.js")
-            .then((registration) => {
-              console.log("Kill Switch SW registered: ", registration);
-            })
-            .catch((registrationError) => {
-              console.log("SW registration failed: ", registrationError);
-            });
         });
       }
     </script>
   </body>
 </html>
 
-<style>
+<style is:global>
   /* Screen reader only utility */
   .sr-only {
     position: absolute;
@@ -258,7 +188,7 @@ const pageStructuredData = structuredData;
     border: 0;
   }
 
-  .focus\:not-sr-only:focus {
+  .sr-only:focus {
     position: static;
     width: auto;
     height: auto;
@@ -288,26 +218,22 @@ const pageStructuredData = structuredData;
       padding: 1rem;
     }
 
-    /* Hide navigation and non-essential elements */
     header,
     footer {
       display: none;
     }
 
-    /* Ensure images fit on page */
     img {
       max-width: 100% !important;
       height: auto !important;
     }
 
-    /* Break pages appropriately */
     h1,
     h2,
     h3 {
       break-after: avoid;
     }
 
-    /* Show URLs for links */
     a[href]:after {
       content: " (" attr(href) ")";
       font-size: 0.8em;
@@ -343,14 +269,7 @@ const pageStructuredData = structuredData;
     }
   }
 
-  /* Dark mode support (if needed in future) */
-  @media (prefers-color-scheme: dark) {
-    /* Add dark mode styles here if needed */
-  }
-
   /* ===== VIEW TRANSITIONS ===== */
-
-  /* Page transition keyframes */
   @keyframes page-fade-out {
     from {
       opacity: 1;
@@ -375,7 +294,6 @@ const pageStructuredData = structuredData;
     }
   }
 
-  /* Root transitions - smooth page change */
   ::view-transition-old(root) {
     animation: page-fade-out 0.25s cubic-bezier(0.4, 0, 0.2, 1) forwards;
   }
@@ -385,14 +303,12 @@ const pageStructuredData = structuredData;
     animation-delay: 0.1s;
   }
 
-  /* Header stays stable */
   ::view-transition-old(header),
   ::view-transition-new(header) {
     animation: none;
     mix-blend-mode: normal;
   }
 
-  /* Footer subtle transition */
   ::view-transition-old(footer) {
     animation: page-fade-out 0.2s ease forwards;
   }
@@ -401,13 +317,11 @@ const pageStructuredData = structuredData;
     animation: page-fade-in 0.3s ease 0.15s forwards;
   }
 
-  /* Transition group isolation */
   ::view-transition-group(header),
   ::view-transition-group(footer) {
     isolation: isolate;
   }
 
-  /* Image transitions for smoother feel */
   ::view-transition-image-pair(root) {
     isolation: isolate;
   }

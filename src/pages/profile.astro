@@ -2,9 +2,8 @@
 import "@styles/general.css";
 import ContactBanner from "@components/Hero/ContactBanner.astro";
 import PageBanner from "@components/PageBanner.astro";
-import SliderImg from "@components/SliderImg.vue";
+import SliderImg from "@components/SliderImg.astro";
 import Layout from "@layouts/Layout.astro";
-import { processImageUrl } from "../utils/imageUtils";
 
 const COLLECTIONS: string[] = [
   "Bodleian Library, Oxford University, England",
@@ -69,19 +68,19 @@ const RESIDENCES: string[] = [
 
 const STUDIO_IMAGES = [
   {
-    src: processImageUrl("/profile/cutting-line.avif"),
+    src: "/profile/cutting-line.avif",
     alt: "Cutting line process in Fernando Feijoo's studio",
   },
   {
-    src: processImageUrl("/profile/inking-up.avif"),
+    src: "/profile/inking-up.avif",
     alt: "Inking up the printing press",
   },
   {
-    src: processImageUrl("/profile/polishing.avif"),
+    src: "/profile/polishing.avif",
     alt: "Polishing artwork in the studio",
   },
   {
-    src: processImageUrl("/profile/rollin.avif"),
+    src: "/profile/rollin.avif",
     alt: "Rolling process during printmaking",
   },
 ];
@@ -99,7 +98,7 @@ const pageDescription =
       <div class="container">
         <div class="hero-grid">
           <figure class="hero-image reveal-left">
-            <SliderImg client:load />
+            <SliderImg />
           </figure>
 
           <article class="hero-content reveal-right" style="--delay: 0.1s">
@@ -815,7 +814,7 @@ const pageDescription =
       (img) => ({
         src: img.src,
         alt: img.alt,
-      })
+      }),
     );
 
     studioItems.forEach((item) => {

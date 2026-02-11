@@ -4,7 +4,7 @@ import Layout from "@layouts/Layout.astro";
 import PageBanner from "@components/PageBanner.astro";
 import MailIcon from "@icons/mail-icon.astro";
 import MapIcon from "@icons/map-icon.astro";
-import { processImageUrl } from "../utils/imageUtils";
+
 
 const contactData = [
   {
@@ -63,7 +63,7 @@ const pageDescription =
         <div class="image-column reveal-left">
           <figure class="main-image">
             <img
-              src={processImageUrl("/profile/columbian.avif")}
+              src={"/profile/columbian.avif"}
               alt="Fernando Feijoo working with a Columbian printing press"
               loading="eager"
               decoding="async"
@@ -122,7 +122,7 @@ const pageDescription =
             >
               <figure class="studio-avatar">
                 <img
-                  src={processImageUrl("/minotaurpress.avif")}
+                  src={"/minotaurpress.avif"}
                   alt="Minotaur Press Studio"
                   loading="lazy"
                   decoding="async"

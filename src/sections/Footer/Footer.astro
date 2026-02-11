@@ -1,32 +1,8 @@
 ---
 import Logo from "@components/Header/Logo.astro";
+import { NAV_ITEMS, SOCIAL_LINKS } from "@constants";
 
 const currentYear = new Date().getFullYear();
-
-const navLinks = [
-  { href: "/", text: "Home" },
-  { href: "/works", text: "Works" },
-  { href: "/profile", text: "Profile" },
-  { href: "/contact", text: "Contact" },
-];
-
-const socialLinks = [
-  {
-    href: "https://www.instagram.com/fernandofeijoo/",
-    label: "Instagram",
-    icon: "instagram",
-  },
-  {
-    href: "https://x.com/fernando_feijoo",
-    label: "X",
-    icon: "x",
-  },
-  {
-    href: "https://vimeo.com/573857181",
-    label: "Vimeo",
-    icon: "vimeo",
-  },
-];
 ---
 
 <footer class="footer" transition:name="footer">
@@ -41,7 +17,7 @@ const socialLinks = [
       <!-- Navigation -->
       <nav class="footer-nav" aria-label="Footer navigation">
         {
-          navLinks.map((link) => (
+          NAV_ITEMS.map((link) => (
             <a href={link.href} class="nav-link">
               {link.text}
             </a>
@@ -52,7 +28,7 @@ const socialLinks = [
       <!-- Social Links -->
       <div class="footer-social">
         {
-          socialLinks.map((link) => (
+          SOCIAL_LINKS.map((link) => (
             <a
               href={link.href}
               class="social-link"
@@ -99,9 +75,9 @@ const socialLinks = [
 
     <!-- Bottom Bar -->
     <div class="footer-bottom">
-      <span class="copyright"
-        >© {currentYear} Fernando Feijoo. All rights reserved.</span
-      >
+      <span class="copyright">
+        © {currentYear} Fernando Feijoo. All rights reserved.
+      </span>
     </div>
   </div>
 </footer>
@@ -265,37 +241,14 @@ const socialLinks = [
   /* Responsive - Tablet & Desktop */
   @media (min-width: 640px) {
     .footer-content {
-      grid-template-columns: auto 1fr;
-      gap: 0;
+      display: flex;
+      justify-content: space-between;
       align-items: center;
       text-align: left;
     }
 
     .footer-brand {
       justify-content: flex-start;
-    }
-
-    /* Nav + Social grouped on the right */
-    .footer-nav {
-      justify-content: flex-end;
-      gap: 1.5rem;
-      order: 2;
-    }
-
-    .footer-social {
-      justify-content: flex-end;
-      order: 3;
-      margin-left: 2rem;
-    }
-
-    /* Wrap nav and social together */
-    .footer-content {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .footer-brand {
       flex-shrink: 0;
     }
 
@@ -303,9 +256,11 @@ const socialLinks = [
       flex-grow: 1;
       justify-content: flex-end;
       margin-right: 1.5rem;
+      gap: 1.5rem;
     }
 
     .footer-social {
+      justify-content: flex-end;
       flex-shrink: 0;
       margin-left: 0;
     }
