@@ -4,15 +4,17 @@ import { NAV_ITEMS } from "@constants";
 import { isCurrentPage } from "@utils/navigation";
 
 const currentPath = Astro.url.pathname;
-
 ---
 
-<header class="header" id="header" transition:name="header" transition:persist>
-  <div class="header-inner">
-    <Logo />
+<header class="header" id="header">
+  <div class="header-container">
+    <!-- Logo -->
+    <div class="header-brand">
+      <Logo />
+    </div>
 
-    <!-- Desktop Nav -->
-    <nav class="nav-desktop" aria-label="Main navigation">
+    <!-- Desktop Navigation -->
+    <nav class="header-nav" aria-label="Main navigation">
       {
         NAV_ITEMS.map((item) => (
           <a
@@ -20,7 +22,7 @@ const currentPath = Astro.url.pathname;
             class:list={["nav-link", { active: isCurrentPage(item.href, currentPath) }]}
             aria-current={isCurrentPage(item.href, currentPath) ? "page" : undefined}
           >
-            {item.text}
+            <span class="nav-text">{item.text}</span>
           </a>
         ))
       }
@@ -31,216 +33,316 @@ const currentPath = Astro.url.pathname;
       class="menu-toggle"
       id="menuToggle"
       type="button"
-      aria-label="Menu"
+      aria-label="Toggle menu"
       aria-expanded="false"
       aria-controls="mobileMenu"
     >
-      <span class="toggle-bar"></span>
-      <span class="toggle-bar"></span>
+      <span class="toggle-line"></span>
+      <span class="toggle-line"></span>
     </button>
   </div>
 </header>
 
-<!-- Mobile Menu Overlay -->
-<div class="mobile-overlay" id="mobileMenu" aria-hidden="true">
-  <nav class="mobile-nav">
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+  <div class="mobile-backdrop"></div>
+  
+  <nav class="mobile-nav" aria-label="Mobile navigation">
     {
       NAV_ITEMS.map((item, i) => (
         <a
           href={item.href}
           class:list={["mobile-link", { active: isCurrentPage(item.href, currentPath) }]}
-          aria-current={isCurrentPage(item.href, currentPath) ? "page" : undefined}
-          style={`--i: ${i}`}
+          style={`--delay: ${i * 0.05}s`}
         >
-          {item.text}
+          <span class="mobile-num">0{i + 1}</span>
+          <span class="mobile-text">{item.text}</span>
         </a>
       ))
     }
   </nav>
 </div>
 
-<!-- Header Spacer -->
 <div class="header-spacer"></div>
 
 <style>
-  /* Header Base */
   .header {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     z-index: 1000;
-    background: white;
-    transition:
-      background 0.3s ease,
-      box-shadow 0.3s ease;
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid transparent;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .header.scrolled {
-    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.08);
+    border-bottom-color: rgba(0, 0, 0, 0.06);
+    background: rgba(255, 255, 255, 0.95);
   }
 
   .header.menu-open {
-    background: black;
+    background: transparent;
+    backdrop-filter: none;
   }
 
-  .header-inner {
+  .header-container {
     display: flex;
     align-items: center;
     justify-content: space-between;
     max-width: 1400px;
     margin: 0 auto;
-    padding: 1.25rem 1.5rem;
+    padding: 0 1.25rem;
+    height: 4rem;
   }
 
   .header-spacer {
-    height: 4.5rem;
+    height: 4rem;
+    flex-shrink: 0;
   }
 
-  /* Desktop Nav */
-  .nav-desktop {
+  /* Logo */
+  .header-brand {
+    position: relative;
+    z-index: 1002;
+    flex-shrink: 0;
+  }
+
+  .header-brand :global(.logo) {
+    margin-left: -0.75rem;
+    padding: 0.5rem 0.75rem;
+  }
+
+  /* Desktop Nav - Minimalista */
+  .header-nav {
     display: none;
-    gap: 3rem;
+    align-items: center;
+    gap: 0.5rem;
+    margin-left: auto;
   }
 
   .nav-link {
     position: relative;
-    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
+    font-family: "Exo", system-ui, sans-serif;
+    font-size: 0.75rem;
     font-weight: 500;
-    color: #18181b;
+    color: #666;
     text-decoration: none;
-    padding: 0.25rem 0;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+    border: none;
+    background: transparent;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
   }
 
+  /* Remove default focus outline */
+  .nav-link:focus,
+  .nav-link:focus-visible {
+    outline: none;
+    box-shadow: none;
+  }
+
+  /* Elegant underline effect */
   .nav-link::after {
-    content: "";
+    content: '';
     position: absolute;
-    left: 0;
-    bottom: -2px;
-    width: 100%;
-    height: 1.5px;
-    background: currentColor;
-    transform: scaleX(0);
-    transform-origin: right;
-    transition: transform 0.3s ease;
+    bottom: 2px;
+    left: 50%;
+    width: 0;
+    height: 1px;
+    background: #000;
+    transform: translateX(-50%);
+    transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  .nav-link:hover::after,
+  .nav-link:hover {
+    color: #000;
+  }
+
+  .nav-link:hover::after {
+    width: calc(100% - 2rem);
+  }
+
+  /* Active state - minimal */
+  .nav-link.active {
+    color: #000;
+    font-weight: 600;
+  }
+
   .nav-link.active::after {
-    transform: scaleX(1);
-    transform-origin: left;
+    width: calc(100% - 2rem);
   }
 
-  /* Menu Toggle */
+  /* Mobile Toggle */
   .menu-toggle {
     position: relative;
-    z-index: 1001;
+    z-index: 1002;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 48px;
-    height: 48px;
-    gap: 8px;
+    width: 44px;
+    height: 44px;
+    gap: 6px;
     background: none;
     border: none;
     cursor: pointer;
     padding: 0;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+    flex-shrink: 0;
   }
 
-  .toggle-bar {
+  .menu-toggle:focus,
+  .menu-toggle:focus-visible {
+    outline: none;
+  }
+
+  .toggle-line {
     display: block;
-    width: 24px;
-    height: 2px;
-    background: #18181b;
-    transition:
-      transform 0.4s cubic-bezier(0.23, 1, 0.32, 1),
-      background 0.3s ease;
+    width: 20px;
+    height: 1.5px;
+    background: #111;
+    border-radius: 1px;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  /* Toggle Open State */
-  .header.menu-open .toggle-bar {
-    background: white;
+  .menu-open .toggle-line {
+    background: #fff;
+    width: 22px;
   }
 
-  .header.menu-open .toggle-bar:first-child {
-    transform: translateY(5px) rotate(45deg);
+  .menu-open .toggle-line:first-child {
+    transform: translateY(3.75px) rotate(45deg);
   }
 
-  .header.menu-open .toggle-bar:last-child {
-    transform: translateY(-5px) rotate(-45deg);
+  .menu-open .toggle-line:last-child {
+    transform: translateY(-3.75px) rotate(-45deg);
   }
 
-  /* Mobile Overlay */
-  .mobile-overlay {
+  /* Mobile Menu */
+  .mobile-menu {
     position: fixed;
     inset: 0;
     z-index: 999;
-    background: black;
     display: flex;
-    align-items: center;
+    flex-direction: column;
     justify-content: center;
     opacity: 0;
     visibility: hidden;
-    transition:
-      opacity 0.4s ease,
-      visibility 0.4s ease;
+    pointer-events: none;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
   }
 
-  .mobile-overlay.open {
+  .mobile-menu.open {
     opacity: 1;
     visibility: visible;
+    pointer-events: auto;
+  }
+
+  .mobile-backdrop {
+    position: absolute;
+    inset: 0;
+    background: #0a0a0a;
+    transform: translateY(-100%);
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .mobile-menu.open .mobile-backdrop {
+    transform: translateY(0);
   }
 
   .mobile-nav {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
+    position: relative;
+    z-index: 1;
+    padding: 2rem;
   }
 
   .mobile-link {
-    font-size: clamp(2rem, 8vw, 3.5rem);
-    font-weight: 600;
-    color: white;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
     text-decoration: none;
-    padding: 0.75rem 1.5rem;
     opacity: 0;
-    transform: translateY(30px);
-    transition:
-      opacity 0.5s ease,
-      transform 0.5s ease,
+    transform: translateY(20px);
+    transition: 
+      opacity 0.4s ease,
+      transform 0.4s ease,
       color 0.2s ease;
-    transition-delay: calc(var(--i) * 0.08s);
+    transition-delay: var(--delay);
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
   }
 
-  .mobile-overlay.open .mobile-link {
+  .mobile-link:focus,
+  .mobile-link:focus-visible {
+    outline: none;
+  }
+
+  .mobile-menu.open .mobile-link {
     opacity: 1;
     transform: translateY(0);
   }
 
-  .mobile-link:hover,
-  .mobile-link:focus-visible {
+  .mobile-num {
+    font-family: "Exo", system-ui, sans-serif;
+    font-size: 0.625rem;
+    color: rgba(255, 255, 255, 0.3);
+    letter-spacing: 0.08em;
+    min-width: 1.5rem;
+    transition: color 0.2s ease;
+  }
+
+  .mobile-text {
+    font-family: "Exo", system-ui, sans-serif;
+    font-size: clamp(1.5rem, 6vw, 2rem);
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.9);
+    letter-spacing: -0.01em;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+
+  .mobile-link:hover .mobile-num {
     color: rgba(255, 255, 255, 0.6);
   }
 
+  .mobile-link:hover .mobile-text {
+    transform: translateX(4px);
+    opacity: 1;
+  }
+
   .mobile-link.active {
+    opacity: 0.4;
+  }
+
+  .mobile-link.active .mobile-text {
     color: rgba(255, 255, 255, 0.5);
   }
 
-  .mobile-link:focus-visible {
-    outline: 2px solid white;
-    outline-offset: 4px;
-  }
-
-  /* Logo color change when menu open */
-  .header.menu-open :global(a) {
-    color: white;
-  }
-
-  /* Desktop breakpoint */
+  /* Responsive */
   @media (min-width: 768px) {
-    .nav-desktop {
+    .header-container {
+      padding: 0 2rem;
+      height: 4.5rem;
+    }
+
+    .header-spacer {
+      height: 4.5rem;
+    }
+
+    .header-brand :global(.logo) {
+      margin-left: -1.25rem;
+      padding: 0.75rem 1.25rem;
+    }
+
+    .header-nav {
       display: flex;
     }
 
@@ -248,18 +350,26 @@ const currentPath = Astro.url.pathname;
       display: none;
     }
 
-    .mobile-overlay {
-      display: none;
+    .mobile-menu {
+      display: none !important;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .header-container {
+      padding: 0 3rem;
+    }
+
+    .header-brand :global(.logo) {
+      margin-left: -1.5rem;
+      padding: 1rem 1.5rem;
     }
   }
 
   /* Reduced motion */
   @media (prefers-reduced-motion: reduce) {
-    .header,
-    .toggle-bar,
-    .mobile-overlay,
-    .mobile-link,
-    .nav-link::after {
+    .mobile-backdrop,
+    .mobile-link {
       transition: none;
     }
 
@@ -270,131 +380,126 @@ const currentPath = Astro.url.pathname;
   }
 </style>
 
-<script>
-  import { isCurrentPage } from "@utils/navigation";
+<script is:inline>
+  (function() {
+    let isOpen = false;
+    let header, toggle, menu, links;
 
-  /**
-   * Manages the mobile menu state and interactions
-   */
-  class MobileMenuController {
-    private header: HTMLElement | null;
-    private toggle: HTMLElement | null;
-    private overlay: HTMLElement | null;
-    private links: NodeListOf<HTMLElement> | null = null;
-    private isOpen = false;
-
-    constructor() {
-      this.header = document.getElementById("header");
-      this.toggle = document.getElementById("menuToggle");
-      this.overlay = document.getElementById("mobileMenu");
-      this.links = this.overlay?.querySelectorAll(".mobile-link") ?? null;
-      this.init();
-    }
-
-    private init(): void {
-      this.toggle?.addEventListener("click", () => this.toggleMenu());
-      this.links?.forEach((link) => {
-        link.addEventListener("click", () => this.close());
-      });
-
-      document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape" && this.isOpen) this.close();
-      });
-    }
-
-    open(): void {
-      this.isOpen = true;
-      this.header?.classList.add("menu-open");
-      this.overlay?.classList.add("open");
-      this.overlay?.setAttribute("aria-hidden", "false");
-      this.toggle?.setAttribute("aria-expanded", "true");
-      document.body.style.overflow = "hidden";
-    }
-
-    close(): void {
-      this.isOpen = false;
-      this.header?.classList.remove("menu-open");
-      this.overlay?.classList.remove("open");
-      this.overlay?.setAttribute("aria-hidden", "true");
-      this.toggle?.setAttribute("aria-expanded", "false");
-      document.body.style.overflow = "";
-    }
-
-    toggleMenu(): void {
-      this.isOpen ? this.close() : this.open();
-    }
-  }
-
-  /**
-   * Manages scroll state for header styling
-   */
-  class ScrollController {
-    private header: HTMLElement | null;
-    private ticking = false;
-
-    constructor() {
-      this.header = document.getElementById("header");
-      this.init();
-    }
-
-    private init(): void {
-      window.addEventListener("scroll", () => {
-        if (!this.ticking) {
-          requestAnimationFrame(() => {
-            this.updateScrollState();
-            this.ticking = false;
-          });
-          this.ticking = true;
-        }
-      });
-      this.updateScrollState();
-    }
-
-    private updateScrollState(): void {
-      if (window.scrollY > 10) {
-        this.header?.classList.add("scrolled");
-      } else {
-        this.header?.classList.remove("scrolled");
+    function getElements() {
+      header = document.getElementById('header');
+      toggle = document.getElementById('menuToggle');
+      menu = document.getElementById('mobileMenu');
+      if (menu) {
+        links = menu.querySelectorAll('.mobile-link');
       }
     }
-  }
 
-  /**
-   * Updates active state of navigation links
-   */
-  function updateActiveNavLinks(): void {
-    const currentPath = window.location.pathname;
-    const navSelectors = [".nav-link", ".mobile-link"];
+    function resetMenu() {
+      isOpen = false;
+      if (!header || !toggle || !menu) return;
+      
+      document.body.classList.remove('menu-open');
+      header.classList.remove('menu-open');
+      menu.classList.remove('open');
+      menu.setAttribute('aria-hidden', 'true');
+      toggle.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
 
-    navSelectors.forEach((selector) => {
-      document.querySelectorAll<HTMLElement>(selector).forEach((link) => {
-        const href = link.getAttribute("href") || "";
-        const isActive = isCurrentPage(href, currentPath);
+    function open() {
+      if (!header || !toggle || !menu) return;
+      
+      isOpen = true;
+      document.body.classList.add('menu-open');
+      header.classList.add('menu-open');
+      menu.classList.add('open');
+      menu.setAttribute('aria-hidden', 'false');
+      toggle.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    }
 
-        link.classList.toggle("active", isActive);
-        link.toggleAttribute("aria-current", isActive);
-        if (isActive) {
-          link.setAttribute("aria-current", "page");
-        } else {
-          link.removeAttribute("aria-current");
-        }
+    function close() {
+      if (!header || !toggle || !menu) return;
+      
+      isOpen = false;
+      document.body.classList.remove('menu-open');
+      header.classList.remove('menu-open');
+      menu.classList.remove('open');
+      menu.setAttribute('aria-hidden', 'true');
+      toggle.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+
+    function initHeader() {
+      getElements();
+      if (!header || !toggle || !menu) return;
+
+      // Reset menu on cada inicialización
+      resetMenu();
+
+      // Toggle handler
+      toggle.onclick = function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        isOpen ? close() : open();
+      };
+
+      // Link handlers - cerrar menú al navegar
+      links.forEach(function(link) {
+        link.onclick = function() {
+          close();
+        };
       });
+
+      // Escape key
+      document.onkeydown = function(e) {
+        if (e.key === 'Escape' && isOpen) close();
+      };
+
+      // Click backdrop
+      menu.onclick = function(e) {
+        if (e.target === menu || e.target.classList.contains('mobile-backdrop')) {
+          close();
+        }
+      };
+    }
+
+    function initScroll() {
+      if (!header) return;
+      
+      let ticking = false;
+      function onScroll() {
+        if (window.scrollY > 10) {
+          header.classList.add('scrolled');
+        } else {
+          header.classList.remove('scrolled');
+        }
+        ticking = false;
+      }
+
+      window.onscroll = function() {
+        if (!ticking) {
+          requestAnimationFrame(onScroll);
+          ticking = true;
+        }
+      };
+
+      onScroll();
+    }
+
+    // Inicializar
+    initHeader();
+    initScroll();
+
+    // IMPORTANTE: Re-inicializar después de transiciones de vista
+    document.addEventListener('astro:after-swap', function() {
+      initHeader();
+      initScroll();
     });
-  }
-
-  /**
-   * Initialize all header functionality
-   */
-  function initHeader(): void {
-    new MobileMenuController();
-    new ScrollController();
-    updateActiveNavLinks();
-  }
-
-  // Run on initial load
-  initHeader();
-
-  // Run after View Transitions navigation
-  document.addEventListener("astro:after-swap", initHeader);
-  document.addEventListener("astro:page-load", updateActiveNavLinks);
+    
+    document.addEventListener('astro:page-load', function() {
+      initHeader();
+      initScroll();
+    });
+  })();
 </script>

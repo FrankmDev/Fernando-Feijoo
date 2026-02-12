@@ -6,18 +6,19 @@ import WorkCard from "@components/WorkCard.astro";
 import Cta from "@components/Cta.astro";
 import ImageModal from "@components/ImageModal.astro";
 import { WORKS } from "@data/works";
-import { processImageUrls } from "@utils/images";
+import { processImageUrls, resolveImage, processImageUrl } from "@utils/images";
+import { Image } from "astro:assets";
 
 
 export async function getStaticPaths() {
   const paths = [];
-  
+
   for (const category of WORKS) {
     if (category.works) {
       for (const work of category.works) {
         paths.push({
           params: { slug: work.slug },
-          props: { 
+          props: {
             work,
             categorySlug: category.slug,
             categoryTitle: category.title
@@ -25,13 +26,13 @@ export async function getStaticPaths() {
         });
       }
     }
-    
+
     if (category.collections) {
       for (const collection of category.collections) {
         for (const work of collection.works) {
           paths.push({
             params: { slug: work.slug },
-            props: { 
+            props: {
               work,
               categorySlug: category.slug,
               categoryTitle: category.title,
@@ -43,7 +44,7 @@ export async function getStaticPaths() {
       }
     }
   }
-  
+
   return paths;
 }
 
@@ -52,7 +53,10 @@ export const prerender = true;
 const { work, categorySlug, categoryTitle, collectionSlug, collectionTitle } = Astro.props;
 
 const processedImageUrls = work?.imageUrls ? processImageUrls(work.imageUrls) : [];
-const mainImage = processedImageUrls[0] || '';
+const mainImageUrl = work?.imageUrls?.[0];
+const mainImageMeta = resolveImage(mainImageUrl);
+const mainImageSrc = processedImageUrls[0] || '';
+
 const hasMultipleImages = processedImageUrls.length > 1;
 const galleryImages = hasMultipleImages ? processedImageUrls : [];
 const galleryColCount = Math.min(galleryImages.length, 4);
@@ -75,19 +79,19 @@ for (const category of WORKS) {
 
 // SEO
 const pageTitle = `${work?.title || 'Work'} | Fernando Feijoo`;
-const pageDescription = work?.description?.trim() 
-  ? work.description.substring(0, 160) 
+const pageDescription = work?.description?.trim()
+  ? work.description.substring(0, 160)
   : `${work?.title} - ${work?.medium || 'Artwork'} by Fernando Feijoo`;
-const ogImage = mainImage || '/favicon.png';
+const ogImage = mainImageSrc || '/favicon.png';
 
-const backLink = collectionSlug 
-  ? `/works/${categorySlug}/${collectionSlug}` 
+const backLink = collectionSlug
+  ? `/works/${categorySlug}/${collectionSlug}`
   : `/works/${categorySlug}`;
 const backLabel = collectionTitle || categoryTitle;
 ---
 
-<Layout 
-  title={pageTitle} 
+<Layout
+  title={pageTitle}
   description={pageDescription}
   image={ogImage}
 >
@@ -95,39 +99,59 @@ const backLabel = collectionTitle || categoryTitle;
     <main class="work-page">
       {work ? (
         <>
-          <!-- Hero Image Section - Full Impact -->
+          <!-- Hero Image Section - Gallery Presentation -->
           <section class="hero-section">
             <div class="hero-inner">
               <!-- Back Navigation -->
               <a href={backLink} class="back-nav">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                  <path d="M19 12H5M12 19l-7-7 7-7"/>
-                </svg>
-                <span>{backLabel}</span>
+                <span class="back-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                  </svg>
+                </span>
+                <span class="back-text">{backLabel}</span>
+                <span class="back-line" aria-hidden="true"></span>
               </a>
 
               <!-- Main Artwork Display -->
               <div class="artwork-frame">
                 <div class="artwork-container">
-                  {mainImage ? (
-                    <img
-                      id="main-work-image"
-                      src={mainImage}
-                      alt={work.title}
-                      class="artwork-image"
-                      loading="eager"
-                      fetchpriority="high"
-                      decoding="async"
-                      data-images={JSON.stringify(processedImageUrls)}
-                    />
-                  ) : (
-                    <div class="artwork-placeholder">
-                      <span>🖼️</span>
-                    </div>
-                  )}
-                  
+                  <div class="artwork-mat">
+                    {mainImageMeta ? (
+                      <Image
+                        id="main-work-image"
+                        src={mainImageMeta}
+                        alt={work.title}
+                        class="artwork-image"
+                        loading="eager"
+                        data-images={JSON.stringify(processedImageUrls)}
+                      />
+                    ) : mainImageSrc ? (
+                      <img
+                        id="main-work-image"
+                        src={mainImageSrc}
+                        alt={work.title}
+                        class="artwork-image"
+                        loading="eager"
+                        fetchpriority="high"
+                        decoding="async"
+                        data-images={JSON.stringify(processedImageUrls)}
+                      />
+                    ) : (
+                      <div class="artwork-placeholder">
+                        <span>🖼️</span>
+                      </div>
+                    )}
+                  </div>
+
+                  <!-- Gallery Frame Corners -->
+                  <div class="frame-corner frame-corner-tl" aria-hidden="true"></div>
+                  <div class="frame-corner frame-corner-tr" aria-hidden="true"></div>
+                  <div class="frame-corner frame-corner-bl" aria-hidden="true"></div>
+                  <div class="frame-corner frame-corner-br" aria-hidden="true"></div>
+
                   <!-- Floating Zoom Button -->
-                  {mainImage && (
+                  {mainImageSrc && (
                     <button class="zoom-trigger" aria-label="View full size">
                       <span class="zoom-icon">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -142,11 +166,17 @@ const backLabel = collectionTitle || categoryTitle;
                 <!-- Image Counter (if multiple) -->
                 {hasMultipleImages && (
                   <div class="image-counter">
-                    <span>1</span>
+                    <span class="counter-current">01</span>
                     <span class="counter-sep">/</span>
-                    <span>{processedImageUrls.length}</span>
+                    <span class="counter-total">{String(processedImageUrls.length).padStart(2, '0')}</span>
                   </div>
                 )}
+              </div>
+
+              <!-- Scroll Indicator -->
+              <div class="scroll-indicator" aria-hidden="true">
+                <span class="scroll-line"></span>
+                <span class="scroll-text">Scroll</span>
               </div>
             </div>
           </section>
@@ -154,16 +184,35 @@ const backLabel = collectionTitle || categoryTitle;
           <!-- Work Information -->
           <section class="info-section">
             <div class="info-container">
+              <!-- Decorative Line -->
+              <div class="section-divider" aria-hidden="true">
+                <span class="divider-line"></span>
+                <span class="divider-dot"></span>
+                <span class="divider-line"></span>
+              </div>
+
               <!-- Breadcrumb -->
               <nav class="breadcrumb" aria-label="Breadcrumb">
                 <a href="/">Home</a>
-                <span class="sep">—</span>
+                <span class="sep">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M9 18l6-6-6-6"/>
+                  </svg>
+                </span>
                 <a href="/works">Works</a>
-                <span class="sep">—</span>
+                <span class="sep">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M9 18l6-6-6-6"/>
+                  </svg>
+                </span>
                 <a href={`/works/${categorySlug}`}>{categoryTitle}</a>
                 {collectionTitle && (
                   <>
-                    <span class="sep">—</span>
+                    <span class="sep">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M9 18l6-6-6-6"/>
+                      </svg>
+                    </span>
                     <a href={`/works/${categorySlug}/${collectionSlug}`}>{collectionTitle}</a>
                   </>
                 )}
@@ -172,54 +221,100 @@ const backLabel = collectionTitle || categoryTitle;
               <!-- Title Block -->
               <header class="title-block">
                 <div class="title-meta">
-                  <span class="collection-name">{collectionTitle || categoryTitle}</span>
-                  <span class="divider">·</span>
+                  <span class="collection-badge">{collectionTitle || categoryTitle}</span>
+                </div>
+                <h1 class="work-title">
+                  <span class="title-line">{work.title}</span>
+                </h1>
+                <div class="artist-credit">
+                  <span class="by-text">by</span>
                   <span class="artist-name">Fernando Feijoo</span>
                 </div>
-                <h1 class="work-title">{work.title}</h1>
               </header>
 
               <!-- Two Column Layout -->
               <div class="info-grid">
                 <!-- Left: Description -->
                 <div class="info-left">
-                  {work.description && work.description.trim() !== "" && (
-                    <p class="description">{work.description}</p>
+                  {work.description && work.description.trim() !== "" ? (
+                    <div class="description-block">
+                      <span class="section-label">About</span>
+                      <p class="description">{work.description}</p>
+                    </div>
+                  ) : (
+                    <div class="description-block">
+                      <span class="section-label">About</span>
+                      <p class="description description-placeholder">Original artwork by Fernando Feijoo</p>
+                    </div>
                   )}
                 </div>
 
                 <!-- Right: Details & Actions -->
                 <div class="info-right">
-                  <dl class="specs">
-                    <div class="spec-item">
-                      <dt>Medium</dt>
-                      <dd>{work.medium || 'Mixed media'}</dd>
-                    </div>
-
-                    {work.dimensions && (
+                  <div class="specs-block">
+                    <span class="section-label">Details</span>
+                    <dl class="specs">
                       <div class="spec-item">
-                        <dt>Dimensions</dt>
-                        <dd>{work.dimensions}</dd>
+                        <dt>
+                          <span class="spec-icon">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                            </svg>
+                          </span>
+                          Medium
+                        </dt>
+                        <dd>{work.medium || 'Mixed media'}</dd>
                       </div>
-                    )}
 
-                    {work.edition && (
-                      <div class="spec-item">
-                        <dt>Edition</dt>
-                        <dd>{work.edition}</dd>
-                      </div>
-                    )}
+                      {work.dimensions && (
+                        <div class="spec-item">
+                          <dt>
+                            <span class="spec-icon">
+                              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <rect x="3" y="3" width="18" height="18" rx="2"/>
+                                <path d="M3 9h18M9 21V9"/>
+                              </svg>
+                            </span>
+                            Dimensions
+                          </dt>
+                          <dd>{work.dimensions}</dd>
+                        </div>
+                      )}
 
-                    {work.price && (
-                      <div class="spec-item spec-price">
-                        <dt>Price</dt>
-                        <dd>{work.price}</dd>
-                      </div>
-                    )}
-                  </dl>
+                      {work.edition && (
+                        <div class="spec-item">
+                          <dt>
+                            <span class="spec-icon">
+                              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                              </svg>
+                            </span>
+                            Edition
+                          </dt>
+                          <dd>{work.edition}</dd>
+                        </div>
+                      )}
+
+                      {work.price && (
+                        <div class="spec-item spec-price">
+                          <dt>
+                            <span class="spec-icon">
+                              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <line x1="12" y1="1" x2="12" y2="23"/>
+                                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                              </svg>
+                            </span>
+                            Price
+                          </dt>
+                          <dd>{work.price}</dd>
+                        </div>
+                      )}
+                    </dl>
+                  </div>
 
                   <div class="cta-block">
-                    <Cta 
+                    <Cta
                       href={`mailto:contact@fernandofeijoo.com?subject=Inquiry about ${encodeURIComponent(work.title)}`}
                       label="Inquire About This Work"
                       isDark={true}
@@ -234,30 +329,66 @@ const backLabel = collectionTitle || categoryTitle;
           {hasMultipleImages && (
             <section class="gallery-section">
               <div class="gallery-header">
-                <span class="gallery-label">Gallery</span>
-                <span class="gallery-count">{galleryImages.length} Images</span>
+                <div class="gallery-title-wrapper">
+                  <span class="gallery-label">Gallery</span>
+                  <span class="gallery-line" aria-hidden="true"></span>
+                </div>
+                <span class="gallery-count">
+                  <span class="count-number">{galleryImages.length}</span>
+                  <span class="count-text">images</span>
+                </span>
               </div>
               <div class="gallery-track">
                 <div class="gallery-grid" style={`--cols: ${galleryColCount}`}>
-                  {galleryImages.map((url, index) => (
+                  {work.imageUrls.map((url, index) => {
+                     const meta = resolveImage(url);
+                     return (
                     <figure class="gallery-card" data-index={index}>
                       <div class="gallery-card-inner">
-                        <img
-                          src={url}
-                          alt={`${work.title} - View ${index + 1}`}
-                          class="gallery-img"
-                          loading="lazy"
-                          decoding="async"
-                        />
-                        <div class="gallery-hover">
-                          <span class="gallery-number">{String(index + 1).padStart(2, '0')}</span>
-                          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
-                          </svg>
+                        {meta ? (
+                           <Image
+                             src={meta}
+                             alt={`${work.title} - View ${index + 1}`}
+                             class="gallery-img"
+                           />
+                        ) : (
+                          <img
+                            src={processImageUrl(url)}
+                            alt={`${work.title} - View ${index + 1}`}
+                            class="gallery-img"
+                            loading="lazy"
+                            decoding="async"
+                          />
+                        )}
+                        
+                        {/* Dark overlay */}
+                        <div class="gallery-card-overlay" />
+                        
+                        {/* Top line accent */}
+                        <div class="gallery-card-line-accent" aria-hidden="true" />
+                        
+                        {/* Content */}
+                        <div class="gallery-card-content">
+                          <span class="gallery-card-category">View {index + 1}</span>
+                          <span class="gallery-card-view">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                              <circle cx="12" cy="12" r="3"/>
+                            </svg>
+                            View
+                          </span>
                         </div>
+                        
+                        {/* Corner index */}
+                        <span class="gallery-card-index" aria-hidden="true">
+                          {String(index + 1).padStart(2, '0')}
+                        </span>
+                        
+                        {/* Border frame */}
+                        <div class="gallery-card-frame" aria-hidden="true" />
                       </div>
                     </figure>
-                  ))}
+                  )})}
                 </div>
               </div>
             </section>
@@ -267,25 +398,75 @@ const backLabel = collectionTitle || categoryTitle;
           {relatedWorks.length > 0 && (
             <section class="related-section">
               <div class="related-header">
-                <h2 class="related-title">More from {collectionTitle || categoryTitle}</h2>
+                <div class="related-title-wrapper">
+                  <span class="related-label">Related</span>
+                  <h2 class="related-title">More from {collectionTitle || categoryTitle}</h2>
+                </div>
                 <a href={backLink} class="related-link">
-                  View All
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M5 12h14M12 5l7 7-7 7"/>
-                  </svg>
+                  <span class="link-text">View All</span>
+                  <span class="link-arrow">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                  </span>
                 </a>
               </div>
               <div class="related-grid">
-                {relatedWorks.map((relatedWork) => (
-                  <WorkCard
-                    href={`/works/${relatedWork.slug}`}
-                    title={relatedWork.title}
-                    subtitle={relatedWork.medium}
-                    imageUrl={relatedWork.imageUrls?.[0] ? processImageUrls([relatedWork.imageUrls[0]])[0] : ""}
-                    imageAlt={relatedWork.title}
-                    isAboveFold={false}
-                  />
-                ))}
+                {relatedWorks.map((relatedWork, index) => {
+                  const relatedUrl = relatedWork.imageUrls?.[0] || "";
+                  const relatedMeta = resolveImage(relatedUrl);
+                  const relatedSrc = processImageUrl(relatedUrl);
+
+                  return (
+                    <a href={`/works/${relatedWork.slug}`} class="work-card">
+                      {relatedMeta ? (
+                        <Image
+                          src={relatedMeta}
+                          alt={relatedWork.title}
+                          width={400}
+                          height={400}
+                          class="work-card-img"
+                        />
+                      ) : relatedSrc ? (
+                        <img
+                          src={relatedSrc}
+                          alt={relatedWork.title}
+                          class="work-card-img"
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      ) : (
+                        <div class="work-card-empty">{relatedWork.title}</div>
+                      )}
+                      
+                      {/* Dark overlay */}
+                      <div class="work-card-overlay" />
+                      
+                      {/* Top line accent */}
+                      <div class="work-card-line-accent" aria-hidden="true" />
+                      
+                      {/* Content */}
+                      <div class="work-card-content">
+                        <span class="work-card-category">{collectionTitle || categoryTitle}</span>
+                        <h3 class="work-card-title">{relatedWork.title}</h3>
+                        <span class="work-card-cta">
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                          </svg>
+                          View Work
+                        </span>
+                      </div>
+                      
+                      {/* Corner index */}
+                      <span class="work-card-index" aria-hidden="true">
+                        {String(index + 1).padStart(2, "0")}
+                      </span>
+                      
+                      {/* Border frame */}
+                      <div class="work-card-frame" aria-hidden="true" />
+                    </a>
+                  );
+                })}
               </div>
             </section>
           )}
@@ -326,7 +507,7 @@ const backLabel = collectionTitle || categoryTitle;
         "artform": categoryTitle,
         "width": work?.dimensions
       };
-      
+
       if (work?.price) {
         schema.offers = {
           "@type": "Offer",
@@ -336,7 +517,7 @@ const backLabel = collectionTitle || categoryTitle;
           "url": `https://fernando-feijoo.com/works/${work?.slug}`
         };
       }
-      
+
       return schema;
     })()
   )} />
@@ -346,8 +527,8 @@ const backLabel = collectionTitle || categoryTitle;
       const mainImage = document.getElementById('main-work-image');
       const zoomBtn = document.querySelector('.zoom-trigger');
       const galleryItems = document.querySelectorAll('.gallery-card');
-      
-      const openModal = (index: number = 0) => {
+
+      const openModal = (index = 0) => {
         const imagesData = mainImage?.getAttribute('data-images');
         if (imagesData) {
           try {
@@ -365,7 +546,7 @@ const backLabel = collectionTitle || categoryTitle;
 
       mainImage?.addEventListener('click', () => openModal(0));
       zoomBtn?.addEventListener('click', () => openModal(0));
-      
+
       galleryItems.forEach((item) => {
         item.addEventListener('click', () => {
           const index = parseInt(item.getAttribute('data-index') || '0');
@@ -385,70 +566,141 @@ const backLabel = collectionTitle || categoryTitle;
   }
 
   /* ========================================
-     HERO SECTION - Full Impact Artwork Display
+     HERO SECTION - Gallery Presentation
      ======================================== */
   .hero-section {
-    min-height: 70vh;
+    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 2rem 1rem;
-    background: linear-gradient(180deg, #f8f8f8 0%, #fff 100%);
+    padding: 6rem 1rem 4rem;
+    background: linear-gradient(180deg, #fafafa 0%, #f0f0f0 50%, #fafafa 100%);
     position: relative;
+    overflow: hidden;
+  }
+
+  /* Subtle texture overlay */
+  .hero-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: 
+      repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 100px,
+        rgba(0,0,0,0.01) 100px,
+        rgba(0,0,0,0.01) 101px
+      );
+    pointer-events: none;
   }
 
   .hero-inner {
     width: 100%;
-    max-width: 1000px;
+    max-width: 1100px;
     margin: 0 auto;
+    position: relative;
+    z-index: 1;
   }
 
   .back-nav {
     display: inline-flex;
     align-items: center;
-    gap: 0.75rem;
-    font-size: 0.8125rem;
+    gap: 1rem;
+    font-size: 0.75rem;
     font-weight: 500;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
     color: #666;
     text-decoration: none;
-    margin-bottom: 2rem;
-    transition: color 0.3s ease;
+    margin-bottom: 2.5rem;
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    padding: 0.75rem 0;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .back-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid #ddd;
+    border-radius: 50%;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .back-text {
+    position: relative;
+    padding-bottom: 2px;
+  }
+
+  .back-line {
+    position: absolute;
+    bottom: 0;
+    left: 56px;
+    width: 0;
+    height: 1px;
+    background: #000;
+    transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .back-nav:hover {
     color: #000;
   }
 
-  .back-nav svg {
-    transition: transform 0.3s ease;
-  }
-
-  .back-nav:hover svg {
+  .back-nav:hover .back-icon {
+    border-color: #000;
     transform: translateX(-4px);
   }
 
-  /* Artwork Frame */
+  .back-nav:hover .back-line {
+    width: calc(100% - 56px);
+  }
+
+  .back-nav svg {
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .back-nav:hover svg {
+    transform: translateX(-3px);
+  }
+
+  /* Artwork Frame - Museum Style */
   .artwork-frame {
     position: relative;
+    padding: 2rem;
+    background: #fff;
+    box-shadow:
+      0 40px 80px -20px rgba(0, 0, 0, 0.15),
+      0 0 0 1px rgba(0, 0, 0, 0.05);
   }
 
   .artwork-container {
     position: relative;
-    background: #fff;
-    box-shadow: 
-      0 25px 50px -12px rgba(0, 0, 0, 0.15),
-      0 0 0 1px rgba(0, 0, 0, 0.03);
+    background: #000;
     overflow: hidden;
   }
 
+  .artwork-mat {
+    position: relative;
+    padding: 3rem;
+    background: #f5f5f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   .artwork-image {
-    width: 100%;
+    max-width: 100%;
+    max-height: 70vh;
+    width: auto;
     height: auto;
     display: block;
-    cursor: pointer;
-    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: zoom-in;
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
   }
 
   .artwork-container:hover .artwork-image {
@@ -465,26 +717,82 @@ const backLabel = collectionTitle || categoryTitle;
     background: #f5f5f5;
   }
 
+  /* Gallery Frame Corners */
+  .frame-corner {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(0, 0, 0, 0.2);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+  }
+
+  .frame-corner-tl {
+    top: 1rem;
+    left: 1rem;
+    border-right: none;
+    border-bottom: none;
+  }
+
+  .frame-corner-tr {
+    top: 1rem;
+    right: 1rem;
+    border-left: none;
+    border-bottom: none;
+  }
+
+  .frame-corner-bl {
+    bottom: 1rem;
+    left: 1rem;
+    border-right: none;
+    border-top: none;
+  }
+
+  .frame-corner-br {
+    bottom: 1rem;
+    right: 1rem;
+    border-left: none;
+    border-top: none;
+  }
+
+  .artwork-container:hover .frame-corner {
+    width: 30px;
+    height: 30px;
+    border-color: rgba(0, 0, 0, 0.4);
+  }
+
   /* Zoom Trigger */
   .zoom-trigger {
     position: absolute;
-    bottom: 1.5rem;
-    right: 1.5rem;
+    bottom: 2rem;
+    right: 2rem;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.75rem 1.25rem;
-    background: rgba(0, 0, 0, 0.85);
-    border: none;
+    gap: 0.75rem;
+    padding: 1rem 1.75rem;
+    background: rgba(0, 0, 0, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     color: #fff;
     font-size: 0.75rem;
     font-weight: 500;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
     cursor: pointer;
     opacity: 0;
-    transform: translateY(10px);
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    transform: translateY(20px);
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    overflow: hidden;
+  }
+
+  .zoom-trigger::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+    transition: left 0.6s ease;
   }
 
   .artwork-container:hover .zoom-trigger {
@@ -494,42 +802,129 @@ const backLabel = collectionTitle || categoryTitle;
 
   .zoom-trigger:hover {
     background: #000;
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+  }
+
+  .zoom-trigger:hover::before {
+    left: 100%;
+  }
+
+  .zoom-trigger:active {
+    transform: translateY(-1px);
   }
 
   .zoom-icon {
     display: flex;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .zoom-trigger:hover .zoom-icon {
+    transform: scale(1.2);
   }
 
   /* Image Counter */
   .image-counter {
     position: absolute;
-    bottom: -3rem;
+    bottom: -3.5rem;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    font-size: 0.75rem;
-    font-weight: 500;
+    gap: 0.75rem;
+    font-family: 'Exo', system-ui, sans-serif;
+    font-size: 0.875rem;
+    font-weight: 300;
     letter-spacing: 0.1em;
-    color: #999;
+    color: #666;
+  }
+
+  .counter-current {
+    font-weight: 500;
+    color: #000;
   }
 
   .counter-sep {
     color: #ccc;
+    font-weight: 300;
+  }
+
+  .counter-total {
+    color: #999;
+  }
+
+  /* Scroll Indicator */
+  .scroll-indicator {
+    position: absolute;
+    bottom: -6rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    opacity: 0.6;
+    animation: bounce-subtle 2s ease-in-out infinite;
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, #000, transparent);
+  }
+
+  .scroll-text {
+    font-size: 0.625rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #666;
+  }
+
+  @keyframes bounce-subtle {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(8px); }
   }
 
   /* ========================================
      INFO SECTION
      ======================================== */
   .info-section {
-    padding: 5rem 1rem;
+    padding: 6rem 1rem;
     background: #fff;
+    position: relative;
   }
 
   .info-container {
     max-width: 1100px;
     margin: 0 auto;
+  }
+
+  /* Section Divider */
+  .section-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 4rem;
+  }
+
+  .divider-line {
+    flex: 1;
+    max-width: 120px;
+    height: 1px;
+    background: linear-gradient(to var(--dir, right), #ddd, transparent);
+  }
+
+  .divider-line:last-child {
+    --dir: left;
+  }
+
+  .divider-dot {
+    width: 8px;
+    height: 8px;
+    background: #ddd;
+    border-radius: 50%;
   }
 
   /* Breadcrumb */
@@ -538,92 +933,163 @@ const backLabel = collectionTitle || categoryTitle;
     align-items: center;
     gap: 0.75rem;
     font-size: 0.6875rem;
+    font-weight: 500;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: #999;
     margin-bottom: 3rem;
     flex-wrap: wrap;
+    padding: 1rem 0;
+    border-top: 1px solid #f0f0f0;
+    border-bottom: 1px solid #f0f0f0;
   }
 
   .breadcrumb a {
-    color: #999;
+    color: #666;
     text-decoration: none;
-    transition: color 0.2s ease;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    cursor: pointer;
+    padding: 0.25rem 0;
+  }
+
+  .breadcrumb a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: #000;
+    transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .breadcrumb a:hover {
     color: #000;
   }
 
+  .breadcrumb a:hover::after {
+    width: 100%;
+  }
+
   .breadcrumb .sep {
-    color: #ddd;
-    font-size: 0.5rem;
+    color: #ccc;
+    display: flex;
+    align-items: center;
   }
 
   /* Title Block */
   .title-block {
     margin-bottom: 4rem;
     padding-bottom: 3rem;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #f0f0f0;
+    text-align: center;
   }
 
   .title-meta {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    margin-bottom: 1rem;
+    justify-content: center;
+    margin-bottom: 1.5rem;
   }
 
-  .collection-name {
+  .collection-badge {
     font-size: 0.75rem;
     font-weight: 600;
     letter-spacing: 0.15em;
     text-transform: uppercase;
     color: #666;
+    padding: 0.5rem 1.25rem;
+    border: 1px solid #e5e5e5;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  .divider {
-    color: #ccc;
-  }
-
-  .artist-name {
-    font-size: 0.75rem;
-    letter-spacing: 0.05em;
-    color: #999;
+  .collection-badge:hover {
+    border-color: #000;
+    color: #000;
   }
 
   .work-title {
-    font-size: clamp(2.5rem, 7vw, 4.5rem);
+    font-size: clamp(2rem, 6vw, 4rem);
     font-weight: 400;
-    letter-spacing: -0.04em;
+    letter-spacing: -0.03em;
     color: #000;
-    margin: 0;
-    line-height: 1.05;
+    margin: 0 0 1.5rem;
+    line-height: 1.1;
+  }
+
+  .title-line {
+    display: block;
+  }
+
+  .artist-credit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: #666;
+  }
+
+  .by-text {
+    font-style: italic;
+    color: #999;
+  }
+
+  .artist-name {
+    font-weight: 500;
+    color: #000;
+    letter-spacing: 0.02em;
   }
 
   /* Info Grid */
   .info-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 3rem;
+    gap: 4rem;
+  }
+
+  .section-label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #999;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .description-block {
+    max-width: 600px;
   }
 
   .description {
     font-size: 1.0625rem;
-    line-height: 1.85;
-    color: #444;
+    line-height: 1.9;
+    color: #333;
     margin: 0;
-    max-width: 600px;
+  }
+
+  .description-placeholder {
+    color: #666;
+    font-style: italic;
   }
 
   /* Specs */
+  .specs-block {
+    background: #fafafa;
+    padding: 2rem;
+    border-radius: 4px;
+  }
+
   .specs {
     display: grid;
     grid-template-columns: 1fr;
     gap: 0;
-    margin: 0 0 2rem;
+    margin: 0;
     padding: 0;
-    border-top: 1px solid #eee;
   }
 
   .spec-item {
@@ -632,19 +1098,50 @@ const backLabel = collectionTitle || categoryTitle;
     align-items: center;
     padding: 1.25rem 0;
     border-bottom: 1px solid #eee;
+    transition: all 0.3s ease;
+  }
+
+  .spec-item:last-child {
+    border-bottom: none;
+  }
+
+  .spec-item:hover {
+    padding-left: 0.5rem;
   }
 
   .spec-item dt {
-    font-size: 0.6875rem;
-    font-weight: 600;
-    letter-spacing: 0.15em;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
     text-transform: uppercase;
-    color: #888;
+    color: #666;
+  }
+
+  .spec-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    border-radius: 4px;
+    color: #999;
+    transition: all 0.3s ease;
+  }
+
+  .spec-item:hover .spec-icon {
+    border-color: #000;
+    color: #000;
   }
 
   .spec-item dd {
-    font-size: 0.9375rem;
-    color: #222;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #000;
     margin: 0;
     text-align: right;
   }
@@ -653,18 +1150,30 @@ const backLabel = collectionTitle || categoryTitle;
     font-size: 1.5rem;
     font-weight: 600;
     letter-spacing: -0.02em;
+    color: #000;
   }
 
   .cta-block {
-    padding-top: 0.5rem;
+    margin-top: 2rem;
   }
 
   /* ========================================
      GALLERY SECTION
      ======================================== */
   .gallery-section {
-    padding: 0 0 6rem;
-    background: #fff;
+    padding: 4rem 0 6rem;
+    background: linear-gradient(180deg, #fff 0%, #fafafa 100%);
+    position: relative;
+  }
+
+  .gallery-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, #eee 20%, #eee 80%, transparent);
   }
 
   .gallery-header {
@@ -672,22 +1181,48 @@ const backLabel = collectionTitle || categoryTitle;
     justify-content: space-between;
     align-items: center;
     max-width: 1400px;
-    margin: 0 auto 2rem;
+    margin: 0 auto 3rem;
     padding: 0 1rem;
   }
 
+  .gallery-title-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
   .gallery-label {
-    font-size: 0.6875rem;
+    font-size: 0.75rem;
     font-weight: 600;
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: #000;
   }
 
+  .gallery-line {
+    width: 40px;
+    height: 1px;
+    background: #ddd;
+  }
+
   .gallery-count {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
     font-size: 0.75rem;
-    color: #999;
+    color: #666;
     letter-spacing: 0.05em;
+  }
+
+  .count-number {
+    font-family: 'Exo', system-ui, sans-serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #000;
+  }
+
+  .count-text {
+    text-transform: uppercase;
   }
 
   .gallery-track {
@@ -698,7 +1233,7 @@ const backLabel = collectionTitle || categoryTitle;
   .gallery-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 2px;
+    gap: 3px;
   }
 
   .gallery-card {
@@ -711,47 +1246,167 @@ const backLabel = collectionTitle || categoryTitle;
     aspect-ratio: 1;
     overflow: hidden;
     background: #0a0a0a;
+    cursor: pointer;
+    isolation: isolate;
   }
 
   .gallery-img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: 
-      transform 1s cubic-bezier(0.16, 1, 0.3, 1),
-      opacity 0.6s ease;
+    transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .gallery-card:hover .gallery-img {
-    transform: scale(1.15);
-    opacity: 0.5;
+    transform: scale(1.06);
   }
 
-  .gallery-hover {
+  /* Dark overlay on hover */
+  .gallery-card-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    opacity: 0;
+    z-index: 2;
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .gallery-card:hover .gallery-card-overlay {
+    opacity: 1;
+  }
+
+  /* Top line accent */
+  .gallery-card-line-accent {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(
+      90deg,
+      #fff 0%,
+      rgba(255, 255, 255, 0.5) 50%,
+      transparent 100%
+    );
+    transform: translateX(-100%);
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 4;
+  }
+
+  .gallery-card:hover .gallery-card-line-accent {
+    transform: translateX(0);
+  }
+
+  /* Content */
+  .gallery-card-content {
     position: absolute;
     inset: 0;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
+    align-items: flex-start;
+    justify-content: flex-end;
+    padding: 1.5rem;
+    padding-bottom: 2rem;
+    text-align: left;
+    z-index: 3;
     opacity: 0;
-    transition: opacity 0.5s ease;
+    transition: opacity 0.4s ease 0.1s;
   }
 
-  .gallery-card:hover .gallery-hover {
+  .gallery-card:hover .gallery-card-content {
     opacity: 1;
   }
 
-  .gallery-number {
-    font-size: 0.6875rem;
+  .gallery-card-category {
+    font-size: 0.625rem;
     font-weight: 600;
     letter-spacing: 0.2em;
-    color: rgba(255, 255, 255, 0.6);
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.5);
+    padding-left: 1rem;
+    border-left: 2px solid rgba(255, 255, 255, 0.3);
+    transform: translateX(-10px);
+    opacity: 0;
+    transition: 
+      opacity 0.5s ease 0.15s,
+      transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.15s;
+    margin-bottom: 1rem;
   }
 
-  .gallery-hover svg {
-    color: #fff;
+  .gallery-card:hover .gallery-card-category {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .gallery-card-view {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.8);
+    padding: 0.5rem 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transform: translateY(10px);
+    opacity: 0;
+    transition: 
+      opacity 0.5s ease 0.2s,
+      transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.2s,
+      background 0.3s ease,
+      border-color 0.3s ease;
+  }
+
+  .gallery-card:hover .gallery-card-view {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .gallery-card-view:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.4);
+  }
+
+  /* Corner index */
+  .gallery-card-index {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.25rem;
+    font-family: "Exo", system-ui, sans-serif;
+    font-size: 0.875rem;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.9);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.05em;
+    z-index: 4;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: 
+      opacity 0.4s ease,
+      transform 0.4s ease,
+      color 0.3s ease;
+  }
+
+  .gallery-card:hover .gallery-card-index {
+    opacity: 1;
+    transform: translateY(0);
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  /* Border frame */
+  .gallery-card-frame {
+    position: absolute;
+    inset: 0.75rem;
+    border: 1px solid rgba(255, 255, 255, 0);
+    border-radius: 2px;
+    z-index: 4;
+    pointer-events: none;
+    transition: border-color 0.5s ease 0.1s;
+  }
+
+  .gallery-card:hover .gallery-card-frame {
+    border-color: rgba(255, 255, 255, 0.15);
   }
 
   /* ========================================
@@ -760,19 +1415,46 @@ const backLabel = collectionTitle || categoryTitle;
   .related-section {
     padding: 6rem 1rem;
     background: #fafafa;
+    position: relative;
+  }
+
+  .related-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, #e5e5e5 20%, #e5e5e5 80%, transparent);
   }
 
   .related-header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-end;
     max-width: 1280px;
     margin: 0 auto 3rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #e5e5e5;
+  }
+
+  .related-title-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .related-label {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #999;
   }
 
   .related-title {
-    font-size: clamp(1.25rem, 3vw, 1.75rem);
-    font-weight: 500;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 400;
     letter-spacing: -0.02em;
     color: #000;
     margin: 0;
@@ -781,34 +1463,256 @@ const backLabel = collectionTitle || categoryTitle;
   .related-link {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.75rem;
     font-size: 0.75rem;
     font-weight: 500;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: #666;
     text-decoration: none;
-    transition: color 0.2s ease;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: pointer;
+    position: relative;
+    padding: 0.5rem 0;
+  }
+
+  .link-text {
+    position: relative;
+  }
+
+  .link-text::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: #000;
+    transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .related-link:hover {
     color: #000;
   }
 
-  .related-link svg {
-    transition: transform 0.2s ease;
+  .related-link:hover .link-text::after {
+    width: 100%;
   }
 
-  .related-link:hover svg {
-    transform: translateX(4px);
+  .link-arrow {
+    display: flex;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .related-link:hover .link-arrow {
+    transform: translateX(6px);
   }
 
   .related-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 3px;
+    gap: 4px;
     max-width: 1280px;
     margin: 0 auto;
+  }
+
+  /* Work Cards - Same style as Hero */
+  .work-card {
+    position: relative;
+    display: block;
+    aspect-ratio: 1;
+    overflow: hidden;
+    background: #0a0a0a;
+    text-decoration: none;
+    border-radius: 4px;
+    isolation: isolate;
+  }
+
+  .work-card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .work-card:hover .work-card-img {
+    transform: scale(1.06);
+  }
+
+  .work-card-empty {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.875rem;
+    color: #666;
+    background: #f0f0f0;
+  }
+
+  /* Dark overlay on hover */
+  .work-card-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    opacity: 0;
+    z-index: 2;
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .work-card:hover .work-card-overlay {
+    opacity: 1;
+  }
+
+  /* Top line accent */
+  .work-card-line-accent {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(
+      90deg,
+      #fff 0%,
+      rgba(255, 255, 255, 0.5) 50%,
+      transparent 100%
+    );
+    transform: translateX(-100%);
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 4;
+  }
+
+  .work-card:hover .work-card-line-accent {
+    transform: translateX(0);
+  }
+
+  /* Content */
+  .work-card-content {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-end;
+    padding: 1.5rem;
+    padding-bottom: 2rem;
+    text-align: left;
+    z-index: 3;
+    opacity: 0;
+    transition: opacity 0.4s ease 0.1s;
+  }
+
+  .work-card:hover .work-card-content {
+    opacity: 1;
+  }
+
+  .work-card-category {
+    font-size: 0.625rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 0.75rem;
+    padding-left: 1rem;
+    border-left: 2px solid rgba(255, 255, 255, 0.3);
+    transform: translateX(-10px);
+    opacity: 0;
+    transition: 
+      opacity 0.5s ease 0.15s,
+      transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.15s;
+  }
+
+  .work-card:hover .work-card-category {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .work-card-title {
+    font-family: "Exo", system-ui, sans-serif;
+    font-size: clamp(1.25rem, 2.5vw, 1.65rem);
+    font-weight: 500;
+    color: #fff;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin: 0 0 1rem;
+    transform: translateY(15px);
+    opacity: 0;
+    transition: 
+      opacity 0.5s ease 0.2s,
+      transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.2s;
+  }
+
+  .work-card:hover .work-card-title {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .work-card-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.7);
+    padding: 0.5rem 0;
+    transform: translateY(10px);
+    opacity: 0;
+    transition: 
+      opacity 0.5s ease 0.25s,
+      transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.25s,
+      color 0.3s ease;
+  }
+
+  .work-card:hover .work-card-cta {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .work-card-cta:hover {
+    color: #fff;
+  }
+
+  /* Corner index */
+  .work-card-index {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.25rem;
+    font-family: "Exo", system-ui, sans-serif;
+    font-size: 0.875rem;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.9);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.05em;
+    z-index: 4;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: 
+      opacity 0.4s ease,
+      transform 0.4s ease,
+      color 0.3s ease;
+  }
+
+  .work-card:hover .work-card-index {
+    opacity: 1;
+    transform: translateY(0);
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  /* Border frame */
+  .work-card-frame {
+    position: absolute;
+    inset: 0.75rem;
+    border: 1px solid rgba(255, 255, 255, 0);
+    border-radius: 2px;
+    z-index: 4;
+    pointer-events: none;
+    transition: border-color 0.5s ease 0.1s;
+  }
+
+  .work-card:hover .work-card-frame {
+    border-color: rgba(255, 255, 255, 0.15);
   }
 
   /* ========================================
@@ -843,49 +1747,125 @@ const backLabel = collectionTitle || categoryTitle;
   @media (min-width: 640px) {
     .related-grid {
       grid-template-columns: repeat(2, 1fr);
-      gap: 4px;
+      gap: 6px;
     }
 
     .gallery-grid {
       grid-template-columns: repeat(var(--cols, 4), 1fr);
     }
+
+    .artwork-mat {
+      padding: 4rem;
+    }
+
+    .image-counter {
+      font-size: 1rem;
+    }
   }
 
   @media (min-width: 768px) {
     .hero-section {
-      min-height: 80vh;
-      padding: 4rem 2rem;
+      min-height: 100vh;
+      padding: 6rem 2rem;
+    }
+
+    .artwork-frame {
+      padding: 3rem;
+    }
+
+    .artwork-mat {
+      padding: 5rem;
+    }
+
+    .zoom-trigger {
+      bottom: 3rem;
+      right: 3rem;
     }
 
     .info-section {
-      padding: 6rem 2rem;
+      padding: 8rem 2rem;
     }
 
     .info-grid {
       grid-template-columns: 1.2fr 1fr;
-      gap: 4rem;
+      gap: 6rem;
+    }
+
+    .title-block {
+      margin-bottom: 5rem;
+      padding-bottom: 4rem;
+    }
+
+    .specs-block {
+      padding: 2.5rem;
     }
 
     .related-section {
-      padding: 7rem 2rem;
+      padding: 8rem 2rem;
     }
 
     .related-grid {
-      gap: 6px;
+      gap: 8px;
+    }
+
+    .work-card-content,
+    .gallery-card-content {
+      padding: 2rem;
+      padding-bottom: 2.5rem;
+    }
+
+    .work-card-category,
+    .gallery-card-category {
+      font-size: 0.6875rem;
+      margin-bottom: 0.875rem;
+    }
+
+    .work-card-title {
+      font-size: clamp(1.5rem, 2.5vw, 1.85rem);
+    }
+
+    .work-card-index,
+    .gallery-card-index {
+      top: 1.5rem;
+      right: 1.5rem;
+      font-size: 1rem;
+    }
+
+    .work-card-frame,
+    .gallery-card-frame {
+      inset: 1rem;
+    }
+
+    .scroll-indicator {
+      bottom: 2rem;
     }
   }
 
   @media (min-width: 1024px) {
     .hero-section {
-      min-height: 85vh;
+      min-height: 100vh;
+    }
+
+    .artwork-mat {
+      padding: 6rem;
     }
 
     .info-grid {
-      gap: 6rem;
+      gap: 8rem;
     }
 
     .related-grid {
       grid-template-columns: repeat(3, 1fr);
+    }
+
+    .work-card-content,
+    .gallery-card-content {
+      padding: 2.5rem;
+      padding-bottom: 3rem;
+    }
+
+    .work-card-title {
+      font-size: clamp(1.65rem, 2.5vw, 2rem);
     }
   }
 
@@ -896,13 +1876,27 @@ const backLabel = collectionTitle || categoryTitle;
     .artwork-image,
     .zoom-trigger,
     .gallery-img,
-    .gallery-hover,
     .back-nav svg,
-    .related-link svg {
+    .related-link svg,
+    .work-card-img,
+    .work-card-overlay,
+    .work-card-content,
+    .work-card-category,
+    .work-card-title,
+    .work-card-index,
+    .work-card-line-accent,
+    .work-card-frame,
+    .gallery-card-overlay,
+    .gallery-card-content,
+    .gallery-card-category,
+    .gallery-card-index,
+    .gallery-card-line-accent,
+    .gallery-card-frame {
       transition: none;
     }
 
     .artwork-container:hover .artwork-image,
+    .work-card:hover .work-card-img,
     .gallery-card:hover .gallery-img {
       transform: none;
     }
@@ -912,8 +1906,30 @@ const backLabel = collectionTitle || categoryTitle;
       transform: none;
     }
 
-    .gallery-hover {
+    .work-card-line-accent,
+    .gallery-card-line-accent {
+      transform: translateX(0);
+    }
+
+    .work-card-overlay,
+    .work-card-content,
+    .work-card-index,
+    .gallery-card-overlay,
+    .gallery-card-content,
+    .gallery-card-index {
       opacity: 1;
+    }
+
+    .work-card-category,
+    .work-card-title,
+    .gallery-card-category {
+      opacity: 1;
+      transform: none;
+    }
+
+    .work-card-frame,
+    .gallery-card-frame {
+      border-color: rgba(255, 255, 255, 0.15);
     }
   }
 
@@ -922,10 +1938,20 @@ const backLabel = collectionTitle || categoryTitle;
      ======================================== */
   @media print {
     .zoom-trigger,
-    .gallery-hover,
     .cta-block,
     .back-nav,
-    .related-section {
+    .related-section,
+    .gallery-section,
+    .work-card-overlay,
+    .work-card-content,
+    .work-card-index,
+    .work-card-line-accent,
+    .work-card-frame,
+    .gallery-card-overlay,
+    .gallery-card-content,
+    .gallery-card-index,
+    .gallery-card-line-accent,
+    .gallery-card-frame {
       display: none;
     }
 

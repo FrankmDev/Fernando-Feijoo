@@ -21,7 +21,7 @@ export const SITE_CONFIG: SiteConfig = {
     "artist",
     "printmaker",
     "ceramics",
-    "drawings",
+    "sketchbooks",
     "mixed media",
     "artist books",
     "contemporary art",

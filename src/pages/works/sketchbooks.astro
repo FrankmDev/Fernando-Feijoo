@@ -1,0 +1,78 @@
+---
+import WorksLayout from "@components/WorksLayout.astro";
+import WorkCard from "@components/WorkCard.astro";
+import { WORKS } from "@data/works";
+import { processImageUrl } from "@utils/images";
+
+const sketchbooksCategory = WORKS.find(
+  (category) => category.slug === "sketchbooks",
+);
+if (!sketchbooksCategory) throw new Error("Sketchbooks category not found");
+
+const works = sketchbooksCategory.works || [];
+const bannerImage = works[0]?.imageUrls?.[0]
+  ? processImageUrl(works[0].imageUrls[0])
+  : undefined;
+
+const description = `Explore Fernando Feijoo's sketchbooks collection featuring ${works.length} unique ${works.length === 1 ? "sketchbook" : "sketchbooks"} that capture moments, places, and characters through various drawing techniques.`;
+---
+
+<WorksLayout
+  title="Sketchbooks"
+  description={description}
+  bannerImage={bannerImage}
+  breadcrumbs={[
+    { label: "Home", href: "/" },
+    { label: "Works", href: "/works" },
+    { label: "Sketchbooks" },
+  ]}
+  introText={description}
+  sectionTitle={works.length > 0 ? `${works.length} Works` : undefined}
+  showEmpty={works.length === 0}
+  emptyIcon="✏️"
+  emptyTitle="No Sketchbooks Available"
+>
+  {
+    works.map((work, index) => (
+      <div class="grid-item" style={`--delay: ${0.2 + index * 0.08}s`}>
+        <WorkCard
+          href={`/works/${work.slug}`}
+          title={work.title}
+          subtitle={work.medium}
+          imageUrl={
+            work.imageUrls?.[0] ? processImageUrl(work.imageUrls[0]) : ""
+          }
+          imageAlt={work.title}
+          isAboveFold={index < 3}
+        />
+      </div>
+    ))
+  }
+</WorksLayout>
+
+<style>
+  .grid-item {
+    opacity: 0;
+    animation: fadeInUp 0.6s var(--ease-out-expo, cubic-bezier(0.16, 1, 0.3, 1))
+      forwards;
+    animation-delay: var(--delay, 0s);
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .grid-item {
+      opacity: 1;
+      animation: none;
+    }
+  }
+</style>

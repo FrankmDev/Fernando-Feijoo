@@ -1,24 +1,30 @@
 ---
+import { Image } from "astro:assets";
+import studio from "@assets/profile/studio.avif";
+import columbian from "@assets/profile/columbian.avif";
+import printing from "@assets/profile/printing.avif";
+import working from "@assets/profile/working.avif";
+
 interface Slide {
-  src: string;
+  src: ImageMetadata;
   alt: string;
 }
 
 const slides: Slide[] = [
   {
-    src: "/profile/studio.avif",
+    src: studio,
     alt: "Fernando Feijoo in his studio workspace",
   },
   {
-    src: "/profile/columbian.avif",
+    src: columbian,
     alt: "Fernando Feijoo working with Columbian printing press",
   },
   {
-    src: "/profile/printing.avif",
+    src: printing,
     alt: "Fernando Feijoo during the printing process",
   },
   {
-    src: "/profile/working.avif",
+    src: working,
     alt: "Fernando Feijoo working on an art piece",
   },
 ];
@@ -43,15 +49,15 @@ const slides: Slide[] = [
           aria-hidden={index !== 0}
           data-profile-slide={index}
         >
-          <img
+          <Image
             src={slide.src}
             alt={slide.alt}
             class="slide-image"
             loading={index === 0 ? "eager" : "lazy"}
             decoding="async"
             fetchpriority={index === 0 ? "high" : "auto"}
-            width="500"
-            height="500"
+            width={500}
+            height={500}
           />
         </div>
       ))

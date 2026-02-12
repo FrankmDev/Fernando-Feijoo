@@ -4,55 +4,66 @@ import SliderHero from "@components/SliderHero.astro";
 import ContactBanner from "@components/Hero/ContactBanner.astro";
 import { WORKS } from "@data/works";
 import Cta from "@components/Cta.astro";
-import { processImageUrl } from "@utils/images";
-import type { Category, Work } from "@data/works";
+import { resolveImage, processImageUrl } from "@utils/images";
+import type { Category } from "@data/works";
+import { Image } from "astro:assets";
 
-interface ProcessedWork extends Work {
-  categorySlug: string;
-  categoryTitle: string;
-  collectionSlug?: string;
-  collectionTitle?: string;
+interface HeroItem {
+  title: string;
+  subtitle: string;
+  image?: ImageMetadata;
+  fallbackImage?: string;
+  href: string;
+  isCollection: boolean;
 }
 
 interface GallerySection {
   id: string;
   title: string;
-  items: ProcessedWork[];
+  items: HeroItem[];
 }
-
-const allWorks: ProcessedWork[] = WORKS.flatMap((category: Category) => {
-  if (category.works) {
-    return category.works.map((work) => ({
-      ...work,
-      categorySlug: category.slug,
-      categoryTitle: category.title,
-    }));
-  }
-
-  if (category.collections) {
-    return category.collections.flatMap((collection) =>
-      collection.works.map((work) => ({
-        ...work,
-        categorySlug: category.slug,
-        categoryTitle: category.title,
-        collectionSlug: collection.slug,
-        collectionTitle: collection.title,
-      })),
-    );
-  }
-
-  return [];
-});
 
 const MAX_ITEMS_PER_CATEGORY = 9;
 
-const gallery: GallerySection[] = WORKS.map((category: Category) => ({
-  id: category.slug,
-  title: category.title,
-  items: allWorks
-    .filter((work) => work.categorySlug === category.slug)
-    .slice(0, MAX_ITEMS_PER_CATEGORY),
-})).filter((section) => section.items.length > 0);
+const gallery: GallerySection[] = WORKS.map((category: Category) => {
+  let items: HeroItem[] = [];
+
+  if (category.collections) {
+    items = category.collections.map((collection) => {
+      const imgPath = collection.works?.[0]?.imageUrls?.[0] || "";
+      return {
+        title: collection.title,
+        subtitle: category.title,
+        image: resolveImage(imgPath),
+        fallbackImage: !resolveImage(imgPath)
+          ? processImageUrl(imgPath)
+          : undefined,
+        href: `/works/${category.slug}/${collection.slug}`,
+        isCollection: true,
+      };
+    });
+  } else if (category.works) {
+    items = category.works.map((work) => {
+      const imgPath = work.imageUrls?.[0] || "";
+      return {
+        title: work.title,
+        subtitle: category.title,
+        image: resolveImage(imgPath),
+        fallbackImage: !resolveImage(imgPath)
+          ? processImageUrl(imgPath)
+          : undefined,
+        href: `/works/${work.slug}`,
+        isCollection: false,
+      };
+    });
+  }
+
+  return {
+    id: category.slug,
+    title: category.title,
+    items: items.slice(0, MAX_ITEMS_PER_CATEGORY),
+  };
+}).filter((section) => section.items.length > 0);
 ---
 
 <section class="hero">
@@ -67,22 +78,30 @@ const gallery: GallerySection[] = WORKS.map((category: Category) => ({
       {
         gallery.map(({ id, title, items }, sectionIndex) => (
           <section id={id} class="gallery reveal">
-            <h2 class="gallery-title">{title}</h2>
+            <h2 class="gallery-title">
+              <span class="title-text">{title}</span>
+            </h2>
 
             <div class="grid reveal-stagger">
-              {items.map((work, index) => {
-                const imageUrl = work.imageUrls?.[0]
-                  ? processImageUrl(work.imageUrls[0])
-                  : "";
+              {items.map((item, index) => {
                 const isAboveFold = sectionIndex === 0 && index < 3;
-                const collection = work.collectionTitle || work.categoryTitle;
 
                 return (
-                  <a href={`/works/${work.slug}`} class="card reveal">
-                    {imageUrl ? (
+                  <a href={item.href} class="card reveal">
+                    {item.image ? (
+                      <Image
+                        src={item.image}
+                        alt={item.title}
+                        width={400}
+                        height={400}
+                        loading={isAboveFold ? "eager" : "lazy"}
+                        decoding="async"
+                        class="card-img"
+                      />
+                    ) : item.fallbackImage ? (
                       <img
-                        src={imageUrl}
-                        alt={work.title}
+                        src={item.fallbackImage}
+                        alt={item.title}
                         width="400"
                         height="400"
                         loading={isAboveFold ? "eager" : "lazy"}
@@ -90,15 +109,28 @@ const gallery: GallerySection[] = WORKS.map((category: Category) => ({
                         class="card-img"
                       />
                     ) : (
-                      <div class="card-empty">{work.title}</div>
+                      <div class="card-empty">{item.title}</div>
                     )}
 
+                    {/* Dark overlay */}
                     <div class="card-overlay" />
 
+                    {/* Top line accent */}
+                    <div class="card-line-accent" aria-hidden="true" />
+
+                    {/* Content */}
                     <div class="card-content">
-                      <span class="card-collection">{collection}</span>
-                      <h3 class="card-title">{work.title}</h3>
+                      <span class="card-category">{item.subtitle}</span>
+                      <h3 class="card-title">{item.title}</h3>
                     </div>
+
+                    {/* Corner index */}
+                    <span class="card-index" aria-hidden="true">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+
+                    {/* Border frame */}
+                    <div class="card-frame" aria-hidden="true" />
                   </a>
                 );
               })}
@@ -136,13 +168,13 @@ const gallery: GallerySection[] = WORKS.map((category: Category) => ({
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 4rem;
+    gap: 5rem;
   }
 
   .gallery-sections {
     display: flex;
     flex-direction: column;
-    gap: 5rem;
+    gap: 6rem;
     width: 100%;
   }
 
@@ -153,42 +185,59 @@ const gallery: GallerySection[] = WORKS.map((category: Category) => ({
   }
 
   .gallery-title {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    overflow: hidden;
+  }
+
+  .title-text {
+    display: inline-block;
     font-size: clamp(1.75rem, 5vw, 2.5rem);
     font-weight: 500;
     letter-spacing: -0.03em;
     color: #000;
-    text-align: center;
-    margin-bottom: 2.5rem;
+    position: relative;
+  }
+
+  .title-text::after {
+    content: "";
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 2px;
+    background: #000;
+    opacity: 0.15;
   }
 
   .grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 3px;
+    gap: 4px;
   }
 
-  /* Card */
+  /* Card Base */
   .card {
     position: relative;
     display: block;
     aspect-ratio: 1;
     overflow: hidden;
-    background: #111;
+    background: #0a0a0a;
     text-decoration: none;
+    border-radius: 4px;
+    isolation: isolate;
   }
 
   .card-img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition:
-      transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-      opacity 0.5s ease;
+    transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .card:hover .card-img {
-    transform: scale(1.1);
-    opacity: 0.4;
+    transform: scale(1.06);
   }
 
   .card-empty {
@@ -202,17 +251,40 @@ const gallery: GallerySection[] = WORKS.map((category: Category) => ({
     background: #f0f0f0;
   }
 
-  /* Overlay */
+  /* Dark overlay on hover - darker */
   .card-overlay {
     position: absolute;
     inset: 0;
-    background: black;
+    background: rgba(0, 0, 0, 0.85);
     opacity: 0;
-    transition: opacity 0.5s ease;
+    z-index: 2;
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .card:hover .card-overlay {
-    opacity: 0.5;
+    opacity: 1;
+  }
+
+  /* Top line accent */
+  .card-line-accent {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(
+      90deg,
+      #fff 0%,
+      rgba(255, 255, 255, 0.5) 50%,
+      transparent 100%
+    );
+    transform: translateX(-100%);
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 4;
+  }
+
+  .card:hover .card-line-accent {
+    transform: translateX(0);
   }
 
   /* Content */
@@ -221,69 +293,140 @@ const gallery: GallerySection[] = WORKS.map((category: Category) => ({
     inset: 0;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    align-items: flex-start;
+    justify-content: flex-end;
     padding: 1.5rem;
-    text-align: center;
+    padding-bottom: 2rem;
+    text-align: left;
+    z-index: 3;
     opacity: 0;
-    transition: opacity 0.4s ease;
+    transition: opacity 0.4s ease 0.1s;
   }
 
-  .card:hover .card-content,
-  .card:focus-visible .card-content {
+  .card:hover .card-content {
     opacity: 1;
   }
 
-  .card-collection {
-    font-size: 0.6875rem;
+  .card-category {
+    font-size: 0.625rem;
     font-weight: 600;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(255, 255, 255, 0.5);
     margin-bottom: 0.75rem;
-    transform: translateY(15px);
-    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.1s;
+    padding-left: 1rem;
+    border-left: 2px solid rgba(255, 255, 255, 0.3);
+    transform: translateX(-10px);
+    opacity: 0;
+    transition:
+      opacity 0.5s ease 0.15s,
+      transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.15s;
   }
 
-  .card:hover .card-collection {
-    transform: translateY(0);
+  .card:hover .card-category {
+    opacity: 1;
+    transform: translateX(0);
   }
 
   .card-title {
-    font-size: clamp(1.25rem, 4vw, 1.75rem);
-    font-weight: 600;
+    font-family: "Exo", system-ui, sans-serif;
+    font-size: clamp(1.35rem, 3vw, 1.85rem);
+    font-weight: 500;
     color: #fff;
     letter-spacing: -0.02em;
-    line-height: 1.15;
+    line-height: 1.2;
     margin: 0;
     transform: translateY(15px);
-    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    opacity: 0;
+    transition:
+      opacity 0.5s ease 0.2s,
+      transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.2s;
   }
 
   .card:hover .card-title {
+    opacity: 1;
     transform: translateY(0);
   }
 
+  /* Corner index */
+  .card-index {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.25rem;
+    font-family: "Exo", system-ui, sans-serif;
+    font-size: 0.875rem;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.9);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.05em;
+    z-index: 4;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition:
+      opacity 0.4s ease,
+      transform 0.4s ease,
+      color 0.3s ease;
+  }
+
+  .card:hover .card-index {
+    opacity: 1;
+    transform: translateY(0);
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  /* Border frame */
+  .card-frame {
+    position: absolute;
+    inset: 0.75rem;
+    border: 1px solid rgba(255, 255, 255, 0);
+    border-radius: 2px;
+    z-index: 4;
+    pointer-events: none;
+    transition: border-color 0.5s ease 0.1s;
+  }
+
+  .card:hover .card-frame {
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+
+  /* Focus States */
   .card:focus-visible {
     outline: 2px solid #000;
-    outline-offset: 2px;
+    outline-offset: 3px;
+    border-radius: 6px;
   }
 
-  .card:focus-visible .card-collection,
+  .card:focus-visible .card-overlay,
+  .card:focus-visible .card-content,
+  .card:focus-visible .card-index,
+  .card:focus-visible .card-line-accent {
+    opacity: 1;
+  }
+
+  .card:focus-visible .card-line-accent {
+    transform: translateX(0);
+  }
+
+  .card:focus-visible .card-category,
   .card:focus-visible .card-title {
-    transform: translateY(0);
+    opacity: 1;
+    transform: translate(0);
+  }
+
+  .card:focus-visible .card-frame {
+    border-color: rgba(255, 255, 255, 0.15);
   }
 
   .gallery-cta {
     text-align: center;
-    margin-top: 2.5rem;
+    margin-top: 3rem;
   }
 
   /* Responsive */
   @media (min-width: 640px) {
     .grid {
       grid-template-columns: repeat(2, 1fr);
-      gap: 4px;
+      gap: 6px;
     }
   }
 
@@ -293,26 +436,61 @@ const gallery: GallerySection[] = WORKS.map((category: Category) => ({
     }
 
     .content {
-      gap: 5rem;
-    }
-
-    .gallery-sections {
       gap: 6rem;
     }
 
-    .grid {
-      gap: 6px;
+    .gallery-sections {
+      gap: 8rem;
     }
 
-    .card-collection {
-      font-size: 0.75rem;
-      margin-bottom: 1rem;
+    .grid {
+      gap: 8px;
+    }
+
+    .card-content {
+      padding: 2rem;
+      padding-bottom: 2.5rem;
+    }
+
+    .card-category {
+      font-size: 0.6875rem;
+      margin-bottom: 0.875rem;
+    }
+
+    .card-title {
+      font-family: "Exo", system-ui, sans-serif;
+      font-size: clamp(1.5rem, 2.5vw, 2rem);
+    }
+
+    .card-index {
+      top: 1.5rem;
+      right: 1.5rem;
+      font-size: 1rem;
+    }
+
+    .card-frame {
+      inset: 1rem;
+    }
+
+    .gallery-cta {
+      margin-top: 3.5rem;
     }
   }
 
   @media (min-width: 1024px) {
     .grid {
       grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .card-content {
+      padding: 2.5rem;
+      padding-bottom: 3rem;
+    }
+
+    .card-title {
+      font-family: "Exo", system-ui, sans-serif;
+      font-size: clamp(1.75rem, 2.5vw, 2.25rem);
     }
   }
 
@@ -321,8 +499,11 @@ const gallery: GallerySection[] = WORKS.map((category: Category) => ({
     .card-img,
     .card-overlay,
     .card-content,
-    .card-collection,
-    .card-title {
+    .card-category,
+    .card-title,
+    .card-index,
+    .card-line-accent,
+    .card-frame {
       transition: none;
     }
 
@@ -330,13 +511,24 @@ const gallery: GallerySection[] = WORKS.map((category: Category) => ({
       transform: none;
     }
 
-    .card-content {
+    .card-line-accent {
+      transform: translateX(0);
+    }
+
+    .card-overlay,
+    .card-content,
+    .card-index {
       opacity: 1;
     }
 
-    .card-collection,
+    .card-category,
     .card-title {
+      opacity: 1;
       transform: none;
+    }
+
+    .card-frame {
+      border-color: rgba(255, 255, 255, 0.15);
     }
   }
 
@@ -344,7 +536,10 @@ const gallery: GallerySection[] = WORKS.map((category: Category) => ({
   @media print {
     .slider-wrapper,
     .card-overlay,
-    .card-content {
+    .card-content,
+    .card-index,
+    .card-line-accent,
+    .card-frame {
       display: none;
     }
   }

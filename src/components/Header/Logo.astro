@@ -6,10 +6,91 @@ interface Props {
 const { class: className = "" } = Astro.props;
 ---
 
-<a href="/" class:list={["flex gap-3 items-center", className]}>
-  <h2 class="text-3xl md:text-4xl font-bold uppercase">Fernando Feijoo</h2>
-  <div class="flex flex-col text-xs md:text-sm">
-    <span class="-mb-1">Artist &</span>
+<a href="/" class:list={["logo", className]}>
+  <h2 class="logo-title">Fernando Feijoo</h2>
+  <div class="logo-subtitle">
+    <span>Artist &</span>
     <span>Printmaker</span>
   </div>
 </a>
+
+<style>
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+    color: var(--color-gray-900);
+    transition: color 0.4s var(--ease-out-quart);
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+    position: relative;
+    z-index: 1001;
+    margin: 0;
+  }
+
+  /* Focus visible personalizado */
+  .logo:focus-visible {
+    outline: none;
+  }
+
+  .logo::before {
+    content: '';
+    position: absolute;
+    inset: -6px -8px;
+    background: rgba(0, 0, 0, 0.03);
+    border-radius: 6px;
+    opacity: 0;
+    transform: scale(0.95);
+    transition: all 0.3s var(--ease-out-back);
+    z-index: -1;
+  }
+
+  .logo:focus-visible::before {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  /* Cambio de color cuando el menú está abierto */
+  :global(.header.menu-open) .logo {
+    color: white;
+  }
+
+  :global(.header.menu-open) .logo::before {
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  .logo-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    line-height: 1;
+  }
+
+  .logo-subtitle {
+    display: flex;
+    flex-direction: column;
+    font-size: 0.6875rem;
+    font-weight: 500;
+    line-height: 1.3;
+    letter-spacing: 0.03em;
+    color: var(--color-gray-500);
+    transition: color 0.4s var(--ease-out-quart);
+  }
+
+  :global(.header.menu-open) .logo-subtitle {
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  /* Desktop */
+  @media (min-width: 768px) {
+    .logo-title {
+      font-size: 1.5rem;
+    }
+
+    .logo-subtitle {
+      font-size: 0.75rem;
+    }
+  }
+</style>

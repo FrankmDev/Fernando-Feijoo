@@ -13,6 +13,17 @@ export const WORKS: Category[] = [
         description: "",
         works: [
           {
+            slug: "busted",
+            title: "Busted",
+            description:
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+            medium: "Linocut, wood block & Letterpress",
+            price: "£520",
+            imageUrls: [
+              "@assets/works/prints/citizensWastrels/gangstersCollection/busted.avif",
+            ],
+          },
+          {
             slug: "after-hours",
             title: "Afterhours",
             description:
@@ -88,17 +99,6 @@ export const WORKS: Category[] = [
             price: "£480",
             imageUrls: [
               "@assets/works/prints/citizensWastrels/timeIsJustAnIllution.avif",
-            ],
-          },
-          {
-            slug: "busted",
-            title: "Busted",
-            description:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-            medium: "Linocut, wood block & Letterpress",
-            price: "£520",
-            imageUrls: [
-              "@assets/works/prints/citizensWastrels/gangstersCollection/busted.avif",
             ],
           },
           {
@@ -347,6 +347,231 @@ export const WORKS: Category[] = [
               "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
             medium: "Linocut, wood block & Letterpress",
             price: "£600",
+            imageUrls: ["@assets/works/prints/godsMonsters/agni.avif"],
+          },
+          {
+            slug: "bala",
+            title: "Bala",
+            description:
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+            medium: "Linocut, wood block & Letterpress",
+            price: "£600",
+            imageUrls: ["@assets/works/prints/godsMonsters/bala.avif"],
+          },
+          {
+            slug: "cerbus",
+            title: "Cerbus",
+            description:
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+            medium: "Linocut, wood block & Letterpress",
+            price: "£600",
+            imageUrls: ["@assets/works/prints/godsMonsters/cerbus.avif"],
+          },
+          {
+            slug: "draco",
+            title: "Draco",
+            description:
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+            medium: "Linocut, wood block & Letterpress",
+            price: "£600",
+            imageUrls: ["@assets/works/prints/godsMonsters/draco.avif"],
+          },
+          {
+            slug: "europa",
+            title: "Europa",
+            description:
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+            medium: "Linocut, wood block & Letterpress",
+            price: "£600",
+            imageUrls: ["@assets/works/prints/godsMonsters/europa.avif"],
+          },
+          {
+            slug: "fenir",
+            title: "Fenir",
+            description:
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+            medium: "Linocut, wood block & Letterpress",
+            price: "£600",
+            imageUrls: ["@assets/works/prints/godsMonsters/fenir.avif"],
+          },
+          {
+            slug: "gala",
+            title: "Gala",
+            description:
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+            medium: "Linocut, wood block & Letterpress",
+            price: "£600",
+            imageUrls: ["@assets/works/prints/godsMonsters/gala.avif"],
+          },
+          {
+            slug: "hercules",
+            title: "Hercules",
+            description:
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+            medium: "Linocut, wood block & Letterpress",
+            price: "£600",
+            imageUrls: ["@assets/works/prints/godsMonsters/hercules.avif"],
+          },
+          {
+            slug: "icarus",
+            title: "Icarus",
+            description:
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+            medium: "Linocut, wood block & Letterpress",
+            price: "£600",
+            imageUrls: ["@assets/works/prints/godsMonsters/icarus.avif"],
+          },
+          {
+            slug: "janus",
+            title: "Janus",
+            description:
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+            medium: "Linocut, wood block & Letterpress",
+            price: "£600",
+            imageUrls: ["@assets/works/prints/godsMonsters/janus.avif"],
+          },
+          {
+            slug: "kraken",
+            title: "Kraken",
+            description:
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+            medium: "Linocut, wood block & Letterpress",
+            price: "£600",
+            imageUrls: ["@assets/works/prints/godsMonsters/kraken.avif"],
+          },
+          {
+            slug: "lucifer",
+            title: "Lucifer",
+            description:
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+            medium: "Linocut, wood block & Letterpress",
+            price: "£600",
+            imageUrls: ["@assets/works/prints/godsMonsters/lucifer.avif"],
+          },
+          {
+            slug: "medusa",
+            title: "Medusa",
+            description:
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+            medium: "Linocut, wood block & Letterpress",
+            price: "£600",
+            imageUrls: ["@assets/works/prints/godsMonsters/medusa.avif"],
+          },
+          {
+            slug: "neptune",
+            title: "Neptune",
+            description:
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+            medium: "Linocut, wood block & Letterpress",
+            price: "£600",
+            imageUrls: ["@assets/works/prints/godsMonsters/neptune.avif"],
+          },
+          {
+            slug: "odin",
+            title: "Odin",
+            description:
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+            medium: "Linocut, wood block & Letterpress",
+            price: "£600",
+            imageUrls: ["@assets/works/prints/godsMonsters/odin.avif"],
+          },
+          {
+            slug: "prometheus",
+            title: "Prometheus",
+            description:
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+            medium: "Linocut, wood block & Letterpress",
+            price: "£600",
+            imageUrls: ["@assets/works/prints/godsMonsters/prometheus.avif"],
+          },
+          {
+            slug: "quetzlcoatl",
+            title: "Quetzlcoatl",
+            description:
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+            medium: "Linocut, wood block & Letterpress",
+            price: "£600",
+            imageUrls: ["@assets/works/prints/godsMonsters/quetzlcoatl.avif"],
+          },
+          {
+            slug: "ra",
+            title: "Ra",
+            description:
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+            medium: "Linocut, wood block & Letterpress",
+            price: "£600",
+            imageUrls: ["@assets/works/prints/godsMonsters/ra.avif"],
+          },
+          {
+            slug: "shu",
+            title: "Shu",
+            description:
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+            medium: "Linocut, wood block & Letterpress",
+            price: "£600",
+            imageUrls: ["@assets/works/prints/godsMonsters/shu.avif"],
+          },
+          {
+            slug: "theseus",
+            title: "Theseus",
+            description:
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+            medium: "Linocut, wood block & Letterpress",
+            price: "£600",
+            imageUrls: ["@assets/works/prints/godsMonsters/theseus.avif"],
+          },
+          {
+            slug: "urania",
+            title: "Urania",
+            description:
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+            medium: "Linocut, wood block & Letterpress",
+            price: "£600",
+            imageUrls: ["@assets/works/prints/godsMonsters/urania.avif"],
+          },
+          {
+            slug: "volcan",
+            title: "Volcan",
+            description:
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+            medium: "Linocut, wood block & Letterpress",
+            price: "£600",
+            imageUrls: ["@assets/works/prints/godsMonsters/volcan.avif"],
+          },
+          {
+            slug: "walpurgis",
+            title: "Walpurgis",
+            description:
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+            medium: "Linocut, wood block & Letterpress",
+            price: "£600",
+            imageUrls: ["@assets/works/prints/godsMonsters/walpurgis.avif"],
+          },
+          {
+            slug: "xanthos",
+            title: "Xanthos",
+            description:
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+            medium: "Linocut, wood block & Letterpress",
+            price: "£600",
+            imageUrls: ["@assets/works/prints/godsMonsters/xanthos.avif"],
+          },
+          {
+            slug: "yggdrasil",
+            title: "Yggdrasil",
+            description:
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+            medium: "Linocut, wood block & Letterpress",
+            price: "£600",
+            imageUrls: ["@assets/works/prints/godsMonsters/yggdrasil.avif"],
+          },
+          {
+            slug: "zephyr",
+            title: "Zephyr",
+            description:
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+            medium: "Linocut, wood block & Letterpress",
+            price: "£600",
             imageUrls: ["@assets/works/prints/godsMonsters/zephyr.avif"],
           },
         ],
@@ -356,6 +581,17 @@ export const WORKS: Category[] = [
         title: "Inferno",
         description: "",
         works: [
+          {
+            slug: "night-terrors",
+            title: "Night Terrors",
+            description:
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+            medium: "Linocut, wood block & Letterpress",
+            price: "£650",
+            imageUrls: [
+              "@assets/works/prints/structDestruct/Nightwatch_fernando_feijoo.avif",
+            ],
+          },
           {
             slug: "descent-into-darkness",
             title: "Descent into Darkness",
@@ -476,127 +712,7 @@ export const WORKS: Category[] = [
           },
         ],
       },
-      {
-        slug: "labyrinth-of-dreams",
-        title: "Labyrinth of Dreams",
-        description: "",
-        works: [
-          {
-            slug: "arrogance",
-            title: "Arrogance",
-            description:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-            medium: "Linocut, wood block & Letterpress",
-            imageUrls: [
-              "@assets/works/prints/labyrinthOfDreams/arrogance.avif",
-            ],
-          },
-          {
-            slug: "condemnation",
-            title: "Condemnation",
-            description:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-            medium: "Linocut, wood block & Letterpress",
-            imageUrls: [
-              "@assets/works/prints/labyrinthOfDreams/condemnation.avif",
-            ],
-          },
-          {
-            slug: "creation",
-            title: "Creation",
-            description:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-            medium: "Linocut, wood block & Letterpress",
-            price: "£620",
-            imageUrls: ["@assets/works/prints/labyrinthOfDreams/creation.avif"],
-          },
-          {
-            slug: "evasion",
-            title: "Evasion",
-            description:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-            medium: "Linocut, wood block & Letterpress",
-            price: "£620",
-            imageUrls: ["@assets/works/prints/labyrinthOfDreams/evasion.avif"],
-          },
-          {
-            slug: "greed",
-            title: "Greed",
-            description:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-            medium: "Linocut, wood block & Letterpress",
-            price: "£620",
-            imageUrls: ["@assets/works/prints/labyrinthOfDreams/greed.avif"],
-          },
-          {
-            slug: "hunter",
-            title: "Hunter",
-            description:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-            medium: "Linocut, wood block & Letterpress",
-            price: "£620",
-            imageUrls: ["@assets/works/prints/labyrinthOfDreams/hunter.avif"],
-          },
-          {
-            slug: "ilumination",
-            title: "Ilumination",
-            description:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-            medium: "Linocut, wood block & Letterpress",
-            imageUrls: [
-              "@assets/works/prints/labyrinthOfDreams/ilumination.avif",
-            ],
-          },
-          {
-            slug: "lost",
-            title: "Lost",
-            description:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-            medium: "Linocut, wood block & Letterpress",
-            price: "£620",
-            imageUrls: ["@assets/works/prints/labyrinthOfDreams/lost.avif"],
-          },
-          {
-            slug: "obssesion",
-            title: "Obssesion",
-            description:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-            medium: "Linocut, wood block & Letterpress",
-            imageUrls: [
-              "@assets/works/prints/labyrinthOfDreams/obssesion.avif",
-            ],
-          },
-          {
-            slug: "persuasion",
-            title: "Persuasion",
-            description:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-            medium: "Linocut, wood block & Letterpress",
-            imageUrls: [
-              "@assets/works/prints/labyrinthOfDreams/persuasion.avif",
-            ],
-          },
-          {
-            slug: "reality",
-            title: "Reality",
-            description:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-            medium: "Linocut, wood block & Letterpress",
-            price: "£620",
-            imageUrls: ["@assets/works/prints/labyrinthOfDreams/reality.avif"],
-          },
-          {
-            slug: "the-final-bow",
-            title: "The Final Bow",
-            description:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-            medium: "Linocut, wood block & Letterpress",
-            imageUrls: [
-              "@assets/works/prints/labyrinthOfDreams/theFinalBow.avif",
-            ],
-          },
-        ],
-      },
+
       {
         slug: "persons&personas",
         title: "Persons & Personas",
@@ -918,6 +1034,16 @@ export const WORKS: Category[] = [
         description: "",
         works: [
           {
+            slug: "darkness",
+            title: "Darkness",
+            description:
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+            medium: "Linocut, wood block & Letterpress",
+            imageUrls: [
+              "@assets/works/prints/theJourneyMan/6_Darkness__fernando_feijoo.avif",
+            ],
+          },
+          {
             slug: "arrival",
             title: "1. Arrival",
             description:
@@ -965,16 +1091,6 @@ export const WORKS: Category[] = [
             medium: "Linocut, wood block & Letterpress",
             imageUrls: [
               "@assets/works/prints/theJourneyMan/5_Confusion_fernando_feijoo.avif",
-            ],
-          },
-          {
-            slug: "darkness",
-            title: "6. Darkness",
-            description:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-            medium: "Linocut, wood block & Letterpress",
-            imageUrls: [
-              "@assets/works/prints/theJourneyMan/6_Darkness__fernando_feijoo.avif",
             ],
           },
           {
@@ -1386,6 +1502,16 @@ export const WORKS: Category[] = [
         description: "",
         works: [
           {
+            slug: "rumble-in-the-jungle",
+            title: "Rumble in the Jungle",
+            description:
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+            medium: "Linocut, wood block & Letterpress",
+            imageUrls: [
+              "@assets/works/prints/watchBewitched/Rumble_in_the_Jungle_Fernando_Feijoo.avif",
+            ],
+          },
+          {
             slug: "carrera-de-san-fermin",
             title: "Carrera de San Fermín",
             description:
@@ -1473,16 +1599,6 @@ export const WORKS: Category[] = [
             medium: "Linocut, wood block & Letterpress",
             imageUrls: [
               "@assets/works/prints/watchBewitched/Rudos_Vs_Tecnicos_fernando_feijoo.avif",
-            ],
-          },
-          {
-            slug: "rumble-in-the-jungle",
-            title: "Rumble in the Jungle",
-            description:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-            medium: "Linocut, wood block & Letterpress",
-            imageUrls: [
-              "@assets/works/prints/watchBewitched/Rumble_in_the_Jungle_Fernando_Feijoo.avif",
             ],
           },
           {
@@ -1668,8 +1784,8 @@ export const WORKS: Category[] = [
     ],
   },
   {
-    slug: "drawings",
-    title: "Drawings",
+    slug: "sketchbooks",
+    title: "Sketchbooks",
     works: [
       {
         slug: "botanical-garden-malaga",
@@ -1934,33 +2050,160 @@ export const WORKS: Category[] = [
   {
     slug: "mixed-media",
     title: "Mixed Media",
-    works: [
+    collections: [
       {
-        slug: "luchador",
-        title: "Luchador",
-        description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-        medium: "Mixed Media",
-        price: "£700",
-        imageUrls: ["@assets/works/mixed/luchador.avif"],
+        slug: "labyrinth-of-dreams",
+        title: "Labyrinth of Dreams",
+        description: "",
+        works: [
+          {
+            slug: "arrogance",
+            title: "Arrogance",
+            description:
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+            medium: "Linocut, wood block & Letterpress",
+            imageUrls: [
+              "@assets/works/prints/labyrinthOfDreams/arrogance.avif",
+            ],
+          },
+          {
+            slug: "condemnation",
+            title: "Condemnation",
+            description:
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+            medium: "Linocut, wood block & Letterpress",
+            imageUrls: [
+              "@assets/works/prints/labyrinthOfDreams/condemnation.avif",
+            ],
+          },
+          {
+            slug: "creation",
+            title: "Creation",
+            description:
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+            medium: "Linocut, wood block & Letterpress",
+            price: "£620",
+            imageUrls: ["@assets/works/prints/labyrinthOfDreams/creation.avif"],
+          },
+          {
+            slug: "evasion",
+            title: "Evasion",
+            description:
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+            medium: "Linocut, wood block & Letterpress",
+            price: "£620",
+            imageUrls: ["@assets/works/prints/labyrinthOfDreams/evasion.avif"],
+          },
+          {
+            slug: "greed",
+            title: "Greed",
+            description:
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+            medium: "Linocut, wood block & Letterpress",
+            price: "£620",
+            imageUrls: ["@assets/works/prints/labyrinthOfDreams/greed.avif"],
+          },
+          {
+            slug: "hunter",
+            title: "Hunter",
+            description:
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+            medium: "Linocut, wood block & Letterpress",
+            price: "£620",
+            imageUrls: ["@assets/works/prints/labyrinthOfDreams/hunter.avif"],
+          },
+          {
+            slug: "ilumination",
+            title: "Ilumination",
+            description:
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+            medium: "Linocut, wood block & Letterpress",
+            imageUrls: [
+              "@assets/works/prints/labyrinthOfDreams/ilumination.avif",
+            ],
+          },
+          {
+            slug: "lost",
+            title: "Lost",
+            description:
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+            medium: "Linocut, wood block & Letterpress",
+            price: "£620",
+            imageUrls: ["@assets/works/prints/labyrinthOfDreams/lost.avif"],
+          },
+          {
+            slug: "obssesion",
+            title: "Obssesion",
+            description:
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+            medium: "Linocut, wood block & Letterpress",
+            imageUrls: [
+              "@assets/works/prints/labyrinthOfDreams/obssesion.avif",
+            ],
+          },
+          {
+            slug: "persuasion",
+            title: "Persuasion",
+            description:
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+            medium: "Linocut, wood block & Letterpress",
+            imageUrls: [
+              "@assets/works/prints/labyrinthOfDreams/persuasion.avif",
+            ],
+          },
+          {
+            slug: "reality",
+            title: "Reality",
+            description:
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+            medium: "Linocut, wood block & Letterpress",
+            price: "£620",
+            imageUrls: ["@assets/works/prints/labyrinthOfDreams/reality.avif"],
+          },
+          {
+            slug: "the-final-bow",
+            title: "The Final Bow",
+            description:
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+            medium: "Linocut, wood block & Letterpress",
+            imageUrls: [
+              "@assets/works/prints/labyrinthOfDreams/theFinalBow.avif",
+            ],
+          },
+        ],
       },
       {
-        slug: "pagannini",
-        title: "Pagannini",
-        description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-        medium: "Mixed Media",
-        price: "£700",
-        imageUrls: ["@assets/works/mixed/pagannini.avif"],
-      },
-      {
-        slug: "puta-gallina",
-        title: "Puta Gallina",
-        description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-        medium: "Mixed Media",
-        price: "£700",
-        imageUrls: ["@assets/works/mixed/putaGallina.avif"],
+        slug: "mixed-media-works",
+        title: "Mixed Media Works",
+        works: [
+          {
+            slug: "luchador",
+            title: "Luchador",
+            description:
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+            medium: "Mixed Media",
+            price: "£700",
+            imageUrls: ["@assets/works/mixed/luchador.avif"],
+          },
+          {
+            slug: "pagannini",
+            title: "Pagannini",
+            description:
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+            medium: "Mixed Media",
+            price: "£700",
+            imageUrls: ["@assets/works/mixed/pagannini.avif"],
+          },
+          {
+            slug: "puta-gallina",
+            title: "Puta Gallina",
+            description:
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+            medium: "Mixed Media",
+            price: "£700",
+            imageUrls: ["@assets/works/mixed/putaGallina.avif"],
+          },
+        ],
       },
     ],
   },

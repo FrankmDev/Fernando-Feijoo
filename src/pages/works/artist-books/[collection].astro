@@ -11,7 +11,7 @@ import { processImageUrl } from "@utils/images";
 
 export async function getStaticPaths() {
   const artistBooksCategory = WORKS.find(
-    (category) => category.slug === "artist-books"
+    (category) => category.slug === "artist-books",
   );
   if (!artistBooksCategory || !artistBooksCategory.collections) return [];
 
@@ -111,12 +111,12 @@ const description =
   }
 
   .intro-text {
-    font-size: 1.125rem;
-    color: var(--color-gray-500, #666);
+    font-size: 1rem;
+    color: #444;
     text-align: center;
     max-width: 640px;
     margin: 0 auto 3rem;
-    line-height: 1.7;
+    line-height: 1.8;
   }
 
   .section-title {
