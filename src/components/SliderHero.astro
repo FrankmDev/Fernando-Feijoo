@@ -1,41 +1,62 @@
 ---
 import { Image } from "astro:assets";
+import theFall from "@assets/heroSlider/TheFall.avif";
+import robots from "@assets/heroSlider/robots.avif";
+import theWar from "@assets/heroSlider/theWar.avif";
+import slide3 from "@assets/heroSlider/3.avif";
 import theFuture from "@assets/heroSlider/TheFuture.avif";
-import packOfLiars from "@assets/heroSlider/3.avif";
-import theFall from "@assets/works/prints/inferno/thFall.avif";
-import persons from "@assets/heroSlider/2.avif";
+import slide2 from "@assets/heroSlider/2.avif";
 
 interface Slide {
   id: number;
   src: ImageMetadata;
   alt: string;
   title?: string;
+  isBW?: boolean;
 }
 
 const slides: Slide[] = [
   {
     id: 1,
-    src: theFuture,
-    alt: "The Future artwork by Fernando Feijoo",
-    title: "The Future",
-  },
-  {
-    id: 2,
-    src: packOfLiars,
-    alt: "Pack of Liars artwork by Fernando Feijoo",
-    title: "Pack of Liars",
-  },
-  {
-    id: 3,
     src: theFall,
     alt: "The Fall artwork by Fernando Feijoo",
     title: "The Fall",
+    isBW: true,
+  },
+  {
+    id: 2,
+    src: robots,
+    alt: "Robots artwork by Fernando Feijoo",
+    title: "Robots",
+    isBW: false,
+  },
+  {
+    id: 3,
+    src: theWar,
+    alt: "The War artwork by Fernando Feijoo",
+    title: "The War",
+    isBW: true,
   },
   {
     id: 4,
-    src: persons,
-    alt: "Persons artwork by Fernando Feijoo",
-    title: "Persons",
+    src: slide3,
+    alt: "Artwork 3 by Fernando Feijoo",
+    title: "Artwork 3",
+    isBW: false,
+  },
+  {
+    id: 5,
+    src: theFuture,
+    alt: "The Future artwork by Fernando Feijoo",
+    title: "The Future",
+    isBW: false,
+  },
+  {
+    id: 6,
+    src: slide2,
+    alt: "Artwork 2 by Fernando Feijoo",
+    title: "Artwork 2",
+    isBW: false,
   },
 ];
 ---
@@ -70,7 +91,7 @@ const slides: Slide[] = [
               <Image
                 src={slide.src}
                 alt={slide.alt}
-                class="slide-image"
+                class={`slide-image ${slide.isBW ? 'bw-image' : ''}`}
                 loading={index === 0 ? "eager" : "lazy"}
                 fetchpriority={index === 0 ? "high" : "auto"}
                 decoding="async"
@@ -590,6 +611,14 @@ const slides: Slide[] = [
     filter: brightness(0.95) contrast(1) saturate(1);
     transform: scale(1.12);
     transition: filter 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .slide-image.bw-image {
+    filter: brightness(0.95) contrast(1.05) saturate(0) grayscale(100%);
+  }
+
+  .slide.active .slide-image.bw-image {
+    filter: brightness(1) contrast(1.1) saturate(0) grayscale(100%);
   }
 
   .slide.active .slide-image {

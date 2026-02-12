@@ -26,7 +26,7 @@ const bannerImage =
     ? getFirstImageFromCollection(collections[0])
     : undefined;
 
-const description = `Explore Fernando Feijoo's prints collection featuring ${collections.length} unique ${collections.length === 1 ? "collection" : "collections"} of linocut, wood block, and letterpress works.`;
+const description = `Explore the different grouped collections of linocut, wood block, wood engravings, Lithographs, screen prints and etchings. Each original print is hand printed by the artist using archival lightfast inks onto Sommerset archival papers.`;
 ---
 
 <WorksLayout
@@ -47,7 +47,7 @@ const description = `Explore Fernando Feijoo's prints collection featuring ${col
         <WorkCard
           href={`/works/prints/${collection.slug}`}
           title={collection.title}
-          subtitle={`${collection.works.length} works`}
+          subtitle=""
           imageUrl={getFirstImageFromCollection(collection)}
           imageAlt={`${collection.title} collection`}
           isAboveFold={index < 3}

@@ -62,7 +62,7 @@ const description =
         }
 
         <h2 class="section-title animate-fade-in" style="--delay: 0.15s">
-          {collection.works.length} Books
+          {collection.title}
         </h2>
 
         <div class="grid">
@@ -72,7 +72,7 @@ const description =
                 <WorkCard
                   href={`/works/${work.slug}`}
                   title={work.title}
-                  subtitle={work.medium}
+                  subtitle={work.printType}
                   imageUrl={
                     work.imageUrls?.[0]
                       ? processImageUrl(work.imageUrls[0])

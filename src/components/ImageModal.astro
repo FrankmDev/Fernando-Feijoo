@@ -8,90 +8,56 @@ const { id = "imageModal" } = Astro.props;
 
 <div
   id={id}
-  class="image-modal hidden fixed inset-0 z-50 bg-black bg-opacity-90 flex items-center justify-center p-4"
+  class="image-modal"
+  style="display: none; position: fixed; inset: 0; z-index: 9999; background: rgba(0,0,0,0.95); align-items: center; justify-content: center; padding: 1rem;"
 >
-  <div class="relative max-w-full max-h-full flex items-center justify-center">
+  <div class="modal-inner" style="position: relative; max-width: 100%; max-height: 100%; display: flex; align-items: center; justify-content: center;">
     <!-- Close button -->
     <button
-      class="modal-close absolute top-4 right-4 text-white hover:text-gray-300 transition-colors z-10"
+      class="modal-close"
       aria-label="Close modal"
+      style="position: absolute; top: 1rem; right: 1rem; background: none; border: none; color: white; cursor: pointer; z-index: 10; padding: 0.5rem;"
     >
-      <svg
-        class="w-8 h-8"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M6 18L18 6M6 6l12 12"></path>
+      <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
       </svg>
     </button>
 
     <!-- Navigation buttons -->
     <button
-      class="modal-prev absolute left-4 top-1/2 -translate-y-1/2 text-white hover:text-gray-300 transition-colors p-2 rounded-full bg-black bg-opacity-50 hover:bg-opacity-70"
+      class="modal-prev"
       aria-label="Previous image"
+      style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); border: none; color: white; cursor: pointer; padding: 0.75rem; border-radius: 50%; display: none;"
     >
-      <svg
-        class="w-6 h-6"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M15 19l-7-7 7-7"></path>
+      <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"></path>
       </svg>
     </button>
 
     <button
-      class="modal-next absolute right-4 top-1/2 -translate-y-1/2 text-white hover:text-gray-300 transition-colors p-2 rounded-full bg-black bg-opacity-50 hover:bg-opacity-70"
+      class="modal-next"
       aria-label="Next image"
+      style="position: absolute; right: 1rem; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); border: none; color: white; cursor: pointer; padding: 0.75rem; border-radius: 50%; display: none;"
     >
-      <svg
-        class="w-6 h-6"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M9 5l7 7-7 7"></path>
+      <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path>
       </svg>
     </button>
 
     <!-- Image container -->
-    <div
-      class="modal-image-container flex items-center justify-center max-w-full max-h-full"
-    >
-      <!-- Loading indicator -->
-      <div
-        class="modal-loading absolute inset-0 flex items-center justify-center bg-black bg-opacity-20"
-      >
-        <div
-          class="animate-spin rounded-full h-12 w-12 border-b-2 border-white"
-        >
-        </div>
-      </div>
-
+    <div class="modal-image-container" style="display: flex; align-items: center; justify-content: center; max-width: 90vw; max-height: 90vh;">
       <img
-        class="modal-image max-w-full max-h-full object-contain opacity-0 transition-opacity duration-300"
+        class="modal-image"
         src=""
         alt=""
-        style="max-height: 90vh; max-width: 90vw;"
+        style="max-width: 90vw; max-height: 90vh; object-fit: contain; opacity: 0; transition: opacity 0.3s ease;"
       />
     </div>
 
     <!-- Image counter -->
     <div
-      class="absolute bottom-4 left-1/2 -translate-x-1/2 text-white bg-black bg-opacity-50 px-3 py-1 rounded-full text-sm"
+      class="modal-counter"
+      style="position: absolute; bottom: 1rem; left: 50%; transform: translateX(-50%); color: white; background: rgba(0,0,0,0.6); padding: 0.5rem 1rem; border-radius: 9999px; font-size: 0.875rem;"
     >
       <span class="modal-current">1</span> / <span class="modal-total">1</span>
     </div>
@@ -99,54 +65,136 @@ const { id = "imageModal" } = Astro.props;
 </div>
 
 <script>
-  import { ImageModal } from "../scripts/ImageModal";
+// @ts-nocheck
+// Image Modal - Self-contained script
+(function() {
+  function initModal() {
+    const modal = document.getElementById('imageModal');
+    if (!modal || modal._initialized) return;
+    
+    modal._initialized = true;
+    
+    const modalImg = modal.querySelector('.modal-image');
+    const modalCurrent = modal.querySelector('.modal-current');
+    const modalTotal = modal.querySelector('.modal-total');
+    const prevBtn = modal.querySelector('.modal-prev');
+    const nextBtn = modal.querySelector('.modal-next');
+    const closeBtn = modal.querySelector('.modal-close');
 
-  // Initialize modal when DOM is loaded
-  document.addEventListener("DOMContentLoaded", () => {
-    const modalInstance = new ImageModal("imageModal");
-    (window as any).imageModal = modalInstance;
-  });
+    let images = [];
+    let currentIndex = 0;
+
+    function updateImage() {
+      if (!images.length || !modalImg) return;
+      
+      modalImg.style.opacity = '0';
+      
+      const img = new Image();
+      img.onload = function() {
+        modalImg.src = images[currentIndex];
+        modalImg.style.opacity = '1';
+      };
+      img.onerror = function() {
+        modalImg.src = images[currentIndex];
+        modalImg.style.opacity = '1';
+      };
+      img.src = images[currentIndex];
+
+      if (modalCurrent) modalCurrent.textContent = currentIndex + 1;
+      if (modalTotal) modalTotal.textContent = images.length;
+      
+      if (prevBtn) prevBtn.style.display = images.length > 1 ? 'block' : 'none';
+      if (nextBtn) nextBtn.style.display = images.length > 1 ? 'block' : 'none';
+    }
+
+    function openModal(imageList, startIndex) {
+      if (!imageList || !imageList.length) return;
+      
+      images = imageList;
+      currentIndex = startIndex || 0;
+      
+      updateImage();
+      
+      modal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      modal.style.display = 'none';
+      document.body.style.overflow = '';
+      images = [];
+    }
+
+    function prevImage() {
+      if (images.length <= 1) return;
+      currentIndex = currentIndex > 0 ? currentIndex - 1 : images.length - 1;
+      updateImage();
+    }
+
+    function nextImage() {
+      if (images.length <= 1) return;
+      currentIndex = currentIndex < images.length - 1 ? currentIndex + 1 : 0;
+      updateImage();
+    }
+
+    closeBtn && closeBtn.addEventListener('click', closeModal);
+    prevBtn && prevBtn.addEventListener('click', prevImage);
+    nextBtn && nextBtn.addEventListener('click', nextImage);
+
+    modal.addEventListener('click', function(e) {
+      if (e.target === modal) {
+        closeModal();
+      }
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (modal.style.display === 'none') return;
+      
+      if (e.key === 'Escape') {
+        closeModal();
+      } else if (e.key === 'ArrowLeft' && images.length > 1) {
+        prevImage();
+      } else if (e.key === 'ArrowRight' && images.length > 1) {
+        nextImage();
+      }
+    });
+
+    window.imageModal = {
+      openModal: openModal,
+      closeModal: closeModal
+    };
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initModal);
+  } else {
+    initModal();
+  }
+  
+  document.addEventListener('astro:page-load', initModal);
+})();
 </script>
 
 <style>
   .image-modal {
-    backdrop-filter: blur(4px);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
   }
 
-  .modal-image {
-    transition: opacity 0.3s ease-in-out;
+  .modal-close:hover,
+  .modal-prev:hover,
+  .modal-next:hover {
+    opacity: 0.8;
   }
 
-  .modal-loading {
-    display: none;
+  .modal-close:active,
+  .modal-prev:active,
+  .modal-next:active {
+    transform: scale(0.95);
   }
 
-  /* Prevent body scroll when modal is open */
-  body.modal-open {
-    overflow: hidden;
-  }
-
-  /* Smooth transitions */
-  .image-modal * {
-    transition: all 0.2s ease-in-out;
-  }
-
-  /* Accessibility improvements */
-  .modal-close:focus,
-  .modal-prev:focus,
-  .modal-next:focus {
-    outline: 2px solid white;
-    outline-offset: 2px;
-  }
-
-  /* Loading spinner animation */
-  @keyframes spin {
-    to {
-      transform: rotate(360deg);
-    }
-  }
-
-  .animate-spin {
-    animation: spin 1s linear infinite;
+  .modal-prev:active,
+  .modal-next:active {
+    transform: translateY(-50%) scale(0.95);
   }
 </style>

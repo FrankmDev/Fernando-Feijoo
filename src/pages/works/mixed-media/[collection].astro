@@ -1,0 +1,183 @@
+---
+import "@styles/general.css";
+import Layout from "@layouts/Layout.astro";
+import PageBanner from "@components/PageBanner.astro";
+import ContactBanner from "@components/Hero/ContactBanner.astro";
+import Breadcrumb from "@components/Breadcrumb.astro";
+import WorkCard from "@components/WorkCard.astro";
+import Cta from "@components/Cta.astro";
+import { WORKS } from "@data/works";
+import { processImageUrl } from "@utils/images";
+
+export async function getStaticPaths() {
+  const mixedCategory = WORKS.find((category) => category.slug === "mixed-media");
+  if (!mixedCategory || !mixedCategory.collections) return [];
+
+  return mixedCategory.collections.map((collection) => ({
+    params: { collection: collection.slug },
+    props: { collection, categoryTitle: mixedCategory.title },
+  }));
+}
+
+const { collection, categoryTitle } = Astro.props;
+if (!collection) throw new Error(`Collection not found`);
+
+const bannerImage = collection.works?.[0]?.imageUrls?.[0]
+  ? processImageUrl(collection.works[0].imageUrls[0])
+  : undefined;
+
+const description =
+  collection.description ||
+  `Explore ${collection.title} - a collection of ${collection.works.length} mixed media works by Fernando Feijoo.`;
+---
+
+<Layout
+  title={`${collection.title} - Mixed Media - Fernando Feijoo`}
+  description={description}
+>
+  <main>
+    <PageBanner title={collection.title} backgroundImage={bannerImage} />
+
+    <section class="works-section">
+      <div class="container">
+        <div class="animate-fade-in">
+          <Breadcrumb
+            items={[
+              { label: "Home", href: "/" },
+              { label: "Works", href: "/works" },
+              { label: categoryTitle, href: "/works/mixed-media" },
+              { label: collection.title },
+            ]}
+          />
+        </div>
+
+        {
+          collection.description && (
+            <p class="intro-text animate-fade-in" style="--delay: 0.1s">
+              {collection.description}
+            </p>
+          )
+        }
+
+        <h2 class="section-title animate-fade-in" style="--delay: 0.15s">
+          {collection.title}
+        </h2>
+
+        <div class="grid">
+          {
+            collection.works.map((work, index) => (
+              <div class="grid-item" style={`--delay: ${0.2 + index * 0.06}s`}>
+                <WorkCard
+                  href={`/works/${work.slug}`}
+                  title={work.title}
+                  subtitle={work.printType}
+                  imageUrl={
+                    work.imageUrls?.[0]
+                      ? processImageUrl(work.imageUrls[0])
+                      : ""
+                  }
+                  imageAlt={work.title}
+                  isAboveFold={index < 3}
+                />
+              </div>
+            ))
+          }
+        </div>
+
+        <div class="cta-section animate-fade-in" style="--delay: 0.5s">
+          <Cta href="/works/mixed-media" label="← Back to Mixed Media" isDark={false} />
+        </div>
+      </div>
+    </section>
+
+    <ContactBanner />
+  </main>
+</Layout>
+
+<style>
+  .works-section {
+    padding: 4rem 1rem;
+  }
+
+  .container {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .intro-text {
+    font-size: 1rem;
+    color: #444;
+    text-align: center;
+    max-width: 640px;
+    margin: 0 auto 3rem;
+    line-height: 1.8;
+  }
+
+  .section-title {
+    font-size: clamp(1.75rem, 5vw, 2.5rem);
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    color: var(--color-black, #000);
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3px;
+  }
+
+  .grid-item {
+    opacity: 0;
+    animation: fadeInUp 0.6s var(--ease-out-expo, cubic-bezier(0.16, 1, 0.3, 1))
+      forwards;
+    animation-delay: var(--delay, 0s);
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .cta-section {
+    text-align: center;
+    margin-top: 4rem;
+  }
+
+  @media (min-width: 640px) {
+    .grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 4px;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .works-section {
+      padding: 5rem 2rem;
+    }
+
+    .grid {
+      gap: 6px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .grid-item {
+      opacity: 1;
+      animation: none;
+    }
+  }
+</style>

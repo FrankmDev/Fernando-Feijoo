@@ -2,13 +2,60 @@
 import Layout from "@layouts/Layout.astro";
 import SectionContainer from "@components/SectionContainer.astro";
 import ContactBanner from "@components/Hero/ContactBanner.astro";
-import WorkCard from "@components/WorkCard.astro";
-import Cta from "@components/Cta.astro";
 import ImageModal from "@components/ImageModal.astro";
 import { WORKS } from "@data/works";
-import { processImageUrls, resolveImage, processImageUrl } from "@utils/images";
+import { resolveImage, processImageUrl } from "@utils/images";
 import { Image } from "astro:assets";
 
+// Importar todas las imágenes de ceramics para detectar automáticamente
+const allCeramicImages = import.meta.glob<{ default: ImageMetadata }>(
+  '/src/assets/works/ceramics/**/*.{avif,jpg,jpeg,png}',
+  { eager: true }
+);
+
+// Importar todas las imágenes de artistBooks para detectar automáticamente
+const allArtistBookImages = import.meta.glob<{ default: ImageMetadata }>(
+  '/src/assets/works/artistBooks/**/*.{avif,jpg,jpeg,png}',
+  { eager: true }
+);
+
+// Función para obtener imágenes de una obra específica
+function getWorkImages(categorySlug: string, workSlug: string): ImageMetadata[] {
+  const images: ImageMetadata[] = [];
+  
+  if (categorySlug === 'ceramics') {
+    for (const [path, imageModule] of Object.entries(allCeramicImages)) {
+      const normalizedPath = path.toLowerCase();
+      const searchPattern = `/ceramics/${workSlug.toLowerCase()}/`;
+      const searchPatternWin = `\\ceramics\\${workSlug.toLowerCase()}\\`;
+      
+      if (normalizedPath.includes(searchPattern) || normalizedPath.includes(searchPatternWin)) {
+        images.push(imageModule.default);
+      }
+    }
+  } else if (categorySlug === 'artist-books') {
+    for (const [path, imageModule] of Object.entries(allArtistBookImages)) {
+      const folderMap: Record<string, string> = {
+        'contemporary-street-alphabet-1': 'contemporarystreetalphabet',
+        'crack-progress-charlies-progress-1': 'crackprogresscharliesprogress',
+        'future-1': 'future',
+        'gods-monsters-1': 'godsmonsters',
+        'journeyman-1': 'thejourneyman',
+        'modern-marriage-1': 'modernmarriage',
+        'run-1': 'run'
+      };
+      
+      const folderName = folderMap[workSlug.toLowerCase()];
+      const normalizedPath = path.toLowerCase();
+      
+      if (folderName && (normalizedPath.includes(`/artistbooks/${folderName}/`) || normalizedPath.includes(`\\artistbooks\\${folderName}\\`))) {
+        images.push(imageModule.default);
+      }
+    }
+  }
+  
+  return images.sort((a, b) => a.src.localeCompare(b.src));
+}
 
 export async function getStaticPaths() {
   const paths = [];
@@ -52,36 +99,41 @@ export const prerender = true;
 
 const { work, categorySlug, categoryTitle, collectionSlug, collectionTitle } = Astro.props;
 
-const processedImageUrls = work?.imageUrls ? processImageUrls(work.imageUrls) : [];
-const mainImageUrl = work?.imageUrls?.[0];
-const mainImageMeta = resolveImage(mainImageUrl);
-const mainImageSrc = processedImageUrls[0] || '';
+const detectedImageMetas = (categorySlug === 'ceramics' || categorySlug === 'artist-books') 
+  ? getWorkImages(categorySlug, work.slug)
+  : [];
 
-const hasMultipleImages = processedImageUrls.length > 1;
-const galleryImages = hasMultipleImages ? processedImageUrls : [];
-const galleryColCount = Math.min(galleryImages.length, 4);
+const hasDetectedImages = detectedImageMetas.length > 0;
+const allImageMetas = hasDetectedImages 
+  ? detectedImageMetas 
+  : work?.imageUrls?.map(url => resolveImage(url)).filter(Boolean) as ImageMetadata[] || [];
 
-// Find related works
+const mainImageMeta = allImageMetas[0];
+const mainImageSrc = mainImageMeta?.src || '';
+const hasMultipleImages = allImageMetas.length > 1;
+const additionalImageMetas = allImageMetas.slice(1);
+const additionalImagesCount = additionalImageMetas.length;
+const galleryColCount = Math.min(Math.max(additionalImagesCount, 2), 4);
+
 const relatedWorks = [];
 for (const category of WORKS) {
   if (category.slug === categorySlug) {
     if (collectionSlug && category.collections) {
       const collection = category.collections.find(c => c.slug === collectionSlug);
       if (collection) {
-        relatedWorks.push(...collection.works.filter(w => w.slug !== work.slug).slice(0, 6));
+        relatedWorks.push(...collection.works.filter(w => w.slug !== work.slug).slice(0, 4));
       }
     } else if (category.works) {
-      relatedWorks.push(...category.works.filter(w => w.slug !== work.slug).slice(0, 6));
+      relatedWorks.push(...category.works.filter(w => w.slug !== work.slug).slice(0, 4));
     }
     break;
   }
 }
 
-// SEO
 const pageTitle = `${work?.title || 'Work'} | Fernando Feijoo`;
 const pageDescription = work?.description?.trim()
   ? work.description.substring(0, 160)
-  : `${work?.title} - ${work?.medium || 'Artwork'} by Fernando Feijoo`;
+  : `${work?.title} - ${work?.printType || 'Artwork'} by Fernando Feijoo`;
 const ogImage = mainImageSrc || '/favicon.png';
 
 const backLink = collectionSlug
@@ -99,384 +151,251 @@ const backLabel = collectionTitle || categoryTitle;
     <main class="work-page">
       {work ? (
         <>
-          <!-- Hero Image Section - Gallery Presentation -->
-          <section class="hero-section">
-            <div class="hero-inner">
-              <!-- Back Navigation -->
-              <a href={backLink} class="back-nav">
-                <span class="back-icon">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                    <path d="M19 12H5M12 19l-7-7 7-7"/>
-                  </svg>
-                </span>
-                <span class="back-text">{backLabel}</span>
-                <span class="back-line" aria-hidden="true"></span>
+          {/* Elegant Navigation */}
+          <nav class="work-nav">
+            <div class="nav-inner">
+              <a href={backLink} class="nav-back">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                <span>Back to {backLabel}</span>
               </a>
+              <div class="nav-path">
+                <span class="path-segment"><a href="/">Home</a></span>
+                <span class="path-divider">/</span>
+                <span class="path-segment"><a href="/works">Works</a></span>
+                <span class="path-divider">/</span>
+                <span class="path-segment active">{work.title}</span>
+              </div>
+            </div>
+          </nav>
 
-              <!-- Main Artwork Display -->
-              <div class="artwork-frame">
-                <div class="artwork-container">
-                  <div class="artwork-mat">
+          {/* Main Content - Editorial Layout */}
+          <article class="work-content">
+            {/* Hero Section */}
+            <div class="work-hero">
+              <div class="hero-image-wrapper">
+                <div class="image-frame">
+                  <div class="frame-decoration top-left"></div>
+                  <div class="frame-decoration top-right"></div>
+                  <div class="frame-decoration bottom-left"></div>
+                  <div class="frame-decoration bottom-right"></div>
+                  
+                  <div class="image-container">
                     {mainImageMeta ? (
                       <Image
                         id="main-work-image"
                         src={mainImageMeta}
                         alt={work.title}
-                        class="artwork-image"
+                        class="hero-image"
                         loading="eager"
-                        data-images={JSON.stringify(processedImageUrls)}
+                        data-images={JSON.stringify(allImageMetas.map(m => m.src))}
                       />
                     ) : mainImageSrc ? (
                       <img
                         id="main-work-image"
                         src={mainImageSrc}
                         alt={work.title}
-                        class="artwork-image"
+                        class="hero-image"
                         loading="eager"
                         fetchpriority="high"
                         decoding="async"
-                        data-images={JSON.stringify(processedImageUrls)}
+                        data-images={JSON.stringify(allImageMetas.map(m => m.src))}
                       />
                     ) : (
-                      <div class="artwork-placeholder">
-                        <span>🖼️</span>
+                      <div class="image-placeholder">
+                        <span>{work.title}</span>
+                      </div>
+                    )}
+                    
+                    <button class="expand-trigger" aria-label="Expand image">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+
+                {hasMultipleImages && (
+                  <div class="image-indicator">
+                    <span class="indicator-current">01</span>
+                    <div class="indicator-bar">
+                      <div class="indicator-progress" style={`width: ${100 / allImageMetas.length}%`}></div>
+                    </div>
+                    <span class="indicator-total">{String(allImageMetas.length).padStart(2, '0')}</span>
+                  </div>
+                )}
+              </div>
+
+              <div class="hero-info">
+                <header class="info-header">
+                  <div class="info-eyebrow">
+                    <span class="eyebrow-line"></span>
+                    <span class="eyebrow-text">{collectionTitle || categoryTitle}</span>
+                  </div>
+                  
+                  <h1 class="info-title">{work.title}</h1>
+                  
+                  {work.description && (
+                    <p class="info-description">{work.description}</p>
+                  )}
+                </header>
+
+                <div class="info-specs">
+                  <div class="spec-list">
+                    <div class="spec-item">
+                      <span class="spec-label">Medium</span>
+                      <span class="spec-value">{work.printType || 'Mixed media'}</span>
+                    </div>
+                    
+                    {work.size && (
+                      <div class="spec-item">
+                        <span class="spec-label">Dimensions</span>
+                        <span class="spec-value">{work.size}</span>
+                      </div>
+                    )}
+                    
+                    {work.printEdition && (
+                      <div class="spec-item">
+                        <span class="spec-label">Edition</span>
+                        <span class="spec-value">{work.printEdition}</span>
+                      </div>
+                    )}
+                    
+                    {work.price && (
+                      <div class="spec-item spec-highlight">
+                        <span class="spec-label">Price</span>
+                        <span class="spec-value">{work.price}</span>
                       </div>
                     )}
                   </div>
-
-                  <!-- Gallery Frame Corners -->
-                  <div class="frame-corner frame-corner-tl" aria-hidden="true"></div>
-                  <div class="frame-corner frame-corner-tr" aria-hidden="true"></div>
-                  <div class="frame-corner frame-corner-bl" aria-hidden="true"></div>
-                  <div class="frame-corner frame-corner-br" aria-hidden="true"></div>
-
-                  <!-- Floating Zoom Button -->
-                  {mainImageSrc && (
-                    <button class="zoom-trigger" aria-label="View full size">
-                      <span class="zoom-icon">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                          <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
-                        </svg>
-                      </span>
-                      <span class="zoom-text">Expand</span>
-                    </button>
-                  )}
                 </div>
 
-                <!-- Image Counter (if multiple) -->
-                {hasMultipleImages && (
-                  <div class="image-counter">
-                    <span class="counter-current">01</span>
-                    <span class="counter-sep">/</span>
-                    <span class="counter-total">{String(processedImageUrls.length).padStart(2, '0')}</span>
-                  </div>
-                )}
-              </div>
-
-              <!-- Scroll Indicator -->
-              <div class="scroll-indicator" aria-hidden="true">
-                <span class="scroll-line"></span>
-                <span class="scroll-text">Scroll</span>
-              </div>
-            </div>
-          </section>
-
-          <!-- Work Information -->
-          <section class="info-section">
-            <div class="info-container">
-              <!-- Decorative Line -->
-              <div class="section-divider" aria-hidden="true">
-                <span class="divider-line"></span>
-                <span class="divider-dot"></span>
-                <span class="divider-line"></span>
-              </div>
-
-              <!-- Breadcrumb -->
-              <nav class="breadcrumb" aria-label="Breadcrumb">
-                <a href="/">Home</a>
-                <span class="sep">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                    <path d="M9 18l6-6-6-6"/>
-                  </svg>
-                </span>
-                <a href="/works">Works</a>
-                <span class="sep">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                    <path d="M9 18l6-6-6-6"/>
-                  </svg>
-                </span>
-                <a href={`/works/${categorySlug}`}>{categoryTitle}</a>
-                {collectionTitle && (
-                  <>
-                    <span class="sep">
-                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <path d="M9 18l6-6-6-6"/>
-                      </svg>
-                    </span>
-                    <a href={`/works/${categorySlug}/${collectionSlug}`}>{collectionTitle}</a>
-                  </>
-                )}
-              </nav>
-
-              <!-- Title Block -->
-              <header class="title-block">
-                <div class="title-meta">
-                  <span class="collection-badge">{collectionTitle || categoryTitle}</span>
-                </div>
-                <h1 class="work-title">
-                  <span class="title-line">{work.title}</span>
-                </h1>
-                <div class="artist-credit">
-                  <span class="by-text">by</span>
-                  <span class="artist-name">Fernando Feijoo</span>
-                </div>
-              </header>
-
-              <!-- Two Column Layout -->
-              <div class="info-grid">
-                <!-- Left: Description -->
-                <div class="info-left">
-                  {work.description && work.description.trim() !== "" ? (
-                    <div class="description-block">
-                      <span class="section-label">About</span>
-                      <p class="description">{work.description}</p>
-                    </div>
-                  ) : (
-                    <div class="description-block">
-                      <span class="section-label">About</span>
-                      <p class="description description-placeholder">Original artwork by Fernando Feijoo</p>
-                    </div>
-                  )}
-                </div>
-
-                <!-- Right: Details & Actions -->
-                <div class="info-right">
-                  <div class="specs-block">
-                    <span class="section-label">Details</span>
-                    <dl class="specs">
-                      <div class="spec-item">
-                        <dt>
-                          <span class="spec-icon">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-                            </svg>
-                          </span>
-                          Medium
-                        </dt>
-                        <dd>{work.medium || 'Mixed media'}</dd>
-                      </div>
-
-                      {work.dimensions && (
-                        <div class="spec-item">
-                          <dt>
-                            <span class="spec-icon">
-                              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                <rect x="3" y="3" width="18" height="18" rx="2"/>
-                                <path d="M3 9h18M9 21V9"/>
-                              </svg>
-                            </span>
-                            Dimensions
-                          </dt>
-                          <dd>{work.dimensions}</dd>
-                        </div>
-                      )}
-
-                      {work.edition && (
-                        <div class="spec-item">
-                          <dt>
-                            <span class="spec-icon">
-                              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
-                                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
-                              </svg>
-                            </span>
-                            Edition
-                          </dt>
-                          <dd>{work.edition}</dd>
-                        </div>
-                      )}
-
-                      {work.price && (
-                        <div class="spec-item spec-price">
-                          <dt>
-                            <span class="spec-icon">
-                              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                <line x1="12" y1="1" x2="12" y2="23"/>
-                                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
-                              </svg>
-                            </span>
-                            Price
-                          </dt>
-                          <dd>{work.price}</dd>
-                        </div>
-                      )}
-                    </dl>
-                  </div>
-
-                  <div class="cta-block">
-                    <Cta
-                      href={`mailto:contact@fernandofeijoo.com?subject=Inquiry about ${encodeURIComponent(work.title)}`}
-                      label="Inquire About This Work"
-                      isDark={true}
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <!-- Gallery Section (only if multiple images) -->
-          {hasMultipleImages && (
-            <section class="gallery-section">
-              <div class="gallery-header">
-                <div class="gallery-title-wrapper">
-                  <span class="gallery-label">Gallery</span>
-                  <span class="gallery-line" aria-hidden="true"></span>
-                </div>
-                <span class="gallery-count">
-                  <span class="count-number">{galleryImages.length}</span>
-                  <span class="count-text">images</span>
-                </span>
-              </div>
-              <div class="gallery-track">
-                <div class="gallery-grid" style={`--cols: ${galleryColCount}`}>
-                  {work.imageUrls.map((url, index) => {
-                     const meta = resolveImage(url);
-                     return (
-                    <figure class="gallery-card" data-index={index}>
-                      <div class="gallery-card-inner">
-                        {meta ? (
-                           <Image
-                             src={meta}
-                             alt={`${work.title} - View ${index + 1}`}
-                             class="gallery-img"
-                           />
-                        ) : (
-                          <img
-                            src={processImageUrl(url)}
-                            alt={`${work.title} - View ${index + 1}`}
-                            class="gallery-img"
-                            loading="lazy"
-                            decoding="async"
-                          />
-                        )}
-                        
-                        {/* Dark overlay */}
-                        <div class="gallery-card-overlay" />
-                        
-                        {/* Top line accent */}
-                        <div class="gallery-card-line-accent" aria-hidden="true" />
-                        
-                        {/* Content */}
-                        <div class="gallery-card-content">
-                          <span class="gallery-card-category">View {index + 1}</span>
-                          <span class="gallery-card-view">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                              <circle cx="12" cy="12" r="3"/>
-                            </svg>
-                            View
-                          </span>
-                        </div>
-                        
-                        {/* Corner index */}
-                        <span class="gallery-card-index" aria-hidden="true">
-                          {String(index + 1).padStart(2, '0')}
-                        </span>
-                        
-                        {/* Border frame */}
-                        <div class="gallery-card-frame" aria-hidden="true" />
-                      </div>
-                    </figure>
-                  )})}
-                </div>
-              </div>
-            </section>
-          )}
-
-          <!-- Related Works -->
-          {relatedWorks.length > 0 && (
-            <section class="related-section">
-              <div class="related-header">
-                <div class="related-title-wrapper">
-                  <span class="related-label">Related</span>
-                  <h2 class="related-title">More from {collectionTitle || categoryTitle}</h2>
-                </div>
-                <a href={backLink} class="related-link">
-                  <span class="link-text">View All</span>
-                  <span class="link-arrow">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <path d="M5 12h14M12 5l7 7-7 7"/>
+                <div class="info-cta">
+                  <a 
+                    href={`mailto:info@fernandofeijoo.com?subject=Inquiry: ${encodeURIComponent(work.title)}`}
+                    class="cta-primary"
+                  >
+                    <span>Inquire about this work</span>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
-                  </span>
-                </a>
+                  </a>
+                  <a href="/contact" class="cta-secondary">
+                    <span>Visit studio</span>
+                  </a>
+                </div>
               </div>
-              <div class="related-grid">
-                {relatedWorks.map((relatedWork, index) => {
-                  const relatedUrl = relatedWork.imageUrls?.[0] || "";
-                  const relatedMeta = resolveImage(relatedUrl);
-                  const relatedSrc = processImageUrl(relatedUrl);
+            </div>
 
-                  return (
-                    <a href={`/works/${relatedWork.slug}`} class="work-card">
-                      {relatedMeta ? (
+            {/* Gallery Section */}
+            {additionalImagesCount > 0 && (
+              <section class="work-gallery">
+                <div class="section-header">
+                  <div class="section-eyebrow">
+                    <span class="eyebrow-line"></span>
+                    <span class="eyebrow-text">Gallery</span>
+                  </div>
+                  <h2 class="section-title">Additional Views</h2>
+                </div>
+                
+                <div class="gallery-grid" style={`--cols: ${galleryColCount}`}>
+                  {additionalImageMetas.map((meta, index) => (
+                    <figure class="gallery-item" data-index={index + 1}>
+                      <div class="gallery-image-container">
                         <Image
-                          src={relatedMeta}
-                          alt={relatedWork.title}
-                          width={400}
-                          height={400}
-                          class="work-card-img"
+                          src={meta}
+                          alt={`${work.title} - View ${index + 2}`}
+                          class="gallery-image"
                         />
-                      ) : relatedSrc ? (
-                        <img
-                          src={relatedSrc}
-                          alt={relatedWork.title}
-                          class="work-card-img"
-                          loading="lazy"
-                          decoding="async"
-                        />
-                      ) : (
-                        <div class="work-card-empty">{relatedWork.title}</div>
-                      )}
-                      
-                      {/* Dark overlay */}
-                      <div class="work-card-overlay" />
-                      
-                      {/* Top line accent */}
-                      <div class="work-card-line-accent" aria-hidden="true" />
-                      
-                      {/* Content */}
-                      <div class="work-card-content">
-                        <span class="work-card-category">{collectionTitle || categoryTitle}</span>
-                        <h3 class="work-card-title">{relatedWork.title}</h3>
-                        <span class="work-card-cta">
-                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <path d="M5 12h14M12 5l7 7-7 7"/>
-                          </svg>
-                          View Work
-                        </span>
+                        <div class="gallery-overlay">
+                          <div class="gallery-expand-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                              <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
+                            </svg>
+                          </div>
+                        </div>
                       </div>
-                      
-                      {/* Corner index */}
-                      <span class="work-card-index" aria-hidden="true">
-                        {String(index + 1).padStart(2, "0")}
-                      </span>
-                      
-                      {/* Border frame */}
-                      <div class="work-card-frame" aria-hidden="true" />
+                      <figcaption class="gallery-caption">
+                        <span class="caption-number">{String(index + 2).padStart(2, '0')}</span>
+                      </figcaption>
+                    </figure>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {/* Related Works */}
+            {relatedWorks.length > 0 && (
+              <section class="work-related">
+                <div class="section-header">
+                  <div class="section-eyebrow">
+                    <span class="eyebrow-line"></span>
+                    <span class="eyebrow-text">Explore</span>
+                  </div>
+                  <div class="section-title-row">
+                    <h2 class="section-title">More from {collectionTitle || categoryTitle}</h2>
+                    <a href={backLink} class="view-all-link">
+                      <span>View all</span>
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
                     </a>
-                  );
-                })}
-              </div>
-            </section>
-          )}
+                  </div>
+                </div>
+
+                <div class="related-grid">
+                  {relatedWorks.map((relatedWork, index) => {
+                    const relatedUrl = relatedWork.imageUrls?.[0] || "";
+                    const relatedMeta = resolveImage(relatedUrl);
+                    const relatedSrc = processImageUrl(relatedUrl);
+
+                    return (
+                      <a href={`/works/${relatedWork.slug}`} class="related-card">
+                        <div class="related-image-wrapper">
+                          {relatedMeta ? (
+                            <Image
+                              src={relatedMeta}
+                              alt={relatedWork.title}
+                              width={400}
+                              height={400}
+                              loading="lazy"
+                              decoding="async"
+                              class="related-image"
+                            />
+                          ) : relatedSrc ? (
+                            <img
+                              src={relatedSrc}
+                              alt={relatedWork.title}
+                              width="400"
+                              height="400"
+                              loading="lazy"
+                              decoding="async"
+                              class="related-image"
+                            />
+                          ) : (
+                            <div class="related-fallback">{relatedWork.title}</div>
+                          )}
+                          <div class="related-hover-overlay">
+                            <div class="related-hover-content">
+                              <span class="related-number">{String(index + 1).padStart(2, "0")}</span>
+                              <h3 class="related-title-text">{relatedWork.title}</h3>
+                            </div>
+                          </div>
+                        </div>
+                      </a>
+                    );
+                  })}
+                </div>
+              </section>
+            )}
+          </article>
         </>
       ) : (
         <section class="not-found">
           <span class="not-found-icon">🖼️</span>
           <h1>Work Not Found</h1>
           <p>The work you're looking for doesn't exist or has been moved.</p>
-          <Cta href="/works" label="View All Works" isDark={true} />
         </section>
       )}
 
@@ -492,7 +411,7 @@ const backLabel = collectionTitle || categoryTitle;
         "@context": "https://schema.org",
         "@type": "VisualArtwork",
         "name": work?.title,
-        "image": processedImageUrls.map(url => `https://fernando-feijoo.com${url}`),
+        "image": allImageMetas.map(m => `https://fernando-feijoo.com${m.src}`),
         "description": work?.description,
         "creator": {
           "@type": "Person",
@@ -503,9 +422,9 @@ const backLabel = collectionTitle || categoryTitle;
           "@type": "Person",
           "name": "Fernando Feijoo"
         },
-        "artMedium": work?.medium,
+        "artMedium": work?.printType,
         "artform": categoryTitle,
-        "width": work?.dimensions
+        "width": work?.size
       };
 
       if (work?.price) {
@@ -522,1447 +441,766 @@ const backLabel = collectionTitle || categoryTitle;
     })()
   )} />
 
-  <script>
-    function setupWorkPage() {
+  <script is:inline>
+    // Initialize everything when DOM is ready
+    function initWorkPage() {
+      // Get fresh references to elements
       const mainImage = document.getElementById('main-work-image');
-      const zoomBtn = document.querySelector('.zoom-trigger');
-      const galleryItems = document.querySelectorAll('.gallery-card');
+      const expandTrigger = document.querySelector('.expand-trigger');
+      const galleryItems = document.querySelectorAll('.gallery-item');
 
-      const openModal = (index = 0) => {
+      // Open modal function
+      function openModal(index) {
         const imagesData = mainImage?.getAttribute('data-images');
-        if (imagesData) {
-          try {
-            const images = JSON.parse(imagesData);
-            // @ts-ignore
-            if (window.imageModal?.openModal) {
-              // @ts-ignore
-              window.imageModal.openModal(images, index);
-            }
-          } catch (e) {
-            console.error('Error parsing image data', e);
+        if (!imagesData) return;
+        
+        try {
+          const images = JSON.parse(imagesData);
+          if (window.imageModal?.openModal) {
+            window.imageModal.openModal(images, index);
           }
+        } catch (e) {
+          console.error('Error opening modal:', e);
         }
-      };
+      }
 
-      mainImage?.addEventListener('click', () => openModal(0));
-      zoomBtn?.addEventListener('click', () => openModal(0));
+      // Remove existing listeners first (to prevent duplicates)
+      if (mainImage) {
+        mainImage.replaceWith(mainImage.cloneNode(true));
+        const freshMainImage = document.getElementById('main-work-image');
+        freshMainImage?.addEventListener('click', () => openModal(0));
+      }
 
-      galleryItems.forEach((item) => {
-        item.addEventListener('click', () => {
-          const index = parseInt(item.getAttribute('data-index') || '0');
-          openModal(index);
+      // Expand button
+      const freshExpandBtn = document.querySelector('.expand-trigger');
+      freshExpandBtn?.addEventListener('click', function(e) {
+        e.stopPropagation();
+        openModal(0);
+      });
+
+      // Gallery items
+      document.querySelectorAll('.gallery-item').forEach(function(item) {
+        item.addEventListener('click', function() {
+          const idx = parseInt(item.getAttribute('data-index') || '0');
+          openModal(idx);
         });
       });
     }
 
-    document.addEventListener('DOMContentLoaded', setupWorkPage);
+    // Run on initial load
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initWorkPage);
+    } else {
+      initWorkPage();
+    }
+
+    // Re-run after view transitions
+    document.addEventListener('astro:page-load', initWorkPage);
+    document.addEventListener('astro:after-swap', initWorkPage);
   </script>
 </Layout>
 
-
 <style>
+  /* ========================================
+     BASE & VARIABLES
+     ======================================== */
   .work-page {
+    --color-bg: #ffffff;
+    --color-surface: #f8f8f8;
+    --color-surface-elevated: #ffffff;
+    --color-border: #e5e5e5;
+    --color-border-light: #f0f0f0;
+    --color-text: #0a0a0a;
+    --color-text-secondary: #525252;
+    --color-text-muted: #737373;
+    --color-accent: #000000;
+    
+    --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+    
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    
     width: 100%;
+    background: var(--color-bg);
   }
 
   /* ========================================
-     HERO SECTION - Gallery Presentation
+     NAVIGATION
      ======================================== */
-  .hero-section {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 6rem 1rem 4rem;
-    background: linear-gradient(180deg, #fafafa 0%, #f0f0f0 50%, #fafafa 100%);
-    position: relative;
-    overflow: hidden;
-  }
-
-  /* Subtle texture overlay */
-  .hero-section::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: 
-      repeating-linear-gradient(
-        90deg,
-        transparent,
-        transparent 100px,
-        rgba(0,0,0,0.01) 100px,
-        rgba(0,0,0,0.01) 101px
-      );
-    pointer-events: none;
-  }
-
-  .hero-inner {
-    width: 100%;
-    max-width: 1100px;
+  .work-nav {
+    padding: 1.5rem 1.5rem 1rem;
+    max-width: 1600px;
     margin: 0 auto;
-    position: relative;
-    z-index: 1;
   }
 
-  .back-nav {
+  @media (min-width: 768px) {
+    .work-nav {
+      padding: 2rem 3rem 1.5rem;
+    }
+  }
+
+  .nav-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--color-border-light);
+  }
+
+  @media (min-width: 640px) {
+    .nav-inner {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+
+  .nav-back {
     display: inline-flex;
     align-items: center;
-    gap: 1rem;
-    font-size: 0.75rem;
+    gap: 0.5rem;
+    font-size: 0.875rem;
     font-weight: 500;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: #666;
+    color: var(--color-text-secondary);
     text-decoration: none;
-    margin-bottom: 2.5rem;
-    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-    padding: 0.75rem 0;
-    cursor: pointer;
-    position: relative;
+    transition: color 0.2s var(--ease-smooth);
   }
 
-  .back-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    border: 1px solid #ddd;
-    border-radius: 50%;
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  .nav-back:hover {
+    color: var(--color-text);
   }
 
-  .back-text {
-    position: relative;
-    padding-bottom: 2px;
+  .nav-back svg {
+    transition: transform 0.2s var(--ease-out);
   }
 
-  .back-line {
-    position: absolute;
-    bottom: 0;
-    left: 56px;
-    width: 0;
-    height: 1px;
-    background: #000;
-    transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .back-nav:hover {
-    color: #000;
-  }
-
-  .back-nav:hover .back-icon {
-    border-color: #000;
-    transform: translateX(-4px);
-  }
-
-  .back-nav:hover .back-line {
-    width: calc(100% - 56px);
-  }
-
-  .back-nav svg {
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .back-nav:hover svg {
+  .nav-back:hover svg {
     transform: translateX(-3px);
   }
 
-  /* Artwork Frame - Museum Style */
-  .artwork-frame {
-    position: relative;
-    padding: 2rem;
-    background: #fff;
-    box-shadow:
-      0 40px 80px -20px rgba(0, 0, 0, 0.15),
-      0 0 0 1px rgba(0, 0, 0, 0.05);
+  .nav-path {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8125rem;
+    color: var(--color-text-muted);
   }
 
-  .artwork-container {
+  .path-segment a {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    transition: color 0.2s var(--ease-smooth);
+  }
+
+  .path-segment a:hover {
+    color: var(--color-text);
+  }
+
+  .path-segment.active {
+    color: var(--color-text);
+    font-weight: 500;
+  }
+
+  .path-divider {
+    color: var(--color-border);
+  }
+
+  /* ========================================
+     WORK CONTENT - Editorial Layout
+     ======================================== */
+  .work-content {
+    max-width: 1600px;
+    margin: 0 auto;
+  }
+
+  /* ========================================
+     HERO SECTION
+     ======================================== */
+  .work-hero {
+    display: grid;
+    gap: 3rem;
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  @media (min-width: 1024px) {
+    .work-hero {
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 4rem;
+      padding: 3rem 3rem 6rem;
+      align-items: start;
+    }
+  }
+
+  /* Hero Image */
+  .hero-image-wrapper {
+    position: sticky;
+    top: 2rem;
+  }
+
+  .image-frame {
     position: relative;
-    background: #000;
+    background: var(--color-surface);
+    padding: 1rem;
+    box-shadow: var(--shadow-lg);
+  }
+
+  @media (min-width: 768px) {
+    .image-frame {
+      padding: 1.5rem;
+    }
+  }
+
+  /* Frame Corner Decorations */
+  .frame-decoration {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--color-text);
+    opacity: 0.15;
+    transition: opacity 0.4s var(--ease-out);
+  }
+
+  .top-left { top: 0.5rem; left: 0.5rem; border-right: none; border-bottom: none; }
+  .top-right { top: 0.5rem; right: 0.5rem; border-left: none; border-bottom: none; }
+  .bottom-left { bottom: 0.5rem; left: 0.5rem; border-right: none; border-top: none; }
+  .bottom-right { bottom: 0.5rem; right: 0.5rem; border-left: none; border-top: none; }
+
+  .image-frame:hover .frame-decoration {
+    opacity: 0.4;
+  }
+
+  .image-container {
+    position: relative;
+    background: var(--color-surface-elevated);
     overflow: hidden;
   }
 
-  .artwork-mat {
-    position: relative;
-    padding: 3rem;
-    background: #f5f5f5;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .artwork-image {
-    max-width: 100%;
-    max-height: 70vh;
-    width: auto;
+  .hero-image {
+    width: 100%;
     height: auto;
     display: block;
     cursor: zoom-in;
-    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    transition: transform 0.7s var(--ease-out);
   }
 
-  .artwork-container:hover .artwork-image {
+  .image-container:hover .hero-image {
     transform: scale(1.02);
   }
 
-  .artwork-placeholder {
+  .image-placeholder {
     aspect-ratio: 1;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 5rem;
-    color: #ddd;
-    background: #f5f5f5;
+    font-size: 1.25rem;
+    color: var(--color-text-muted);
+    background: var(--color-surface);
   }
 
-  /* Gallery Frame Corners */
-  .frame-corner {
+  .expand-trigger {
     position: absolute;
-    width: 20px;
-    height: 20px;
-    border: 2px solid rgba(0, 0, 0, 0.2);
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    pointer-events: none;
-  }
-
-  .frame-corner-tl {
-    top: 1rem;
-    left: 1rem;
-    border-right: none;
-    border-bottom: none;
-  }
-
-  .frame-corner-tr {
-    top: 1rem;
-    right: 1rem;
-    border-left: none;
-    border-bottom: none;
-  }
-
-  .frame-corner-bl {
-    bottom: 1rem;
-    left: 1rem;
-    border-right: none;
-    border-top: none;
-  }
-
-  .frame-corner-br {
     bottom: 1rem;
     right: 1rem;
-    border-left: none;
-    border-top: none;
-  }
-
-  .artwork-container:hover .frame-corner {
-    width: 30px;
-    height: 30px;
-    border-color: rgba(0, 0, 0, 0.4);
-  }
-
-  /* Zoom Trigger */
-  .zoom-trigger {
-    position: absolute;
-    bottom: 2rem;
-    right: 2rem;
+    width: 52px;
+    height: 52px;
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    padding: 1rem 1.75rem;
-    background: rgba(0, 0, 0, 0.9);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: #fff;
-    font-size: 0.75rem;
-    font-weight: 500;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
+    justify-content: center;
+    background: var(--color-accent);
+    border: none;
+    color: white;
     cursor: pointer;
     opacity: 0;
-    transform: translateY(20px);
-    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-    overflow: hidden;
+    transform: translateY(10px);
+    transition: all 0.4s var(--ease-out);
+    box-shadow: var(--shadow-md);
   }
 
-  .zoom-trigger::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-    transition: left 0.6s ease;
-  }
-
-  .artwork-container:hover .zoom-trigger {
+  .image-container:hover .expand-trigger {
     opacity: 1;
     transform: translateY(0);
   }
 
-  .zoom-trigger:hover {
-    background: #000;
-    transform: translateY(-3px);
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+  .expand-trigger:hover {
+    transform: scale(1.08);
+    box-shadow: var(--shadow-lg);
   }
 
-  .zoom-trigger:hover::before {
-    left: 100%;
-  }
-
-  .zoom-trigger:active {
-    transform: translateY(-1px);
-  }
-
-  .zoom-icon {
-    display: flex;
-    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-  }
-
-  .zoom-trigger:hover .zoom-icon {
-    transform: scale(1.2);
-  }
-
-  /* Image Counter */
-  .image-counter {
-    position: absolute;
-    bottom: -3.5rem;
-    left: 50%;
-    transform: translateX(-50%);
+  /* Image Indicator */
+  .image-indicator {
     display: flex;
     align-items: center;
     gap: 0.75rem;
+    margin-top: 1.5rem;
+    padding: 0 0.5rem;
+  }
+
+  .indicator-current, .indicator-total {
     font-family: 'Exo', system-ui, sans-serif;
     font-size: 0.875rem;
-    font-weight: 300;
-    letter-spacing: 0.1em;
-    color: #666;
-  }
-
-  .counter-current {
     font-weight: 500;
-    color: #000;
+    color: var(--color-text-muted);
+    min-width: 1.5rem;
   }
 
-  .counter-sep {
-    color: #ccc;
-    font-weight: 300;
+  .indicator-current {
+    color: var(--color-text);
   }
 
-  .counter-total {
-    color: #999;
+  .indicator-bar {
+    flex: 1;
+    height: 2px;
+    background: var(--color-border);
+    border-radius: 1px;
+    overflow: hidden;
   }
 
-  /* Scroll Indicator */
-  .scroll-indicator {
-    position: absolute;
-    bottom: -6rem;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.75rem;
-    opacity: 0.6;
-    animation: bounce-subtle 2s ease-in-out infinite;
-  }
-
-  .scroll-line {
-    width: 1px;
-    height: 40px;
-    background: linear-gradient(to bottom, #000, transparent);
-  }
-
-  .scroll-text {
-    font-size: 0.625rem;
-    font-weight: 500;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: #666;
-  }
-
-  @keyframes bounce-subtle {
-    0%, 100% { transform: translateX(-50%) translateY(0); }
-    50% { transform: translateX(-50%) translateY(8px); }
+  .indicator-progress {
+    height: 100%;
+    background: var(--color-text);
+    transition: width 0.4s var(--ease-out);
   }
 
   /* ========================================
-     INFO SECTION
+     HERO INFO
      ======================================== */
-  .info-section {
-    padding: 6rem 1rem;
-    background: #fff;
-    position: relative;
-  }
-
-  .info-container {
-    max-width: 1100px;
-    margin: 0 auto;
-  }
-
-  /* Section Divider */
-  .section-divider {
+  .hero-info {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  @media (min-width: 1024px) {
+    .hero-info {
+      padding-top: 1rem;
+    }
+  }
+
+  .info-header {
+    display: flex;
+    flex-direction: column;
     gap: 1rem;
-    margin-bottom: 4rem;
   }
 
-  .divider-line {
-    flex: 1;
-    max-width: 120px;
-    height: 1px;
-    background: linear-gradient(to var(--dir, right), #ddd, transparent);
-  }
-
-  .divider-line:last-child {
-    --dir: left;
-  }
-
-  .divider-dot {
-    width: 8px;
-    height: 8px;
-    background: #ddd;
-    border-radius: 50%;
-  }
-
-  /* Breadcrumb */
-  .breadcrumb {
+  .info-eyebrow {
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    font-size: 0.6875rem;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: #999;
-    margin-bottom: 3rem;
-    flex-wrap: wrap;
-    padding: 1rem 0;
-    border-top: 1px solid #f0f0f0;
-    border-bottom: 1px solid #f0f0f0;
   }
 
-  .breadcrumb a {
-    color: #666;
-    text-decoration: none;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    position: relative;
-    cursor: pointer;
-    padding: 0.25rem 0;
-  }
-
-  .breadcrumb a::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0;
+  .eyebrow-line {
+    width: 40px;
     height: 1px;
-    background: #000;
-    transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    background: var(--color-text);
   }
 
-  .breadcrumb a:hover {
-    color: #000;
-  }
-
-  .breadcrumb a:hover::after {
-    width: 100%;
-  }
-
-  .breadcrumb .sep {
-    color: #ccc;
-    display: flex;
-    align-items: center;
-  }
-
-  /* Title Block */
-  .title-block {
-    margin-bottom: 4rem;
-    padding-bottom: 3rem;
-    border-bottom: 1px solid #f0f0f0;
-    text-align: center;
-  }
-
-  .title-meta {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 1.5rem;
-  }
-
-  .collection-badge {
+  .eyebrow-text {
     font-size: 0.75rem;
     font-weight: 600;
-    letter-spacing: 0.15em;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: #666;
-    padding: 0.5rem 1.25rem;
-    border: 1px solid #e5e5e5;
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    color: var(--color-text-muted);
   }
 
-  .collection-badge:hover {
-    border-color: #000;
-    color: #000;
-  }
-
-  .work-title {
-    font-size: clamp(2rem, 6vw, 4rem);
+  .info-title {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
     font-weight: 400;
-    letter-spacing: -0.03em;
-    color: #000;
-    margin: 0 0 1.5rem;
-    line-height: 1.1;
-  }
-
-  .title-line {
-    display: block;
-  }
-
-  .artist-credit {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    font-size: 0.875rem;
-    color: #666;
-  }
-
-  .by-text {
-    font-style: italic;
-    color: #999;
-  }
-
-  .artist-name {
-    font-weight: 500;
-    color: #000;
-    letter-spacing: 0.02em;
-  }
-
-  /* Info Grid */
-  .info-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 4rem;
-  }
-
-  .section-label {
-    display: block;
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: #999;
-    margin-bottom: 1.5rem;
-    padding-bottom: 0.75rem;
-    border-bottom: 1px solid #f0f0f0;
-  }
-
-  .description-block {
-    max-width: 600px;
-  }
-
-  .description {
-    font-size: 1.0625rem;
-    line-height: 1.9;
-    color: #333;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    color: var(--color-text);
     margin: 0;
   }
 
-  .description-placeholder {
-    color: #666;
-    font-style: italic;
+  .info-description {
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: var(--color-text-secondary);
+    margin: 0.5rem 0 0;
+    max-width: 480px;
   }
 
   /* Specs */
-  .specs-block {
-    background: #fafafa;
-    padding: 2rem;
-    border-radius: 4px;
+  .info-specs {
+    border-top: 1px solid var(--color-border-light);
+    border-bottom: 1px solid var(--color-border-light);
+    padding: 1.5rem 0;
   }
 
-  .specs {
+  .spec-list {
     display: grid;
-    grid-template-columns: 1fr;
-    gap: 0;
-    margin: 0;
-    padding: 0;
+    gap: 1.25rem;
   }
 
   .spec-item {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .spec-label {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+
+  .spec-value {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--color-text);
+  }
+
+  .spec-highlight .spec-value {
+    font-size: 1.75rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  /* CTA */
+  .info-cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .cta-primary {
+    display: inline-flex;
     align-items: center;
-    padding: 1.25rem 0;
-    border-bottom: 1px solid #eee;
-    transition: all 0.3s ease;
+    gap: 0.5rem;
+    padding: 1.125rem 2rem;
+    background: var(--color-accent);
+    color: white;
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    text-decoration: none;
+    transition: all 0.3s var(--ease-out);
+    box-shadow: var(--shadow-md);
   }
 
-  .spec-item:last-child {
-    border-bottom: none;
+  .cta-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-xl);
   }
 
-  .spec-item:hover {
-    padding-left: 0.5rem;
+  .cta-primary svg {
+    transition: transform 0.3s var(--ease-out);
   }
 
-  .spec-item dt {
+  .cta-primary:hover svg {
+    transform: translateX(4px);
+  }
+
+  .cta-secondary {
+    display: inline-flex;
+    align-items: center;
+    padding: 1.125rem 2rem;
+    background: transparent;
+    color: var(--color-text);
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    text-decoration: none;
+    border: 1px solid var(--color-border);
+    transition: all 0.3s var(--ease-out);
+  }
+
+  .cta-secondary:hover {
+    border-color: var(--color-text);
+    background: var(--color-surface);
+  }
+
+  /* ========================================
+     SECTION HEADERS
+     ======================================== */
+  .section-header {
+    margin-bottom: 2rem;
+    padding: 0 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .section-header {
+      padding: 0 3rem;
+      margin-bottom: 2.5rem;
+    }
+  }
+
+  .section-eyebrow {
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    font-size: 0.75rem;
-    font-weight: 500;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    color: #666;
+    margin-bottom: 0.75rem;
   }
 
-  .spec-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 32px;
-    height: 32px;
-    background: #fff;
-    border: 1px solid #e5e5e5;
-    border-radius: 4px;
-    color: #999;
-    transition: all 0.3s ease;
-  }
-
-  .spec-item:hover .spec-icon {
-    border-color: #000;
-    color: #000;
-  }
-
-  .spec-item dd {
-    font-size: 1rem;
-    font-weight: 500;
-    color: #000;
+  .section-title {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 400;
+    letter-spacing: -0.03em;
+    color: var(--color-text);
     margin: 0;
-    text-align: right;
   }
 
-  .spec-price dd {
-    font-size: 1.5rem;
-    font-weight: 600;
-    letter-spacing: -0.02em;
-    color: #000;
+  .section-title-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
   }
 
-  .cta-block {
-    margin-top: 2rem;
+  .view-all-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    transition: color 0.2s var(--ease-smooth);
+  }
+
+  .view-all-link:hover {
+    color: var(--color-text);
+  }
+
+  .view-all-link svg {
+    transition: transform 0.2s var(--ease-out);
+  }
+
+  .view-all-link:hover svg {
+    transform: translateX(4px);
   }
 
   /* ========================================
      GALLERY SECTION
      ======================================== */
-  .gallery-section {
-    padding: 4rem 0 6rem;
-    background: linear-gradient(180deg, #fff 0%, #fafafa 100%);
-    position: relative;
+  .work-gallery {
+    padding: 4rem 0;
+    border-top: 1px solid var(--color-border-light);
   }
 
-  .gallery-section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(to right, transparent, #eee 20%, #eee 80%, transparent);
-  }
-
-  .gallery-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 1400px;
-    margin: 0 auto 3rem;
-    padding: 0 1rem;
-  }
-
-  .gallery-title-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
-
-  .gallery-label {
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: #000;
-  }
-
-  .gallery-line {
-    width: 40px;
-    height: 1px;
-    background: #ddd;
-  }
-
-  .gallery-count {
-    display: flex;
-    align-items: baseline;
-    gap: 0.5rem;
-    font-size: 0.75rem;
-    color: #666;
-    letter-spacing: 0.05em;
-  }
-
-  .count-number {
-    font-family: 'Exo', system-ui, sans-serif;
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: #000;
-  }
-
-  .count-text {
-    text-transform: uppercase;
-  }
-
-  .gallery-track {
-    width: 100%;
-    overflow: hidden;
+  @media (min-width: 768px) {
+    .work-gallery {
+      padding: 6rem 0;
+    }
   }
 
   .gallery-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 3px;
+    gap: 1px;
+    padding: 0 1.5rem;
   }
 
-  .gallery-card {
+  @media (min-width: 640px) {
+    .gallery-grid {
+      grid-template-columns: repeat(var(--cols, 4), 1fr);
+      padding: 0 3rem;
+    }
+  }
+
+  .gallery-item {
     margin: 0;
     cursor: pointer;
+    background: var(--color-surface);
   }
 
-  .gallery-card-inner {
+  .gallery-image-container {
     position: relative;
-    aspect-ratio: 1;
     overflow: hidden;
-    background: #0a0a0a;
-    cursor: pointer;
-    isolation: isolate;
+    aspect-ratio: 1;
   }
 
-  .gallery-img {
+  .gallery-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: transform 0.6s var(--ease-out);
   }
 
-  .gallery-card:hover .gallery-img {
-    transform: scale(1.06);
+  .gallery-item:hover .gallery-image {
+    transform: scale(1.05);
   }
 
-  /* Dark overlay on hover */
-  .gallery-card-overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.7);
-    opacity: 0;
-    z-index: 2;
-    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .gallery-card:hover .gallery-card-overlay {
-    opacity: 1;
-  }
-
-  /* Top line accent */
-  .gallery-card-line-accent {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: linear-gradient(
-      90deg,
-      #fff 0%,
-      rgba(255, 255, 255, 0.5) 50%,
-      transparent 100%
-    );
-    transform: translateX(-100%);
-    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-    z-index: 4;
-  }
-
-  .gallery-card:hover .gallery-card-line-accent {
-    transform: translateX(0);
-  }
-
-  /* Content */
-  .gallery-card-content {
+  .gallery-overlay {
     position: absolute;
     inset: 0;
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-end;
-    padding: 1.5rem;
-    padding-bottom: 2rem;
-    text-align: left;
-    z-index: 3;
-    opacity: 0;
-    transition: opacity 0.4s ease 0.1s;
-  }
-
-  .gallery-card:hover .gallery-card-content {
-    opacity: 1;
-  }
-
-  .gallery-card-category {
-    font-size: 0.625rem;
-    font-weight: 600;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.5);
-    padding-left: 1rem;
-    border-left: 2px solid rgba(255, 255, 255, 0.3);
-    transform: translateX(-10px);
-    opacity: 0;
-    transition: 
-      opacity 0.5s ease 0.15s,
-      transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.15s;
-    margin-bottom: 1rem;
-  }
-
-  .gallery-card:hover .gallery-card-category {
-    opacity: 1;
-    transform: translateX(0);
-  }
-
-  .gallery-card-view {
-    display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
+    justify-content: center;
+    background: rgba(0,0,0,0.5);
+    opacity: 0;
+    transition: opacity 0.4s var(--ease-out);
+  }
+
+  .gallery-item:hover .gallery-overlay {
+    opacity: 1;
+  }
+
+  .gallery-expand-icon {
+    color: white;
+    transform: scale(0.8);
+    transition: transform 0.4s var(--ease-spring);
+  }
+
+  .gallery-item:hover .gallery-expand-icon {
+    transform: scale(1);
+  }
+
+  .gallery-caption {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0.5rem 0;
+  }
+
+  .caption-number {
+    font-family: 'Exo', system-ui, sans-serif;
     font-size: 0.75rem;
     font-weight: 500;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.8);
-    padding: 0.5rem 1rem;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    transform: translateY(10px);
-    opacity: 0;
-    transition: 
-      opacity 0.5s ease 0.2s,
-      transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.2s,
-      background 0.3s ease,
-      border-color 0.3s ease;
-  }
-
-  .gallery-card:hover .gallery-card-view {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .gallery-card-view:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.4);
-  }
-
-  /* Corner index */
-  .gallery-card-index {
-    position: absolute;
-    top: 1.25rem;
-    right: 1.25rem;
-    font-family: "Exo", system-ui, sans-serif;
-    font-size: 0.875rem;
-    font-weight: 300;
-    color: rgba(255, 255, 255, 0.9);
-    font-variant-numeric: tabular-nums;
-    letter-spacing: 0.05em;
-    z-index: 4;
-    opacity: 0;
-    transform: translateY(-10px);
-    transition: 
-      opacity 0.4s ease,
-      transform 0.4s ease,
-      color 0.3s ease;
-  }
-
-  .gallery-card:hover .gallery-card-index {
-    opacity: 1;
-    transform: translateY(0);
-    color: rgba(255, 255, 255, 0.4);
-  }
-
-  /* Border frame */
-  .gallery-card-frame {
-    position: absolute;
-    inset: 0.75rem;
-    border: 1px solid rgba(255, 255, 255, 0);
-    border-radius: 2px;
-    z-index: 4;
-    pointer-events: none;
-    transition: border-color 0.5s ease 0.1s;
-  }
-
-  .gallery-card:hover .gallery-card-frame {
-    border-color: rgba(255, 255, 255, 0.15);
+    color: var(--color-text-muted);
   }
 
   /* ========================================
      RELATED SECTION
      ======================================== */
-  .related-section {
-    padding: 6rem 1rem;
-    background: #fafafa;
-    position: relative;
+  .work-related {
+    padding: 4rem 0 6rem;
+    border-top: 1px solid var(--color-border-light);
   }
 
-  .related-section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(to right, transparent, #e5e5e5 20%, #e5e5e5 80%, transparent);
-  }
-
-  .related-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    max-width: 1280px;
-    margin: 0 auto 3rem;
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid #e5e5e5;
-  }
-
-  .related-title-wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  .related-label {
-    font-size: 0.6875rem;
-    font-weight: 600;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: #999;
-  }
-
-  .related-title {
-    font-size: clamp(1.5rem, 3vw, 2rem);
-    font-weight: 400;
-    letter-spacing: -0.02em;
-    color: #000;
-    margin: 0;
-  }
-
-  .related-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.75rem;
-    font-size: 0.75rem;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: #666;
-    text-decoration: none;
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    cursor: pointer;
-    position: relative;
-    padding: 0.5rem 0;
-  }
-
-  .link-text {
-    position: relative;
-  }
-
-  .link-text::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    width: 0;
-    height: 1px;
-    background: #000;
-    transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .related-link:hover {
-    color: #000;
-  }
-
-  .related-link:hover .link-text::after {
-    width: 100%;
-  }
-
-  .link-arrow {
-    display: flex;
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .related-link:hover .link-arrow {
-    transform: translateX(6px);
+  @media (min-width: 768px) {
+    .work-related {
+      padding: 6rem 0 8rem;
+    }
   }
 
   .related-grid {
     display: grid;
-    grid-template-columns: 1fr;
-    gap: 4px;
-    max-width: 1280px;
-    margin: 0 auto;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    padding: 0 1.5rem;
+    background: var(--color-border-light);
   }
 
-  /* Work Cards - Same style as Hero */
-  .work-card {
-    position: relative;
+  @media (min-width: 640px) {
+    .related-grid {
+      grid-template-columns: repeat(3, 1fr);
+      padding: 0 3rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .related-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .related-card {
     display: block;
-    aspect-ratio: 1;
-    overflow: hidden;
-    background: #0a0a0a;
     text-decoration: none;
-    border-radius: 4px;
-    isolation: isolate;
+    background: var(--color-bg);
   }
 
-  .work-card-img {
+  .related-image-wrapper {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 1;
+    background: var(--color-surface);
+  }
+
+  .related-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: transform 0.5s var(--ease-out);
   }
 
-  .work-card:hover .work-card-img {
-    transform: scale(1.06);
+  .related-card:hover .related-image {
+    transform: scale(1.05);
   }
 
-  .work-card-empty {
+  .related-fallback {
     width: 100%;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 0.875rem;
-    color: #666;
-    background: #f0f0f0;
+    color: var(--color-text-muted);
   }
 
-  /* Dark overlay on hover */
-  .work-card-overlay {
+  .related-hover-overlay {
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.7);
+    background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 50%, transparent 100%);
     opacity: 0;
-    z-index: 2;
-    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: opacity 0.4s var(--ease-out);
   }
 
-  .work-card:hover .work-card-overlay {
+  .related-card:hover .related-hover-overlay {
     opacity: 1;
   }
 
-  /* Top line accent */
-  .work-card-line-accent {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: linear-gradient(
-      90deg,
-      #fff 0%,
-      rgba(255, 255, 255, 0.5) 50%,
-      transparent 100%
-    );
-    transform: translateX(-100%);
-    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-    z-index: 4;
-  }
-
-  .work-card:hover .work-card-line-accent {
-    transform: translateX(0);
-  }
-
-  /* Content */
-  .work-card-content {
+  .related-hover-content {
     position: absolute;
     inset: 0;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-end;
-    padding: 1.5rem;
-    padding-bottom: 2rem;
-    text-align: left;
-    z-index: 3;
+    justify-content: space-between;
+    padding: 1rem;
     opacity: 0;
-    transition: opacity 0.4s ease 0.1s;
-  }
-
-  .work-card:hover .work-card-content {
-    opacity: 1;
-  }
-
-  .work-card-category {
-    font-size: 0.625rem;
-    font-weight: 600;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.5);
-    margin-bottom: 0.75rem;
-    padding-left: 1rem;
-    border-left: 2px solid rgba(255, 255, 255, 0.3);
-    transform: translateX(-10px);
-    opacity: 0;
-    transition: 
-      opacity 0.5s ease 0.15s,
-      transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.15s;
-  }
-
-  .work-card:hover .work-card-category {
-    opacity: 1;
-    transform: translateX(0);
-  }
-
-  .work-card-title {
-    font-family: "Exo", system-ui, sans-serif;
-    font-size: clamp(1.25rem, 2.5vw, 1.65rem);
-    font-weight: 500;
-    color: #fff;
-    letter-spacing: -0.02em;
-    line-height: 1.2;
-    margin: 0 0 1rem;
-    transform: translateY(15px);
-    opacity: 0;
-    transition: 
-      opacity 0.5s ease 0.2s,
-      transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.2s;
-  }
-
-  .work-card:hover .work-card-title {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .work-card-cta {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.6875rem;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.7);
-    padding: 0.5rem 0;
     transform: translateY(10px);
-    opacity: 0;
-    transition: 
-      opacity 0.5s ease 0.25s,
-      transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.25s,
-      color 0.3s ease;
+    transition: all 0.4s var(--ease-out) 0.05s;
   }
 
-  .work-card:hover .work-card-cta {
+  .related-card:hover .related-hover-content {
     opacity: 1;
     transform: translateY(0);
   }
 
-  .work-card-cta:hover {
-    color: #fff;
+  .related-number {
+    font-family: 'Exo', system-ui, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: rgba(255,255,255,0.6);
   }
 
-  /* Corner index */
-  .work-card-index {
-    position: absolute;
-    top: 1.25rem;
-    right: 1.25rem;
-    font-family: "Exo", system-ui, sans-serif;
-    font-size: 0.875rem;
-    font-weight: 300;
-    color: rgba(255, 255, 255, 0.9);
-    font-variant-numeric: tabular-nums;
-    letter-spacing: 0.05em;
-    z-index: 4;
-    opacity: 0;
-    transform: translateY(-10px);
-    transition: 
-      opacity 0.4s ease,
-      transform 0.4s ease,
-      color 0.3s ease;
-  }
-
-  .work-card:hover .work-card-index {
-    opacity: 1;
-    transform: translateY(0);
-    color: rgba(255, 255, 255, 0.4);
-  }
-
-  /* Border frame */
-  .work-card-frame {
-    position: absolute;
-    inset: 0.75rem;
-    border: 1px solid rgba(255, 255, 255, 0);
-    border-radius: 2px;
-    z-index: 4;
-    pointer-events: none;
-    transition: border-color 0.5s ease 0.1s;
-  }
-
-  .work-card:hover .work-card-frame {
-    border-color: rgba(255, 255, 255, 0.15);
+  .related-title-text {
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: white;
+    margin: 0;
+    line-height: 1.3;
   }
 
   /* ========================================
      NOT FOUND
      ======================================== */
   .not-found {
-    padding: 8rem 1rem;
+    padding: 6rem 1.5rem;
     text-align: center;
   }
 
   .not-found-icon {
-    font-size: 5rem;
+    font-size: 3rem;
     display: block;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
   }
 
   .not-found h1 {
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: 500;
-    color: #000;
-    margin: 0 0 0.75rem;
+    color: var(--color-text);
+    margin: 0 0 0.5rem;
   }
 
   .not-found p {
-    color: #666;
-    margin: 0 0 2.5rem;
-  }
-
-  /* ========================================
-     RESPONSIVE
-     ======================================== */
-  @media (min-width: 640px) {
-    .related-grid {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 6px;
-    }
-
-    .gallery-grid {
-      grid-template-columns: repeat(var(--cols, 4), 1fr);
-    }
-
-    .artwork-mat {
-      padding: 4rem;
-    }
-
-    .image-counter {
-      font-size: 1rem;
-    }
-  }
-
-  @media (min-width: 768px) {
-    .hero-section {
-      min-height: 100vh;
-      padding: 6rem 2rem;
-    }
-
-    .artwork-frame {
-      padding: 3rem;
-    }
-
-    .artwork-mat {
-      padding: 5rem;
-    }
-
-    .zoom-trigger {
-      bottom: 3rem;
-      right: 3rem;
-    }
-
-    .info-section {
-      padding: 8rem 2rem;
-    }
-
-    .info-grid {
-      grid-template-columns: 1.2fr 1fr;
-      gap: 6rem;
-    }
-
-    .title-block {
-      margin-bottom: 5rem;
-      padding-bottom: 4rem;
-    }
-
-    .specs-block {
-      padding: 2.5rem;
-    }
-
-    .related-section {
-      padding: 8rem 2rem;
-    }
-
-    .related-grid {
-      gap: 8px;
-    }
-
-    .work-card-content,
-    .gallery-card-content {
-      padding: 2rem;
-      padding-bottom: 2.5rem;
-    }
-
-    .work-card-category,
-    .gallery-card-category {
-      font-size: 0.6875rem;
-      margin-bottom: 0.875rem;
-    }
-
-    .work-card-title {
-      font-size: clamp(1.5rem, 2.5vw, 1.85rem);
-    }
-
-    .work-card-index,
-    .gallery-card-index {
-      top: 1.5rem;
-      right: 1.5rem;
-      font-size: 1rem;
-    }
-
-    .work-card-frame,
-    .gallery-card-frame {
-      inset: 1rem;
-    }
-
-    .scroll-indicator {
-      bottom: 2rem;
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .hero-section {
-      min-height: 100vh;
-    }
-
-    .artwork-mat {
-      padding: 6rem;
-    }
-
-    .info-grid {
-      gap: 8rem;
-    }
-
-    .related-grid {
-      grid-template-columns: repeat(3, 1fr);
-    }
-
-    .work-card-content,
-    .gallery-card-content {
-      padding: 2.5rem;
-      padding-bottom: 3rem;
-    }
-
-    .work-card-title {
-      font-size: clamp(1.65rem, 2.5vw, 2rem);
-    }
-  }
-
-  /* ========================================
-     REDUCED MOTION
-     ======================================== */
-  @media (prefers-reduced-motion: reduce) {
-    .artwork-image,
-    .zoom-trigger,
-    .gallery-img,
-    .back-nav svg,
-    .related-link svg,
-    .work-card-img,
-    .work-card-overlay,
-    .work-card-content,
-    .work-card-category,
-    .work-card-title,
-    .work-card-index,
-    .work-card-line-accent,
-    .work-card-frame,
-    .gallery-card-overlay,
-    .gallery-card-content,
-    .gallery-card-category,
-    .gallery-card-index,
-    .gallery-card-line-accent,
-    .gallery-card-frame {
-      transition: none;
-    }
-
-    .artwork-container:hover .artwork-image,
-    .work-card:hover .work-card-img,
-    .gallery-card:hover .gallery-img {
-      transform: none;
-    }
-
-    .zoom-trigger {
-      opacity: 1;
-      transform: none;
-    }
-
-    .work-card-line-accent,
-    .gallery-card-line-accent {
-      transform: translateX(0);
-    }
-
-    .work-card-overlay,
-    .work-card-content,
-    .work-card-index,
-    .gallery-card-overlay,
-    .gallery-card-content,
-    .gallery-card-index {
-      opacity: 1;
-    }
-
-    .work-card-category,
-    .work-card-title,
-    .gallery-card-category {
-      opacity: 1;
-      transform: none;
-    }
-
-    .work-card-frame,
-    .gallery-card-frame {
-      border-color: rgba(255, 255, 255, 0.15);
-    }
-  }
-
-  /* ========================================
-     PRINT
-     ======================================== */
-  @media print {
-    .zoom-trigger,
-    .cta-block,
-    .back-nav,
-    .related-section,
-    .gallery-section,
-    .work-card-overlay,
-    .work-card-content,
-    .work-card-index,
-    .work-card-line-accent,
-    .work-card-frame,
-    .gallery-card-overlay,
-    .gallery-card-content,
-    .gallery-card-index,
-    .gallery-card-line-accent,
-    .gallery-card-frame {
-      display: none;
-    }
-
-    .hero-section {
-      min-height: auto;
-      padding: 2rem 0;
-    }
-
-    .artwork-container {
-      box-shadow: none;
-      border: 1px solid #ddd;
-    }
+    color: var(--color-text-secondary);
+    margin: 0 0 2rem;
   }
 </style>

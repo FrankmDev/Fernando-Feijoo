@@ -88,7 +88,7 @@ const fallbackSrc = !imageMeta ? processImageUrl(imageUrl || "") : "";
     inset: 0;
     background: linear-gradient(
       135deg,
-      rgba(212, 81, 30, 0.1) 0%,
+      rgba(255, 255, 255, 0.05) 0%,
       transparent 50%
     );
     opacity: 0;
@@ -101,11 +101,11 @@ const fallbackSrc = !imageMeta ? processImageUrl(imageUrl || "") : "";
   }
 
   .card:hover {
-    border-color: rgba(212, 81, 30, 0.5);
+    border-color: rgba(255, 255, 255, 0.3);
     box-shadow:
       0 20px 60px rgba(0, 0, 0, 0.6),
-      0 0 0 1px rgba(212, 81, 30, 0.3),
-      inset 0 0 60px rgba(212, 81, 30, 0.05);
+      0 0 0 1px rgba(255, 255, 255, 0.1),
+      inset 0 0 60px rgba(255, 255, 255, 0.03);
     transform: translateY(-4px);
   }
 
@@ -172,7 +172,7 @@ const fallbackSrc = !imageMeta ? processImageUrl(imageUrl || "") : "";
     font-weight: 600;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: rgba(212, 81, 30, 0.9);
+    color: rgba(255, 255, 255, 0.7);
     margin-bottom: 0.75rem;
     transform: translateY(20px);
     opacity: 0;
@@ -218,11 +218,11 @@ const fallbackSrc = !imageMeta ? processImageUrl(imageUrl || "") : "";
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(212, 81, 30, 0.15);
+    background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(212, 81, 30, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 50%;
-    color: rgba(212, 81, 30, 0.9);
+    color: rgba(255, 255, 255, 0.8);
     transform: translateY(20px) scale(0.8);
     opacity: 0;
     transition:
@@ -235,12 +235,12 @@ const fallbackSrc = !imageMeta ? processImageUrl(imageUrl || "") : "";
   .card:hover .card-arrow {
     transform: translateY(0) scale(1);
     opacity: 1;
-    background: rgba(212, 81, 30, 0.25);
-    border-color: rgba(212, 81, 30, 0.5);
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.4);
   }
 
   .card:focus-visible {
-    outline: 2px solid rgba(212, 81, 30, 0.8);
+    outline: 2px solid rgba(255, 255, 255, 0.5);
     outline-offset: 3px;
   }
 

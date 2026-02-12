@@ -4,85 +4,129 @@ import BannerImg from "/public/bannerimg.avif";
 ---
 
 <section class="contact-banner reveal">
-  <div class="banner-inner">
-    <!-- Image Side -->
-    <div class="banner-image">
-      <Image
-        src={BannerImg}
-        alt="Fernando Feijoo in his studio"
-        width={800}
-        height={900}
-        class="image"
-        loading="lazy"
-        decoding="async"
-        quality={85}
-        format="webp"
-      />
-      <div class="image-overlay"></div>
-    </div>
+  <div class="banner-container">
+    <!-- Decorative frame lines -->
+    <div class="frame-line frame-line-top"></div>
+    <div class="frame-line frame-line-bottom"></div>
 
-    <!-- Content Side -->
-    <div class="banner-content">
-      <div class="content-inner">
-        <div class="content-header">
-          <span class="label">
-            <span class="label-line"></span>
-            <span class="label-text">Let's Connect</span>
-          </span>
+    <div class="banner-inner">
+      <!-- Image Side -->
+      <div class="banner-image-wrapper">
+        <div class="banner-image">
+          <Image
+            src={BannerImg}
+            alt="Fernando Feijoo in his studio"
+            width={800}
+            height={900}
+            class="image"
+            loading="lazy"
+            decoding="async"
+            quality={85}
+            format="webp"
+          />
+          <div class="image-overlay"></div>
+          <!-- Subtle gradient effect -->
+          <div class="gradient-accent" aria-hidden="true"></div>
         </div>
-
-        <h2 class="title">
-          <span class="title-line">Ready to create</span>
-          <span class="title-line">something together?</span>
-        </h2>
-
-        <p class="description">
-          Whether you're interested in commissioning a piece, acquiring existing
-          work, or simply want to discuss art — I'd love to hear from you.
-        </p>
-
-        <div class="cta-wrapper">
-          <a href="/contact" class="cta">
-            <span class="cta-text">Get in Touch</span>
-            <span class="cta-arrow">
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 20 20"
-                fill="none"
-                aria-hidden="true"
-              >
-                <path
-                  d="M4 10h12M12 6l4 4-4 4"
-                  stroke="currentColor"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"></path>
-              </svg>
-            </span>
-          </a>
-
-          <a href="mailto:contact@fernandofeijoo.com" class="cta-secondary">
-            <span class="cta-secondary-icon">
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.5"
-              >
-                <rect x="2" y="4" width="20" height="16" rx="2"></rect>
-                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
-              </svg>
-            </span>
-            <span class="cta-secondary-text">contact@fernandofeijoo.com</span>
-          </a>
-        </div>
+        <!-- Floating accent shape -->
+        <div class="accent-shape" aria-hidden="true"></div>
       </div>
 
-      <!-- Decorative Element -->
-      <div class="decor-corner"></div>
+      <!-- Content Side -->
+      <div class="banner-content">
+        <div class="content-inner">
+          <div class="content-header">
+            <span class="label">
+              <span class="label-icon">
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                >
+                  <path
+                    d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+                </svg>
+              </span>
+              <span class="label-line"></span>
+              <span class="label-text">Let's Connect</span>
+            </span>
+          </div>
+
+          <h2 class="title">
+            <span class="title-line title-line-1">Ready to create</span>
+            <span class="title-line title-line-2">
+              <span class="title-highlight">something </span> together?
+            </span>
+          </h2>
+
+          <p class="description">
+            Whether you're interested in commissioning a piece, acquiring
+            existing work, or simply want to discuss art — I'd love to hear from
+            you.
+          </p>
+
+          <div class="cta-wrapper">
+            <a href="/contact" class="cta-primary">
+              <span class="cta-bg"></span>
+              <span class="cta-border"></span>
+              <span class="cta-content">
+                <span class="cta-text">Get in Touch</span>
+                <span class="cta-arrow">
+                  <svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path
+                      d="M5 12h14M12 5l7 7-7 7"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"></path>
+                  </svg>
+                </span>
+              </span>
+            </a>
+
+            <a href="mailto:contact@fernandofeijoo.com" class="cta-secondary">
+              <span class="cta-secondary-icon">
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                >
+                  <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                  <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+                </svg>
+              </span>
+              <span class="cta-secondary-text">contact@fernandofeijoo.com</span>
+              <span class="cta-secondary-underline"></span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Decorative corner element -->
+        <div class="decor-corner">
+          <div class="corner-line corner-line-h"></div>
+          <div class="corner-line corner-line-v"></div>
+        </div>
+
+        <!-- Decorative dots pattern -->
+        <div class="dots-pattern" aria-hidden="true">
+          <span></span><span></span><span></span>
+          <span></span><span></span><span></span>
+          <span></span><span></span><span></span>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -92,36 +136,79 @@ import BannerImg from "/public/bannerimg.avif";
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 3rem 1.25rem;
+    padding: 4rem 1.25rem;
+  }
+
+  .banner-container {
+    position: relative;
+  }
+
+  /* Frame lines - artistic border effect */
+  .frame-line {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      rgba(0, 0, 0, 0.2) 50%,
+      transparent
+    );
+    opacity: 0;
+    animation: frameLineIn 0.8s ease 0.3s forwards;
+  }
+
+  .frame-line-top {
+    top: -20px;
+  }
+
+  .frame-line-bottom {
+    bottom: -20px;
+    transform: translateX(-50%) rotate(180deg);
+  }
+
+  @keyframes frameLineIn {
+    to {
+      opacity: 1;
+      height: 60px;
+    }
   }
 
   .banner-inner {
     display: grid;
     grid-template-columns: 1fr;
-    min-height: 480px;
     position: relative;
-    border-radius: 2px;
+    border-radius: 4px;
     overflow: hidden;
-    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.08);
+    box-shadow:
+      0 4px 6px -1px rgba(0, 0, 0, 0.05),
+      0 10px 15px -3px rgba(0, 0, 0, 0.08),
+      0 25px 50px -12px rgba(0, 0, 0, 0.15);
   }
 
-  /* Image - Refined */
+  /* Image Side - Enhanced */
+  .banner-image-wrapper {
+    position: relative;
+    order: 1;
+  }
+
   .banner-image {
     position: relative;
     aspect-ratio: 4/3;
     overflow: hidden;
-    order: 1;
   }
 
   .image {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .banner-image:hover .image {
-    transform: scale(1.02);
+    transform: scale(1.05);
   }
 
   .image-overlay {
@@ -129,18 +216,58 @@ import BannerImg from "/public/bannerimg.avif";
     inset: 0;
     background: linear-gradient(
       to bottom,
-      rgba(0, 0, 0, 0) 60%,
-      rgba(0, 0, 0, 0.2) 100%
+      rgba(0, 0, 0, 0) 40%,
+      rgba(0, 0, 0, 0.4) 100%
     );
     pointer-events: none;
   }
 
-  /* Content - Refined */
+  /* Subtle gradient accent - grayscale */
+  .gradient-accent {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 120px;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.08) 0%,
+      rgba(255, 255, 255, 0.02) 50%,
+      transparent 100%
+    );
+    mix-blend-mode: overlay;
+    pointer-events: none;
+    transform: skewY(-3deg);
+    transform-origin: bottom left;
+  }
+
+  /* Floating accent shape - white border */
+  .accent-shape {
+    position: absolute;
+    bottom: -20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    border: 2px solid rgba(255, 255, 255, 0.25);
+    border-radius: 50%;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .banner-image-wrapper:hover .accent-shape {
+    opacity: 1;
+    transform: scale(1);
+    bottom: -15px;
+    right: 25px;
+  }
+
+  /* Content Side - Enhanced */
   .banner-content {
     position: relative;
     display: flex;
     align-items: center;
-    background: #0c0c0c;
+    background: linear-gradient(135deg, #0c0c0c 0%, #1a1a1a 100%);
     padding: 2.5rem 1.5rem;
     order: 2;
     overflow: hidden;
@@ -153,124 +280,195 @@ import BannerImg from "/public/bannerimg.avif";
   }
 
   .content-header {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.75rem;
   }
 
   .label {
     display: inline-flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: 0.625rem;
+    padding: 0.5rem 0;
+  }
+
+  .label-icon {
+    display: flex;
+    color: rgba(255, 255, 255, 0.6);
+    animation: pulseIcon 3s ease-in-out infinite;
+  }
+
+  @keyframes pulseIcon {
+    0%,
+    100% {
+      opacity: 0.5;
+    }
+    50% {
+      opacity: 0.9;
+    }
   }
 
   .label-line {
     display: block;
     width: 24px;
     height: 1px;
-    background: rgba(255, 255, 255, 0.25);
+    background: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0.4),
+      rgba(255, 255, 255, 0.1)
+    );
   }
 
   .label-text {
     font-size: 0.6875rem;
     font-weight: 600;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.45);
+    color: rgba(255, 255, 255, 0.5);
   }
 
   .title {
-    font-size: clamp(1.5rem, 4.5vw, 2.25rem);
+    font-size: clamp(1.75rem, 5vw, 2.5rem);
     font-weight: 500;
-    letter-spacing: -0.025em;
-    line-height: 1.2;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
     color: #fff;
-    margin: 0 0 1.25rem;
+    margin: 0 0 1.5rem;
   }
 
   .title-line {
     display: block;
   }
 
-  .description {
-    font-size: 0.9375rem;
-    line-height: 1.7;
-    color: rgba(255, 255, 255, 0.6);
-    margin: 0 0 2rem;
-    max-width: 380px;
+  .title-line-1 {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
   }
 
-  /* CTA Wrapper - Refined */
+  .title-line-2 {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.35s forwards;
+  }
+
+  @keyframes slideUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .title-highlight {
+    color: rgba(255, 255, 255, 0.7);
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  .description {
+    font-size: 0.9375rem;
+    line-height: 1.75;
+    color: rgba(255, 255, 255, 0.55);
+    margin: 0 0 2.25rem;
+    max-width: 380px;
+    opacity: 0;
+    transform: translateY(15px);
+    animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
+  }
+
+  /* CTA Wrapper - Enhanced */
   .cta-wrapper {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 1.25rem;
+    opacity: 0;
+    transform: translateY(15px);
+    animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.65s forwards;
   }
 
-  /* Primary CTA - Refined */
-  .cta {
+  /* Primary CTA - White on dark */
+  .cta-primary {
     display: inline-flex;
     align-items: center;
-    gap: 0.75rem;
-    padding: 0.875rem 1.5rem;
-    background: #fff;
+    position: relative;
+    padding: 1rem 1.75rem;
+    background: transparent;
     color: #111;
     text-decoration: none;
-    font-size: 0.8125rem;
+    font-size: 0.875rem;
     font-weight: 500;
-    letter-spacing: 0.01em;
-    border-radius: 2px;
-    position: relative;
+    letter-spacing: 0.02em;
+    border-radius: 3px;
     overflow: hidden;
-    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    isolation: isolate;
+    width: fit-content;
   }
 
-  .cta::before {
-    content: "";
+  .cta-bg {
     position: absolute;
     inset: 0;
-    background: #1a1a1a;
-    transform: translateX(-101%);
-    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    background: #fff;
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: -2;
   }
 
-  .cta:hover::before {
-    transform: translateX(0);
+  .cta-border {
+    position: absolute;
+    inset: 0;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+    opacity: 0;
+    transform: scale(1.05);
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  .cta:hover {
-    color: #fff;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  .cta-primary:hover .cta-bg {
+    transform: scale(0.95);
+    background: #f5f5f5;
   }
 
-  .cta-text,
-  .cta-arrow {
+  .cta-primary:hover .cta-border {
+    opacity: 1;
+    transform: scale(1.1);
+    border-color: rgba(255, 255, 255, 0.4);
+  }
+
+  .cta-primary:hover {
+    color: #000;
+  }
+
+  .cta-content {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
     position: relative;
     z-index: 1;
   }
 
   .cta-arrow {
     display: flex;
-    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  .cta:hover .cta-arrow {
-    transform: translateX(3px);
+  .cta-primary:hover .cta-arrow {
+    transform: translateX(4px);
   }
 
-  .cta:focus-visible {
+  .cta-primary:focus-visible {
     outline: 2px solid rgba(255, 255, 255, 0.5);
-    outline-offset: 3px;
+    outline-offset: 4px;
   }
 
-  /* Secondary CTA - Refined */
+  /* Secondary CTA - White text on dark */
   .cta-secondary {
     display: inline-flex;
     align-items: center;
     gap: 0.625rem;
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 0.45);
     text-decoration: none;
     font-size: 0.8125rem;
-    transition: all 0.3s ease;
-    padding: 0.25rem 0;
+    position: relative;
+    padding: 0.5rem 0;
+    width: fit-content;
+    transition: color 0.3s ease;
   }
 
   .cta-secondary:hover {
@@ -279,49 +477,111 @@ import BannerImg from "/public/bannerimg.avif";
 
   .cta-secondary-icon {
     display: flex;
-    opacity: 0.6;
-    transition: opacity 0.3s ease;
+    opacity: 0.5;
+    transition: all 0.3s ease;
   }
 
   .cta-secondary:hover .cta-secondary-icon {
     opacity: 1;
+    transform: translateY(-1px);
   }
 
   .cta-secondary-text {
-    border-bottom: 1px solid transparent;
-    transition: border-color 0.3s ease;
+    position: relative;
   }
 
-  .cta-secondary:hover .cta-secondary-text {
-    border-bottom-color: rgba(255, 255, 255, 0.25);
+  .cta-secondary-underline {
+    position: absolute;
+    bottom: 0.25rem;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  /* Decorative Corner - Refined */
+  .cta-secondary:hover .cta-secondary-underline {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  /* Decorative Corner - Enhanced */
   .decor-corner {
     position: absolute;
     bottom: 0;
     right: 0;
-    width: 80px;
-    height: 80px;
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    border-bottom: none;
-    border-right: none;
+    width: 100px;
+    height: 100px;
     pointer-events: none;
   }
 
-  /* Desktop - Refined */
+  .corner-line {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  .corner-line-h {
+    bottom: 0;
+    right: 0;
+    width: 0;
+    height: 1px;
+    animation: expandWidth 0.8s ease 0.8s forwards;
+  }
+
+  .corner-line-v {
+    bottom: 0;
+    right: 0;
+    width: 1px;
+    height: 0;
+    animation: expandHeight 0.8s ease 0.8s forwards;
+  }
+
+  @keyframes expandWidth {
+    to {
+      width: 100%;
+    }
+  }
+
+  @keyframes expandHeight {
+    to {
+      height: 100%;
+    }
+  }
+
+  /* Dots pattern */
+  .dots-pattern {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    opacity: 0.3;
+  }
+
+  .dots-pattern span {
+    width: 3px;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 50%;
+  }
+
+  /* Desktop - Enhanced */
   @media (min-width: 768px) {
     .contact-banner {
-      padding: 4rem 2rem;
+      padding: 5rem 2rem;
     }
 
     .banner-inner {
       grid-template-columns: 1fr 1fr;
-      min-height: 480px;
+      min-height: 520px;
     }
 
     .banner-image {
       aspect-ratio: auto;
+      height: 100%;
       order: 2;
     }
 
@@ -331,32 +591,50 @@ import BannerImg from "/public/bannerimg.avif";
     }
 
     .description {
-      font-size: 0.9375rem;
+      font-size: 1rem;
     }
 
     .cta-wrapper {
       flex-direction: row;
       align-items: center;
-      gap: 1.5rem;
+      gap: 2rem;
     }
 
     .decor-corner {
-      width: 100px;
-      height: 100px;
+      width: 120px;
+      height: 120px;
+    }
+
+    .dots-pattern {
+      top: 3rem;
+      right: 3rem;
+      gap: 10px;
+    }
+
+    .dots-pattern span {
+      width: 4px;
+      height: 4px;
+    }
+
+    .accent-shape {
+      width: 80px;
+      height: 80px;
+      bottom: -30px;
+      right: 30px;
     }
   }
 
   @media (min-width: 1024px) {
     .contact-banner {
-      padding: 5rem 2rem;
+      padding: 6rem 2rem;
     }
 
     .banner-content {
-      padding: 3.5rem 3rem;
+      padding: 3.5rem 3.5rem;
     }
 
     .content-header {
-      margin-bottom: 1.75rem;
+      margin-bottom: 2rem;
     }
 
     .label-line {
@@ -364,20 +642,26 @@ import BannerImg from "/public/bannerimg.avif";
     }
 
     .description {
-      margin-bottom: 2.25rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .cta-primary {
+      padding: 1.125rem 2rem;
     }
 
     .decor-corner {
-      width: 120px;
-      height: 120px;
+      width: 140px;
+      height: 140px;
     }
   }
 
-  /* Reveal animation */
+  /* Reveal animation on scroll */
   .reveal {
     opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    transform: translateY(30px);
+    transition:
+      opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .reveal.visible {
@@ -387,15 +671,33 @@ import BannerImg from "/public/bannerimg.avif";
 
   /* Reduced motion */
   @media (prefers-reduced-motion: reduce) {
+    .frame-line,
     .image,
-    .cta,
-    .cta::before,
+    .cta-bg,
+    .cta-border,
     .cta-arrow,
     .cta-secondary,
     .cta-secondary-icon,
-    .cta-secondary-text,
+    .cta-secondary-underline,
+    .corner-line,
+    .accent-shape,
+    .title-line-1,
+    .title-line-2,
+    .description,
+    .cta-wrapper,
+    .label-icon,
     .reveal {
+      animation: none;
       transition: none;
+      opacity: 1;
+      transform: none;
+    }
+
+    .corner-line-h {
+      width: 100%;
+    }
+    .corner-line-v {
+      height: 100%;
     }
 
     .banner-image:hover .image {
@@ -403,15 +705,6 @@ import BannerImg from "/public/bannerimg.avif";
     }
 
     .reveal {
-      opacity: 1;
-      transform: none;
-    }
-
-    .cta:hover::before {
-      transform: translateX(-101%);
-    }
-
-    .cta:hover .cta-arrow {
       transform: none;
     }
   }
@@ -423,8 +716,12 @@ import BannerImg from "/public/bannerimg.avif";
       padding: 2rem 0;
     }
 
-    .banner-image,
-    .decor-corner {
+    .banner-image-wrapper,
+    .decor-corner,
+    .dots-pattern,
+    .frame-line,
+    .accent-shape,
+    .gradient-accent {
       display: none;
     }
 
@@ -436,6 +733,7 @@ import BannerImg from "/public/bannerimg.avif";
     .banner-content {
       background: #fff;
       border: 1px solid #000;
+      padding: 2rem;
     }
 
     .title,
@@ -444,8 +742,18 @@ import BannerImg from "/public/bannerimg.avif";
       color: #000;
     }
 
-    .cta {
+    .title-highlight {
+      color: #666;
+      font-style: normal;
+    }
+
+    .cta-primary {
       border: 1px solid #000;
+      color: #000;
+    }
+
+    .cta-primary .cta-bg {
+      background: transparent;
     }
 
     .cta-secondary {
@@ -456,22 +764,22 @@ import BannerImg from "/public/bannerimg.avif";
 
 <script>
   // Reveal animation on scroll
-  document.addEventListener('DOMContentLoaded', () => {
-    const revealBanner = document.querySelector('.contact-banner.reveal');
-    
+  document.addEventListener("DOMContentLoaded", () => {
+    const revealBanner = document.querySelector(".contact-banner.reveal");
+
     if (revealBanner) {
       const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
             if (entry.isIntersecting) {
-              entry.target.classList.add('visible');
+              entry.target.classList.add("visible");
               observer.unobserve(entry.target);
             }
           });
         },
-        { threshold: 0.2 }
+        { threshold: 0.15, rootMargin: "0px 0px -50px 0px" },
       );
-      
+
       observer.observe(revealBanner);
     }
   });

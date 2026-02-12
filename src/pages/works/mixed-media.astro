@@ -9,12 +9,30 @@ const mixedMediaCategory = WORKS.find(
 );
 if (!mixedMediaCategory) throw new Error("Mixed Media category not found");
 
-const works = mixedMediaCategory.works || [];
-const bannerImage = works[0]?.imageUrls?.[0]
-  ? processImageUrl(works[0].imageUrls[0])
-  : undefined;
+const collections = mixedMediaCategory.collections || [];
 
-const description = `Explore Fernando Feijoo's mixed media collection featuring ${works.length} unique ${works.length === 1 ? "piece" : "pieces"} that combine various artistic techniques and materials in innovative ways.`;
+const getFirstImageFromCollection = (
+  collection: (typeof collections)[0]
+): string => {
+  if (collection.works && collection.works.length > 0) {
+    const work = collection.works[0];
+    if (work.imageUrls && work.imageUrls.length > 0) {
+      return processImageUrl(work.imageUrls[0]);
+    }
+  }
+  return "";
+};
+
+const bannerImage =
+  collections.length > 0
+    ? getFirstImageFromCollection(collections[0])
+    : undefined;
+
+const description = `Just as the sketchbook is a means of observation and investigation and recording, other media are sometimes explored: painting, collage, mixed media and experiments with colour.
+
+The breadth of media utilised in my work represents a continual search for new forms to represent emerging ideas and responses to an ever-changing world.
+
+Fascinated by the past, by myth, by architecture, nature and landscape, and characters met on my own journey through life and this world, the works in this section have often fed into other individual pieces or series.`;
 ---
 
 <WorksLayout
@@ -27,22 +45,20 @@ const description = `Explore Fernando Feijoo's mixed media collection featuring 
     { label: "Mixed Media" },
   ]}
   introText={description}
-  sectionTitle={works.length > 0 ? `${works.length} Works` : undefined}
-  showEmpty={works.length === 0}
+  sectionTitle={collections.length > 0 ? "Collections" : undefined}
+  showEmpty={collections.length === 0}
   emptyIcon="🎨"
-  emptyTitle="No Mixed Media Works Available"
+  emptyTitle="No Mixed Media Collections Available"
 >
   {
-    works.map((work, index) => (
+    collections.map((collection, index) => (
       <div class="grid-item" style={`--delay: ${0.2 + index * 0.08}s`}>
         <WorkCard
-          href={`/works/${work.slug}`}
-          title={work.title}
-          subtitle={work.medium}
-          imageUrl={
-            work.imageUrls?.[0] ? processImageUrl(work.imageUrls[0]) : ""
-          }
-          imageAlt={work.title}
+          href={`/works/mixed-media/${collection.slug}`}
+          title={collection.title}
+          subtitle=""
+          imageUrl={getFirstImageFromCollection(collection)}
+          imageAlt={`${collection.title} collection`}
           isAboveFold={index < 3}
         />
       </div>

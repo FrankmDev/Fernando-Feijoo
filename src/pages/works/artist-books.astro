@@ -28,7 +28,7 @@ const bannerImage =
     ? getFirstImageFromCollection(collections[0])
     : undefined;
 
-const description = `Explore Fernando Feijoo's artist books collection featuring ${collections.length} unique ${collections.length === 1 ? "collection" : "collections"} that combine visual art with narrative storytelling.`;
+const description = `The artist book lends itself well to the adaption and exploration of sequential narrative story telling. Careful consideration is given to all design elements of the book including layout, typography, pagination, and cover designs. The artist can control all design elements and apply the handmade craft to produce unique artist books.`;
 ---
 
 <WorksLayout
@@ -49,7 +49,7 @@ const description = `Explore Fernando Feijoo's artist books collection featuring
         <WorkCard
           href={`/works/artist-books/${collection.slug}`}
           title={collection.title}
-          subtitle={`${collection.works.length} books`}
+          subtitle=""
           imageUrl={getFirstImageFromCollection(collection)}
           imageAlt={`${collection.title} collection`}
           isAboveFold={index < 3}

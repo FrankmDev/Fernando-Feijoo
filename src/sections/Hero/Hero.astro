@@ -8,6 +8,39 @@ import { resolveImage, processImageUrl } from "@utils/images";
 import type { Category } from "@data/works";
 import { Image } from "astro:assets";
 
+// Import specific images for PRINTS section (exact order requested)
+import nightAttack from "@assets/works/prints/inferno/Night_Attack_fernando_feijoo.avif";
+import angelOfVictory from "@assets/works/prints/citizensWastrels/angelOfVictory.avif";
+import curtainRises from "@assets/works/prints/theThreeProgresses/curtainRises/The_curtain_rises_fernando_feijoo.avif";
+import machiavellian from "@assets/works/prints/gamesPlayer/machiavellian.avif";
+import darkness from "@assets/works/prints/theJourneyMan/6_Darkness__fernando_feijoo.avif";
+import revolution from "@assets/works/prints/robotsCranks/1_Revolution_fernando_feijoov2.avif";
+import joaquin from "@assets/works/prints/persons&Personas/Joaquin.avif";
+import nightwatch from "@assets/works/prints/structDestruct/Nightwatch_fernando_feijoo.avif";
+import runRiot from "@assets/works/prints/run/run_riot_fernando_feijoo.avif";
+
+// Import specific images for SKETCHBOOKS section (exact order requested)
+import virginOfAnguish from "@assets/works/sketchbooks/characters/Virgin of Anguish.avif";
+import semanaSanta from "@assets/works/sketchbooks/characters/Semana Santa.avif";
+import redemption from "@assets/works/sketchbooks/characters/redemption_fernando_feijoo.avif";
+import pedro from "@assets/works/sketchbooks/characters/Pedro.avif";
+import muttonDresses from "@assets/works/sketchbooks/characters/mutton dressed as lamb.avif";
+import rouenCathedral from "@assets/works/sketchbooks/locations/Rouen cathedral.avif";
+import botanicalGarden from "@assets/works/sketchbooks/locations/malaga botanical gardens.avif";
+import reimsCathedral from "@assets/works/sketchbooks/locations/Reims cathedral France.avif";
+import cromerPier from "@assets/works/sketchbooks/locations/cromer Pier.avif";
+
+// Import specific images for MIXED MEDIA section (exact order requested)
+import portOfMalaga from "@assets/works/mixed/others/Malaga_Port.avif";
+import palmerasInCastel from "@assets/works/mixed/others/Castel_de_Ferro_beach.avif";
+import cruzcampo from "@assets/works/mixed/others/Cruzcampo.avif";
+import santaMariaChurch from "@assets/works/mixed/others/Cadaques Church Spain.avif";
+import villageOnTheHorizon from "@assets/works/mixed/others/viewIntoTheDistance.avif";
+import castelDeFerro from "@assets/works/mixed/others/Castel_de_Ferro_Spain.avif";
+import cinesAlbeniz from "@assets/works/mixed/others/Old_Cinema_Malaga.avif";
+import plazaDeLaCorredera from "@assets/works/mixed/others/Plaza_de_la_Corredera,_Cordoba_Spain.avif";
+import wavesCostaDelSol from "@assets/works/mixed/others/waves.avif";
+
 interface HeroItem {
   title: string;
   subtitle: string;
@@ -23,9 +56,238 @@ interface GallerySection {
   items: HeroItem[];
 }
 
+// Exact order requested for PRINTS section
+const PRINTS_ITEMS: HeroItem[] = [
+  {
+    title: "Night Attack",
+    subtitle: "Inferno",
+    image: nightAttack,
+    href: "/works/prints/inferno",
+    isCollection: true,
+  },
+  {
+    title: "Angel of Victory",
+    subtitle: "Citizens & Wastrels",
+    image: angelOfVictory,
+    href: "/works/prints/citizens-wastrels",
+    isCollection: true,
+  },
+  {
+    title: "The Curtain Rises",
+    subtitle: "The Three Progresses",
+    image: curtainRises,
+    href: "/works/prints/the-three-progresses",
+    isCollection: true,
+  },
+  {
+    title: "Machiavellian",
+    subtitle: "Games & Players",
+    image: machiavellian,
+    href: "/works/prints/games-players",
+    isCollection: true,
+  },
+  {
+    title: "Darkness",
+    subtitle: "The Journey Man",
+    image: darkness,
+    href: "/works/prints/the-journey-man",
+    isCollection: true,
+  },
+  {
+    title: "Revolution",
+    subtitle: "Robots & Cranks",
+    image: revolution,
+    href: "/works/prints/robots-cranks",
+    isCollection: true,
+  },
+  {
+    title: "Joaquin",
+    subtitle: "Persons & Personas",
+    image: joaquin,
+    href: "/works/prints/persons-personas",
+    isCollection: true,
+  },
+  {
+    title: "Nightwatch",
+    subtitle: "Struct & Destruct",
+    image: nightwatch,
+    href: "/works/prints/struct-destruct",
+    isCollection: true,
+  },
+  {
+    title: "Run Riot",
+    subtitle: "Run",
+    image: runRiot,
+    href: "/works/prints/run",
+    isCollection: true,
+  },
+];
+
+// Exact order requested for SKETCHBOOKS section
+const SKETCHBOOKS_ITEMS: HeroItem[] = [
+  {
+    title: "Virgin of Anguish",
+    subtitle: "Characters",
+    image: virginOfAnguish,
+    href: "/works/sketchbooks/characters",
+    isCollection: true,
+  },
+  {
+    title: "Semana Santa",
+    subtitle: "Characters",
+    image: semanaSanta,
+    href: "/works/sketchbooks/characters",
+    isCollection: true,
+  },
+  {
+    title: "Redemption",
+    subtitle: "Characters",
+    image: redemption,
+    href: "/works/sketchbooks/characters",
+    isCollection: true,
+  },
+  {
+    title: "Pedro",
+    subtitle: "Characters",
+    image: pedro,
+    href: "/works/sketchbooks/characters",
+    isCollection: true,
+  },
+  {
+    title: "Mutton dresses",
+    subtitle: "Characters",
+    image: muttonDresses,
+    href: "/works/sketchbooks/characters",
+    isCollection: true,
+  },
+  {
+    title: "Rouen Cathedral",
+    subtitle: "Locations",
+    image: rouenCathedral,
+    href: "/works/sketchbooks/locations",
+    isCollection: true,
+  },
+  {
+    title: "Botanical garden",
+    subtitle: "Locations",
+    image: botanicalGarden,
+    href: "/works/sketchbooks/locations",
+    isCollection: true,
+  },
+  {
+    title: "Reims Cathedral",
+    subtitle: "Locations",
+    image: reimsCathedral,
+    href: "/works/sketchbooks/locations",
+    isCollection: true,
+  },
+  {
+    title: "Cromer pier",
+    subtitle: "Locations",
+    image: cromerPier,
+    href: "/works/sketchbooks/locations",
+    isCollection: true,
+  },
+];
+
+// Exact order requested for MIXED MEDIA section
+const MIXED_MEDIA_ITEMS: HeroItem[] = [
+  {
+    title: "Port of Malaga",
+    subtitle: "Mixed Media",
+    image: portOfMalaga,
+    href: "/works/mixed-media",
+    isCollection: false,
+  },
+  {
+    title: "Palmeras in Castel",
+    subtitle: "Mixed Media",
+    image: palmerasInCastel,
+    href: "/works/mixed-media",
+    isCollection: false,
+  },
+  {
+    title: "Cruzcampo",
+    subtitle: "Mixed Media",
+    image: cruzcampo,
+    href: "/works/mixed-media",
+    isCollection: false,
+  },
+  {
+    title: "Santa Maria Church",
+    subtitle: "Mixed Media",
+    image: santaMariaChurch,
+    href: "/works/mixed-media",
+    isCollection: false,
+  },
+  {
+    title: "Village on the horizon",
+    subtitle: "Mixed Media",
+    image: villageOnTheHorizon,
+    href: "/works/mixed-media",
+    isCollection: false,
+  },
+  {
+    title: "Castel de Ferro",
+    subtitle: "Mixed Media",
+    image: castelDeFerro,
+    href: "/works/mixed-media",
+    isCollection: false,
+  },
+  {
+    title: "Cines Albeniz Malaga",
+    subtitle: "Mixed Media",
+    image: cinesAlbeniz,
+    href: "/works/mixed-media",
+    isCollection: false,
+  },
+  {
+    title: "Plaza de la corredera",
+    subtitle: "Mixed Media",
+    image: plazaDeLaCorredera,
+    href: "/works/mixed-media",
+    isCollection: false,
+  },
+  {
+    title: "Waves costa del sol",
+    subtitle: "Mixed Media",
+    image: wavesCostaDelSol,
+    href: "/works/mixed-media",
+    isCollection: false,
+  },
+];
+
 const MAX_ITEMS_PER_CATEGORY = 9;
 
 const gallery: GallerySection[] = WORKS.map((category: Category) => {
+  // For prints category, use the specific items in exact order
+  if (category.slug === "prints") {
+    return {
+      id: category.slug,
+      title: category.title,
+      items: PRINTS_ITEMS,
+    };
+  }
+
+  // For sketchbooks category, use the specific items in exact order
+  if (category.slug === "sketchbooks") {
+    return {
+      id: category.slug,
+      title: category.title,
+      items: SKETCHBOOKS_ITEMS,
+    };
+  }
+
+  // For mixed-media category, use the specific items in exact order
+  if (category.slug === "mixed-media") {
+    return {
+      id: category.slug,
+      title: category.title,
+      items: MIXED_MEDIA_ITEMS,
+    };
+  }
+
+  // For other categories, use the default logic
   let items: HeroItem[] = [];
 
   if (category.collections) {
@@ -124,11 +386,6 @@ const gallery: GallerySection[] = WORKS.map((category: Category) => {
                       <h3 class="card-title">{item.title}</h3>
                     </div>
 
-                    {/* Corner index */}
-                    <span class="card-index" aria-hidden="true">
-                      {String(index + 1).padStart(2, "0")}
-                    </span>
-
                     {/* Border frame */}
                     <div class="card-frame" aria-hidden="true" />
                   </a>
@@ -140,7 +397,9 @@ const gallery: GallerySection[] = WORKS.map((category: Category) => {
               <Cta
                 href={`/works/${id}`}
                 label={`View All ${title}`}
-                isDark={true}
+                isDark={false}
+                variant="secondary"
+                size="md"
               />
             </div>
           </section>
@@ -348,7 +607,8 @@ const gallery: GallerySection[] = WORKS.map((category: Category) => {
     transform: translateY(0);
   }
 
-  /* Corner index */
+  /* Corner index - REMOVED */
+  /*
   .card-index {
     position: absolute;
     top: 1.25rem;
@@ -373,6 +633,7 @@ const gallery: GallerySection[] = WORKS.map((category: Category) => {
     transform: translateY(0);
     color: rgba(255, 255, 255, 0.4);
   }
+  */
 
   /* Border frame */
   .card-frame {
@@ -398,7 +659,7 @@ const gallery: GallerySection[] = WORKS.map((category: Category) => {
 
   .card:focus-visible .card-overlay,
   .card:focus-visible .card-content,
-  .card:focus-visible .card-index,
+  /* .card:focus-visible .card-index, */
   .card:focus-visible .card-line-accent {
     opacity: 1;
   }
@@ -462,11 +723,11 @@ const gallery: GallerySection[] = WORKS.map((category: Category) => {
       font-size: clamp(1.5rem, 2.5vw, 2rem);
     }
 
-    .card-index {
+    /* .card-index {
       top: 1.5rem;
       right: 1.5rem;
       font-size: 1rem;
-    }
+    } */
 
     .card-frame {
       inset: 1rem;
@@ -501,7 +762,7 @@ const gallery: GallerySection[] = WORKS.map((category: Category) => {
     .card-content,
     .card-category,
     .card-title,
-    .card-index,
+    /* .card-index, */
     .card-line-accent,
     .card-frame {
       transition: none;
@@ -516,8 +777,7 @@ const gallery: GallerySection[] = WORKS.map((category: Category) => {
     }
 
     .card-overlay,
-    .card-content,
-    .card-index {
+    .card-content {
       opacity: 1;
     }
 
@@ -537,7 +797,7 @@ const gallery: GallerySection[] = WORKS.map((category: Category) => {
     .slider-wrapper,
     .card-overlay,
     .card-content,
-    .card-index,
+    /* .card-index, */
     .card-line-accent,
     .card-frame {
       display: none;

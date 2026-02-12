@@ -9,12 +9,29 @@ const sketchbooksCategory = WORKS.find(
 );
 if (!sketchbooksCategory) throw new Error("Sketchbooks category not found");
 
-const works = sketchbooksCategory.works || [];
-const bannerImage = works[0]?.imageUrls?.[0]
-  ? processImageUrl(works[0].imageUrls[0])
+const collections = sketchbooksCategory.collections || [];
+
+const getFirstImageFromCollection = (
+  collection: (typeof collections)[0]
+): string => {
+  if (collection.works && collection.works.length > 0) {
+    const work = collection.works[0];
+    if (work.imageUrls && work.imageUrls.length > 0) {
+      return processImageUrl(work.imageUrls[0]);
+    }
+  }
+  return "";
+};
+
+const bannerImage = collections.length > 0
+  ? getFirstImageFromCollection(collections[0])
   : undefined;
 
-const description = `Explore Fernando Feijoo's sketchbooks collection featuring ${works.length} unique ${works.length === 1 ? "sketchbook" : "sketchbooks"} that capture moments, places, and characters through various drawing techniques.`;
+const description = `The sketchbook is the place where I can plan compositions and character designs with no pressure to produce final outcomes. Ideas are free to flow, come and go, sometimes making it to the Final Cut where they will be drawn up on blocks and carved in the future.
+
+I always travel with sketchbooks: it is like a research journal recording street characters, locations and environments which may inform future works, whilst also experimenting with different materials and processes of working on paper.
+
+Surrounded by the unique architecture of each locale and the people who live there, reportage drawing allows me to focus on the moment and pick out the atmospheres and vibrations of a place: observing and drawing these creates many memories.`;
 ---
 
 <WorksLayout
@@ -27,22 +44,20 @@ const description = `Explore Fernando Feijoo's sketchbooks collection featuring 
     { label: "Sketchbooks" },
   ]}
   introText={description}
-  sectionTitle={works.length > 0 ? `${works.length} Works` : undefined}
-  showEmpty={works.length === 0}
+  sectionTitle={collections.length > 0 ? "Collections" : undefined}
+  showEmpty={collections.length === 0}
   emptyIcon="✏️"
   emptyTitle="No Sketchbooks Available"
 >
   {
-    works.map((work, index) => (
+    collections.map((collection, index) => (
       <div class="grid-item" style={`--delay: ${0.2 + index * 0.08}s`}>
         <WorkCard
-          href={`/works/${work.slug}`}
-          title={work.title}
-          subtitle={work.medium}
-          imageUrl={
-            work.imageUrls?.[0] ? processImageUrl(work.imageUrls[0]) : ""
-          }
-          imageAlt={work.title}
+          href={`/works/sketchbooks/${collection.slug}`}
+          title={collection.title}
+          subtitle=""
+          imageUrl={getFirstImageFromCollection(collection)}
+          imageAlt={`${collection.title} collection`}
           isAboveFold={index < 3}
         />
       </div>

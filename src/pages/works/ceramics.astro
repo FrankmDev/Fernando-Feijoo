@@ -12,7 +12,7 @@ const bannerImage = works[0]?.imageUrls?.[0]
   ? processImageUrl(works[0].imageUrls[0])
   : undefined;
 
-const description = `Explore Fernando Feijoo's ceramics collection featuring ${works.length} unique ${works.length === 1 ? "piece" : "pieces"} crafted with underglaze painting, oxides and clear glaze finishes.`;
+const description = `These ceramics are unique pieces crafted by the artist using a range of underglaze painting, oxides and clear glaze finishes. The different shapes and forms of the vessels allow the artist to display pictorial narrative imagery with creative outcomes which engage the viewer and offer the chance to explore the object from all angles. The normal function of plates, vases etc., is often subverted allowing for contradictions and subtexts within the subject matter.`;
 ---
 
 <WorksLayout
@@ -25,7 +25,7 @@ const description = `Explore Fernando Feijoo's ceramics collection featuring ${w
     { label: "Ceramics" },
   ]}
   introText={description}
-  sectionTitle={`${works.length} Works`}
+  sectionTitle="Works"
   showEmpty={works.length === 0}
   emptyIcon="🏺"
   emptyTitle="No Ceramics Available"
@@ -36,7 +36,7 @@ const description = `Explore Fernando Feijoo's ceramics collection featuring ${w
         <WorkCard
           href={`/works/${work.slug}`}
           title={work.title}
-          subtitle={work.medium}
+          subtitle={work.printType}
           imageUrl={
             work.imageUrls?.[0] ? processImageUrl(work.imageUrls[0]) : ""
           }

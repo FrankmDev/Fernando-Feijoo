@@ -47,9 +47,9 @@ export interface Work {
   slug: string;
   title: string;
   description: string;
-  medium: string;
-  dimensions?: string;
-  edition?: number;
+  printType: string;
+  size?: string;
+  printEdition?: number;
   price?: string;
   imageUrls: string[];
 }

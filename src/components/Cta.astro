@@ -4,6 +4,8 @@ interface Props {
   href: string;
   label?: string;
   isDark?: boolean;
+  variant?: 'primary' | 'secondary' | 'ghost';
+  size?: 'sm' | 'md' | 'lg';
 }
 
 const {
@@ -11,29 +13,411 @@ const {
   class: className = "",
   label = "Contact me",
   isDark = false,
+  variant = 'primary',
+  size = 'md',
 } = Astro.props;
+
+const variantClasses = {
+  primary: isDark 
+    ? "cta-primary-dark" 
+    : "cta-primary-light",
+  secondary: isDark
+    ? "cta-secondary-dark"
+    : "cta-secondary-light",
+  ghost: isDark
+    ? "cta-ghost-dark"
+    : "cta-ghost-light",
+};
+
+const sizeClasses = {
+  sm: "cta-sm",
+  md: "cta-md",
+  lg: "cta-lg",
+};
 ---
 
 <a
   href={href}
   rel="noopener noreferrer"
   class:list={[
-    "inline-block w-fit px-4 py-2 sm:px-6 sm:py-3 rounded-xl mt-6 transition duration-300 ease-in-out",
-    {
-      "bg-black text-white hover:bg-white hover:text-black hover:outline hover:outline-[1px]":
-        isDark,
-      "bg-white text-black hover:bg-black hover:text-white hover:outline hover:outline-[1px]":
-        !isDark,
-    },
+    "cta",
+    variantClasses[variant],
+    sizeClasses[size],
     className,
   ]}
   aria-label={label}
 >
-  <slot>{label}</slot>
+  <span class="cta-fill"></span>
+  <span class="cta-shine"></span>
+  <span class="cta-content">
+    <span class="cta-text">{label}</span>
+    <span class="cta-arrow" aria-hidden="true">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5 12h14"/>
+        <path d="m12 5 7 7-7 7"/>
+      </svg>
+    </span>
+  </span>
 </a>
 
 <style>
-  a {
+  /* ========================================
+     BASE STYLES
+     ======================================== */
+  .cta {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     text-decoration: none;
+    font-family: "Exo", system-ui, sans-serif;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    border-radius: 4px;
+    overflow: hidden;
+    isolation: isolate;
+    cursor: pointer;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .cta:active {
+    transform: scale(0.97);
+  }
+
+  /* Fill layer - animates from bottom */
+  .cta-fill {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    transform: translateY(100%);
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .cta:hover .cta-fill {
+    transform: translateY(0);
+  }
+
+  /* Shine sweep effect */
+  .cta-shine {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.3),
+      transparent
+    );
+    z-index: 0;
+    transition: left 0.6s ease;
+    transform: skewX(-20deg);
+  }
+
+  .cta:hover .cta-shine {
+    left: 150%;
+  }
+
+  /* Content wrapper */
+  .cta-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+  }
+
+  /* Text */
+  .cta-text {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Arrow */
+  .cta-arrow {
+    display: flex;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .cta:hover .cta-arrow {
+    transform: translateX(4px);
+  }
+
+  /* ========================================
+     SIZE VARIANTS
+     ======================================== */
+  .cta-sm {
+    padding: 0.625rem 1.25rem;
+    font-size: 0.8125rem;
+  }
+
+  .cta-sm .cta-arrow svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .cta-md {
+    padding: 0.875rem 1.75rem;
+    font-size: 0.875rem;
+  }
+
+  .cta-lg {
+    padding: 1.125rem 2.25rem;
+    font-size: 0.9375rem;
+  }
+
+  .cta-lg .cta-arrow svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  /* ========================================
+     PRIMARY LIGHT - Fondo claro → Botón NEGRO
+     ======================================== */
+  .cta-primary-light {
+    background: #000;
+    color: #fff;
+    border: 1.5px solid #000;
+    box-shadow: 
+      0 1px 2px rgba(0, 0, 0, 0.1),
+      0 4px 8px rgba(0, 0, 0, 0.08);
+  }
+
+  .cta-primary-light .cta-fill {
+    background: #fff;
+  }
+
+  .cta-primary-light:hover {
+    color: #000;
+    border-color: #000;
+    box-shadow: 
+      0 4px 12px rgba(0, 0, 0, 0.15),
+      0 8px 24px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+  }
+
+  /* ========================================
+     PRIMARY DARK - Fondo oscuro → Botón BLANCO
+     ======================================== */
+  .cta-primary-dark {
+    background: #fff;
+    color: #000;
+    border: 1.5px solid #fff;
+    box-shadow: 
+      0 1px 2px rgba(255, 255, 255, 0.1),
+      0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  .cta-primary-dark .cta-fill {
+    background: #000;
+  }
+
+  .cta-primary-dark:hover {
+    color: #fff;
+    border-color: #fff;
+    box-shadow: 
+      0 4px 16px rgba(255, 255, 255, 0.15),
+      0 8px 32px rgba(0, 0, 0, 0.4);
+    transform: translateY(-2px);
+  }
+
+  .cta-primary-dark .cta-shine {
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.2),
+      transparent
+    );
+  }
+
+  /* ========================================
+     SECONDARY LIGHT - Fondo claro → Outline NEGRO
+     ======================================== */
+  .cta-secondary-light {
+    background: transparent;
+    color: #000;
+    border: 1.5px solid rgba(0, 0, 0, 0.25);
+  }
+
+  .cta-secondary-light .cta-fill {
+    background: #000;
+  }
+
+  .cta-secondary-light:hover {
+    color: #fff;
+    border-color: #000;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  }
+
+  /* ========================================
+     SECONDARY DARK - Fondo oscuro → Outline BLANCO
+     ======================================== */
+  .cta-secondary-dark {
+    background: transparent;
+    color: #fff;
+    border: 1.5px solid rgba(255, 255, 255, 0.35);
+  }
+
+  .cta-secondary-dark .cta-fill {
+    background: #fff;
+  }
+
+  .cta-secondary-dark:hover {
+    color: #000;
+    border-color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  }
+
+  .cta-secondary-dark .cta-shine {
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(0, 0, 0, 0.15),
+      transparent
+    );
+  }
+
+  /* ========================================
+     GHOST LIGHT - Fondo claro → Solo texto + flecha
+     ======================================== */
+  .cta-ghost-light {
+    background: transparent;
+    color: #000;
+    border: none;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .cta-ghost-light::after {
+    content: '';
+    position: absolute;
+    bottom: 0.5rem;
+    left: 0;
+    width: calc(100% - 1.5rem);
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .cta-ghost-light:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  .cta-ghost-light .cta-fill {
+    display: none;
+  }
+
+  .cta-ghost-light .cta-arrow {
+    opacity: 0.5;
+    transition: all 0.3s ease;
+  }
+
+  .cta-ghost-light:hover .cta-arrow {
+    opacity: 1;
+    transform: translateX(6px);
+  }
+
+  /* ========================================
+     GHOST DARK - Fondo oscuro → Solo texto + flecha
+     ======================================== */
+  .cta-ghost-dark {
+    background: transparent;
+    color: #fff;
+    border: none;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .cta-ghost-dark::after {
+    content: '';
+    position: absolute;
+    bottom: 0.5rem;
+    left: 0;
+    width: calc(100% - 1.5rem);
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .cta-ghost-dark:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  .cta-ghost-dark .cta-fill {
+    display: none;
+  }
+
+  .cta-ghost-dark .cta-arrow {
+    opacity: 0.5;
+    transition: all 0.3s ease;
+  }
+
+  .cta-ghost-dark:hover .cta-arrow {
+    opacity: 1;
+    transform: translateX(6px);
+  }
+
+  /* ========================================
+     FOCUS STATES
+     ======================================== */
+  .cta:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 4px;
+  }
+
+  /* ========================================
+     REDUCED MOTION
+     ======================================== */
+  @media (prefers-reduced-motion: reduce) {
+    .cta,
+    .cta-fill,
+    .cta-shine,
+    .cta-arrow,
+    .cta::after {
+      transition: none !important;
+    }
+
+    .cta:hover {
+      transform: none;
+    }
+
+    .cta-shine {
+      display: none;
+    }
+
+    .cta-fill {
+      transform: translateY(0);
+      opacity: 0;
+    }
+
+    .cta:hover .cta-fill {
+      opacity: 1;
+    }
+  }
+
+  /* ========================================
+     PRINT STYLES
+     ======================================== */
+  @media print {
+    .cta {
+      border: 1px solid #000 !important;
+      background: transparent !important;
+      color: #000 !important;
+      box-shadow: none !important;
+    }
+
+    .cta-fill,
+    .cta-shine {
+      display: none !important;
+    }
   }
 </style>
