@@ -35,7 +35,7 @@ const structuredData = {
 <html lang="en" prefix="og: http://ogp.me/ns#">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
     <meta name="generator" content={Astro.generator} />
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
@@ -93,8 +93,8 @@ const structuredData = {
     <ClientRouter />
   </head>
 
-  <body class="flex flex-col items-center max-w-[2000px] mx-auto min-h-screen bg-white text-gray-900">
-    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-black text-white px-4 py-2 z-50">
+  <body class="flex flex-col items-center min-w-0 max-w-[100vw] mx-auto min-h-screen bg-white text-gray-900">
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 bg-black text-white px-4 py-2">
       Skip to main content
     </a>
 

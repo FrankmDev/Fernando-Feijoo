@@ -121,7 +121,7 @@ const fallbackSrc = !imageMeta ? processImageUrl(imageUrl || "") : "";
 
   .card:hover .card-img {
     transform: scale(1.1);
-    filter: grayscale(0) brightness(0.6);
+    filter: grayscale(0) brightness(0.35);
   }
 
   .card-empty {
@@ -141,8 +141,8 @@ const fallbackSrc = !imageMeta ? processImageUrl(imageUrl || "") : "";
     background: linear-gradient(
       to top,
       rgba(0, 0, 0, 0.95) 0%,
-      rgba(0, 0, 0, 0.6) 30%,
-      rgba(0, 0, 0, 0.2) 60%,
+      rgba(0, 0, 0, 0.7) 30%,
+      rgba(0, 0, 0, 0.3) 60%,
       transparent 100%
     );
     opacity: 0.8;
@@ -152,6 +152,13 @@ const fallbackSrc = !imageMeta ? processImageUrl(imageUrl || "") : "";
 
   .card:hover .card-overlay {
     opacity: 1;
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 1) 0%,
+      rgba(0, 0, 0, 0.85) 30%,
+      rgba(0, 0, 0, 0.5) 60%,
+      rgba(0, 0, 0, 0.2) 100%
+    );
   }
 
   .card-content {

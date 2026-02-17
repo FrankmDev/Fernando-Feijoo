@@ -94,12 +94,12 @@ const currentPath = Astro.url.pathname;
     justify-content: space-between;
     max-width: 1400px;
     margin: 0 auto;
-    padding: 0 1.25rem;
-    height: 4rem;
+    padding: 0 clamp(1rem, 3vw, 1.5rem);
+    height: clamp(3.5rem, 10vw, 4.5rem);
   }
 
   .header-spacer {
-    height: 4rem;
+    height: clamp(3.5rem, 10vw, 4.5rem);
     flex-shrink: 0;
   }
 

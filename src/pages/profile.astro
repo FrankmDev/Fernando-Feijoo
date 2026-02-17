@@ -140,6 +140,11 @@ const pageDescription =
               {
                 COLLECTIONS.map((collection, i) => (
                   <li class="collection-item" style={`--i: ${i}`}>
+                    <span class="collection-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M2 22h20M2 6h20M2 10l10-6 10 6M4 10v12m16-12v12m-8-12v12"/>
+                      </svg>
+                    </span>
                     <span class="collection-name">{collection}</span>
                   </li>
                 ))
@@ -152,6 +157,12 @@ const pageDescription =
               {
                 RESIDENCES.map((residence, i) => (
                   <li class="residence-item" style={`--i: ${i}`}>
+                    <span class="residence-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                        <polyline points="9,22 9,12 15,12 15,22"/>
+                      </svg>
+                    </span>
                     <span class="residence-name">{residence}</span>
                   </li>
                 ))
@@ -166,6 +177,12 @@ const pageDescription =
               {
                 AWARDS_PUBLICATIONS.map((award, i) => (
                   <li class="award-item" style={`--i: ${i}`}>
+                    <span class="award-marker" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M8 12l3 3 5-5"/>
+                      </svg>
+                    </span>
                     <span class="award-year">{award.year}</span>
                     <span class="award-title">{award.title}</span>
                   </li>
@@ -417,7 +434,7 @@ const pageDescription =
   }
 
   .section {
-    padding: 4rem 1.25rem;
+    padding: clamp(3rem, 8vw, 6rem) clamp(1rem, 3vw, 2rem);
   }
 
   .section-muted {
@@ -425,7 +442,7 @@ const pageDescription =
   }
 
   .container {
-    max-width: 1100px;
+    max-width: clamp(320px, 90vw, 1100px);
     margin: 0 auto;
   }
 
@@ -514,7 +531,7 @@ const pageDescription =
   .hero-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 2.5rem;
+    gap: clamp(1.5rem, 5vw, 2.5rem);
     align-items: start;
   }
 
@@ -545,7 +562,7 @@ const pageDescription =
   .two-column {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 3rem;
+    gap: clamp(2rem, 6vw, 3rem);
     align-items: stretch;
   }
 
@@ -555,7 +572,7 @@ const pageDescription =
     flex-direction: column;
   }
 
-  /* Collections & Residences - Minimal */
+  /* Collections & Residences - With Icons */
   .collections-list,
   .residences-list {
     list-style: none;
@@ -565,7 +582,10 @@ const pageDescription =
 
   .collection-item,
   .residence-item {
-    padding: 0.75rem 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.875rem 0;
     border-bottom: 1px solid #eee;
     transition: all 0.3s ease;
   }
@@ -578,6 +598,28 @@ const pageDescription =
   .collection-item:hover,
   .residence-item:hover {
     padding-left: 0.5rem;
+    background: rgba(0, 0, 0, 0.02);
+  }
+
+  .collection-icon,
+  .residence-icon {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    color: #666;
+    transition: all 0.3s ease;
+  }
+
+  .collection-icon svg,
+  .residence-icon svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .collection-item:hover .collection-icon,
+  .residence-item:hover .residence-icon {
+    color: #000;
+    transform: scale(1.1);
   }
 
   .collection-name,
@@ -593,7 +635,7 @@ const pageDescription =
     color: #000;
   }
 
-  /* Awards List - Timeline Style */
+  /* Awards List - Enhanced Timeline Style */
   .awards-list {
     list-style: none;
     padding: 0;
@@ -605,51 +647,78 @@ const pageDescription =
   .awards-list::before {
     content: '';
     position: absolute;
-    left: 20px;
-    top: 0.5rem;
-    bottom: 0.5rem;
-    width: 1px;
-    background: #e0e0e0;
+    left: 23px;
+    top: 0.75rem;
+    bottom: 0.75rem;
+    width: 2px;
+    background: linear-gradient(to bottom, #e0e0e0 0%, #ccc 50%, #e0e0e0 100%);
+    border-radius: 1px;
   }
 
   .award-item {
     display: flex;
     align-items: flex-start;
     gap: 1rem;
-    padding: 0.875rem 0 0.875rem 48px;
+    padding: 1rem 0 1rem 56px;
     position: relative;
-    transition: all 0.3s ease;
-  }
-
-  .award-item::before {
-    content: '';
-    position: absolute;
-    left: 16px;
-    top: 1.125rem;
-    width: 9px;
-    height: 9px;
-    background: #fff;
-    border: 2px solid #ccc;
-    border-radius: 50%;
-    z-index: 1;
-    transition: all 0.3s ease;
-  }
-
-  .award-item:hover::before {
-    border-color: #000;
-    background: #000;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    border-radius: 4px;
   }
 
   .award-item:hover {
-    padding-left: 52px;
+    background: rgba(0, 0, 0, 0.02);
+    padding-left: 60px;
+  }
+
+  .award-marker {
+    position: absolute;
+    left: 12px;
+    top: 1rem;
+    width: 24px;
+    height: 24px;
+    background: #fff;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .award-marker svg {
+    width: 12px;
+    height: 12px;
+    color: #ccc;
+    transition: all 0.3s ease;
+  }
+
+  .award-item:hover .award-marker {
+    border-color: #000;
+    background: #000;
+    transform: scale(1.1);
+  }
+
+  .award-item:hover .award-marker svg {
+    color: #fff;
   }
 
   .award-year {
     flex-shrink: 0;
     font-size: 0.8125rem;
-    font-weight: 600;
+    font-weight: 700;
     color: #000;
     min-width: 44px;
+    background: #f5f5f5;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    text-align: center;
+    transition: all 0.3s ease;
+  }
+
+  .award-item:hover .award-year {
+    background: #000;
+    color: #fff;
   }
 
   .award-title {
@@ -657,6 +726,7 @@ const pageDescription =
     color: #444;
     line-height: 1.6;
     transition: color 0.3s ease;
+    flex: 1;
   }
 
   .award-item:hover .award-title {
@@ -854,6 +924,13 @@ const pageDescription =
     .residence-item:hover,
     .award-item:hover {
       padding-left: 0;
+      background: transparent;
+    }
+
+    .collection-icon,
+    .residence-icon,
+    .award-marker {
+      transition: none;
     }
 
     .studio-image {

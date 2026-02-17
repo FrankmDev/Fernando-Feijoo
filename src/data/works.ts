@@ -147,6 +147,31 @@ export const WORKS: Category[] = [
             printEdition: 30,
             size: "40 x 40 cm",
           },
+          {
+            slug: "metamorphosis",
+            title: "Metamorphosis",
+            description:
+              "Transformation and change. The struggle between human nature and machine.",
+            printType: "Reduction Linocut",
+            price: "£150",
+            printEdition: 12,
+            imageUrls: [
+              "@assets/works/prints/citizensWastrels/metamorphosis_fernando_feijoo.avif",
+            ],
+          },
+          {
+            slug: "laying-down-the-law",
+            title: "Laying down the Law",
+            description:
+              "Lifting the spirits in tonic row, laying down the law in lager lane. The order of the day.",
+            printType: "Lithograph",
+            price: "£150",
+            printEdition: 50,
+            imageUrls: [
+              "@assets/works/prints/citizensWastrels/lifting-the-spirits-in-tonic-row-laying-down-the-law-in-lager-lane_fernando_feijoo.avif",
+              "@assets/works/prints/citizensWastrels/liftingTheSpirits.avif",
+            ],
+          },
         ],
       },
       {
@@ -178,6 +203,7 @@ export const WORKS: Category[] = [
               "Structure of family relationships within the suit of diamonds.",
             printType: "Zinc Lithograph",
             price: "£100",
+            printEdition: 5,
             imageUrls: [
               "@assets/works/prints/gamesPlayer/hierarchiOfAnarchy.avif",
             ],
@@ -585,8 +611,10 @@ export const WORKS: Category[] = [
               "Guardian angel swoops down. No Mercy. Death stare of Azrael.",
             printType: "Wood engraving",
             price: "£150",
+            printEdition: 50,
+            size: "8 x 10 cm",
             imageUrls: [
-              "@assets/works/prints/structDestruct/Nightwatch_fernando_feijoo.avif",
+              "@assets/works/prints/inferno/Night_Terrors_fernando_feijoo.avif",
             ],
           },
           {
@@ -688,6 +716,33 @@ export const WORKS: Category[] = [
             printType: "Linocut, wood block & Letterpress",
             price: "£650",
             imageUrls: ["@assets/works/prints/inferno/today.avif"],
+          },
+          {
+            slug: "night-attack",
+            title: "Night Attack",
+            description:
+              "The lords on high soar in the skies, ready to pounce. 'Run: don't look up.' Death is coming for all; even while the carnival proceeds, all will succumb.",
+            printType: "Wood engraving",
+            price: "£150",
+            printEdition: 50,
+            size: "8 x 10 cm",
+            imageUrls: [
+              "@assets/works/prints/inferno/Night_Attack_fernando_feijoo.avif",
+            ],
+          },
+          {
+            slug: "midnight",
+            title: "Midnight",
+            description:
+              "Displaced and distraught people move during the cover of night. The sound of war rumbles, explosions shatter windows. Judgement dawns with a new day, but night demons still hunt. Air raid sirens wail.",
+            printType: "Stone lithograph",
+            price: "£395",
+            printEdition: 30,
+            size: "56 x 76 cm",
+            imageUrls: [
+              "@assets/works/prints/inferno/Midnight_fernando_feijoo.avif",
+              "@assets/works/prints/inferno/Midnight_colour_fernando_feijoo.avif",
+            ],
           },
         ],
       },
@@ -807,10 +862,15 @@ export const WORKS: Category[] = [
             slug: "revolution",
             title: "Revolution",
             description:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-            printType: "Linocut, wood block & Letterpress",
-            price: "£580",
-            imageUrls: ["@assets/works/prints/robotsCranks/revolution.avif"],
+              "The iron machine strides forward to destroy. Man v Machine. AI assists the iron machine. Big Brother is watching. An uprising is emerging.",
+            printType: "Reduction Linocut",
+            price: "£175",
+            printEdition: 10,
+            size: "30 x 40 cm",
+            imageUrls: [
+              "@assets/works/prints/robotsCranks/revolution.avif",
+              "@assets/works/prints/robotsCranks/1_Revolution_fernando_feijoov2.avif",
+            ],
           },
           {
             slug: "search-and-destroy",
@@ -875,6 +935,17 @@ export const WORKS: Category[] = [
             price: "£580",
             imageUrls: ["@assets/works/prints/robotsCranks/spaceX.avif"],
           },
+          {
+            slug: "metamorph",
+            title: "Metamorph",
+            description:
+              "He transforms and appears to greet his audience, but the Monster is revealed. Command and conquer. Twisted iron entraps buildings. No one is safe when the monsters return.",
+            printType: "Reduction Linocut",
+            price: "£395",
+            printEdition: 30,
+            size: "56 x 76 cm",
+            imageUrls: ["@assets/works/prints/robotsCranks/metamorph.avif"],
+          },
         ],
       },
       {
@@ -888,7 +959,8 @@ export const WORKS: Category[] = [
             title: "Print Run",
             description:
               "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-            printType: "Linocut, Letterpress, and collage, ½ bound hardback cover",
+            printType:
+              "Linocut, Letterpress, and collage, ½ bound hardback cover",
             imageUrls: [
               "@assets/works/prints/run/print_run_fernando_feijoo.avif",
             ],
@@ -901,7 +973,8 @@ export const WORKS: Category[] = [
             title: "Run a Stitch",
             description:
               "An exploration of sayings and expressions inspired by contemporary life. Machines are taking over. Glances at how media runs news, politicians run lives, and fake news runs away with facts. Themes: Technology, corruption, and control.",
-            printType: "Linocut, Letterpress, and collage, ½ bound hardback cover",
+            printType:
+              "Linocut, Letterpress, and collage, ½ bound hardback cover",
             imageUrls: [
               "@assets/works/prints/run/run_a_stitch_fernando_feijoo.avif",
             ],
@@ -914,7 +987,8 @@ export const WORKS: Category[] = [
             title: "Run Out of Money",
             description:
               "An exploration of sayings and expressions inspired by contemporary life. Machines are taking over. Glances at how media runs news, politicians run lives, and fake news runs away with facts. Themes: Technology, corruption, and control.",
-            printType: "Linocut, Letterpress, and collage, ½ bound hardback cover",
+            printType:
+              "Linocut, Letterpress, and collage, ½ bound hardback cover",
             imageUrls: [
               "@assets/works/prints/run/run_out_of_money_fernando_feijoo.avif",
             ],
@@ -927,7 +1001,8 @@ export const WORKS: Category[] = [
             title: "Run Out of Steam",
             description:
               "An exploration of sayings and expressions inspired by contemporary life. Machines are taking over. Glances at how media runs news, politicians run lives, and fake news runs away with facts. Themes: Technology, corruption, and control.",
-            printType: "Linocut, Letterpress, and collage, ½ bound hardback cover",
+            printType:
+              "Linocut, Letterpress, and collage, ½ bound hardback cover",
             imageUrls: [
               "@assets/works/prints/run/run_out_of_steam_fernando_feijoo.avif",
             ],
@@ -940,7 +1015,8 @@ export const WORKS: Category[] = [
             title: "Run Out of Time",
             description:
               "An exploration of sayings and expressions inspired by contemporary life. Machines are taking over. Glances at how media runs news, politicians run lives, and fake news runs away with facts. Themes: Technology, corruption, and control.",
-            printType: "Linocut, Letterpress, and collage, ½ bound hardback cover",
+            printType:
+              "Linocut, Letterpress, and collage, ½ bound hardback cover",
             imageUrls: [
               "@assets/works/prints/run/run_out_of_time_fernando_feijoo.avif",
             ],
@@ -953,7 +1029,8 @@ export const WORKS: Category[] = [
             title: "Run Riot",
             description:
               "An exploration of sayings and expressions inspired by contemporary life. Machines are taking over. Glances at how media runs news, politicians run lives, and fake news runs away with facts. Themes: Technology, corruption, and control.",
-            printType: "Linocut, Letterpress, and collage, ½ bound hardback cover",
+            printType:
+              "Linocut, Letterpress, and collage, ½ bound hardback cover",
             imageUrls: [
               "@assets/works/prints/run/run_riot_fernando_feijoo.avif",
             ],
@@ -966,7 +1043,8 @@ export const WORKS: Category[] = [
             title: "Run the Show",
             description:
               "An exploration of sayings and expressions inspired by contemporary life. Machines are taking over. Glances at how media runs news, politicians run lives, and fake news runs away with facts. Themes: Technology, corruption, and control.",
-            printType: "Linocut, Letterpress, and collage, ½ bound hardback cover",
+            printType:
+              "Linocut, Letterpress, and collage, ½ bound hardback cover",
             imageUrls: [
               "@assets/works/prints/run/run_the_show_fernando_feijoo.avif",
             ],
@@ -979,7 +1057,8 @@ export const WORKS: Category[] = [
             title: "Run Up a Bill",
             description:
               "An exploration of sayings and expressions inspired by contemporary life. Machines are taking over. Glances at how media runs news, politicians run lives, and fake news runs away with facts. Themes: Technology, corruption, and control.",
-            printType: "Linocut, Letterpress, and collage, ½ bound hardback cover",
+            printType:
+              "Linocut, Letterpress, and collage, ½ bound hardback cover",
             imageUrls: [
               "@assets/works/prints/run/run_up_a_bill_fernando_feijoo.avif",
             ],
@@ -1178,7 +1257,6 @@ export const WORKS: Category[] = [
               "@assets/works/prints/theJourneyMan/10_Metropolis__fernando_feijoo.avif",
             ],
           },
-
         ],
       },
       {
@@ -1600,7 +1678,8 @@ export const WORKS: Category[] = [
             title: "Run Run Run",
             description:
               "An exploration of sayings and expressions inspired by contemporary life. Machines are taking over. Glances at how media runs news, politicians run lives, and fake news runs away with facts. Themes: Technology, corruption, and control.",
-            printType: "Linocut, Letterpress, and collage, ½ bound hardback cover",
+            printType:
+              "Linocut, Letterpress, and collage, ½ bound hardback cover",
             imageUrls: [
               "@assets/works/prints/watchBewitched/run-run-run_fernando_feijoo.avif",
             ],
@@ -2373,7 +2452,8 @@ export const WORKS: Category[] = [
             title: "Run Book",
             description:
               "An exploration of sayings and expressions inspired by contemporary life. Machines are taking over. Glances at how media runs news, politicians run lives, and fake news runs away with facts. Themes: Technology, corruption, and control.",
-            printType: "Linocut, Letterpress, and collage, ½ bound hardback cover",
+            printType:
+              "Linocut, Letterpress, and collage, ½ bound hardback cover",
             price: "£850",
             imageUrls: [
               "@assets/works/artistBooks/run/1.avif",

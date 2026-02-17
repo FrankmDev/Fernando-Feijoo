@@ -1,13 +1,14 @@
 {
   "metadata": {
-    "data_source": "Artist Portfolio Documents",
+    "data_source": "Artist Portfolio Documents & Updates",
     "content_types": ["Artist Books", "Ceramics", "Prints/Engravings"],
     "currency": "GBP",
-    "language": "en"
+    "language": "en",
+    "last_updated": "2024-Update"
   },
   "portfolio_content": {
     "artist_books": {
-      "general_description": "Hand printed, signed and bound by the artist. Printed onto Somerset velvet paper 250 gms with archival inks. The artist book lends itself well to the adaption and exploration of sequential narrative story telling.",
+      "general_description": "Hand printed, signed and bound by the artist. Printed onto Somerset velvet paper 250 gms with archival inks. Sequential narrative storytelling.",
       "items": [
         {
           "title": "Gods & Monsters",
@@ -15,7 +16,7 @@
           "edition": "10",
           "technical_info": "32 pp, 570 x 370 x 38 mm",
           "price": "£995",
-          "narrative": "A large format alphabet book illustrating the surreal creatures and spiritual powers of the mighty legendary Gods and mythical beasts from the underworld. Inspired by Ovid’s Metamorphosis, Greek Mythology and childhood memories. Themes include the fusion of villain and hero (Picasso’s Minotaur), the passage of life, and good versus evil."
+          "narrative": "A large format alphabet book illustrating surreal creatures and spiritual powers. Inspired by Ovid’s Metamorphosis and Greek Mythology. Themes: fusion of villain and hero, passage of life, good versus evil."
         },
         {
           "title": "Journeyman",
@@ -23,7 +24,7 @@
           "edition": "15",
           "technical_info": "12 pages, 188 x 253 x 24 mm",
           "price": "£395",
-          "narrative": "Inspired by a surreal dream and the universal idea of the journeyman. The labyrinth represents the twists and turns of modern life. Symbols include the jellyfish (rescue/care) and the dream catcher. Themes: life’s excitements, fears and dangers. A story that does not end: it evolves with the times."
+          "narrative": "Inspired by a surreal dream. The labyrinth represents the twists and turns of modern life. Symbols: jellyfish, dream catcher. Themes: life’s excitements, fears and dangers."
         },
         {
           "title": "Run",
@@ -31,7 +32,7 @@
           "edition": "10",
           "technical_info": "16 pages, 34 x 57 x 20 mm",
           "price": "£850",
-          "narrative": "An exploration of sayings and expressions inspired by contemporary life. Machines are taking over. Glances at how media runs news, politicians run lives, and fake news runs away with facts. Themes: Technology, corruption, and control."
+          "narrative": "Exploration of sayings/expressions. Machines are taking over. Glances at how media runs news and politicians run lives. Themes: Technology, corruption."
         },
         {
           "title": "Future",
@@ -39,23 +40,23 @@
           "edition": "15",
           "technical_info": "24 pp, 275 x 380 x 16 mm",
           "price": "£395",
-          "narrative": "Created in a time of great uncertainty. Parallels seen between superpowers (Kim Jong-un, Trump, Putin). Themes: Nuclear threat, greed, power corruption, and global communication manipulation. 'The Future is now.'"
+          "narrative": "Created in a time of uncertainty. Parallels between superpowers (Kim Jong-un, Trump, Putin). Themes: Nuclear threat, greed, power corruption. 'The Future is now.'"
         },
         {
           "title": "Crack’s Progress / Charlie’s Progress",
-          "medium": "Offset lithograph from scaled down original linocuts, hardback cover dos a dos artist book",
+          "medium": "Offset lithograph from linocuts, hardback cover dos a dos book",
           "edition": "50",
           "technical_info": "20 pages, 250 x 250 x 30 mm",
           "price": "£75",
-          "narrative": "Two tales in one book. Crack's Progress: A modern fable based on Hogarth’s A Rake’s Progress; a tale of drugs, crime, prison, and Bedlam. Charlie's Progress: Based on Hogarth’s A Harlot’s Progress; follows Crack's sister Charlie through London's low life, exploitation, and eventual recovery."
+          "narrative": "Two tales in one. Crack's Progress: A modern fable of drugs and crime based on Hogarth. Charlie's Progress: Follows Crack's sister through London's low life and exploitation."
         },
         {
           "title": "Modern Marriage",
-          "medium": "Offset lithograph & Letterpress, hardback cover with screen printed band",
+          "medium": "Offset lithograph & Letterpress, hardback cover",
           "edition": "50",
           "technical_info": "62 pp, 230 x 163 x 13 mm",
           "price": "£50",
-          "narrative": "Interweaves the 'Progress' stories. Tara (rich) and Darren (nouveau riche) marry. Themes: Debt, crime, neglect (their child Wayne), and ultimate tragedy followed by redemption through siblings Crack and Charlie."
+          "narrative": "Interweaves the 'Progress' stories. Tara and Darren marry. Themes: Debt, crime, neglect, tragedy, and redemption through siblings Crack and Charlie."
         },
         {
           "title": "Contemporary Street Alphabet",
@@ -63,398 +64,155 @@
           "edition": "50",
           "technical_info": "32 pages, 250 x 200 x 30 mm",
           "price": "£95",
-          "narrative": "An alphabet book of modern-day street characters with text by Pat Francis. A savage portrayal of the city, depicting victims and perpetrators, horror and humour."
+          "narrative": "An alphabet book of modern-day street characters. A savage portrayal of the city, depicting victims and perpetrators."
         }
       ]
     },
     "ceramics": {
-      "general_description": "Sculptural forms in stoneware clay with brush-on slips, glazes, and oxides. Narratives wrap around the object. Each piece is a one-off.",
+      "general_description": "Sculptural forms in stoneware clay with brush-on slips, glazes, and oxides. Unique storytelling experiences.",
       "items": [
         {
           "title": "Afterlife",
           "type": "stoneware vase",
-          "medium": "underglaze painting, oxides and clear glaze finish",
+          "medium": "underglaze painting, oxides",
           "dimensions": "20 x 20 x 30 cm",
           "price": "£1500",
-          "narrative": "Inspired by the Mexican Day of the Dead. Skeletons act as gatekeepers for the passageway to the afterlife."
+          "narrative": "Inspired by Day of the Dead. Skeletons act as gatekeepers to the afterlife."
         },
         {
           "title": "Azrael",
           "type": "stoneware plate",
-          "medium": "underglaze painting, oxides and clear glaze finish",
+          "medium": "underglaze painting, oxides",
           "dimensions": "25 x 25 x 5 cm",
           "price": "£800",
-          "narrative": "Angel of death, keeper of fire. Linking into the Inferno series. Infiltrating lives and meals."
+          "narrative": "Angel of death, keeper of fire. Linking into the Inferno series."
         },
         {
           "title": "Bala",
           "type": "stoneware pot",
-          "medium": "underglaze painting, oxides and clear glaze finish",
+          "medium": "underglaze painting, oxides",
           "dimensions": "20 x 20 x 30 cm",
           "price": "£1500",
-          "narrative": "The next terrible storm is named. Spinning and raging, destroying all in its path."
+          "narrative": "The next terrible storm is named. Spinning and raging."
         },
         {
           "title": "Burn in hell",
           "type": "stoneware bowl",
-          "medium": "underglaze painting, oxides and clear glaze finish",
+          "medium": "underglaze painting, oxides",
           "dimensions": "20 x 20 x 30 cm",
           "price": "£1200",
-          "narrative": "Links to Inferno prints. Circular theme of the bowl suits the endless chase. Witches, boiling water, trapped souls."
+          "narrative": "Links to Inferno prints. Witches, boiling water, trapped souls."
         },
         {
           "title": "Chaos",
           "type": "stoneware pot",
-          "medium": "underglaze painting, oxides and clear glaze finish",
+          "medium": "underglaze painting, oxides",
           "dimensions": "20 x 20 x 30 cm",
           "price": "£1000",
-          "narrative": "From chaos was the world created. Void, swirling wind, rising sea levels. Mankind must learn that Gods can cleanse the earth."
+          "narrative": "Creation and destruction. Swirling wind, rising sea levels."
         },
         {
           "title": "Lockdown",
           "type": "stoneware pot",
-          "medium": "underglaze painting, oxides and clear glaze finish",
+          "medium": "underglaze painting, oxides",
           "dimensions": "20 x 20 x 30 cm",
           "price": "£1500",
-          "narrative": "Relates to Persons and Personas prints. Depicts characters incarcerated in El Salvador prisons. Violence, betrayal, no hope of salvation."
+          "narrative": "Characters incarcerated in El Salvador prisons. Violence, betrayal."
         },
         {
           "title": "Superpowers",
           "type": "stoneware pot",
-          "medium": "underglaze painting, oxides and clear glaze finish",
+          "medium": "underglaze painting, oxides",
           "dimensions": "20 x 20 x 30 cm",
           "price": "£800",
-          "narrative": "Superpowers' fights are big versions of spats. Social media, fake news, nuclear buttons."
+          "narrative": "Political spats, social media, fake news, nuclear buttons."
         },
         {
           "title": "Medusa",
           "type": "stoneware plate",
-          "medium": "underglaze painting, oxides and clear glaze finish",
+          "medium": "underglaze painting, oxides",
           "dimensions": "20 x 20 x 30 cm",
           "price": "£1500",
-          "narrative": "Concepts of eating and glazing (Medusa's gaze). Open mouths invite consumption, but it is 'hell on a plate'. Warning of gluttony."
+          "narrative": "Medusa's gaze. Open mouths invite consumption. 'Hell on a plate'."
         },
         {
           "title": "Rocket man",
           "type": "stoneware pot",
-          "medium": "underglaze painting, oxides and clear glaze finish",
+          "medium": "underglaze painting, oxides",
           "dimensions": "20 x 20 x 30 cm",
           "price": "£1000",
-          "narrative": "Rocketman circles the earth. Reference to Hiroshima bombs and modern ego threats of superpowers."
+          "narrative": "Reference to Hiroshima bombs and modern ego threats of superpowers."
         },
         {
           "title": "Safe passage",
           "type": "stoneware pot",
-          "medium": "underglaze painting, oxides and clear glaze finish",
+          "medium": "underglaze painting, oxides",
           "dimensions": "20 x 20 x 30 cm",
           "price": "£1500",
-          "narrative": "Rivers run slow with hot lava. The ferry man guides souls through darkness closer to hell."
+          "narrative": "The ferry man guides souls through darkness closer to hell."
         },
         {
           "title": "Fish car",
           "type": "stoneware tile",
-          "medium": "underglaze painting, oxides and clear glaze finish",
+          "medium": "underglaze painting, oxides",
           "dimensions": "20 x 20 x 30 cm",
           "price": "£1000",
-          "narrative": "Playful take on genetic manipulation. A hybrid that can't run or swim, pegged down in a tile."
+          "narrative": "Genetic manipulation. A hybrid that can't run or swim."
         },
         {
           "title": "Freedom",
           "type": "stoneware plate",
-          "medium": "underglaze painting, oxides and clear glaze finish",
+          "medium": "underglaze painting, oxides",
           "dimensions": "20 x 20 x 30 cm",
           "price": "£1000",
-          "narrative": "The war has ended, but wounds are open. Political leaders deciding impossible solutions. Freedom must prevail."
+          "narrative": "The war has ended, but wounds are open. Freedom must prevail."
         }
       ]
     },
     "print_collections": [
       {
-        "collection_name": "Charlie’s Progress",
-        "medium_type": "Linocut",
-        "description": "Inspired by Hogarth’s A Harlot’s Progress. Follows Charlie (Crack's sister) and her sister Tara through London's dark low life.",
-        "works": [
-          {
-            "title": "Conceived in a summer of love",
-            "edition": "30",
-            "size": "60 x 40 cm",
-            "price": "£325"
-          },
-          {
-            "title": "To be safe in the city",
-            "edition": "30",
-            "size": "60 x 40 cm",
-            "price": "£325"
-          },
-          {
-            "title": "Wayward women working the web",
-            "edition": "30",
-            "size": "60 x 40 cm",
-            "price": "£325"
-          },
-          {
-            "title": "Caught",
-            "edition": "30",
-            "size": "60 x 40 cm",
-            "price": "£325"
-          },
-          {
-            "title": "To pay her debt",
-            "edition": "30",
-            "size": "60 x 40 cm",
-            "price": "£325"
-          },
-          {
-            "title": "Tara came in graduation gown",
-            "edition": "30",
-            "size": "60 x 40 cm",
-            "price": "£325"
-          },
-          {
-            "title": "Nearly died",
-            "edition": "30",
-            "size": "60 x 40 cm",
-            "price": "£325"
-          },
-          {
-            "title": "Badly bawdy dreams",
-            "edition": "30",
-            "size": "60 x 40 cm",
-            "price": "£325"
-          }
-        ]
-      },
-      {
-        "collection_name": "Crack’s Progress",
-        "medium_type": "Linocut",
-        "description": "A modern fable of dark morality, crime and corruption. Follows Crack and his dog Spike.",
-        "works": [
-          {
-            "title": "Crack could get by",
-            "edition": "30",
-            "size": "60 x 40 cm",
-            "price": "£325"
-          },
-          {
-            "title": "To be bad he became bad",
-            "edition": "30",
-            "size": "60 x 40 cm",
-            "price": "£325"
-          },
-          {
-            "title": "Nice girls wouldn’t touch him",
-            "edition": "30",
-            "size": "60 x 40 cm",
-            "price": "£325"
-          },
-          {
-            "title": "Caught",
-            "edition": "30",
-            "size": "60 x 40 cm",
-            "price": "£325"
-          },
-          {
-            "title": "Crack came out",
-            "edition": "30",
-            "size": "60 x 40 cm",
-            "price": "£325"
-          },
-          {
-            "title": "Crack took crack",
-            "edition": "30",
-            "size": "60 x 40 cm",
-            "price": "£325"
-          },
-          {
-            "title": "Taken a life",
-            "edition": "30",
-            "size": "60 x 40 cm",
-            "price": "£325"
-          },
-          {
-            "title": "Now it is the nightmare",
-            "edition": "30",
-            "size": "60 x 40 cm",
-            "price": "£325"
-          }
-        ]
-      },
-      {
-        "collection_name": "Citizens and Wastrels",
-        "description": "Inhabitants of towns/cities, living in light or lurking in shadows. Themes of urban decay, corruption, and vice.",
-        "works": [
-          {
-            "title": "After Hours",
-            "medium": "Etching",
-            "edition": "30",
-            "size": "30 x 20 cm",
-            "price": "£125",
-            "narrative": "Too much to drink, rats come out to play."
-          },
-          {
-            "title": "Angel of Victory",
-            "medium": "Reduction Linocut",
-            "edition": "10",
-            "size": "20 x 30 cm",
-            "price": "£125",
-            "narrative": "A fighter, a carer inside a mask. True victory is caring for the carers."
-          },
-          {
-            "title": "Early hours of the morning",
-            "medium": "Linocut",
-            "edition": "30",
-            "size": "65 x 45 cm",
-            "price": "£175",
-            "narrative": "Underworld spreads its tentacles. Prisoners break out, judges play away."
-          },
-          {
-            "title": "Laying down the Law in Lager Lane and Lifting the Spirits in Tonic Row",
-            "medium": "Lithograph",
-            "edition": "50",
-            "size": "60 x 30 cm",
-            "price": "£150",
-            "narrative": "Inspired by Hogarth’s 'Gin Lane'. Commentary on consumerist society, alcohol, and shady lawyers."
-          },
-          {
-            "title": "Metamorphosis",
-            "medium": "Reduction Linocut",
-            "edition": "12",
-            "size": "40 x 30 cm",
-            "price": "£150",
-            "narrative": "Inspired by Kafka. A man morphs into a creature through cosmetic surgery."
-          },
-          {
-            "title": "Time is just an illusion",
-            "medium": "Linocut",
-            "edition": "30",
-            "size": "30 x 40 cm",
-            "price": "£100",
-            "narrative": "‘Work for bones’. The tramp watches the world go by."
-          },
-          {
-            "title": "Nightcap",
-            "medium": "Reduction Linocut",
-            "edition": "10",
-            "size": "30 x 30 cm",
-            "price": "£175",
-            "narrative": "One for the road. Corruption lurks in dark corners."
-          },
-          {
-            "title": "Getting Weighed In",
-            "medium": "Reduction Linocut",
-            "edition": "15",
-            "size": "60 x 40 cm",
-            "price": "£195",
-            "narrative": "Politicians and gangsters weighing up the odds on corrupted scales."
-          },
-          {
-            "title": "Self-made man",
-            "medium": "Reduction Linocut",
-            "edition": "10",
-            "size": "30 x 30 cm",
-            "price": "£175",
-            "narrative": "My word stands for all. Cross my path and there will be no more words."
-          },
-          {
-            "title": "Gangsters - Contracted",
-            "medium": "Reduction Linocut",
-            "edition": "30",
-            "size": "40 x 40 cm",
-            "price": "£150 (Set £450)",
-            "narrative": "Step into the arena. One step too far."
-          },
-          {
-            "title": "Gangsters - Driven",
-            "medium": "Reduction Linocut",
-            "edition": "30",
-            "size": "40 x 40 cm",
-            "price": "£150 (Set £450)",
-            "narrative": "The engine fires. Point of no return."
-          },
-          {
-            "title": "Gangsters - Wacked",
-            "medium": "Reduction Linocut",
-            "edition": "30",
-            "size": "40 x 40 cm",
-            "price": "£150 (Set £450)",
-            "narrative": "Footsteps in darkness. Finger on the trigger. BANG."
-          },
-          {
-            "title": "Gangsters - Busted",
-            "medium": "Reduction Linocut",
-            "edition": "30",
-            "size": "40 x 40 cm",
-            "price": "£150 (Set £450)",
-            "narrative": "Locked in shackles and sent to the clink."
-          }
-        ]
-      },
-      {
-        "collection_name": "Death Dances",
-        "description": "Inspired by Hans Holbein’s Dance of Death. A series presented in small volumes. Themes: Behaviors and personality traits vs. Death. 'The dancing skeleton delights in countering the swagger of the individual'.",
-        "note": "Concept description only; individual print specifications not listed in source."
-      },
-      {
-        "collection_name": "Games and Players",
-        "description": "Rules are carefully constructed, then bent to other purposes.",
-        "works": [
-          {
-            "title": "Hierarchy of Anarchy",
-            "medium": "Zinc Lithograph",
-            "edition": "5",
-            "size": "50 x 50 cm",
-            "price": "£100",
-            "narrative": "Structure of family relationships within the suit of diamonds."
-          },
-          {
-            "title": "Pack of Liars",
-            "medium": "Zinc Lithograph",
-            "edition": "5 (Complete set)",
-            "size": "15 x 20 cm",
-            "price": "£250",
-            "narrative": "Satirical portrayal of a corrupt 'royal' family (business magnate king, socialite, drop out heir) controlled by a joker."
-          },
-          {
-            "title": "Machiavellian",
-            "medium": "Stone Lithograph",
-            "edition": "10",
-            "size": "60 x 80 cm",
-            "price": "£250",
-            "narrative": "Inspired by Punch and Judy. The skeleton controls the King and Queen. Political commentary on how citizens are misled by corrupt powers."
-          }
-        ]
-      },
-      {
-        "collection_name": "Gods & Monsters (Prints)",
-        "description": "Surreal creatures and mythical beasts from the underworld.",
-        "works": [
-          {
-            "title": "Gods & Monsters (Single)",
-            "medium": "Lino & wood block",
-            "edition": "30",
-            "size": "56cm x 38cm",
-            "price": "£195"
-          },
-          {
-            "title": "Gods & Monsters (Complete Set)",
-            "medium": "Lino & wood block",
-            "edition": "30 (Set)",
-            "size": "56cm x 38cm",
-            "price": "£2500"
-          }
-        ]
-      },
-      {
         "collection_name": "Inferno",
-        "description": "Explores the darker sides of human nature, climate change, and political catastrophes. References Dante’s Inferno.",
+        "description": "Explores the darker sides of human nature, impact on the planet, political events, and manmade catastrophes. References Dante’s Inferno.",
         "works": [
+          {
+            "title": "The War: A Reflection on Power, and Survival",
+            "medium": "Quadriptych of Lino cuts",
+            "edition": "50",
+            "size": "56 x 76 cm (x2) & 40 x 50 cm (x2)",
+            "price": "£1000 (Unframed) / £1450 (Framed)",
+            "narrative": "A stark and urgent reminder of turbulent times. Echoes German Expressionism. Explores cycles of violence, power-hungry leaders, and the threat of total annihilation. Imagery of underground tunnels serves as a metaphor for survival and control. 'Who will push the red button?' A visual manifesto for resistance."
+          },
+          {
+            "title": "Night Attack",
+            "medium": "Wood engraving",
+            "edition": "50",
+            "size": "8 x 10 cm",
+            "price": "£150",
+            "narrative": "The lords on high soar in the skies, ready to pounce. 'Run: don’t look up.' Death is coming for all; even while the carnival proceeds, all will succumb."
+          },
+          {
+            "title": "Night Terrors",
+            "medium": "Wood engraving",
+            "edition": "50",
+            "size": "8 x 10 cm",
+            "price": "£150",
+            "narrative": "The guardian angel swoops down. No Mercy, no Forgiveness. Bodies pile up. The death stare of Azrael is relentless; you may fight, but ultimately fail."
+          },
+          {
+            "title": "Midnight",
+            "medium": "Stone lithograph",
+            "edition": "30",
+            "size": "56 x 76 cm",
+            "price": "£395",
+            "narrative": "Displaced and distraught people move during the cover of night. The sound of war rumbles, explosions shatter windows. Judgement dawns with a new day, but night demons still hunt. Air raid sirens wail."
+          },
           {
             "title": "The FUTURE",
             "medium": "Linocut (Tryptic)",
             "edition": "30",
             "size": "56 x 76 cm each",
             "price": "£750",
-            "narrative": "Post-apocalyptic narrative. Rising sea levels, human consumption, and skeletons. 'The FUTURE is now!'"
+            "narrative": "Post-apocalyptic narrative. Rising sea levels, human consumption. 'The FUTURE is now!'"
           },
           {
             "title": "Fall",
@@ -462,7 +220,7 @@
             "edition": "30",
             "size": "56 x 76 cm each",
             "price": "£600",
-            "narrative": "Prediction of collapse. 'Fall, Fall, we will all fall'. Economies fail, pandemics rise. 'Look on this and learn'."
+            "narrative": "Prediction of societal collapse. 'Fall, Fall, we will all fall'. Economies fail, pandemics rise."
           },
           {
             "title": "Hell is empty: the devils are all here",
@@ -478,7 +236,7 @@
             "edition": "30",
             "size": "76 x 56 cm",
             "price": "£325",
-            "narrative": "Earth groans under weight of 'things'. Putrid swamps, storms named after people's lusts."
+            "narrative": "Earth groans under weight of 'things'. Putrid swamps, storms named after lusts."
           },
           {
             "title": "Stewpot of Mouldering Morsels",
@@ -494,7 +252,7 @@
             "edition": "30",
             "size": "56 x 76 cm",
             "price": "£325",
-            "narrative": "Part man, part beast. Masked officials infiltrate. 'Hell on Earth is now and for ever'."
+            "narrative": "Masked officials infiltrate. 'Hell on Earth is now and for ever'."
           },
           {
             "title": "The Devils in the Detail",
@@ -502,7 +260,7 @@
             "edition": "30",
             "size": "76 x 56 cm",
             "price": "£325",
-            "narrative": "We deal with the devils daily. Our endless online orders and consumption corrode the planet."
+            "narrative": "We deal with the devils daily. Consumption corrodes the planet."
           },
           {
             "title": "Descent into Darkness",
@@ -510,7 +268,7 @@
             "edition": "50",
             "size": "8 x 10 cm",
             "price": "£150",
-            "narrative": "The tree as a gateway. What lies beneath the shaded graveyard?"
+            "narrative": "The tree as a gateway to the graveyard."
           },
           {
             "title": "The circles of Hell",
@@ -518,123 +276,196 @@
             "edition": "30",
             "size": "30 x 30 cm",
             "price": "£2500",
-            "narrative": "Work in progress. Inspired by Dante. A lone journeyman wanders through the labyrinth. Sins of gluttony, lust, fraud judged."
-          },
-          {
-            "title": "Night Attack",
-            "medium": "Wood engraving",
-            "edition": "50",
-            "size": "8 x 10 cm",
-            "price": "£150",
-            "narrative": "Lords on high soar in skies. Run: don't look up."
-          },
-          {
-            "title": "Night Terrors",
-            "medium": "Wood engraving",
-            "edition": "50",
-            "size": "8 x 10 cm",
-            "price": "£150",
-            "narrative": "Guardian angel swoops down. No Mercy. Death stare of Azrael."
-          },
-          {
-            "title": "Midnight",
-            "medium": "Stone lithograph (B&W)",
-            "edition": "30",
-            "size": "76 x 56 cm",
-            "price": "£395",
-            "narrative": "Displaced people move during night cover. Air raid sirens wail."
-          },
-          {
-            "title": "The War: A Reflection on Power, and Survival",
-            "medium": "Quadriptych of Lino cuts",
-            "edition": "50",
-            "size": "Various (76x56 and 40x50 sheets)",
-            "price": "£1000",
-            "narrative": "Stark reminder of turbulent times. Echoes German Expressionism. Imagery of underground tunnels. 'Who will have the nerve to push the red button?'"
+            "narrative": "Work in progress. Inspired by Dante. A lone journeyman wanders through the labyrinth."
           }
+        ]
+      },
+      {
+        "collection_name": "Robots & Crancks",
+        "description": "Exploration of the conflict between Man and Machine, AI, and authoritarian control.",
+        "works": [
+          {
+            "title": "Revolution",
+            "medium": "Reduction Linocut",
+            "edition": "10",
+            "size": "30 x 40 cm",
+            "price": "£175",
+            "narrative": "The iron machine strides forward to destroy. Man v Machine. AI assists the iron machine. Big Brother is watching. An uprising is emerging."
+          },
+          {
+            "title": "Metamorph",
+            "medium": "Reduction Linocut",
+            "edition": "30",
+            "size": "56 x 76 cm",
+            "price": "£395",
+            "narrative": "He transforms and appears to greet his audience, but the Monster is revealed. Command and conquer. Twisted iron entraps buildings. No one is safe when the monsters return."
+          }
+        ]
+      },
+      {
+        "collection_name": "Landscapes & Memories",
+        "description": "Evocative prints focusing on place, memory, and atmosphere.",
+        "works": [
+          {
+            "title": "Cromer",
+            "medium": "Reduction Linocut",
+            "edition": "30",
+            "size": "112 x 60 cm",
+            "price": "£395",
+            "narrative": "Nostalgia for a place by the sea. Crashing waves, smell of fish and chips, excited children. Architectural grandeur standing strong against North Sea winds. The pier as a statement of British character."
+          }
+        ]
+      },
+      {
+        "collection_name": "Citizens and Wastrels",
+        "description": "Inhabitants of towns/cities, living in light or lurking in shadows. Themes of urban decay, corruption, and vice.",
+        "works": [
+          {
+            "title": "After Hours",
+            "medium": "Etching",
+            "edition": "30",
+            "price": "£125"
+          },
+          {
+            "title": "Angel of Victory",
+            "medium": "Reduction Linocut",
+            "edition": "10",
+            "price": "£125"
+          },
+          {
+            "title": "Early hours of the morning",
+            "medium": "Linocut",
+            "edition": "30",
+            "price": "£175"
+          },
+          {
+            "title": "Laying down the Law...",
+            "medium": "Lithograph",
+            "edition": "50",
+            "price": "£150"
+          },
+          {
+            "title": "Metamorphosis",
+            "medium": "Reduction Linocut",
+            "edition": "12",
+            "price": "£150"
+          },
+          {
+            "title": "Time is just an illusion",
+            "medium": "Linocut",
+            "edition": "30",
+            "price": "£100"
+          },
+          {
+            "title": "Nightcap",
+            "medium": "Reduction Linocut",
+            "edition": "10",
+            "price": "£175"
+          },
+          {
+            "title": "Getting Weighed In",
+            "medium": "Reduction Linocut",
+            "edition": "15",
+            "price": "£195"
+          },
+          {
+            "title": "Self-made man",
+            "medium": "Reduction Linocut",
+            "edition": "10",
+            "price": "£175"
+          },
+          {
+            "title": "Gangsters (Contracted, Driven, Wacked, Busted)",
+            "medium": "Reduction Linocut",
+            "edition": "30",
+            "price": "£150 each / £450 set"
+          }
+        ]
+      },
+      {
+        "collection_name": "Charlie’s Progress",
+        "medium_type": "Linocut",
+        "description": "Inspired by Hogarth. Charlie's journey through London.",
+        "works": [
+          { "title": "Conceived in a summer of love", "price": "£325" },
+          { "title": "To be safe in the city", "price": "£325" },
+          { "title": "Wayward women working the web", "price": "£325" },
+          { "title": "Caught", "price": "£325" },
+          { "title": "To pay her debt", "price": "£325" },
+          { "title": "Tara came in graduation gown", "price": "£325" },
+          { "title": "Nearly died", "price": "£325" },
+          { "title": "Badly bawdy dreams", "price": "£325" }
+        ]
+      },
+      {
+        "collection_name": "Crack’s Progress",
+        "medium_type": "Linocut",
+        "description": "A modern fable of dark morality, crime and corruption.",
+        "works": [
+          { "title": "Crack could get by", "price": "£325" },
+          { "title": "To be bad he became bad", "price": "£325" },
+          { "title": "Nice girls wouldn’t touch him", "price": "£325" },
+          { "title": "Caught", "price": "£325" },
+          { "title": "Crack came out", "price": "£325" },
+          { "title": "Crack took crack", "price": "£325" },
+          { "title": "Taken a life", "price": "£325" },
+          { "title": "Now it is the nightmare", "price": "£325" }
         ]
       },
       {
         "collection_name": "Journeyman",
         "medium_type": "Etching",
-        "description": "Surreal dream of the 'everyman'. Labyrinth of modern life.",
+        "description": "Surreal dream of the 'everyman'.",
+        "works": [
+          { "title": "Arrival", "price": "£125" },
+          { "title": "Submerged", "price": "£125" },
+          { "title": "Secret Doorway", "price": "£125" },
+          { "title": "Labyrinth", "price": "£125" },
+          { "title": "Confusion", "price": "£125" },
+          { "title": "Darkness", "price": "£125" },
+          { "title": "Ascent", "price": "£125" },
+          { "title": "Eruption", "price": "£125" },
+          { "title": "Departure", "price": "£125" },
+          { "title": "Metropolis", "price": "£125" },
+          { "title": "Complete Set", "price": "£800" }
+        ]
+      },
+      {
+        "collection_name": "Games and Players",
         "works": [
           {
-            "title": "Arrival",
-            "edition": "30",
-            "size": "15 x 20 cm",
-            "price": "£125",
-            "narrative": "No name, nor emotion. Arriving, never to return."
+            "title": "Hierarchy of Anarchy",
+            "medium": "Zinc Lithograph",
+            "edition": "5",
+            "price": "£100"
           },
           {
-            "title": "Submerged",
-            "edition": "30",
-            "size": "15 x 20 cm",
-            "price": "£125",
-            "narrative": "Plummeting into darkness. Seeds are sown. Journeyman awakes."
+            "title": "Pack of Liars",
+            "medium": "Zinc Lithograph",
+            "edition": "5",
+            "price": "£250"
           },
           {
-            "title": "Secret Doorway",
+            "title": "Machiavellian",
+            "medium": "Stone Lithograph",
+            "edition": "10",
+            "price": "£250"
+          }
+        ]
+      },
+      {
+        "collection_name": "Gods & Monsters (Prints)",
+        "works": [
+          {
+            "title": "Gods & Monsters (Single)",
+            "medium": "Lino & wood block",
             "edition": "30",
-            "size": "15 x 20 cm",
-            "price": "£125",
-            "narrative": "Barren landscape. A doorway looms."
+            "price": "£195"
           },
           {
-            "title": "Labyrinth",
-            "edition": "30",
-            "size": "15 x 20 cm",
-            "price": "£125",
-            "narrative": "Webs are impenetrable. Sunlight will always beam if we let it."
-          },
-          {
-            "title": "Confusion",
-            "edition": "30",
-            "size": "15 x 20 cm",
-            "price": "£125",
-            "narrative": "Mixed messages. A moment of clarity: Exit from the maelstrom."
-          },
-          {
-            "title": "Darkness",
-            "edition": "30",
-            "size": "15 x 20 cm",
-            "price": "£125",
-            "narrative": "Hell under earth. A lamplight flickers."
-          },
-          {
-            "title": "Ascent",
-            "edition": "30",
-            "size": "15 x 20 cm",
-            "price": "£125",
-            "narrative": "Ravening monsters awake. Hope is hatched."
-          },
-          {
-            "title": "Eruption",
-            "edition": "30",
-            "size": "15 x 20 cm",
-            "price": "£125",
-            "narrative": "Trees are salvation, but time is running out."
-          },
-          {
-            "title": "Departure",
-            "edition": "30",
-            "size": "15 x 20 cm",
-            "price": "£125",
-            "narrative": "Fires burning on earth. Ride the airwaves to safety."
-          },
-          {
-            "title": "Metropolis",
-            "edition": "30",
-            "size": "15 x 20 cm",
-            "price": "£125",
-            "narrative": "A safety net protects new life. The dream catcher journeys on."
-          },
-          {
-            "title": "Journeyman (Complete Set)",
-            "edition": "30",
-            "size": "Various",
-            "price": "£800",
-            "narrative": "Complete collection of 10 prints."
+            "title": "Gods & Monsters (Complete Set)",
+            "medium": "Lino & wood block",
+            "price": "£2500"
           }
         ]
       }

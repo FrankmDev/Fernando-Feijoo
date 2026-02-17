@@ -18,6 +18,8 @@ import revolution from "@assets/works/prints/robotsCranks/1_Revolution_fernando_
 import joaquin from "@assets/works/prints/persons&Personas/Joaquin.avif";
 import nightwatch from "@assets/works/prints/structDestruct/Nightwatch_fernando_feijoo.avif";
 import runRiot from "@assets/works/prints/run/run_riot_fernando_feijoo.avif";
+import jokerPlayingCard from "@assets/works/prints/deathDance/jokerPlayingCard.avif";
+import agni from "@assets/works/prints/godsMonsters/agni.avif";
 
 // Import specific images for SKETCHBOOKS section (exact order requested)
 import virginOfAnguish from "@assets/works/sketchbooks/characters/Virgin of Anguish.avif";
@@ -69,7 +71,7 @@ const PRINTS_ITEMS: HeroItem[] = [
     title: "Angel of Victory",
     subtitle: "Citizens & Wastrels",
     image: angelOfVictory,
-    href: "/works/prints/citizens-wastrels",
+    href: "/works/prints/citizens&wastrels",
     isCollection: true,
   },
   {
@@ -83,35 +85,35 @@ const PRINTS_ITEMS: HeroItem[] = [
     title: "Machiavellian",
     subtitle: "Games & Players",
     image: machiavellian,
-    href: "/works/prints/games-players",
+    href: "/works/prints/games&players",
     isCollection: true,
   },
   {
     title: "Darkness",
     subtitle: "The Journey Man",
     image: darkness,
-    href: "/works/prints/the-journey-man",
+    href: "/works/prints/the-journey-man-prints",
     isCollection: true,
   },
   {
     title: "Revolution",
     subtitle: "Robots & Cranks",
     image: revolution,
-    href: "/works/prints/robots-cranks",
+    href: "/works/prints/robots&cranks",
     isCollection: true,
   },
   {
     title: "Joaquin",
     subtitle: "Persons & Personas",
     image: joaquin,
-    href: "/works/prints/persons-personas",
+    href: "/works/prints/persons&personas",
     isCollection: true,
   },
   {
     title: "Nightwatch",
     subtitle: "Struct & Destruct",
     image: nightwatch,
-    href: "/works/prints/struct-destruct",
+    href: "/works/prints/struct-and-destruct",
     isCollection: true,
   },
   {
@@ -119,6 +121,20 @@ const PRINTS_ITEMS: HeroItem[] = [
     subtitle: "Run",
     image: runRiot,
     href: "/works/prints/run",
+    isCollection: true,
+  },
+  {
+    title: "Joker Playing Card",
+    subtitle: "Death Dances",
+    image: jokerPlayingCard,
+    href: "/works/prints/death-dances",
+    isCollection: true,
+  },
+  {
+    title: "Agni",
+    subtitle: "Gods & Monsters",
+    image: agni,
+    href: "/works/prints/gods&monsters",
     isCollection: true,
   },
 ];
@@ -265,7 +281,7 @@ const gallery: GallerySection[] = WORKS.map((category: Category) => {
     return {
       id: category.slug,
       title: category.title,
-      items: PRINTS_ITEMS,
+      items: PRINTS_ITEMS.slice(0, MAX_ITEMS_PER_CATEGORY),
     };
   }
 
@@ -274,7 +290,7 @@ const gallery: GallerySection[] = WORKS.map((category: Category) => {
     return {
       id: category.slug,
       title: category.title,
-      items: SKETCHBOOKS_ITEMS,
+      items: SKETCHBOOKS_ITEMS.slice(0, MAX_ITEMS_PER_CATEGORY),
     };
   }
 
@@ -283,7 +299,7 @@ const gallery: GallerySection[] = WORKS.map((category: Category) => {
     return {
       id: category.slug,
       title: category.title,
-      items: MIXED_MEDIA_ITEMS,
+      items: MIXED_MEDIA_ITEMS.slice(0, MAX_ITEMS_PER_CATEGORY),
     };
   }
 
@@ -418,34 +434,43 @@ const gallery: GallerySection[] = WORKS.map((category: Category) => {
 
   .slider-wrapper {
     width: 100%;
-    padding: 0 1rem;
+    padding: 0 clamp(0.75rem, 2vw, 1.5rem);
   }
 
   .content {
     width: 100%;
-    padding: 0 1rem;
+    padding: 0 clamp(0.75rem, 2vw, 1.5rem);
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 5rem;
+    gap: clamp(3rem, 8vw, 5rem);
+  }
+
+  /* Mobile: Add top spacing to hero content and reduce horizontal padding */
+  @media (max-width: 767px) {
+    .content {
+      padding-top: 2rem;
+      padding-left: 5px;
+      padding-right: 5px;
+    }
   }
 
   .gallery-sections {
     display: flex;
     flex-direction: column;
-    gap: 6rem;
+    gap: clamp(4rem, 10vw, 6rem);
     width: 100%;
   }
 
   .gallery {
     width: 100%;
-    max-width: 1280px;
+    max-width: clamp(320px, 90vw, 1280px);
     margin: 0 auto;
   }
 
   .gallery-title {
     text-align: center;
-    margin-bottom: 2.5rem;
+    margin-bottom: clamp(1.5rem, 4vw, 2.5rem);
     overflow: hidden;
   }
 
@@ -472,8 +497,23 @@ const gallery: GallerySection[] = WORKS.map((category: Category) => {
 
   .grid {
     display: grid;
-    grid-template-columns: 1fr;
-    gap: 4px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(4px, 1vw, 12px);
+  }
+
+  /* Tablet: 2 columns */
+  @media (max-width: 1023px) {
+    .grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  /* Mobile: 1 column with 5px gap */
+  @media (max-width: 767px) {
+    .grid {
+      grid-template-columns: 1fr;
+      gap: 5px;
+    }
   }
 
   /* Card Base */
@@ -684,13 +724,6 @@ const gallery: GallerySection[] = WORKS.map((category: Category) => {
   }
 
   /* Responsive */
-  @media (min-width: 640px) {
-    .grid {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 6px;
-    }
-  }
-
   @media (min-width: 768px) {
     .slider-wrapper {
       padding: 1rem 1rem 4rem;
@@ -702,10 +735,6 @@ const gallery: GallerySection[] = WORKS.map((category: Category) => {
 
     .gallery-sections {
       gap: 8rem;
-    }
-
-    .grid {
-      gap: 8px;
     }
 
     .card-content {
@@ -723,12 +752,6 @@ const gallery: GallerySection[] = WORKS.map((category: Category) => {
       font-size: clamp(1.5rem, 2.5vw, 2rem);
     }
 
-    /* .card-index {
-      top: 1.5rem;
-      right: 1.5rem;
-      font-size: 1rem;
-    } */
-
     .card-frame {
       inset: 1rem;
     }
@@ -739,11 +762,6 @@ const gallery: GallerySection[] = WORKS.map((category: Category) => {
   }
 
   @media (min-width: 1024px) {
-    .grid {
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-    }
-
     .card-content {
       padding: 2.5rem;
       padding-bottom: 3rem;

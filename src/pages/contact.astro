@@ -214,17 +214,17 @@ const pageDescription =
      EDITORIAL HEADER
      ======================================== */
   .editorial-header {
-    padding: 4rem 1.5rem 3rem;
+    padding: clamp(3rem, 8vw, 4rem) clamp(1rem, 3vw, 1.5rem) clamp(2rem, 6vw, 3rem);
     background: #fafafa;
     border-bottom: 1px solid #eee;
   }
 
   .header-grid {
-    max-width: 1100px;
+    max-width: clamp(320px, 90vw, 1100px);
     margin: 0 auto;
     display: grid;
     grid-template-columns: auto 1fr;
-    gap: 2rem;
+    gap: clamp(1.5rem, 4vw, 2rem);
     align-items: start;
   }
 
@@ -296,16 +296,16 @@ const pageDescription =
      ASYMMETRIC CONTENT
      ======================================== */
   .content-section {
-    padding: 4rem 1.5rem;
+    padding: clamp(3rem, 8vw, 4rem) clamp(1rem, 3vw, 1.5rem);
     position: relative;
   }
 
   .content-asymmetric {
-    max-width: 1100px;
+    max-width: clamp(320px, 90vw, 1100px);
     margin: 0 auto;
     display: grid;
     grid-template-columns: 1fr;
-    gap: 3rem;
+    gap: clamp(2rem, 5vw, 3rem);
   }
 
   /* Image Panel */
@@ -600,14 +600,14 @@ const pageDescription =
      NEWSLETTER EDITORIAL
      ======================================== */
   .newsletter-editorial {
-    padding: 5rem 1.5rem;
+    padding: clamp(3rem, 10vw, 5rem) clamp(1rem, 3vw, 1.5rem);
     background: #0a0a0a;
     position: relative;
     overflow: hidden;
   }
 
   .newsletter-container {
-    max-width: 1100px;
+    max-width: clamp(320px, 90vw, 1100px);
     margin: 0 auto;
     position: relative;
     z-index: 1;
