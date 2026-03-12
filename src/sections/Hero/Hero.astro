@@ -520,15 +520,28 @@ const gallery: GallerySection[] = WORKS.map((category: Category) => {
   .card {
     position: relative;
     display: block;
-    aspect-ratio: 1;
     overflow: hidden;
     background: #0a0a0a;
     text-decoration: none;
     border-radius: 4px;
-    isolation: isolate;
+    /* Fallback for browsers that don't support aspect-ratio */
+    padding-bottom: 100%;
+    height: 0;
+    aspect-ratio: 1;
+  }
+
+  /* Reset padding-bottom when aspect-ratio is supported */
+  @supports (aspect-ratio: 1) {
+    .card {
+      padding-bottom: 0;
+      height: auto;
+    }
   }
 
   .card-img {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -540,6 +553,9 @@ const gallery: GallerySection[] = WORKS.map((category: Category) => {
   }
 
   .card-empty {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     display: flex;
@@ -553,6 +569,10 @@ const gallery: GallerySection[] = WORKS.map((category: Category) => {
   /* Dark overlay on hover - darker */
   .card-overlay {
     position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
     inset: 0;
     background: rgba(0, 0, 0, 0.85);
     opacity: 0;
@@ -589,6 +609,10 @@ const gallery: GallerySection[] = WORKS.map((category: Category) => {
   /* Content */
   .card-content {
     position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
     inset: 0;
     display: flex;
     flex-direction: column;
@@ -678,6 +702,10 @@ const gallery: GallerySection[] = WORKS.map((category: Category) => {
   /* Border frame */
   .card-frame {
     position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    bottom: 0.75rem;
+    left: 0.75rem;
     inset: 0.75rem;
     border: 1px solid rgba(255, 255, 255, 0);
     border-radius: 2px;
@@ -753,6 +781,10 @@ const gallery: GallerySection[] = WORKS.map((category: Category) => {
     }
 
     .card-frame {
+      top: 1rem;
+      right: 1rem;
+      bottom: 1rem;
+      left: 1rem;
       inset: 1rem;
     }
 
