@@ -2,29 +2,17 @@
 import WorksLayout from "@components/WorksLayout.astro";
 import WorkCard from "@components/WorkCard.astro";
 import { WORKS } from "@data/works";
-import { processImageUrl } from "@utils/images";
+import { resolveImage } from "@utils/images";
 
 const printsCategory = WORKS.find((category) => category.slug === "prints");
 if (!printsCategory) throw new Error("Prints category not found");
 
 const collections = printsCategory.collections || [];
 
-const getFirstImageFromCollection = (
-  collection: (typeof collections)[0]
-): string => {
-  if (collection.works && collection.works.length > 0) {
-    const work = collection.works[0];
-    if (work.imageUrls && work.imageUrls.length > 0) {
-      return processImageUrl(work.imageUrls[0]);
-    }
-  }
-  return "";
-};
+const getFirstImageUrl = (collection: (typeof collections)[0]): string =>
+  collection.works?.[0]?.imageUrls?.[0] || "";
 
-const bannerImage =
-  collections.length > 0
-    ? getFirstImageFromCollection(collections[0])
-    : undefined;
+const bannerImage = resolveImage(getFirstImageUrl(collections[0]));
 
 const description = `Explore the different grouped collections of linocut, wood block, wood engravings, Lithographs, screen prints and etchings. Each original print is hand printed by the artist using archival lightfast inks onto Sommerset archival papers.`;
 ---
@@ -48,7 +36,7 @@ const description = `Explore the different grouped collections of linocut, wood 
           href={`/works/prints/${collection.slug}`}
           title={collection.title}
           subtitle=""
-          imageUrl={getFirstImageFromCollection(collection)}
+          imageUrl={getFirstImageUrl(collection)}
           imageAlt={`${collection.title} collection`}
           isAboveFold={index < 3}
         />

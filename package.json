@@ -3,25 +3,24 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "astro dev --host --no-cache",
+    "dev": "astro dev --host",
     "start": "astro dev",
     "build": "astro check && astro build",
     "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/check": "^0.9.4",
-    "@astrojs/cloudflare": "^12.5.3",
     "@astrojs/tailwind": "^5.1.4",
     "astro": "^5.1.1",
     "tailwindcss": "^3.4.17",
-    "tailwindcss-animate": "^1.0.7",
-    "typescript": "^5.7.2"
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
+    "@astrojs/check": "^0.9.4",
     "emmet-language-server": "^0.1.3",
     "prettier": "3.4.1",
     "prettier-plugin-astro": "0.14.1",
-    "sharp": "^0.34.5"
+    "sharp": "^0.34.5",
+    "typescript": "^5.7.2"
   }
 }

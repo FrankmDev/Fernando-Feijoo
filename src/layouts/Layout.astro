@@ -1,4 +1,5 @@
 ---
+import "@styles/general.css";
 import Header from "@sections/Header/Header.astro";
 import Footer from "@sections/Footer/Footer.astro";
 import { SITE_CONFIG } from "@constants";
@@ -26,7 +27,7 @@ const structuredData = {
   jobTitle: "Artist & Printmaker",
   description: SITE_CONFIG.description,
   url: siteUrl,
-  sameAs: [],
+  sameAs: ["https://www.instagram.com/fernandofeijoo/", "https://x.com/fernando_feijoo", "https://vimeo.com/573857181"],
   knowsAbout: ["Printmaking", "Ceramics", "Drawing", "Mixed Media", "Artist Books"],
 };
 ---
@@ -37,10 +38,6 @@ const structuredData = {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
     <meta name="generator" content={Astro.generator} />
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-    <meta http-equiv="Pragma" content="no-cache" />
-    <meta http-equiv="Expires" content="0" />
-
     <title>{title}</title>
     <meta name="title" content={title} />
     <meta name="description" content={description} />
@@ -56,7 +53,7 @@ const structuredData = {
     <link rel="canonical" href={currentUrl} />
 
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content={SITE_CONFIG.title} />
+    <meta property="og:site_name" content={SITE_CONFIG.name} />
     <meta property="og:url" content={currentUrl} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -81,9 +78,8 @@ const structuredData = {
     <link rel="preload" href="/Exo2-VariableFont_wght.woff2" as="font" type="font/woff2" crossorigin />
 
     <script type="application/ld+json" is:inline set:html={JSON.stringify(structuredData)} />
-    <script src="../scripts/scroll-reveal.ts"></script>
+    <script src="@/scripts/scroll-reveal.ts"></script>
 
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="format-detection" content="telephone=no" />
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
 
@@ -96,40 +92,17 @@ const structuredData = {
       Skip to main content
     </a>
 
-    <Header transition:persist />
+    <Header transition:persist transition:name="header" />
 
     <main id="main-content" class="flex-1 w-full" role="main">
       <slot />
     </main>
 
-    <Footer transition:persist />
+    <Footer transition:persist transition:name="footer" />
   </body>
 </html>
 
 <style is:global>
-  .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
-  }
-
-  .sr-only:focus {
-    position: static;
-    width: auto;
-    height: auto;
-    padding: inherit;
-    margin: inherit;
-    overflow: visible;
-    clip: auto;
-    white-space: normal;
-  }
-
   html {
     scroll-behavior: smooth;
   }
@@ -222,14 +195,3 @@ const structuredData = {
   }
 </style>
 
-<script>
-  // Asegurar visibilidad del body tras transiciones
-  document.addEventListener('astro:page-load', () => {
-    document.body.style.opacity = '1';
-  });
-  
-  // Prevenir flash de contenido sin estilos
-  document.addEventListener('astro:after-swap', () => {
-    document.body.style.opacity = '1';
-  });
-</script>

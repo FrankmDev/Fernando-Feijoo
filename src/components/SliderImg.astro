@@ -195,13 +195,7 @@ const slides: Slide[] = [
       startAutoplay();
     }
 
-    // Initialize
-    if (document.readyState === "loading") {
-      document.addEventListener("DOMContentLoaded", initProfileSlider);
-    } else {
-      initProfileSlider();
-    }
-
+    // astro:page-load fires on initial page load and after every View Transition
     document.addEventListener("astro:page-load", initProfileSlider);
   })();
 </script>

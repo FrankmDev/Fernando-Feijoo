@@ -125,13 +125,13 @@ const currentYear = new Date().getFullYear();
     padding: 0.5rem 0;
     position: relative;
     transition: color 0.3s ease;
-    outline: none;
     -webkit-tap-highlight-color: transparent;
   }
 
-  .footer-link:focus,
   .footer-link:focus-visible {
-    outline: none;
+    outline: 2px solid #000;
+    outline-offset: 3px;
+    border-radius: 2px;
   }
 
   /* Elegant underline */
@@ -230,13 +230,13 @@ const currentYear = new Date().getFullYear();
     color: #999;
     text-decoration: none;
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    outline: none;
     -webkit-tap-highlight-color: transparent;
   }
 
-  .social-link:focus,
   .social-link:focus-visible {
-    outline: none;
+    outline: 2px solid #000;
+    outline-offset: 3px;
+    border-radius: 4px;
   }
 
   .social-link svg {

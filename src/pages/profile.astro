@@ -1,5 +1,4 @@
 ---
-import "@styles/general.css";
 import ContactBanner from "@components/Hero/ContactBanner.astro";
 import PageBanner from "@components/PageBanner.astro";
 import SliderImg from "@components/SliderImg.astro";
@@ -95,7 +94,7 @@ const pageDescription =
 ---
 
 <Layout title="Profile - Fernando Feijoo" description={pageDescription}>
-  <main class="profile-page">
+  <div class="profile-page">
     <PageBanner title="Profile" />
 
     <!-- Hero Section -->
@@ -425,7 +424,7 @@ const pageDescription =
     </section>
 
     <ContactBanner />
-  </main>
+  </div>
 </Layout>
 
 <style>
@@ -1003,13 +1002,6 @@ const pageDescription =
       revealElements.forEach(el => revealObserver.observe(el));
     }
 
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initProfilePage);
-    } else {
-      initProfilePage();
-    }
-
-    document.addEventListener('astro:after-swap', initProfilePage);
     document.addEventListener('astro:page-load', initProfilePage);
   })();
 </script>

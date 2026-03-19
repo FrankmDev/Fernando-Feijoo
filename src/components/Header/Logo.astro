@@ -22,16 +22,10 @@ const { class: className = "" } = Astro.props;
     text-decoration: none;
     color: var(--color-gray-900);
     transition: color 0.4s var(--ease-out-quart);
-    outline: none;
     -webkit-tap-highlight-color: transparent;
     position: relative;
     z-index: 1001;
     margin: 0;
-  }
-
-  /* Focus visible personalizado */
-  .logo:focus-visible {
-    outline: none;
   }
 
   .logo::before {

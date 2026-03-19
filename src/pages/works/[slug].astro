@@ -4,58 +4,9 @@ import SectionContainer from "@components/SectionContainer.astro";
 import ContactBanner from "@components/Hero/ContactBanner.astro";
 import ImageModal from "@components/ImageModal.astro";
 import { WORKS } from "@data/works";
-import { resolveImage, processImageUrl } from "@utils/images";
+import { SITE_CONFIG } from "@constants";
+import { resolveImage } from "@utils/images";
 import { Image } from "astro:assets";
-
-// Importar todas las imágenes de ceramics para detectar automáticamente
-const allCeramicImages = import.meta.glob<{ default: ImageMetadata }>(
-  '/src/assets/works/ceramics/**/*.{avif,jpg,jpeg,png}',
-  { eager: true }
-);
-
-// Importar todas las imágenes de artistBooks para detectar automáticamente
-const allArtistBookImages = import.meta.glob<{ default: ImageMetadata }>(
-  '/src/assets/works/artistBooks/**/*.{avif,jpg,jpeg,png}',
-  { eager: true }
-);
-
-// Función para obtener imágenes de una obra específica
-function getWorkImages(categorySlug: string, workSlug: string): ImageMetadata[] {
-  const images: ImageMetadata[] = [];
-  
-  if (categorySlug === 'ceramics') {
-    for (const [path, imageModule] of Object.entries(allCeramicImages)) {
-      const normalizedPath = path.toLowerCase();
-      const searchPattern = `/ceramics/${workSlug.toLowerCase()}/`;
-      const searchPatternWin = `\\ceramics\\${workSlug.toLowerCase()}\\`;
-      
-      if (normalizedPath.includes(searchPattern) || normalizedPath.includes(searchPatternWin)) {
-        images.push(imageModule.default);
-      }
-    }
-  } else if (categorySlug === 'artist-books') {
-    for (const [path, imageModule] of Object.entries(allArtistBookImages)) {
-      const folderMap: Record<string, string> = {
-        'contemporary-street-alphabet-1': 'contemporarystreetalphabet',
-        'crack-progress-charlies-progress-1': 'crackprogresscharliesprogress',
-        'future-1': 'future',
-        'gods-monsters-1': 'godsmonsters',
-        'journeyman-1': 'thejourneyman',
-        'modern-marriage-1': 'modernmarriage',
-        'run-1': 'run'
-      };
-      
-      const folderName = folderMap[workSlug.toLowerCase()];
-      const normalizedPath = path.toLowerCase();
-      
-      if (folderName && (normalizedPath.includes(`/artistbooks/${folderName}/`) || normalizedPath.includes(`\\artistbooks\\${folderName}\\`))) {
-        images.push(imageModule.default);
-      }
-    }
-  }
-  
-  return images.sort((a, b) => a.src.localeCompare(b.src));
-}
 
 export async function getStaticPaths() {
   const paths = [];
@@ -95,18 +46,11 @@ export async function getStaticPaths() {
   return paths;
 }
 
-export const prerender = true;
-
 const { work, categorySlug, categoryTitle, collectionSlug, collectionTitle } = Astro.props;
 
-const detectedImageMetas = (categorySlug === 'ceramics' || categorySlug === 'artist-books') 
-  ? getWorkImages(categorySlug, work.slug)
-  : [];
-
-const hasDetectedImages = detectedImageMetas.length > 0;
-const allImageMetas = hasDetectedImages 
-  ? detectedImageMetas 
-  : work?.imageUrls?.map(url => resolveImage(url)).filter(Boolean) as ImageMetadata[] || [];
+const allImageMetas = (work.imageUrls ?? [])
+  .map(url => resolveImage(url))
+  .filter((m): m is ImageMetadata => m !== undefined);
 
 const mainImageMeta = allImageMetas[0];
 const mainImageSrc = mainImageMeta?.src || '';
@@ -148,9 +92,7 @@ const backLabel = collectionTitle || categoryTitle;
   image={ogImage}
 >
   <SectionContainer id="work-detail">
-    <main class="work-page">
-      {work ? (
-        <>
+    <div class="work-page">
           {/* Elegant Navigation */}
           <nav class="work-nav">
             <div class="nav-inner">
@@ -189,17 +131,6 @@ const backLabel = collectionTitle || categoryTitle;
                         alt={work.title}
                         class="hero-image"
                         loading="eager"
-                        data-images={JSON.stringify(allImageMetas.map(m => m.src))}
-                      />
-                    ) : mainImageSrc ? (
-                      <img
-                        id="main-work-image"
-                        src={mainImageSrc}
-                        alt={work.title}
-                        class="hero-image"
-                        loading="eager"
-                        fetchpriority="high"
-                        decoding="async"
                         data-images={JSON.stringify(allImageMetas.map(m => m.src))}
                       />
                     ) : (
@@ -346,9 +277,7 @@ const backLabel = collectionTitle || categoryTitle;
 
                 <div class="related-grid">
                   {relatedWorks.map((relatedWork, index) => {
-                    const relatedUrl = relatedWork.imageUrls?.[0] || "";
-                    const relatedMeta = resolveImage(relatedUrl);
-                    const relatedSrc = processImageUrl(relatedUrl);
+                    const relatedMeta = resolveImage(relatedWork.imageUrls?.[0]);
 
                     return (
                       <a href={`/works/${relatedWork.slug}`} class="related-card">
@@ -359,16 +288,6 @@ const backLabel = collectionTitle || categoryTitle;
                               alt={relatedWork.title}
                               width={400}
                               height={400}
-                              loading="lazy"
-                              decoding="async"
-                              class="related-image"
-                            />
-                          ) : relatedSrc ? (
-                            <img
-                              src={relatedSrc}
-                              alt={relatedWork.title}
-                              width="400"
-                              height="400"
                               loading="lazy"
                               decoding="async"
                               class="related-image"
@@ -390,51 +309,43 @@ const backLabel = collectionTitle || categoryTitle;
               </section>
             )}
           </article>
-        </>
-      ) : (
-        <section class="not-found">
-          <span class="not-found-icon">🖼️</span>
-          <h1>Work Not Found</h1>
-          <p>The work you're looking for doesn't exist or has been moved.</p>
-        </section>
-      )}
 
       <ContactBanner />
-    </main>
+    </div>
   </SectionContainer>
 
   <ImageModal id="imageModal" />
 
   <script type="application/ld+json" is:inline set:html={JSON.stringify(
     (() => {
+      const siteUrl = SITE_CONFIG.url;
       const schema: Record<string, unknown> = {
         "@context": "https://schema.org",
         "@type": "VisualArtwork",
-        "name": work?.title,
-        "image": allImageMetas.map(m => `https://fernando-feijoo.com${m.src}`),
-        "description": work?.description,
+        "name": work.title,
+        "image": allImageMetas.map(m => `${siteUrl}${m.src}`),
+        "description": work.description,
         "creator": {
           "@type": "Person",
           "name": "Fernando Feijoo",
-          "url": "https://fernando-feijoo.com"
+          "url": siteUrl
         },
-        "artist": {
-          "@type": "Person",
-          "name": "Fernando Feijoo"
-        },
-        "artMedium": work?.printType,
+        "artMedium": work.printType,
         "artform": categoryTitle,
-        "width": work?.size
+        "size": work.size
       };
 
-      if (work?.price) {
-        schema.offers = {
-          "@type": "Offer",
-          "price": work.price.replace(/[^0-9.]/g, ''),
-          "priceCurrency": "GBP",
-          "availability": "https://schema.org/InStock",
-          "url": `https://fernando-feijoo.com/works/${work?.slug}`
-        };
+      if (work.price) {
+        const priceMatch = work.price.match(/[\d.]+/);
+        if (priceMatch) {
+          schema.offers = {
+            "@type": "Offer",
+            "price": priceMatch[0],
+            "priceCurrency": "GBP",
+            "availability": "https://schema.org/InStock",
+            "url": `${siteUrl}/works/${work.slug}`
+          };
+        }
       }
 
       return schema;
@@ -442,61 +353,52 @@ const backLabel = collectionTitle || categoryTitle;
   )} />
 
   <script is:inline>
-    // Initialize everything when DOM is ready
-    function initWorkPage() {
-      // Get fresh references to elements
-      const mainImage = document.getElementById('main-work-image');
-      const expandTrigger = document.querySelector('.expand-trigger');
-      const galleryItems = document.querySelectorAll('.gallery-item');
+    (function() {
+      var controller;
 
-      // Open modal function
-      function openModal(index) {
-        const imagesData = mainImage?.getAttribute('data-images');
-        if (!imagesData) return;
-        
-        try {
-          const images = JSON.parse(imagesData);
-          if (window.imageModal?.openModal) {
-            window.imageModal.openModal(images, index);
+      function initWorkPage() {
+        // Abort previous listeners to prevent duplicates on View Transitions
+        if (controller) controller.abort();
+        controller = new AbortController();
+        var signal = controller.signal;
+
+        var mainImage = document.getElementById('main-work-image');
+
+        function openModal(index) {
+          var imagesData = mainImage && mainImage.getAttribute('data-images');
+          if (!imagesData) return;
+          try {
+            var images = JSON.parse(imagesData);
+            if (window.imageModal && window.imageModal.openModal) {
+              window.imageModal.openModal(images, index);
+            }
+          } catch (e) {
+            console.error('Error opening modal:', e);
           }
-        } catch (e) {
-          console.error('Error opening modal:', e);
         }
-      }
 
-      // Remove existing listeners first (to prevent duplicates)
-      if (mainImage) {
-        mainImage.replaceWith(mainImage.cloneNode(true));
-        const freshMainImage = document.getElementById('main-work-image');
-        freshMainImage?.addEventListener('click', () => openModal(0));
-      }
+        if (mainImage) {
+          mainImage.addEventListener('click', function() { openModal(0); }, { signal: signal });
+        }
 
-      // Expand button
-      const freshExpandBtn = document.querySelector('.expand-trigger');
-      freshExpandBtn?.addEventListener('click', function(e) {
-        e.stopPropagation();
-        openModal(0);
-      });
+        var expandBtn = document.querySelector('.expand-trigger');
+        if (expandBtn) {
+          expandBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            openModal(0);
+          }, { signal: signal });
+        }
 
-      // Gallery items
-      document.querySelectorAll('.gallery-item').forEach(function(item) {
-        item.addEventListener('click', function() {
-          const idx = parseInt(item.getAttribute('data-index') || '0');
-          openModal(idx);
+        document.querySelectorAll('.gallery-item').forEach(function(item) {
+          item.addEventListener('click', function() {
+            var idx = parseInt(item.getAttribute('data-index') || '0');
+            openModal(idx);
+          }, { signal: signal });
         });
-      });
-    }
+      }
 
-    // Run on initial load
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initWorkPage);
-    } else {
-      initWorkPage();
-    }
-
-    // Re-run after view transitions
-    document.addEventListener('astro:page-load', initWorkPage);
-    document.addEventListener('astro:after-swap', initWorkPage);
+      document.addEventListener('astro:page-load', initWorkPage);
+    })();
   </script>
 </Layout>
 
@@ -1178,29 +1080,4 @@ const backLabel = collectionTitle || categoryTitle;
     line-height: 1.3;
   }
 
-  /* ========================================
-     NOT FOUND
-     ======================================== */
-  .not-found {
-    padding: 6rem 1.5rem;
-    text-align: center;
-  }
-
-  .not-found-icon {
-    font-size: 3rem;
-    display: block;
-    margin-bottom: 1.5rem;
-  }
-
-  .not-found h1 {
-    font-size: 1.5rem;
-    font-weight: 500;
-    color: var(--color-text);
-    margin: 0 0 0.5rem;
-  }
-
-  .not-found p {
-    color: var(--color-text-secondary);
-    margin: 0 0 2rem;
-  }
 </style>

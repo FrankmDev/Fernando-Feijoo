@@ -2,7 +2,7 @@
 import WorksLayout from "@components/WorksLayout.astro";
 import WorkCard from "@components/WorkCard.astro";
 import { WORKS } from "@data/works";
-import { processImageUrl } from "@utils/images";
+import { resolveImage } from "@utils/images";
 
 const sketchbooksCategory = WORKS.find(
   (category) => category.slug === "sketchbooks",
@@ -11,21 +11,10 @@ if (!sketchbooksCategory) throw new Error("Sketchbooks category not found");
 
 const collections = sketchbooksCategory.collections || [];
 
-const getFirstImageFromCollection = (
-  collection: (typeof collections)[0]
-): string => {
-  if (collection.works && collection.works.length > 0) {
-    const work = collection.works[0];
-    if (work.imageUrls && work.imageUrls.length > 0) {
-      return processImageUrl(work.imageUrls[0]);
-    }
-  }
-  return "";
-};
+const getFirstImageUrl = (collection: (typeof collections)[0]): string =>
+  collection.works?.[0]?.imageUrls?.[0] || "";
 
-const bannerImage = collections.length > 0
-  ? getFirstImageFromCollection(collections[0])
-  : undefined;
+const bannerImage = resolveImage(getFirstImageUrl(collections[0]));
 
 const description = `The sketchbook is the place where I can plan compositions and character designs with no pressure to produce final outcomes. Ideas are free to flow, come and go, sometimes making it to the Final Cut where they will be drawn up on blocks and carved in the future.
 
@@ -56,7 +45,7 @@ Surrounded by the unique architecture of each locale and the people who live the
           href={`/works/sketchbooks/${collection.slug}`}
           title={collection.title}
           subtitle=""
-          imageUrl={getFirstImageFromCollection(collection)}
+          imageUrl={getFirstImageUrl(collection)}
           imageAlt={`${collection.title} collection`}
           isAboveFold={index < 3}
         />

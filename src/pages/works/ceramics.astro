@@ -2,15 +2,13 @@
 import WorksLayout from "@components/WorksLayout.astro";
 import WorkCard from "@components/WorkCard.astro";
 import { WORKS } from "@data/works";
-import { processImageUrl } from "@utils/images";
+import { resolveImage } from "@utils/images";
 
 const ceramicsCategory = WORKS.find((category) => category.slug === "ceramics");
 if (!ceramicsCategory) throw new Error("Ceramics category not found");
 
 const works = ceramicsCategory.works || [];
-const bannerImage = works[0]?.imageUrls?.[0]
-  ? processImageUrl(works[0].imageUrls[0])
-  : undefined;
+const bannerImage = resolveImage(works[0]?.imageUrls?.[0]);
 
 const description = `These ceramics are unique pieces crafted by the artist using a range of underglaze painting, oxides and clear glaze finishes. The different shapes and forms of the vessels allow the artist to display pictorial narrative imagery with creative outcomes which engage the viewer and offer the chance to explore the object from all angles. The normal function of plates, vases etc., is often subverted allowing for contradictions and subtexts within the subject matter.`;
 ---
@@ -37,9 +35,7 @@ const description = `These ceramics are unique pieces crafted by the artist usin
           href={`/works/${work.slug}`}
           title={work.title}
           subtitle={work.printType}
-          imageUrl={
-            work.imageUrls?.[0] ? processImageUrl(work.imageUrls[0]) : ""
-          }
+          imageUrl={work.imageUrls?.[0] || ""}
           imageAlt={work.title}
           isAboveFold={index < 3}
         />

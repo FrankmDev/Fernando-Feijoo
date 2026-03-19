@@ -1,6 +1,6 @@
 ---
 import { Image } from "astro:assets";
-import BannerImg from "/public/bannerimg.avif";
+import BannerImg from "@assets/bannerimg.avif";
 import type { ImageMetadata } from "astro";
 
 interface Props {
@@ -40,6 +40,8 @@ const bgImageUrl = backgroundImage && typeof backgroundImage === "string" ? back
           alt=""
           role="presentation"
           class="banner-image"
+          width="1920"
+          height="480"
           loading="eager"
           decoding="async"
           fetchpriority="high"

@@ -8,20 +8,10 @@ export const WORKS: Category[] = [
     title: "Prints",
     collections: [
       {
-        slug: "citizens&wastrels",
+        slug: "citizens-and-wastrels",
         title: "Citizens & Wastrels",
         description: "",
         works: [
-          {
-            slug: "busted",
-            title: "Busted",
-            description: "Locked in shackles and sent to the clink.",
-            printType: "Reduction Linocut",
-            price: "£150 (Set £450)",
-            imageUrls: [
-              "@assets/works/prints/citizensWastrels/gangstersCollection/busted.avif",
-            ],
-          },
           {
             slug: "after-hours",
             title: "Afterhours",
@@ -112,42 +102,6 @@ export const WORKS: Category[] = [
             size: "30 x 40 cm",
           },
           {
-            slug: "contracter",
-            title: "Contracter",
-            description: "Step into the arena. One step too far.",
-            printType: "Reduction Linocut",
-            price: "£150 (Set £450)",
-            imageUrls: [
-              "@assets/works/prints/citizensWastrels/gangstersCollection/contracter.avif",
-            ],
-            printEdition: 30,
-            size: "40 x 40 cm",
-          },
-          {
-            slug: "driven",
-            title: "Driven",
-            description: "The engine fires. Point of no return.",
-            printType: "Reduction Linocut",
-            price: "£150 (Set £450)",
-            imageUrls: [
-              "@assets/works/prints/citizensWastrels/gangstersCollection/driven.avif",
-            ],
-            printEdition: 30,
-            size: "40 x 40 cm",
-          },
-          {
-            slug: "wacked",
-            title: "Wacked",
-            description: "Footsteps in darkness. Finger on the trigger. BANG.",
-            printType: "Reduction Linocut",
-            price: "£150 (Set £450)",
-            imageUrls: [
-              "@assets/works/prints/citizensWastrels/gangstersCollection/wacked.avif",
-            ],
-            printEdition: 30,
-            size: "40 x 40 cm",
-          },
-          {
             slug: "metamorphosis",
             title: "Metamorphosis",
             description:
@@ -167,9 +121,57 @@ export const WORKS: Category[] = [
             printType: "Lithograph",
             price: "£150",
             printEdition: 50,
+            size: "60 x 30 cm",
             imageUrls: [
               "@assets/works/prints/citizensWastrels/lifting-the-spirits-in-tonic-row-laying-down-the-law-in-lager-lane_fernando_feijoo.avif",
               "@assets/works/prints/citizensWastrels/liftingTheSpirits.avif",
+            ],
+          },
+          {
+            slug: "contracted",
+            title: "Contracted",
+            description: "Step into the arena. One step too far.",
+            printType: "Linocut",
+            price: "£150 (Set £450)",
+            imageUrls: [
+              "@assets/works/prints/citizensWastrels/gangstersCollection/contracter.avif",
+            ],
+            printEdition: 30,
+            size: "50 x 40 cm",
+          },
+          {
+            slug: "driven",
+            title: "Driven",
+            description: "The engine fires. Point of no return.",
+            printType: "Linocut",
+            price: "£150 (Set £450)",
+            imageUrls: [
+              "@assets/works/prints/citizensWastrels/gangstersCollection/driven.avif",
+            ],
+            printEdition: 30,
+            size: "50 x 40 cm",
+          },
+          {
+            slug: "wacked",
+            title: "Wacked",
+            description: "Footsteps in darkness. Finger on the trigger. BANG.",
+            printType: "Linocut",
+            price: "£150 (Set £450)",
+            imageUrls: [
+              "@assets/works/prints/citizensWastrels/gangstersCollection/wacked.avif",
+            ],
+            printEdition: 30,
+            size: "50 x 40 cm",
+          },
+          {
+            slug: "busted",
+            title: "Busted",
+            description: "Locked in shackles and sent to the clink.",
+            printType: "Linocut",
+            price: "£150 (Set £450)",
+            size: "50 x 40 cm",
+            imageUrls: [
+              "@assets/works/prints/citizensWastrels/gangstersCollection/busted.avif",
             ],
           },
         ],
@@ -177,7 +179,7 @@ export const WORKS: Category[] = [
       {
         slug: "death-dances",
         title: "Death Dances",
-        description: "",
+        description: "This project is currently being developed, visit again soon to see the outcomes of this collection inspired by Hans Holbein's Dance of Death.",
         works: [
           {
             slug: "joker-playing-card",
@@ -192,7 +194,7 @@ export const WORKS: Category[] = [
         ],
       },
       {
-        slug: "games&players",
+        slug: "games-and-players",
         title: "Games & Players",
         description: "",
         works: [
@@ -204,6 +206,7 @@ export const WORKS: Category[] = [
             printType: "Zinc Lithograph",
             price: "£100",
             printEdition: 5,
+            size: "50 x 50 cm",
             imageUrls: [
               "@assets/works/prints/gamesPlayer/hierarchiOfAnarchy.avif",
             ],
@@ -224,8 +227,8 @@ export const WORKS: Category[] = [
             title: "Ace of Diamonds",
             description:
               "Satirical portrayal of a corrupt 'royal' family (business magnate king, socialite, drop out heir) controlled by a joker.",
-            printType: "Linocut, wood block & Letterpress",
-            price: "£350",
+            printType: "Zinc Lithography",
+            price: "£40 (Complete set of 14 prints £350)",
             imageUrls: [
               "@assets/works/prints/gamesPlayer/packOfLiars/aceOfDiamonds.avif",
             ],
@@ -235,8 +238,8 @@ export const WORKS: Category[] = [
             title: "Eight of Diamonds",
             description:
               "Satirical portrayal of a corrupt 'royal' family (business magnate king, socialite, drop out heir) controlled by a joker.",
-            printType: "Linocut, wood block & Letterpress",
-            price: "£350",
+            printType: "Zinc Lithography",
+            price: "£40 (Complete set of 14 prints £350)",
             imageUrls: [
               "@assets/works/prints/gamesPlayer/packOfLiars/eightOfDiamonds.avif",
             ],
@@ -246,8 +249,8 @@ export const WORKS: Category[] = [
             title: "Five of Diamonds",
             description:
               "Satirical portrayal of a corrupt 'royal' family (business magnate king, socialite, drop out heir) controlled by a joker.",
-            printType: "Linocut, wood block & Letterpress",
-            price: "£350",
+            printType: "Zinc Lithography",
+            price: "£40 (Complete set of 14 prints £350)",
             imageUrls: [
               "@assets/works/prints/gamesPlayer/packOfLiars/fiveOfDiamonds.avif",
             ],
@@ -257,8 +260,8 @@ export const WORKS: Category[] = [
             title: "Four of Diamonds",
             description:
               "Satirical portrayal of a corrupt 'royal' family (business magnate king, socialite, drop out heir) controlled by a joker.",
-            printType: "Linocut, wood block & Letterpress",
-            price: "£350",
+            printType: "Zinc Lithography",
+            price: "£40 (Complete set of 14 prints £350)",
             imageUrls: [
               "@assets/works/prints/gamesPlayer/packOfLiars/fourOfDiamonds.avif",
             ],
@@ -268,8 +271,8 @@ export const WORKS: Category[] = [
             title: "Nine of Diamonds",
             description:
               "Satirical portrayal of a corrupt 'royal' family (business magnate king, socialite, drop out heir) controlled by a joker.",
-            printType: "Linocut, wood block & Letterpress",
-            price: "£350",
+            printType: "Zinc Lithography",
+            price: "£40 (Complete set of 14 prints £350)",
             imageUrls: [
               "@assets/works/prints/gamesPlayer/packOfLiars/nineOfDiamonds.avif",
             ],
@@ -279,8 +282,8 @@ export const WORKS: Category[] = [
             title: "Jack of Diamonds",
             description:
               "Satirical portrayal of a corrupt 'royal' family (business magnate king, socialite, drop out heir) controlled by a joker.",
-            printType: "Linocut, wood block & Letterpress",
-            price: "£400",
+            printType: "Zinc Lithography",
+            price: "£40 (Complete set of 14 prints £350)",
             imageUrls: [
               "@assets/works/prints/gamesPlayer/packOfLiars/jackOfDiamonds.avif",
             ],
@@ -290,8 +293,8 @@ export const WORKS: Category[] = [
             title: "King of Diamonds",
             description:
               "Satirical portrayal of a corrupt 'royal' family (business magnate king, socialite, drop out heir) controlled by a joker.",
-            printType: "Linocut, wood block & Letterpress",
-            price: "£450",
+            printType: "Zinc Lithography",
+            price: "£40 (Complete set of 14 prints £350)",
             imageUrls: [
               "@assets/works/prints/gamesPlayer/packOfLiars/kingOfDiamonds.avif",
             ],
@@ -301,8 +304,8 @@ export const WORKS: Category[] = [
             title: "Queen of Diamonds",
             description:
               "Satirical portrayal of a corrupt 'royal' family (business magnate king, socialite, drop out heir) controlled by a joker.",
-            printType: "Linocut, wood block & Letterpress",
-            price: "£425",
+            printType: "Zinc Lithography",
+            price: "£40 (Complete set of 14 prints £350)",
             imageUrls: [
               "@assets/works/prints/gamesPlayer/packOfLiars/queenOfDiamonds.avif",
             ],
@@ -312,8 +315,8 @@ export const WORKS: Category[] = [
             title: "Seven of Diamonds",
             description:
               "Satirical portrayal of a corrupt 'royal' family (business magnate king, socialite, drop out heir) controlled by a joker.",
-            printType: "Linocut, wood block & Letterpress",
-            price: "£350",
+            printType: "Zinc Lithography",
+            price: "£40 (Complete set of 14 prints £350)",
             imageUrls: [
               "@assets/works/prints/gamesPlayer/packOfLiars/sevenOfDiamonds.avif",
             ],
@@ -323,8 +326,8 @@ export const WORKS: Category[] = [
             title: "Six of Diamonds",
             description:
               "Satirical portrayal of a corrupt 'royal' family (business magnate king, socialite, drop out heir) controlled by a joker.",
-            printType: "Linocut, wood block & Letterpress",
-            price: "£350",
+            printType: "Zinc Lithography",
+            price: "£40 (Complete set of 14 prints £350)",
             imageUrls: [
               "@assets/works/prints/gamesPlayer/packOfLiars/sixOfDiamonds.avif",
             ],
@@ -334,8 +337,8 @@ export const WORKS: Category[] = [
             title: "Three of Diamonds",
             description:
               "Satirical portrayal of a corrupt 'royal' family (business magnate king, socialite, drop out heir) controlled by a joker.",
-            printType: "Linocut, wood block & Letterpress",
-            price: "£350",
+            printType: "Zinc Lithography",
+            price: "£40 (Complete set of 14 prints £350)",
             imageUrls: [
               "@assets/works/prints/gamesPlayer/packOfLiars/threeOfDiamonds.avif",
             ],
@@ -345,8 +348,8 @@ export const WORKS: Category[] = [
             title: "Two of Diamonds",
             description:
               "Satirical portrayal of a corrupt 'royal' family (business magnate king, socialite, drop out heir) controlled by a joker.",
-            printType: "Linocut, wood block & Letterpress",
-            price: "£350",
+            printType: "Zinc Lithography",
+            price: "£40 (Complete set of 14 prints £350)",
             imageUrls: [
               "@assets/works/prints/gamesPlayer/packOfLiars/twoOfDiamonds.avif",
             ],
@@ -356,8 +359,8 @@ export const WORKS: Category[] = [
             title: "Joker 1",
             description:
               "Satirical portrayal of a corrupt 'royal' family (business magnate king, socialite, drop out heir) controlled by a joker.",
-            printType: "Linocut, wood block & Letterpress",
-            price: "£500",
+            printType: "Zinc Lithography",
+            price: "£40 (Complete set of 14 prints £350)",
             imageUrls: [
               "@assets/works/prints/gamesPlayer/packOfLiars/joker1.avif",
             ],
@@ -367,8 +370,8 @@ export const WORKS: Category[] = [
             title: "Joker 2",
             description:
               "Satirical portrayal of a corrupt 'royal' family (business magnate king, socialite, drop out heir) controlled by a joker.",
-            printType: "Linocut, wood block & Letterpress",
-            price: "£500",
+            printType: "Zinc Lithography",
+            price: "£40 (Complete set of 14 prints £350)",
             imageUrls: [
               "@assets/works/prints/gamesPlayer/packOfLiars/joker2.avif",
             ],
@@ -376,226 +379,244 @@ export const WORKS: Category[] = [
         ],
       },
       {
-        slug: "gods&monsters",
+        slug: "gods-and-monsters",
         title: "Gods & Monsters",
         description:
-          "A large format alphabet book illustrating the surreal creatures and spiritual powers of the mighty legendary Gods and mythical beasts from the underworld. Inspired by Ovid’s Metamorphosis, Greek Mythology and childhood memories. Themes include the fusion of villain and hero (Picasso’s Minotaur), the passage of life, and good versus evil.",
+          "A portfolio of alphabet inspired prints illustrating the surreal creatures and spiritual powers of the mighty legendary Gods and mythical beasts from the underworld. Inspired by Ovid’s Metamorphosis, Greek Mythology and childhood memories. Themes include the fusion of villain and hero (Picasso’s Minotaur), the passage of life, and good versus evil.",
         works: [
           {
             slug: "agni",
             title: "Agni",
             description: "",
-            printType:
-              "Linocut, wood block & Letterpress, hardback cover concertina book",
-            price: "£995",
+            printType: "Linocut and Woodblock",
+            price: "£195 (Complete set of 30 prints £2500)",
             imageUrls: ["@assets/works/prints/godsMonsters/agni.avif"],
-            printEdition: 10,
-            size: "32 pp, 570 x 370 x 38 mm",
+            size: "57 x 37 cm",
           },
           {
             slug: "bala",
             title: "Bala",
             description: "",
-            printType: "underglaze painting, oxides and clear glaze finish",
-            price: "£1500",
+            printType: "Linocut and Woodblock",
+            price: "£195 (Complete set of 30 prints £2500)",
             imageUrls: ["@assets/works/prints/godsMonsters/bala.avif"],
-            size: "20 x 20 x 30 cm",
+            size: "57 x 37 cm",
           },
           {
             slug: "cerbus",
             title: "Cerbus",
             description: "",
-            printType: "Linocut, wood block & Letterpress",
-            price: "£600",
+            printType: "Linocut and Woodblock",
+            price: "£195 (Complete set of 30 prints £2500)",
             imageUrls: ["@assets/works/prints/godsMonsters/cerbus.avif"],
+            size: "57 x 37 cm",
           },
           {
             slug: "draco",
             title: "Draco",
             description: "",
-            printType: "Linocut, wood block & Letterpress",
-            price: "£600",
+            printType: "Linocut and Woodblock",
+            price: "£195 (Complete set of 30 prints £2500)",
             imageUrls: ["@assets/works/prints/godsMonsters/draco.avif"],
+            size: "57 x 37 cm",
           },
           {
             slug: "europa",
             title: "Europa",
             description: "",
-            printType: "Linocut, wood block & Letterpress",
-            price: "£600",
+            printType: "Linocut and Woodblock",
+            price: "£195 (Complete set of 30 prints £2500)",
             imageUrls: ["@assets/works/prints/godsMonsters/europa.avif"],
+            size: "57 x 37 cm",
           },
           {
             slug: "fenir",
             title: "Fenir",
             description: "",
-            printType: "Linocut, wood block & Letterpress",
-            price: "£600",
+            printType: "Linocut and Woodblock",
+            price: "£195 (Complete set of 30 prints £2500)",
             imageUrls: ["@assets/works/prints/godsMonsters/fenir.avif"],
+            size: "57 x 37 cm",
           },
           {
             slug: "gala",
             title: "Gala",
             description: "",
-            printType: "Linocut, wood block & Letterpress",
-            price: "£600",
+            printType: "Linocut and Woodblock",
+            price: "£195 (Complete set of 30 prints £2500)",
             imageUrls: ["@assets/works/prints/godsMonsters/gala.avif"],
+            size: "57 x 37 cm",
           },
           {
             slug: "hercules",
             title: "Hercules",
             description: "",
-            printType: "Linocut, wood block & Letterpress",
-            price: "£600",
+            printType: "Linocut and Woodblock",
+            price: "£195 (Complete set of 30 prints £2500)",
             imageUrls: ["@assets/works/prints/godsMonsters/hercules.avif"],
+            size: "57 x 37 cm",
           },
           {
             slug: "icarus",
             title: "Icarus",
             description: "",
-            printType: "Linocut, wood block & Letterpress",
-            price: "£600",
+            printType: "Linocut and Woodblock",
+            price: "£195 (Complete set of 30 prints £2500)",
             imageUrls: ["@assets/works/prints/godsMonsters/icarus.avif"],
+            size: "57 x 37 cm",
           },
           {
             slug: "janus",
             title: "Janus",
             description: "",
-            printType: "Linocut, wood block & Letterpress",
-            price: "£600",
+            printType: "Linocut and Woodblock",
+            price: "£195 (Complete set of 30 prints £2500)",
             imageUrls: ["@assets/works/prints/godsMonsters/janus.avif"],
+            size: "57 x 37 cm",
           },
           {
             slug: "kraken",
             title: "Kraken",
             description: "",
-            printType: "Linocut, wood block & Letterpress",
-            price: "£600",
+            printType: "Linocut and Woodblock",
+            price: "£195 (Complete set of 30 prints £2500)",
             imageUrls: ["@assets/works/prints/godsMonsters/kraken.avif"],
+            size: "57 x 37 cm",
           },
           {
             slug: "lucifer",
             title: "Lucifer",
             description: "",
-            printType: "Linocut, wood block & Letterpress",
-            price: "£600",
+            printType: "Linocut and Woodblock",
+            price: "£195 (Complete set of 30 prints £2500)",
             imageUrls: ["@assets/works/prints/godsMonsters/lucifer.avif"],
+            size: "57 x 37 cm",
           },
           {
             slug: "medusa",
             title: "Medusa",
             description: "",
-            printType: "underglaze painting, oxides and clear glaze finish",
-            price: "£1500",
+            printType: "Linocut and Woodblock",
+            price: "£195 (Complete set of 30 prints £2500)",
             imageUrls: ["@assets/works/prints/godsMonsters/medusa.avif"],
-            size: "20 x 20 x 30 cm",
+            size: "57 x 37 cm",
           },
           {
             slug: "neptune",
             title: "Neptune",
             description: "",
-            printType: "Linocut, wood block & Letterpress",
-            price: "£600",
+            printType: "Linocut and Woodblock",
+            price: "£195 (Complete set of 30 prints £2500)",
             imageUrls: ["@assets/works/prints/godsMonsters/neptune.avif"],
+            size: "57 x 37 cm",
           },
           {
             slug: "odin",
             title: "Odin",
             description: "",
-            printType: "Linocut, wood block & Letterpress",
-            price: "£600",
+            printType: "Linocut and Woodblock",
+            price: "£195 (Complete set of 30 prints £2500)",
             imageUrls: ["@assets/works/prints/godsMonsters/odin.avif"],
+            size: "57 x 37 cm",
           },
           {
             slug: "prometheus",
             title: "Prometheus",
             description: "",
-            printType: "Linocut, wood block & Letterpress",
-            price: "£600",
+            printType: "Linocut and Woodblock",
+            price: "£195 (Complete set of 30 prints £2500)",
             imageUrls: ["@assets/works/prints/godsMonsters/prometheus.avif"],
+            size: "57 x 37 cm",
           },
           {
             slug: "quetzlcoatl",
             title: "Quetzlcoatl",
             description: "",
-            printType: "Linocut, wood block & Letterpress",
-            price: "£600",
+            printType: "Linocut and Woodblock",
+            price: "£195 (Complete set of 30 prints £2500)",
             imageUrls: ["@assets/works/prints/godsMonsters/quetzlcoatl.avif"],
+            size: "57 x 37 cm",
           },
           {
             slug: "ra",
             title: "Ra",
             description: "",
-            printType:
-              "Offset lithograph from scaled down original linocuts, hardback cover dos a dos artist book",
-            price: "£75",
+            printType: "Linocut and Woodblock",
+            price: "£195 (Complete set of 30 prints £2500)",
             imageUrls: ["@assets/works/prints/godsMonsters/ra.avif"],
-            printEdition: 50,
-            size: "20 pages, 250 x 250 x 30 mm",
+            size: "57 x 37 cm",
           },
           {
             slug: "shu",
             title: "Shu",
             description: "",
-            printType: "Linocut, wood block & Letterpress",
-            price: "£600",
+            printType: "Linocut and Woodblock",
+            price: "£195 (Complete set of 30 prints £2500)",
             imageUrls: ["@assets/works/prints/godsMonsters/shu.avif"],
+            size: "57 x 37 cm",
           },
           {
             slug: "theseus",
             title: "Theseus",
             description: "",
-            printType: "Linocut, wood block & Letterpress",
-            price: "£600",
+            printType: "Linocut and Woodblock",
+            price: "£195 (Complete set of 30 prints £2500)",
             imageUrls: ["@assets/works/prints/godsMonsters/theseus.avif"],
+            size: "57 x 37 cm",
           },
           {
             slug: "urania",
             title: "Urania",
             description: "",
-            printType: "Linocut, wood block & Letterpress",
-            price: "£600",
+            printType: "Linocut and Woodblock",
+            price: "£195 (Complete set of 30 prints £2500)",
             imageUrls: ["@assets/works/prints/godsMonsters/urania.avif"],
+            size: "57 x 37 cm",
           },
           {
             slug: "volcan",
             title: "Volcan",
             description: "",
-            printType: "Linocut, wood block & Letterpress",
-            price: "£600",
+            printType: "Linocut and Woodblock",
+            price: "£195 (Complete set of 30 prints £2500)",
             imageUrls: ["@assets/works/prints/godsMonsters/volcan.avif"],
+            size: "57 x 37 cm",
           },
           {
             slug: "walpurgis",
             title: "Walpurgis",
             description: "",
-            printType: "Linocut, wood block & Letterpress",
-            price: "£600",
+            printType: "Linocut and Woodblock",
+            price: "£195 (Complete set of 30 prints £2500)",
             imageUrls: ["@assets/works/prints/godsMonsters/walpurgis.avif"],
+            size: "57 x 37 cm",
           },
           {
             slug: "xanthos",
             title: "Xanthos",
             description: "",
-            printType: "Linocut, wood block & Letterpress",
-            price: "£600",
+            printType: "Linocut and Woodblock",
+            price: "£195 (Complete set of 30 prints £2500)",
             imageUrls: ["@assets/works/prints/godsMonsters/xanthos.avif"],
+            size: "57 x 37 cm",
           },
           {
             slug: "yggdrasil",
             title: "Yggdrasil",
             description: "",
-            printType: "Linocut, wood block & Letterpress",
-            price: "£600",
+            printType: "Linocut and Woodblock",
+            price: "£195 (Complete set of 30 prints £2500)",
             imageUrls: ["@assets/works/prints/godsMonsters/yggdrasil.avif"],
+            size: "57 x 37 cm",
           },
           {
             slug: "zephyr",
             title: "Zephyr",
             description: "",
-            printType: "Linocut, wood block & Letterpress",
-            price: "£600",
+            printType: "Linocut and Woodblock",
+            price: "£195 (Complete set of 30 prints £2500)",
             imageUrls: ["@assets/works/prints/godsMonsters/zephyr.avif"],
+            size: "57 x 37 cm",
           },
         ],
       },
@@ -640,6 +661,19 @@ export const WORKS: Category[] = [
             imageUrls: ["@assets/works/prints/inferno/hellIsEmpty.avif"],
             printEdition: 50,
             size: "30 x 20 cm",
+          },
+          {
+            slug: "night-attack",
+            title: "Night Attack",
+            description:
+              "The lords on high soar in the skies, ready to pounce. 'Run: don't look up.' Death is coming for all; even while the carnival proceeds, all will succumb.",
+            printType: "Wood engraving",
+            price: "£150",
+            printEdition: 50,
+            size: "8 x 10 cm",
+            imageUrls: [
+              "@assets/works/prints/inferno/Night_Attack_fernando_feijoo.avif",
+            ],
           },
           {
             slug: "hell-on-earth",
@@ -710,25 +744,14 @@ export const WORKS: Category[] = [
           },
           {
             slug: "today",
-            title: "Today",
+            title: "The Devils in the Deal",
             description:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-            printType: "Linocut, wood block & Letterpress",
-            price: "£650",
+              "We stand, arms crossed and say \"We merely observe.\"\n\nBut we, in our deals with the devil, unleashed the floods, the famine, the flames and the destruction.\n\nOur endless online orders, with packaging that lays waste to the earth. Our continuous consumption corrodes the planet. Our greed degrades all life that we see. Our violence - verbal, physical and moral, violates all that we touch.\n\nWe laugh at others' misfortunes, mock the weak and deride the cries of distress, but the tables are turned. The remote control is wrested from our grip. We cannot outwit the devils and death.\n\nWe deal with the devils, daily. The devils deal with us, for eternity.\n\nWe must judge ourselves. We are the problem, but could be the solution.",
+            printType: "Linocut",
+            price: "£325",
+            printEdition: 30,
+            size: "76 x 56 cm",
             imageUrls: ["@assets/works/prints/inferno/today.avif"],
-          },
-          {
-            slug: "night-attack",
-            title: "Night Attack",
-            description:
-              "The lords on high soar in the skies, ready to pounce. 'Run: don't look up.' Death is coming for all; even while the carnival proceeds, all will succumb.",
-            printType: "Wood engraving",
-            price: "£150",
-            printEdition: 50,
-            size: "8 x 10 cm",
-            imageUrls: [
-              "@assets/works/prints/inferno/Night_Attack_fernando_feijoo.avif",
-            ],
           },
           {
             slug: "midnight",
@@ -738,7 +761,7 @@ export const WORKS: Category[] = [
             printType: "Stone lithograph",
             price: "£395",
             printEdition: 30,
-            size: "56 x 76 cm",
+            size: "76 x 56 cm",
             imageUrls: [
               "@assets/works/prints/inferno/Midnight_fernando_feijoo.avif",
               "@assets/works/prints/inferno/Midnight_colour_fernando_feijoo.avif",
@@ -748,7 +771,7 @@ export const WORKS: Category[] = [
       },
 
       {
-        slug: "persons&personas",
+        slug: "persons-and-personas",
         title: "Persons & Personas",
         description: "",
         works: [
@@ -757,8 +780,10 @@ export const WORKS: Category[] = [
             title: "Joaquin",
             description:
               "Drawn and etched into the skin are common expressions and relate to the techniques used for this work. Inspired by the idea of our life visualised in our skin and the events of our lives becoming an outward manifestation of our identity, pieces reveal what we are born with and what we add – as tattoos, wounds, as visuals, as words. As 'manuscript' means writing by hand, so our stories are written on our bodies - the manuscripts of our existence.",
-            printType: "Linocut, wood block & Letterpress",
-            price: "£550",
+            printType: "Etching",
+            printEdition: 50,
+            size: "20 x 30 cm",
+            price: "£150",
             imageUrls: ["@assets/works/prints/persons&Personas/Joaquin.avif"],
           },
           {
@@ -766,7 +791,10 @@ export const WORKS: Category[] = [
             title: "Emilio",
             description:
               "Drawn and etched into the skin are common expressions and relate to the techniques used for this work. Inspired by the idea of our life visualised in our skin and the events of our lives becoming an outward manifestation of our identity, pieces reveal what we are born with and what we add – as tattoos, wounds, as visuals, as words. As 'manuscript' means writing by hand, so our stories are written on our bodies - the manuscripts of our existence.",
-            printType: "Linocut, wood block & Letterpress",
+            printType: "Etching",
+            printEdition: 50,
+            size: "20 x 30 cm",
+            price: "£150",
             imageUrls: [
               "@assets/works/prints/persons&Personas/Emilio.avif",
               "@assets/works/prints/persons&Personas/EmilioColor.avif",
@@ -777,8 +805,10 @@ export const WORKS: Category[] = [
             title: "Enzo",
             description:
               "Drawn and etched into the skin are common expressions and relate to the techniques used for this work. Inspired by the idea of our life visualised in our skin and the events of our lives becoming an outward manifestation of our identity, pieces reveal what we are born with and what we add – as tattoos, wounds, as visuals, as words. As 'manuscript' means writing by hand, so our stories are written on our bodies - the manuscripts of our existence.",
-            printType: "Linocut, wood block & Letterpress",
-            price: "£550",
+            printType: "Etching",
+            printEdition: 50,
+            size: "20 x 30 cm",
+            price: "£150",
             imageUrls: ["@assets/works/prints/persons&Personas/Enzo.avif"],
           },
           {
@@ -786,8 +816,10 @@ export const WORKS: Category[] = [
             title: "Hector",
             description:
               "Drawn and etched into the skin are common expressions and relate to the techniques used for this work. Inspired by the idea of our life visualised in our skin and the events of our lives becoming an outward manifestation of our identity, pieces reveal what we are born with and what we add – as tattoos, wounds, as visuals, as words. As 'manuscript' means writing by hand, so our stories are written on our bodies - the manuscripts of our existence.",
-            printType: "Linocut, wood block & Letterpress",
-            price: "£550",
+            printType: "Etching",
+            printEdition: 50,
+            size: "20 x 30 cm",
+            price: "£150",
             imageUrls: [
               "@assets/works/prints/persons&Personas/Hector.avif",
               "@assets/works/prints/persons&Personas/HectorColor.avif",
@@ -798,7 +830,10 @@ export const WORKS: Category[] = [
             title: "Lorenzo",
             description:
               "Drawn and etched into the skin are common expressions and relate to the techniques used for this work. Inspired by the idea of our life visualised in our skin and the events of our lives becoming an outward manifestation of our identity, pieces reveal what we are born with and what we add – as tattoos, wounds, as visuals, as words. As 'manuscript' means writing by hand, so our stories are written on our bodies - the manuscripts of our existence.",
-            printType: "Linocut, wood block & Letterpress",
+            printType: "Etching",
+            printEdition: 50,
+            size: "20 x 30 cm",
+            price: "£150",
             imageUrls: [
               "@assets/works/prints/persons&Personas/Lorenzo.avif",
               "@assets/works/prints/persons&Personas/LorenzoColor.avif",
@@ -809,8 +844,10 @@ export const WORKS: Category[] = [
             title: "Marcus",
             description:
               "Drawn and etched into the skin are common expressions and relate to the techniques used for this work. Inspired by the idea of our life visualised in our skin and the events of our lives becoming an outward manifestation of our identity, pieces reveal what we are born with and what we add – as tattoos, wounds, as visuals, as words. As 'manuscript' means writing by hand, so our stories are written on our bodies - the manuscripts of our existence.",
-            printType: "Linocut, wood block & Letterpress",
-            price: "£550",
+            printType: "Etching",
+            printEdition: 50,
+            size: "20 x 30 cm",
+            price: "£150",
             imageUrls: ["@assets/works/prints/persons&Personas/Marcus.avif"],
           },
           {
@@ -818,8 +855,10 @@ export const WORKS: Category[] = [
             title: "Santiago",
             description:
               "Drawn and etched into the skin are common expressions and relate to the techniques used for this work. Inspired by the idea of our life visualised in our skin and the events of our lives becoming an outward manifestation of our identity, pieces reveal what we are born with and what we add – as tattoos, wounds, as visuals, as words. As 'manuscript' means writing by hand, so our stories are written on our bodies - the manuscripts of our existence.",
-            printType: "Linocut, wood block & Letterpress",
-            price: "£550",
+            printType: "Etching",
+            printEdition: 50,
+            size: "20 x 30 cm",
+            price: "£150",
             imageUrls: ["@assets/works/prints/persons&Personas/Santiago.avif"],
           },
           {
@@ -827,17 +866,21 @@ export const WORKS: Category[] = [
             title: "Jose",
             description:
               "Drawn and etched into the skin are common expressions and relate to the techniques used for this work. Inspired by the idea of our life visualised in our skin and the events of our lives becoming an outward manifestation of our identity, pieces reveal what we are born with and what we add – as tattoos, wounds, as visuals, as words. As 'manuscript' means writing by hand, so our stories are written on our bodies - the manuscripts of our existence.",
-            printType: "Linocut, wood block & Letterpress",
-            price: "£550",
+            printType: "Etching",
+            printEdition: 50,
+            size: "20 x 30 cm",
+            price: "£150",
             imageUrls: ["@assets/works/prints/persons&Personas/Jose.avif"],
           },
           {
             slug: "siesta",
             title: "Siesta",
             description:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-            printType: "Linocut, wood block & Letterpress",
-            price: "£550",
+              "Sun shines too hot. Drink goes down too fast. Legs feel rubbery. Arms are dead weights.\nThis chair is too comfy. The air is too thick. Life is too hard. Every day the same.\nSit, snooze, wake, top up; slump, sleep, half awake, top up; out for the count.",
+            printType: "Reduction Lino Cut",
+            printEdition: 15,
+            size: "40 x 50 cm",
+            price: "£250",
             imageUrls: ["@assets/works/prints/persons&Personas/Siesta.avif"],
           },
           {
@@ -845,8 +888,10 @@ export const WORKS: Category[] = [
             title: "Step into the arena",
             description:
               "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-            printType: "Linocut, wood block & Letterpress",
-            price: "£550",
+            printType: "Collagraph",
+            printEdition: 5,
+            size: "20 x 20 cm",
+            price: "£75",
             imageUrls: [
               "@assets/works/prints/persons&Personas/Step into the arena.avif",
             ],
@@ -854,7 +899,7 @@ export const WORKS: Category[] = [
         ],
       },
       {
-        slug: "robots&cranks",
+        slug: "robots-and-cranks",
         title: "Robots & Cranks",
         description: "",
         works: [
@@ -876,9 +921,11 @@ export const WORKS: Category[] = [
             slug: "search-and-destroy",
             title: "Search & Destroy",
             description:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-            printType: "Linocut, wood block & Letterpress",
-            price: "£580",
+              "No mercy\nNo heart\nNo love\nNo Soul\nNo life",
+            printType: "Reduction Linocut",
+            printEdition: 30,
+            size: "30 x 40 cm",
+            price: "£125",
             imageUrls: ["@assets/works/prints/robotsCranks/searchDestroy.avif"],
           },
           {
@@ -1077,8 +1124,11 @@ export const WORKS: Category[] = [
             slug: "cromer-lighthouse",
             title: "Cromer Lighthouse",
             description:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-            printType: "Linocut, wood block & Letterpress",
+              "Beaming out into the North Sea.\nBeware invaders, beware sailing too close.\nThe cottage alongside is a holiday let.\nVisitors drawn by the light, the beacon of the town.\nCromer welcomes; its lighthouse protects.",
+            printType: "Collagraph",
+            printEdition: 10,
+            size: "40 x 30 cm",
+            price: "£175",
             imageUrls: [
               "@assets/works/prints/structDestruct/Cromer_lighthouse_fernando_feijoo.avif",
             ],
@@ -1135,12 +1185,12 @@ export const WORKS: Category[] = [
         works: [
           {
             slug: "darkness",
-            title: "Darkness",
+            title: "6. Darkness",
             description: "Hell under earth. A lamplight flickers.",
-            printType: "Etching & Letterpress, hardback cover concertina book",
-            price: "£395",
-            printEdition: 15,
-            size: "12 pages, 188 x 253 x 24 mm",
+            printType: "Etching",
+            price: "£125 (Complete set available for £750 of 10 prints)",
+            printEdition: 30,
+            size: "15 x 20 cm",
             imageUrls: [
               "@assets/works/prints/theJourneyMan/6_Darkness__fernando_feijoo.avif",
             ],
@@ -1150,7 +1200,7 @@ export const WORKS: Category[] = [
             title: "1. Arrival",
             description: "No name, nor emotion. Arriving, never to return.",
             printType: "Etching",
-            price: "£125",
+            price: "£125 (Complete set available for £750 of 10 prints)",
             printEdition: 30,
             size: "15 x 20 cm",
             imageUrls: [
@@ -1163,7 +1213,7 @@ export const WORKS: Category[] = [
             description:
               "Plummeting into darkness. Seeds are sown. Journeyman awakes.",
             printType: "Etching",
-            price: "£125",
+            price: "£125 (Complete set available for £750 of 10 prints)",
             printEdition: 30,
             size: "15 x 20 cm",
             imageUrls: [
@@ -1175,7 +1225,7 @@ export const WORKS: Category[] = [
             title: "3. Secret Doorway",
             description: "Barren landscape. A doorway looms.",
             printType: "Etching",
-            price: "£125",
+            price: "£125 (Complete set available for £750 of 10 prints)",
             printEdition: 30,
             size: "15 x 20 cm",
             imageUrls: [
@@ -1188,7 +1238,7 @@ export const WORKS: Category[] = [
             description:
               "Webs are impenetrable. Sunlight will always beam if we let it.",
             printType: "Etching",
-            price: "£125",
+            price: "£125 (Complete set available for £750 of 10 prints)",
             printEdition: 30,
             size: "15 x 20 cm",
             imageUrls: [
@@ -1201,7 +1251,7 @@ export const WORKS: Category[] = [
             description:
               "Mixed messages. A moment of clarity: Exit from the maelstrom.",
             printType: "Etching",
-            price: "£125",
+            price: "£125 (Complete set available for £750 of 10 prints)",
             printEdition: 30,
             size: "15 x 20 cm",
             imageUrls: [
@@ -1213,7 +1263,7 @@ export const WORKS: Category[] = [
             title: "7. Ascent",
             description: "Ravening monsters awake. Hope is hatched.",
             printType: "Etching",
-            price: "£125",
+            price: "£125 (Complete set available for £750 of 10 prints)",
             printEdition: 30,
             size: "15 x 20 cm",
             imageUrls: [
@@ -1225,7 +1275,7 @@ export const WORKS: Category[] = [
             title: "8. Eruption",
             description: "Trees are salvation, but time is running out.",
             printType: "Etching",
-            price: "£125",
+            price: "£125 (Complete set available for £750 of 10 prints)",
             printEdition: 30,
             size: "15 x 20 cm",
             imageUrls: [
@@ -1237,7 +1287,7 @@ export const WORKS: Category[] = [
             title: "9. Departure",
             description: "Fires burning on earth. Ride the airwaves to safety.",
             printType: "Etching",
-            price: "£125",
+            price: "£125 (Complete set available for £750 of 10 prints)",
             printEdition: 30,
             size: "15 x 20 cm",
             imageUrls: [
@@ -1250,7 +1300,7 @@ export const WORKS: Category[] = [
             description:
               "A safety net protects new life. The dream catcher journeys on.",
             printType: "Etching",
-            price: "£125",
+            price: "£125 (Complete set available for £750 of 10 prints)",
             printEdition: 30,
             size: "15 x 20 cm",
             imageUrls: [
@@ -1263,7 +1313,7 @@ export const WORKS: Category[] = [
         slug: "the-three-progresses",
         title: "The Three Progresses",
         description:
-          "Charlie's Progress: Inspired by Hogarth's A Harlot's Progress. Follows Charlie (Crack's sister) and her sister Tara through London's dark low life. Crack's Progress: A modern fable of dark morality, crime and corruption. Follows Crack and his dog Spike.",
+          "This trilogy of works is Inspired by William Hogarth's A Rake's Progress, A Harlot's Progress and Marriage a la Mode, the eternal stories of money, corruption, dissolution, crime and redemption. In the book versions a contemporary style of writing is utilised to bring new rhythms to Hogarth's cycles. Rap, para rhyme and sharp word play tie up this great saga which is just as relevant in regards to eighteenth century London as the twenty first century.",
         works: [
           // Charlie's Progress
           {
@@ -1305,8 +1355,8 @@ export const WORKS: Category[] = [
             ],
           },
           {
-            slug: "caught-charlie",
-            title: "Caught",
+            slug: "raided-at-dawn",
+            title: "Raided at Dawn",
             description:
               "A modern fable of dark morality, crime and corruption. Follows Crack and his dog Spike.",
             printType: "Linocut",
@@ -1480,7 +1530,10 @@ export const WORKS: Category[] = [
             title: "The Curtain Rises",
             description:
               "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-            printType: "Linocut, wood block & Letterpress",
+            printType: "Linocut",
+            printEdition: 30,
+            size: "60 x 40 cm",
+            price: "£325",
             imageUrls: [
               "@assets/works/prints/theThreeProgresses/curtainRises/The_curtain_rises_fernando_feijoo.avif",
             ],
@@ -1491,7 +1544,10 @@ export const WORKS: Category[] = [
             title: "Youngest Sister of Crack and Charlie",
             description:
               "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-            printType: "Linocut, wood block & Letterpress",
+            printType: "Linocut",
+            printEdition: 30,
+            size: "60 x 40 cm",
+            price: "£325",
             imageUrls: [
               "@assets/works/prints/theThreeProgresses/modernMarriage/1_youngest_sister_of_crack_and_charlie_fernando_feijoo.avif",
             ],
@@ -1501,7 +1557,10 @@ export const WORKS: Category[] = [
             title: "At the Back End of Town",
             description:
               "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-            printType: "Linocut, wood block & Letterpress",
+            printType: "Linocut",
+            printEdition: 30,
+            size: "60 x 40 cm",
+            price: "£325",
             imageUrls: [
               "@assets/works/prints/theThreeProgresses/modernMarriage/2_at_the_back_end_of_town_fernando_feijoo.avif",
             ],
@@ -1511,7 +1570,10 @@ export const WORKS: Category[] = [
             title: "Conceived a Child",
             description:
               "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-            printType: "Linocut, wood block & Letterpress",
+            printType: "Linocut",
+            printEdition: 30,
+            size: "60 x 40 cm",
+            price: "£325",
             imageUrls: [
               "@assets/works/prints/theThreeProgresses/modernMarriage/3_conceived_a_child_fernando_feijoo.avif",
             ],
@@ -1521,7 +1583,10 @@ export const WORKS: Category[] = [
             title: "Young Wayne Became Wayward",
             description:
               "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-            printType: "Linocut, wood block & Letterpress",
+            printType: "Linocut",
+            printEdition: 30,
+            size: "60 x 40 cm",
+            price: "£325",
             imageUrls: [
               "@assets/works/prints/theThreeProgresses/modernMarriage/4_young_wayne_became_wayward_fernando_feijoo.avif",
             ],
@@ -1531,7 +1596,10 @@ export const WORKS: Category[] = [
             title: "Behind the Scenes",
             description:
               "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-            printType: "Linocut, wood block & Letterpress",
+            printType: "Linocut",
+            printEdition: 30,
+            size: "60 x 40 cm",
+            price: "£325",
             imageUrls: [
               "@assets/works/prints/theThreeProgresses/modernMarriage/5_behind_the_scenes_fernando_feijoo.avif",
             ],
@@ -1541,7 +1609,10 @@ export const WORKS: Category[] = [
             title: "The River Rats",
             description:
               "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-            printType: "Linocut, wood block & Letterpress",
+            printType: "Linocut",
+            printEdition: 30,
+            size: "60 x 40 cm",
+            price: "£325",
             imageUrls: [
               "@assets/works/prints/theThreeProgresses/modernMarriage/6_the_river_rats_fernando_feijoo.avif",
             ],
@@ -1551,7 +1622,10 @@ export const WORKS: Category[] = [
             title: "Walking the Line into Oblivion",
             description:
               "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-            printType: "Linocut, wood block & Letterpress",
+            printType: "Linocut",
+            printEdition: 30,
+            size: "60 x 40 cm",
+            price: "£325",
             imageUrls: [
               "@assets/works/prints/theThreeProgresses/modernMarriage/7_walking_the_line_into_oblivion_fernando_feijoo.avif",
             ],
@@ -1561,7 +1635,10 @@ export const WORKS: Category[] = [
             title: "Protecting a New Generation",
             description:
               "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-            printType: "Linocut, wood block & Letterpress",
+            printType: "Linocut",
+            printEdition: 30,
+            size: "60 x 40 cm",
+            price: "£325",
             imageUrls: [
               "@assets/works/prints/theThreeProgresses/modernMarriage/8_protecting_a_new_generation_fernando_feijoo.avif",
             ],
@@ -1571,14 +1648,17 @@ export const WORKS: Category[] = [
       {
         slug: "watch-and-bewitched",
         title: "Watch & Bewitched",
-        description: "",
+        description: "In theatres, halls and streets a stage is set. Performers transform into characters who tell their tales. The audience become entranced: a spell is cast. Roles can be reversed.",
         works: [
           {
             slug: "rumble-in-the-jungle",
             title: "Rumble in the Jungle",
             description:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-            printType: "Linocut, wood block & Letterpress",
+              "The procession passes.\nThe procession pauses.\nLeaves tremble, people quiver.\nThe procession passes.",
+            printType: "Linocut",
+            printEdition: 30,
+            size: "56 x 76 cm",
+            price: "£325",
             imageUrls: [
               "@assets/works/prints/watchBewitched/Rumble_in_the_Jungle_Fernando_Feijoo.avif",
             ],
@@ -1587,8 +1667,11 @@ export const WORKS: Category[] = [
             slug: "carrera-de-san-fermin",
             title: "Carrera de San Fermín",
             description:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-            printType: "Linocut, wood block & Letterpress",
+              "The bull runs, streets full of tourists turn to streets full of terror as the bulls charge the men who dare to defy these furious beasts. Commentators, safe behind the barriers, use inflammatory language; crowds, cowering behind each other, yell encouragement or disparagement.\nThe bulls are the heroes in this barbaric spectacle.",
+            printType: "Reduction Linocut",
+            printEdition: 10,
+            size: "30 x 20 cm",
+            price: "£150",
             imageUrls: [
               "@assets/works/prints/watchBewitched/Carrera_de_san_fermin__fernando_feijoo.avif",
             ],
@@ -1597,8 +1680,11 @@ export const WORKS: Category[] = [
             slug: "knock-out-1",
             title: "Knock Out 1",
             description:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-            printType: "Linocut, wood block & Letterpress",
+              "Fight as a game.\nFight for life.\nOn guard, guard down.\nLunge forward, fall back.\nKnocked out, a symbol of life.",
+            printType: "Colour Wood Cut",
+            printEdition: 30,
+            size: "80 x 60 cm",
+            price: "£150",
             imageUrls: [
               "@assets/works/prints/watchBewitched/knock-out_1_fernando_feijoo.avif",
             ],
@@ -1607,8 +1693,11 @@ export const WORKS: Category[] = [
             slug: "knock-out-2",
             title: "Knock Out 2",
             description:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-            printType: "Linocut, wood block & Letterpress",
+              "Fight as a game.\nFight for life.\nOn guard, guard down.\nLunge forward, fall back.\nKnocked out, a symbol of life.",
+            printType: "Wood Cut",
+            printEdition: 30,
+            size: "60 x 40 cm",
+            price: "£100",
             imageUrls: [
               "@assets/works/prints/watchBewitched/knock_out_2_fernando_feijoo.avif",
             ],
@@ -1617,8 +1706,11 @@ export const WORKS: Category[] = [
             slug: "knock-out-3",
             title: "Knock Out 3",
             description:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-            printType: "Linocut, wood block & Letterpress",
+              "Fight as a game.\nFight for life.\nOn guard, guard down.\nLunge forward, fall back.\nKnocked out, a symbol of life.",
+            printType: "Linocut",
+            printEdition: 10,
+            size: "30 x 62 cm",
+            price: "£125",
             imageUrls: [
               "@assets/works/prints/watchBewitched/Knock_Out_3_fernando_feijoo.avif",
             ],
@@ -1627,8 +1719,11 @@ export const WORKS: Category[] = [
             slug: "pamplona",
             title: "Pamplona",
             description:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-            printType: "Linocut, wood block & Letterpress",
+              "The bull runs, streets full of tourists turn to streets full of terror as the bulls charge the men who dare to defy these furious beasts. Commentators, safe behind the barriers, use inflammatory language; crowds, cowering behind each other, yell encouragement or disparagement.\nThe bulls are the heroes in this barbaric spectacle.",
+            printType: "Etching",
+            printEdition: 50,
+            size: "30 x 40 cm",
+            price: "£150",
             imageUrls: [
               "@assets/works/prints/watchBewitched/Pamplona_fernando_feijoo.avif",
             ],
@@ -1637,8 +1732,11 @@ export const WORKS: Category[] = [
             slug: "role-reversal-1",
             title: "Role Reversal 1",
             description:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-            printType: "Linocut, wood block & Letterpress",
+              "The roles have been switched.\nThe hunter becomes poacher.\nThe crowd roars, blood spills.\nThe triumphant stand defiantly.\nWho is laughing now?",
+            printType: "Screenprint",
+            printEdition: 10,
+            size: "60 x 80 cm",
+            price: "£95",
             imageUrls: [
               "@assets/works/prints/watchBewitched/Role_reversal_1_fernando_feijoo.avif",
             ],
@@ -1647,8 +1745,11 @@ export const WORKS: Category[] = [
             slug: "role-reversal-2",
             title: "Role Reversal 2",
             description:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-            printType: "Linocut, wood block & Letterpress",
+              "The roles have been switched.\nThe hunter becomes poacher.\nThe crowd roars, blood spills.\nThe triumphant stand defiantly.\nWho is laughing now?",
+            printType: "Screenprint",
+            printEdition: 10,
+            size: "60 x 80 cm",
+            price: "£95",
             imageUrls: [
               "@assets/works/prints/watchBewitched/Role_reversal_2_fernando_feijoo.avif",
             ],
@@ -1657,8 +1758,11 @@ export const WORKS: Category[] = [
             slug: "role-reversal-3",
             title: "Role Reversal 3",
             description:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-            printType: "Linocut, wood block & Letterpress",
+              "The roles have been switched.\nThe hunter becomes poacher.\nThe crowd roars, blood spills.\nThe triumphant stand defiantly.\nWho is laughing now?",
+            printType: "Screenprint",
+            printEdition: 10,
+            size: "60 x 80 cm",
+            price: "£95",
             imageUrls: [
               "@assets/works/prints/watchBewitched/Role_reversal_3_fernando_feijoo.avif",
             ],
@@ -1667,8 +1771,11 @@ export const WORKS: Category[] = [
             slug: "rudos-vs-tecnicos",
             title: "Rudos Vs Técnicos",
             description:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-            printType: "Linocut, wood block & Letterpress",
+              "Step into the arena, the fight is on, the crowd is roaring, but only one winner will stand triumphant and victorious. The identity of each fighter is masked. Superheroes battle amongst themselves. The crowd below beckons. Strength and power are on display as the magical minotaur steps into the arena to command supremacy over all that stand in his path.",
+            printType: "Stone Lithograph",
+            printEdition: 10,
+            size: "40 x 50 cm",
+            price: "£195",
             imageUrls: [
               "@assets/works/prints/watchBewitched/Rudos_Vs_Tecnicos_fernando_feijoo.avif",
             ],
@@ -1677,22 +1784,24 @@ export const WORKS: Category[] = [
             slug: "run-run-run",
             title: "Run Run Run",
             description:
-              "An exploration of sayings and expressions inspired by contemporary life. Machines are taking over. Glances at how media runs news, politicians run lives, and fake news runs away with facts. Themes: Technology, corruption, and control.",
-            printType:
-              "Linocut, Letterpress, and collage, ½ bound hardback cover",
+              "The bull runs, streets full of tourists turn to streets full of terror as the bulls charge the men who dare to defy these furious beasts. Commentators, safe behind the barriers, use inflammatory language; crowds, cowering behind each other, yell encouragement or disparagement.\nThe bulls are the heroes in this barbaric spectacle.",
+            printType: "Etching",
+            printEdition: 30,
+            size: "60 x 20 cm",
+            price: "£150",
             imageUrls: [
               "@assets/works/prints/watchBewitched/run-run-run_fernando_feijoo.avif",
             ],
-            price: "£850",
-            printEdition: 10,
-            size: "16 pages, 34 x 57 x 20 mm",
           },
           {
             slug: "take-down",
             title: "Take-Down",
             description:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-            printType: "Linocut, wood block & Letterpress",
+              "Fight as a game.\nFight for life.\nOn guard, guard down.\nLunge forward, fall back.\nKnocked out, a symbol of life.",
+            printType: "Etching",
+            printEdition: 30,
+            size: "20 x 15 cm",
+            price: "£125",
             imageUrls: [
               "@assets/works/prints/watchBewitched/Take-Down_fernando_feijoo.avif",
             ],
@@ -1701,19 +1810,24 @@ export const WORKS: Category[] = [
             slug: "temptation",
             title: "Temptation",
             description:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-            printType: "Linocut, wood block & Letterpress",
+              "The lustful Catrina bewitches the viewers, drawing them in with her powerful gaze.\nShe symbolises life and death, but which path will she choose for you?",
+            printType: "Linocut",
+            printEdition: 30,
+            size: "30 x 40 cm",
+            price: "£95",
             imageUrls: [
               "@assets/works/prints/watchBewitched/Temptation_fernando_feijoo.avif",
             ],
           },
           {
-            slug: "tollerance",
-            title: "Tollerance",
+            slug: "tolerance",
+            title: "Tolerance",
             description:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-            printType: "Linocut, wood block & Letterpress",
-            price: "£610",
+              "The triumphant Skeleton entertains his spectators as he pours out his magic potion which represents strength and power. Will you dare to sample this deadly drink and play the game of life and death?",
+            printType: "Linocut",
+            printEdition: 30,
+            size: "30 x 40 cm",
+            price: "£95",
             imageUrls: [
               "@assets/works/prints/watchBewitched/Tollerance_fernando_feijoo.avif",
             ],
@@ -1722,9 +1836,11 @@ export const WORKS: Category[] = [
             slug: "tomatina",
             title: "Tomatina",
             description:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-            printType: "Linocut, wood block & Letterpress",
-            price: "£610",
+              "The big trucks roll along the bumpy cobbled roads down into the village of Bunol near Valencia. There are no spectators in this festival, everyone is a participant.\nTake aim and fire.\nSwish, swash, slop – the target is hit. Now it is time to duck and hide.\nTrucks roll out, water hoses come out to spray everything down, and then the party begins.",
+            printType: "Lithograph",
+            printEdition: 30,
+            size: "50 x 20 cm",
+            price: "£95",
             imageUrls: [
               "@assets/works/prints/watchBewitched/Tomatina_fernando_feijoo.avif",
             ],
@@ -1758,7 +1874,7 @@ export const WORKS: Category[] = [
         imageUrls: ["@assets/works/ceramics/azrael/azrael.avif"],
       },
       {
-        slug: "bala",
+        slug: "bala-ceramic",
         title: "Bala",
         description:
           "The next terrible storm is named. Spinning and raging, destroying all in its path.",
@@ -1798,7 +1914,7 @@ export const WORKS: Category[] = [
         imageUrls: ["@assets/works/ceramics/lockdown/lockdown.avif"],
       },
       {
-        slug: "los-tres-amigos",
+        slug: "los-tres-amigos-ceramic",
         title: "Los Tres Amigos",
         description:
           "Superpowers' fights are big versions of spats. Social media, fake news, nuclear buttons.",
@@ -1808,7 +1924,7 @@ export const WORKS: Category[] = [
         imageUrls: ["@assets/works/ceramics/losTresAmigos/www1.avif"],
       },
       {
-        slug: "medusa",
+        slug: "medusa-ceramic",
         title: "Medusa",
         description:
           "Concepts of eating and glazing (Medusa's gaze). Open mouths invite consumption, but it is 'hell on a plate'. Warning of gluttony.",
@@ -1874,7 +1990,6 @@ export const WORKS: Category[] = [
             title: "Alfredo",
             description: "Character study from sketchbook.",
             printType: "Mixed Media on Paper",
-            price: "£180",
             imageUrls: ["@assets/works/sketchbooks/characters/Alfredo.avif"],
           },
           {
@@ -1882,7 +1997,6 @@ export const WORKS: Category[] = [
             title: "Amor",
             description: "Character study from sketchbook.",
             printType: "Mixed Media on Paper",
-            price: "£180",
             imageUrls: ["@assets/works/sketchbooks/characters/Amor.avif"],
           },
           {
@@ -1890,7 +2004,6 @@ export const WORKS: Category[] = [
             title: "Characters 2",
             description: "Character study from sketchbook.",
             printType: "Mixed Media on Paper",
-            price: "£180",
             imageUrls: [
               "@assets/works/sketchbooks/characters/Characters-2.avif",
             ],
@@ -1900,7 +2013,6 @@ export const WORKS: Category[] = [
             title: "Characters",
             description: "Character study from sketchbook.",
             printType: "Mixed Media on Paper",
-            price: "£180",
             imageUrls: ["@assets/works/sketchbooks/characters/Characters.avif"],
           },
           {
@@ -1908,7 +2020,6 @@ export const WORKS: Category[] = [
             title: "circus",
             description: "Character study from sketchbook.",
             printType: "Mixed Media on Paper",
-            price: "£180",
             imageUrls: ["@assets/works/sketchbooks/characters/circus.avif"],
           },
           {
@@ -1916,7 +2027,6 @@ export const WORKS: Category[] = [
             title: "Claude",
             description: "Character study from sketchbook.",
             printType: "Mixed Media on Paper",
-            price: "£180",
             imageUrls: ["@assets/works/sketchbooks/characters/Claude.avif"],
           },
           {
@@ -1924,7 +2034,6 @@ export const WORKS: Category[] = [
             title: "Dressing room",
             description: "Character study from sketchbook.",
             printType: "Mixed Media on Paper",
-            price: "£180",
             imageUrls: [
               "@assets/works/sketchbooks/characters/Dressing room.avif",
             ],
@@ -1934,7 +2043,6 @@ export const WORKS: Category[] = [
             title: "Fiesta",
             description: "Character study from sketchbook.",
             printType: "Mixed Media on Paper",
-            price: "£180",
             imageUrls: ["@assets/works/sketchbooks/characters/Fiesta.avif"],
           },
           {
@@ -1942,7 +2050,6 @@ export const WORKS: Category[] = [
             title: "homeless fernando feijoo",
             description: "Character study from sketchbook.",
             printType: "Mixed Media on Paper",
-            price: "£180",
             imageUrls: [
               "@assets/works/sketchbooks/characters/homeless_fernando_feijoo.avif",
             ],
@@ -1952,7 +2059,6 @@ export const WORKS: Category[] = [
             title: "homeless man 2 fernando feijoo",
             description: "Character study from sketchbook.",
             printType: "Mixed Media on Paper",
-            price: "£180",
             imageUrls: [
               "@assets/works/sketchbooks/characters/homeless_man_2_fernando_feijoo.avif",
             ],
@@ -1962,7 +2068,6 @@ export const WORKS: Category[] = [
             title: "los tres amigos",
             description: "Character study from sketchbook.",
             printType: "Mixed Media on Paper",
-            price: "£180",
             imageUrls: [
               "@assets/works/sketchbooks/characters/los_tres_amigos.avif",
             ],
@@ -1972,7 +2077,6 @@ export const WORKS: Category[] = [
             title: "Morning Coffee",
             description: "Character study from sketchbook.",
             printType: "Mixed Media on Paper",
-            price: "£180",
             imageUrls: [
               "@assets/works/sketchbooks/characters/Morning Coffee.avif",
             ],
@@ -1982,7 +2086,6 @@ export const WORKS: Category[] = [
             title: "mutton dressed as lamb",
             description: "Character study from sketchbook.",
             printType: "Mixed Media on Paper",
-            price: "£180",
             imageUrls: [
               "@assets/works/sketchbooks/characters/mutton dressed as lamb.avif",
             ],
@@ -1992,7 +2095,6 @@ export const WORKS: Category[] = [
             title: "Pedro",
             description: "Character study from sketchbook.",
             printType: "Mixed Media on Paper",
-            price: "£180",
             imageUrls: ["@assets/works/sketchbooks/characters/Pedro.avif"],
           },
           {
@@ -2000,7 +2102,6 @@ export const WORKS: Category[] = [
             title: "Puppets",
             description: "Character study from sketchbook.",
             printType: "Mixed Media on Paper",
-            price: "£180",
             imageUrls: ["@assets/works/sketchbooks/characters/Puppets.avif"],
           },
           {
@@ -2008,7 +2109,6 @@ export const WORKS: Category[] = [
             title: "redemption fernando feijoo",
             description: "Character study from sketchbook.",
             printType: "Mixed Media on Paper",
-            price: "£180",
             imageUrls: [
               "@assets/works/sketchbooks/characters/redemption_fernando_feijoo.avif",
             ],
@@ -2018,7 +2118,6 @@ export const WORKS: Category[] = [
             title: "Semana Santa",
             description: "Character study from sketchbook.",
             printType: "Mixed Media on Paper",
-            price: "£180",
             imageUrls: [
               "@assets/works/sketchbooks/characters/Semana Santa.avif",
             ],
@@ -2028,7 +2127,6 @@ export const WORKS: Category[] = [
             title: "Street performers",
             description: "Character study from sketchbook.",
             printType: "Mixed Media on Paper",
-            price: "£180",
             imageUrls: [
               "@assets/works/sketchbooks/characters/Street performers.avif",
             ],
@@ -2038,7 +2136,6 @@ export const WORKS: Category[] = [
             title: "The debate",
             description: "Character study from sketchbook.",
             printType: "Mixed Media on Paper",
-            price: "£180",
             imageUrls: ["@assets/works/sketchbooks/characters/The debate.avif"],
           },
           {
@@ -2046,7 +2143,6 @@ export const WORKS: Category[] = [
             title: "Two beggers",
             description: "Character study from sketchbook.",
             printType: "Mixed Media on Paper",
-            price: "£180",
             imageUrls: [
               "@assets/works/sketchbooks/characters/Two beggers.avif",
             ],
@@ -2056,7 +2152,6 @@ export const WORKS: Category[] = [
             title: "Virgin of Anguish",
             description: "Character study from sketchbook.",
             printType: "Mixed Media on Paper",
-            price: "£180",
             imageUrls: [
               "@assets/works/sketchbooks/characters/Virgin of Anguish.avif",
             ],
@@ -2066,14 +2161,13 @@ export const WORKS: Category[] = [
             title: "witches",
             description: "Character study from sketchbook.",
             printType: "Mixed Media on Paper",
-            price: "£180",
             imageUrls: ["@assets/works/sketchbooks/characters/witches.avif"],
           },
         ],
       },
       {
-        slug: "locations",
-        title: "Locations",
+        slug: "architecture",
+        title: "Architecture",
         description: "Architectural and landscape studies from various places.",
         works: [
           {
@@ -2081,7 +2175,6 @@ export const WORKS: Category[] = [
             title: "Alcázar de los Reyes Cristianos Cordoba",
             description: "Location study from sketchbook.",
             printType: "Mixed Media on Paper",
-            price: "£180",
             imageUrls: [
               "@assets/works/sketchbooks/locations/Alcázar de los Reyes Cristianos Cordoba.avif",
             ],
@@ -2091,7 +2184,6 @@ export const WORKS: Category[] = [
             title: "Architectural study of facade in Malaga",
             description: "Location study from sketchbook.",
             printType: "Mixed Media on Paper",
-            price: "£180",
             imageUrls: [
               "@assets/works/sketchbooks/locations/Architectural study of facade in Malaga.avif",
             ],
@@ -2101,7 +2193,6 @@ export const WORKS: Category[] = [
             title: "back street Porto",
             description: "Location study from sketchbook.",
             printType: "Mixed Media on Paper",
-            price: "£180",
             imageUrls: [
               "@assets/works/sketchbooks/locations/back street Porto.avif",
             ],
@@ -2111,7 +2202,6 @@ export const WORKS: Category[] = [
             title: "castell de ferro Granada",
             description: "Location study from sketchbook.",
             printType: "Mixed Media on Paper",
-            price: "£180",
             imageUrls: [
               "@assets/works/sketchbooks/locations/castell de ferro Granada.avif",
             ],
@@ -2121,7 +2211,6 @@ export const WORKS: Category[] = [
             title: "cromer Pier and Hotel de Paris",
             description: "Location study from sketchbook.",
             printType: "Mixed Media on Paper",
-            price: "£180",
             imageUrls: [
               "@assets/works/sketchbooks/locations/cromer Pier and Hotel de Paris.avif",
             ],
@@ -2131,7 +2220,6 @@ export const WORKS: Category[] = [
             title: "cromer Pier",
             description: "Location study from sketchbook.",
             printType: "Mixed Media on Paper",
-            price: "£180",
             imageUrls: ["@assets/works/sketchbooks/locations/cromer Pier.avif"],
           },
           {
@@ -2139,7 +2227,6 @@ export const WORKS: Category[] = [
             title: "malaga botanical gardens",
             description: "Location study from sketchbook.",
             printType: "Mixed Media on Paper",
-            price: "£180",
             imageUrls: [
               "@assets/works/sketchbooks/locations/malaga botanical gardens.avif",
             ],
@@ -2149,7 +2236,6 @@ export const WORKS: Category[] = [
             title: "Norte y Sur bar Cordoba",
             description: "Location study from sketchbook.",
             printType: "Mixed Media on Paper",
-            price: "£180",
             imageUrls: [
               "@assets/works/sketchbooks/locations/Norte y Sur bar Cordoba.avif",
             ],
@@ -2159,7 +2245,6 @@ export const WORKS: Category[] = [
             title: "outside the Red Lion Cromer",
             description: "Location study from sketchbook.",
             printType: "Mixed Media on Paper",
-            price: "£180",
             imageUrls: [
               "@assets/works/sketchbooks/locations/outside the Red Lion Cromer.avif",
             ],
@@ -2169,7 +2254,6 @@ export const WORKS: Category[] = [
             title: "Playa fernando feijoo",
             description: "Location study from sketchbook.",
             printType: "Mixed Media on Paper",
-            price: "£180",
             imageUrls: [
               "@assets/works/sketchbooks/locations/Playa_fernando_feijoo.avif",
             ],
@@ -2179,7 +2263,6 @@ export const WORKS: Category[] = [
             title: "Reims cathedral France",
             description: "Location study from sketchbook.",
             printType: "Mixed Media on Paper",
-            price: "£180",
             imageUrls: [
               "@assets/works/sketchbooks/locations/Reims cathedral France.avif",
             ],
@@ -2189,7 +2272,6 @@ export const WORKS: Category[] = [
             title: "Rouen cathedral",
             description: "Location study from sketchbook.",
             printType: "Mixed Media on Paper",
-            price: "£180",
             imageUrls: [
               "@assets/works/sketchbooks/locations/Rouen cathedral.avif",
             ],
@@ -2199,7 +2281,6 @@ export const WORKS: Category[] = [
             title: "The Red house Cromer",
             description: "Location study from sketchbook.",
             printType: "Mixed Media on Paper",
-            price: "£180",
             imageUrls: [
               "@assets/works/sketchbooks/locations/The Red house Cromer.avif",
             ],
@@ -2209,7 +2290,6 @@ export const WORKS: Category[] = [
             title: "Toledo",
             description: "Location study from sketchbook.",
             printType: "Mixed Media on Paper",
-            price: "£180",
             imageUrls: ["@assets/works/sketchbooks/locations/Toledo.avif"],
           },
           {
@@ -2217,7 +2297,6 @@ export const WORKS: Category[] = [
             title: "watching the waves",
             description: "Location study from sketchbook.",
             printType: "Mixed Media on Paper",
-            price: "£180",
             imageUrls: [
               "@assets/works/sketchbooks/locations/watching the waves.avif",
             ],
@@ -2225,8 +2304,8 @@ export const WORKS: Category[] = [
         ],
       },
       {
-        slug: "sketches",
-        title: "Sketches",
+        slug: "locations",
+        title: "Locations",
         description: "Various sketchbook studies and explorations.",
         works: [
           {
@@ -2234,7 +2313,6 @@ export const WORKS: Category[] = [
             title: "botanical Garden Malaga",
             description: "Sketchbook study.",
             printType: "Mixed Media on Paper",
-            price: "£180",
             imageUrls: ["@assets/works/sketchbooks/botanicalGardenMalaga.avif"],
           },
           {
@@ -2242,7 +2320,6 @@ export const WORKS: Category[] = [
             title: "cadaques",
             description: "Sketchbook study.",
             printType: "Mixed Media on Paper",
-            price: "£180",
             imageUrls: ["@assets/works/sketchbooks/cadaques.avif"],
           },
           {
@@ -2250,7 +2327,6 @@ export const WORKS: Category[] = [
             title: "castel De Ferro",
             description: "Sketchbook study.",
             printType: "Mixed Media on Paper",
-            price: "£180",
             imageUrls: ["@assets/works/sketchbooks/castelDeFerro.avif"],
           },
           {
@@ -2258,15 +2334,13 @@ export const WORKS: Category[] = [
             title: "character Design",
             description: "Sketchbook study.",
             printType: "Mixed Media on Paper",
-            price: "£180",
             imageUrls: ["@assets/works/sketchbooks/characterDesign.avif"],
           },
           {
-            slug: "circus",
+            slug: "circus-sketch",
             title: "circus",
             description: "Sketchbook study.",
             printType: "Mixed Media on Paper",
-            price: "£180",
             imageUrls: ["@assets/works/sketchbooks/circus.avif"],
           },
           {
@@ -2274,7 +2348,6 @@ export const WORKS: Category[] = [
             title: "malaga",
             description: "Sketchbook study.",
             printType: "Mixed Media on Paper",
-            price: "£180",
             imageUrls: ["@assets/works/sketchbooks/malaga.avif"],
           },
           {
@@ -2282,7 +2355,6 @@ export const WORKS: Category[] = [
             title: "playa",
             description: "Sketchbook study.",
             printType: "Mixed Media on Paper",
-            price: "£180",
             imageUrls: ["@assets/works/sketchbooks/playa.avif"],
           },
           {
@@ -2290,7 +2362,6 @@ export const WORKS: Category[] = [
             title: "repent",
             description: "Sketchbook study.",
             printType: "Mixed Media on Paper",
-            price: "£180",
             imageUrls: ["@assets/works/sketchbooks/repent.avif"],
           },
           {
@@ -2298,7 +2369,6 @@ export const WORKS: Category[] = [
             title: "semana Santa",
             description: "Sketchbook study.",
             printType: "Mixed Media on Paper",
-            price: "£180",
             imageUrls: ["@assets/works/sketchbooks/semanaSanta.avif"],
           },
           {
@@ -2306,7 +2376,6 @@ export const WORKS: Category[] = [
             title: "view Into The Distance",
             description: "Sketchbook study.",
             printType: "Mixed Media on Paper",
-            price: "£180",
             imageUrls: ["@assets/works/sketchbooks/viewIntoTheDistance.avif"],
           },
         ],
@@ -2327,9 +2396,11 @@ export const WORKS: Category[] = [
             slug: "contemporary-street-alphabet-1",
             title: "Contemporary Street Alphabet",
             description:
-              "An alphabet book of modern-day street characters with text by Pat Francis. A savage portrayal of the city, depicting victims and perpetrators, horror and humour.",
-            printType: "Artist Book",
-            price: "£95",
+              "An alphabet book of modern-day street characters within the city with text by Pat Francis. Inspired by some of the biting satires from history but conceived during the early years of the new millennium, this quite savage portrayal of the streets of our cities, depicts both sad and exploited victims, as well as their perpetrators. The cartoonish stereotypes and characters are presented through the form of an alphabet with crude texts reflecting the horror and humour of the metropolis.",
+            printType: "Offset lithograph & Letterpress",
+            printEdition: 50,
+            size: "32 pages, 250 x 200 x 30 mm",
+            price: "£150",
             imageUrls: [
               "@assets/works/artistBooks/contemporaryStreetAlphabet/1.avif",
               "@assets/works/artistBooks/contemporaryStreetAlphabet/2.avif",
@@ -2351,9 +2422,11 @@ export const WORKS: Category[] = [
             slug: "crack-progress-charlies-progress-1",
             title: "Crack Progress & Charlie's Progress",
             description:
-              "Two tales in one book. Crack's Progress: A modern fable based on Hogarth's A Rake's Progress; a tale of drugs, crime, prison, and Bedlam. Charlie's Progress: Based on Hogarth's A Harlot's Progress; follows Crack's sister Charlie through London's low life, exploitation, and eventual recovery.",
-            printType: "Artist Book",
-            price: "£75",
+              "Crack's Progress: Loosely based on Hogarth's A Rake's Progress this is a modern fable of dark morality and crime and corruption. Crack, with his faithful dog Spike, fight and bite and deal in drugs. Using contemporary slang and rap rhythms the tale is told of the descent into the grim underbelly of society with the use and abuse of women as well as substances, but finally Crack is caught. He is convicted in a trial scene, depicted in the strong fourth frame. He comes out of prison further corrupted and continues but is finally driven crazy by his drug habit and he kills. He is sent to Bedlam (with more than a nod to Hogarth) and, in the final frame, a mad Crack appears to die. But the final Full stop is not the end.\n\nCharlie's Progress: This second tale is inspired by Hogarth's A Harlot's progress. Charlie, Crack's sister, is more rooted in the family background as the opening scene shows the 'faux' nouveau riche mansion of her father. Her trip to London reveals the dark low life of London with drugs and violence as the norm. The corruption at the top of society is lampooned, but the victim is Charlie and also her younger sister Tara. Both girls are viciously exploited by their aunt – seen as like a black widow spider. Charlie recovers, painfully, from her addiction and seeks help from her brother Crack, in the final open-ended scenes.",
+            printType: "Offset lithograph from scaled down original linocuts",
+            printEdition: 50,
+            size: "20 pages, 250 x 250 x 30 mm, hardback cover dos a dos artist book",
+            price: "£125",
             imageUrls: [
               "@assets/works/artistBooks/crackProgressCharliesProgress/1.avif",
               "@assets/works/artistBooks/crackProgressCharliesProgress/2.avif",
@@ -2373,9 +2446,9 @@ export const WORKS: Category[] = [
             slug: "future-1",
             title: "Future",
             description:
-              "Created in a time of great uncertainty. Parallels seen between superpowers (Kim Jong-un, Trump, Putin). Themes: Nuclear threat, greed, power corruption, and global communication manipulation. 'The Future is now.'",
-            printType: "Linocut, Letterpress, and collage, hardback cover",
-            price: "£395",
+              "Created in a time of great uncertainty there is an unease which pervades all areas of society. With the world's superpowers challenging each other and strutting like boxers in a heavy weight contest, parallels are seen between Kim Jong-un and Trump and Putin. Who will nuke the world first? Who uses nerve agents to poison one man, while potentially many are caught in the collateral? Greed dominates: power corrupts. Myths are referenced – who is burnt by flying too close to the sun? Global communication systems spread knowledge or fakery, rumour or subversion. The artist makes cultural nods to David Bowie and others and shows that popular music, which pervades every nation, is manipulated to mesmerize the populations of the world. With chilling resonances, this work reflects the times we live in, whenever that is, and whatever little details may appear to change. The Future is now.",
+            printType: "Linocut, Letterpress, and collage",
+            price: "£750",
             imageUrls: [
               "@assets/works/artistBooks/future/1.avif",
               "@assets/works/artistBooks/future/2.avif",
@@ -2399,10 +2472,9 @@ export const WORKS: Category[] = [
             slug: "gods-monsters-book-1",
             title: "Gods & Monsters Book",
             description:
-              "A large format alphabet book illustrating the surreal creatures and spiritual powers of the mighty legendary Gods and mythical beasts from the underworld. Inspired by Ovid's Metamorphosis, Greek Mythology and childhood memories. Themes include the fusion of villain and hero (Picasso's Minotaur), the passage of life, and good versus evil.",
-            printType:
-              "Linocut, wood block & Letterpress, hardback cover concertina book",
-            price: "£995",
+              "A large format alphabet book illustrating the surreal creatures and spiritual powers of the mighty legendary Gods and mythical beasts from the underworld.\n\nThe works were inspired from a number of sources including Tales from Ovid's Metamorphosis, Greek Mythology and childhood memories or these surreal narratives and the fantasies they created in my own mind.\n\nEach character blends the ancient and the modern as well as stimuli from other artists' interpretations. Picasso's Minotaur motivated the fusion of villain and hero which is a connecting theme running throughout several of the prints.\n\nFurther themes are explored including the passage of life with lovers rising to the heavens and demons dragging sinners deep into the depths of hell. The creation of the universe by the powerful Gods is represented through a narrative series of black and white prints which illustrate good versus evil. A combination of lino and wood cut printing techniques complement one another giving rich textural patterns and expressive mark making creating powerful visual imagery.",
+            printType: "Linocut, wood block & Letterpress",
+            price: "£1500",
             imageUrls: [
               "@assets/works/artistBooks/godsMonsters/1.avif",
               "@assets/works/artistBooks/godsMonsters/2.avif",
@@ -2412,7 +2484,7 @@ export const WORKS: Category[] = [
               "@assets/works/artistBooks/godsMonsters/6.avif",
             ],
             printEdition: 10,
-            size: "32 pp, 570 x 370 x 38 mm",
+            size: "32 pp, 570 x 370 x 38 mm, hardback cover concertina book",
           },
         ],
       },
@@ -2426,10 +2498,9 @@ export const WORKS: Category[] = [
             slug: "modern-marriage-1",
             title: "Modern Marriage",
             description:
-              "Interweaves the 'Progress' stories. Tara (rich) and Darren (nouveau riche) marry. Themes: Debt, crime, neglect (their child Wayne), and ultimate tragedy followed by redemption through siblings Crack and Charlie.",
-            printType:
-              "Offset lithograph & Letterpress, hardback cover with screen printed band",
-            price: "£50",
+              "Modern Marriage had a longer evolution and proved more complex to interpret for a contemporary audience – even the title creating difficulties in how it would relate to 'progress' and to modern marriage patterns.\n\nIn scene one the viewer is introduced to Tara, a spoilt brat, who poses with her horse, as her father's business empire is threatened and a luxury car is towed away. In contrast, scene two is set in the back end of the city where Den and his son Darren exist. But while Den thrives through a range of nefarious activities, he needs money laundering contacts and friends in the higher rungs of society. Darren is a waste of space. The two fathers come up with a deal and marry off the two youngsters. Thus 'real rich' meets 'nouveau riche': the eternal devil's knot.\n\nIn scene four young Wayne is neglected and sees sights of crime and horror, exemplified by the illegal dog fight. Darren gets into horrendous debt and from the bottom of the pit to which he has sunk sells his wife and son into pornography. But even this deal goes bad and he is murdered. Shocked into consciousness and blaming herself Tara decides to end her own life and that of her wayward son. But their fall is caught by Tara's older brother and sister, Crack and Charlie. There are some signs that there may be redemption for all at last.",
+            printType: "Offset lithograph & Letterpress",
+            price: "£75",
             imageUrls: [
               "@assets/works/artistBooks/modernMarriage/1.avif",
               "@assets/works/artistBooks/modernMarriage/2.avif",
@@ -2437,7 +2508,7 @@ export const WORKS: Category[] = [
               "@assets/works/artistBooks/modernMarriage/4.avif",
             ],
             printEdition: 50,
-            size: "62 pp, 230 x 163 x 13 mm",
+            size: "62 pp, 230 x 163 x 13 mm, hardback cover with screen printed band",
           },
         ],
       },
@@ -2451,10 +2522,9 @@ export const WORKS: Category[] = [
             slug: "run-book-1",
             title: "Run Book",
             description:
-              "An exploration of sayings and expressions inspired by contemporary life. Machines are taking over. Glances at how media runs news, politicians run lives, and fake news runs away with facts. Themes: Technology, corruption, and control.",
-            printType:
-              "Linocut, Letterpress, and collage, ½ bound hardback cover",
-            price: "£850",
+              "RUN is an exploration of the sayings and expressions inspired by contemporary life. Machines are taking over and we are being run by them. With minds of their own and with features strangely like ours, with their big eyes, sharp teeth and weird distorted humour, we can see glimpses of how the media runs the news, how politicians run and ruin lives, and how fake news runs away with the facts. Steroid fuelled rockets power their way, running through lives, and sending the humans running for cover. Corruption runs through every vein and artery. Big bosses manipulate the workforce. Deception rules: rulers run riot. So, who controls who? Who is running the show?",
+            printType: "Linocut, Letterpress, and collage",
+            price: "£999",
             imageUrls: [
               "@assets/works/artistBooks/run/1.avif",
               "@assets/works/artistBooks/run/2.avif",
@@ -2464,7 +2534,7 @@ export const WORKS: Category[] = [
               "@assets/works/artistBooks/run/6.avif",
             ],
             printEdition: 10,
-            size: "16 pages, 34 x 57 x 20 mm",
+            size: "16 pages, 34 x 57 x 20 mm, ½ bound hardback cover",
           },
         ],
       },
@@ -2478,9 +2548,11 @@ export const WORKS: Category[] = [
             slug: "the-journey-man-book-1",
             title: "The Journey Man Book",
             description:
-              "Inspired by a surreal dream and the universal idea of the journeyman. The labyrinth represents the twists and turns of modern life. Symbols include the jellyfish (rescue/care) and the dream catcher. Themes: life's excitements, fears and dangers. A story that does not end: it evolves with the times.",
-            printType: "Artist Book",
-            price: "£395",
+              "Journeyman was inspired by a surreal dream many years ago. With references to the artist's own experiences, but also in the spirit of the universal idea of the journeyman, it nods to everyman, every person. The labyrinth represents the twists and turns and blind alleys of modern life and reflects our confusion and despairs at decisions to be made, paths to take.\n\nChoices made are in our power, but we can fall foul of authorities, beliefs, expectations and desires. With poignant use of symbolism, the jelly fish has babies and these both rescue, and are cared for by the journeyman. There is love and there are safety nets and the journeyman is like a dream catcher: but there is also the dominant theme of life's excitements, fears and dangers. A story that does not end: it evolves with whatever the times we live in.",
+            printType: "Etching & Letterpress",
+            printEdition: 15,
+            size: "12 pages, 188 x 253 x 24 mm, hardback cover concertina book",
+            price: "£800",
             imageUrls: [
               "@assets/works/artistBooks/theJourneyMan/1.avif",
               "@assets/works/artistBooks/theJourneyMan/2.avif",
@@ -2505,10 +2577,11 @@ export const WORKS: Category[] = [
         works: [
           {
             slug: "pagannini",
-            title: "pagannini",
-            description: "Mixed media artwork.",
-            printType: "Mixed Media",
-            price: "£450",
+            title: "Pagannini",
+            description: "This piece was inspired from the Labyrinth of Dreams project and shows the spectacular finale performance in the grand theatre. All the monsters and players have come to see her sing one last song. Inspired by a visit to see the great Ara Malikian, the violin player, and painted collaboratively with Rafa Armero.",
+            printType: "Painting onto the inside of a wooden wardrobe",
+            size: "300 x 200 cm",
+            price: "NFS",
             imageUrls: ["@assets/works/mixed/drawings/pagannini.avif"],
           },
         ],
@@ -2516,108 +2589,120 @@ export const WORKS: Category[] = [
       {
         slug: "labyrinth-of-dreams",
         title: "Labyrinth of Dreams",
-        description: "",
+        description: "This collaborative project was made with Rafa Armero in response to a series of short stories which explore a lost man trying to find himself in a surreal world surrounded by chickens, monsters, hunters, and demons. Alternating between split personalities, decisions are made which have future consequences. As the moon emerges his darker inner desires and fantasies are played out in reality as he wanders through the labyrinthine streets of the deeply dark city.",
         works: [
           {
             slug: "arrogance",
-            title: "arrogance",
-            description: "Mixed media artwork.",
-            printType: "Mixed Media",
-            price: "£450",
+            title: "Arrogance",
+            description: "Lurking the streets at night,\nTwitching urges take over his mind.\nWho will be his next victim?\nOr will the hunter become the hunted?",
+            printType: "Painting, Indian inks & collage",
+            size: "40 x 30 cm",
+            price: "£350",
             imageUrls: ["@assets/works/mixed/labyrinthOfDreams/arrogance.avif"],
           },
           {
             slug: "condemnation",
-            title: "condemnation",
-            description: "Mixed media artwork.",
-            printType: "Mixed Media",
-            price: "£450",
+            title: "Condemnation",
+            description: "Judgment day:\nCrimes committed, blood spilt, bodies discarded:\nDown comes the hammer:\nSentenced: bang goes the trap door.\nSnap go the bones in his neck.",
+            printType: "Painting, Indian inks & collage",
+            size: "40 x 30 cm",
+            price: "£350",
             imageUrls: [
               "@assets/works/mixed/labyrinthOfDreams/condemnation.avif",
             ],
           },
           {
             slug: "creation",
-            title: "creation",
-            description: "Mixed media artwork.",
-            printType: "Mixed Media",
-            price: "£450",
+            title: "Creation",
+            description: "Navigating high above in the midnight sky\nStars are within a hand's reach,\nCatching the dreams as they float on high.\nReady to deliver nightmares to the next victims.",
+            printType: "Painting, Indian inks & collage",
+            size: "40 x 30 cm",
+            price: "£350",
             imageUrls: ["@assets/works/mixed/labyrinthOfDreams/creation.avif"],
           },
           {
             slug: "evasion",
-            title: "evasion",
-            description: "Mixed media artwork.",
-            printType: "Mixed Media",
-            price: "£450",
+            title: "Evasion",
+            description: "Time to leave…\nBut no time to go. Nowhere to go…\nRumbling, rushing, roaring towards him…\nHis time has past…",
+            printType: "Painting, Indian inks & collage",
+            size: "40 x 30 cm",
+            price: "£350",
             imageUrls: ["@assets/works/mixed/labyrinthOfDreams/evasion.avif"],
           },
           {
             slug: "greed",
-            title: "greed",
-            description: "Mixed media artwork.",
-            printType: "Mixed Media",
-            price: "£450",
+            title: "Greed",
+            description: "They came to dine: smart and strutted,\nLike a bunch of festering swine.\nStuffed their faces, gulped the wine.\nSoon to stop: necks on the block\nChip, chap, CHOP.",
+            printType: "Painting, Indian inks & collage",
+            size: "40 x 30 cm",
+            price: "£350",
             imageUrls: ["@assets/works/mixed/labyrinthOfDreams/greed.avif"],
           },
           {
             slug: "hunter",
-            title: "hunter",
-            description: "Mixed media artwork.",
-            printType: "Mixed Media",
-            price: "£450",
+            title: "Hunter",
+            description: "Trophies in a row,\nMemories of those swine:\nHow they laughed at him!\nWho's laughing now?",
+            printType: "Painting, Indian inks & collage",
+            size: "40 x 30 cm",
+            price: "£350",
             imageUrls: ["@assets/works/mixed/labyrinthOfDreams/hunter.avif"],
           },
           {
-            slug: "ilumination",
-            title: "ilumination",
-            description: "Mixed media artwork.",
-            printType: "Mixed Media",
-            price: "£450",
+            slug: "illumination",
+            title: "Illumination",
+            description: "Flickering lightbulb,\nA spotlight floods the mirror.\nA searchlight reveals\nWhat is looking at him.",
+            printType: "Painting, Indian inks & collage",
+            size: "40 x 30 cm",
+            price: "£350",
             imageUrls: [
               "@assets/works/mixed/labyrinthOfDreams/ilumination.avif",
             ],
           },
           {
             slug: "lost",
-            title: "lost",
-            description: "Mixed media artwork.",
-            printType: "Mixed Media",
-            price: "£450",
+            title: "Lost",
+            description: "Standing triumphant,\nVictorious and proud.\nNow ruler of the world\nYou all will listen.",
+            printType: "Painting, Indian inks & collage",
+            size: "40 x 30 cm",
+            price: "£350",
             imageUrls: ["@assets/works/mixed/labyrinthOfDreams/lost.avif"],
           },
           {
-            slug: "obssesion",
-            title: "obssesion",
-            description: "Mixed media artwork.",
-            printType: "Mixed Media",
-            price: "£450",
+            slug: "obsession",
+            title: "Obsession",
+            description: "Down the back alleys stumbling.\nSquawking and screaming,\nScarpering and screeching.\nBlade scything, wings flapping.\nBlood...",
+            printType: "Painting, Indian inks & collage",
+            size: "40 x 30 cm",
+            price: "£350",
             imageUrls: ["@assets/works/mixed/labyrinthOfDreams/obssesion.avif"],
           },
           {
             slug: "persuasion",
-            title: "persuasion",
-            description: "Mixed media artwork.",
-            printType: "Mixed Media",
-            price: "£450",
+            title: "Persuasion",
+            description: "Coin drops: eyes light up.\nThe future is you; now you must make it.\nDecisions to be made.\nBut what to believe?",
+            printType: "Painting, Indian inks & collage",
+            size: "40 x 30 cm",
+            price: "£350",
             imageUrls: [
               "@assets/works/mixed/labyrinthOfDreams/persuasion.avif",
             ],
           },
           {
             slug: "reality",
-            title: "reality",
-            description: "Mixed media artwork.",
-            printType: "Mixed Media",
-            price: "£450",
+            title: "Reality",
+            description: "Clothes or hats to consider\nWhat to wear?\nBut in the mirror\nThe soul's laid bare.",
+            printType: "Painting, Indian inks & collage",
+            size: "40 x 30 cm",
+            price: "£350",
             imageUrls: ["@assets/works/mixed/labyrinthOfDreams/reality.avif"],
           },
           {
-            slug: "thefinalbow",
-            title: "theFinalBow",
-            description: "Mixed media artwork.",
-            printType: "Mixed Media",
-            price: "£450",
+            slug: "the-final-bow",
+            title: "The Final Bow",
+            description: "The grand finale.\nThe spotlight focuses.\nThe audience can see\nThe bare bones of truth\nAt last.",
+            printType: "Painting, Indian inks & collage",
+            size: "40 x 30 cm",
+            price: "£350",
             imageUrls: [
               "@assets/works/mixed/labyrinthOfDreams/theFinalBow.avif",
             ],
@@ -2625,8 +2710,8 @@ export const WORKS: Category[] = [
         ],
       },
       {
-        slug: "others",
-        title: "Others",
+        slug: "collage",
+        title: "Collage",
         description: "",
         works: [
           {
@@ -2634,7 +2719,6 @@ export const WORKS: Category[] = [
             title: "Cadaques Church Spain",
             description: "Mixed media artwork.",
             printType: "Mixed Media",
-            price: "£450",
             imageUrls: [
               "@assets/works/mixed/others/Cadaques Church Spain.avif",
             ],
@@ -2644,7 +2728,6 @@ export const WORKS: Category[] = [
             title: "Castel de Ferro Spain",
             description: "Mixed media artwork.",
             printType: "Mixed Media",
-            price: "£450",
             imageUrls: [
               "@assets/works/mixed/others/Castel_de_Ferro_Spain.avif",
             ],
@@ -2654,7 +2737,6 @@ export const WORKS: Category[] = [
             title: "Castel de Ferro beach",
             description: "Mixed media artwork.",
             printType: "Mixed Media",
-            price: "£450",
             imageUrls: [
               "@assets/works/mixed/others/Castel_de_Ferro_beach.avif",
             ],
@@ -2664,7 +2746,6 @@ export const WORKS: Category[] = [
             title: "Cruzcampo",
             description: "Mixed media artwork.",
             printType: "Mixed Media",
-            price: "£450",
             imageUrls: ["@assets/works/mixed/others/Cruzcampo.avif"],
           },
           {
@@ -2672,7 +2753,6 @@ export const WORKS: Category[] = [
             title: "Malaga Port",
             description: "Mixed media artwork.",
             printType: "Mixed Media",
-            price: "£450",
             imageUrls: ["@assets/works/mixed/others/Malaga_Port.avif"],
           },
           {
@@ -2680,7 +2760,6 @@ export const WORKS: Category[] = [
             title: "Old Cinema Malaga",
             description: "Mixed media artwork.",
             printType: "Mixed Media",
-            price: "£450",
             imageUrls: ["@assets/works/mixed/others/Old_Cinema_Malaga.avif"],
           },
           {
@@ -2688,17 +2767,15 @@ export const WORKS: Category[] = [
             title: "Plaza de la Corredera, Cordoba Spain",
             description: "Mixed media artwork.",
             printType: "Mixed Media",
-            price: "£450",
             imageUrls: [
               "@assets/works/mixed/others/Plaza_de_la_Corredera,_Cordoba_Spain.avif",
             ],
           },
           {
-            slug: "viewintothedistance",
+            slug: "view-into-the-distance-mixed",
             title: "viewIntoTheDistance",
             description: "Mixed media artwork.",
             printType: "Mixed Media",
-            price: "£450",
             imageUrls: ["@assets/works/mixed/others/viewIntoTheDistance.avif"],
           },
           {
@@ -2706,7 +2783,6 @@ export const WORKS: Category[] = [
             title: "waves",
             description: "Mixed media artwork.",
             printType: "Mixed Media",
-            price: "£450",
             imageUrls: ["@assets/works/mixed/others/waves.avif"],
           },
         ],
@@ -2718,10 +2794,10 @@ export const WORKS: Category[] = [
         works: [
           {
             slug: "luchador",
-            title: "luchador",
-            description: "Mixed media artwork.",
-            printType: "Mixed Media",
-            price: "£450",
+            title: "Luchador",
+            description: "This collaborative street art piece was produced with Pilar Munoz at La Curtiduría in Oaxaca, Mexico, whilst attending an artist residency at the studio. Reflections on the culture and life in Mexico and Lucha Libre tournaments influenced the production of this piece of work.",
+            printType: "Painting and collage",
+            size: "5 x 4 meters",
             imageUrls: ["@assets/works/mixed/paintings/luchador.avif"],
           },
           {
@@ -2729,7 +2805,7 @@ export const WORKS: Category[] = [
             title: "putaGallina",
             description: "Mixed media artwork.",
             printType: "Mixed Media",
-            price: "£450",
+            price: "NFS",
             imageUrls: ["@assets/works/mixed/paintings/putaGallina.avif"],
           },
         ],
@@ -2737,54 +2813,50 @@ export const WORKS: Category[] = [
       {
         slug: "the-war-theatre",
         title: "The War Theatre",
-        description: "",
+        description: "This piece is a unique exploration of the idea of who is the audience, and who is the performance for?",
         works: [
           {
-            slug: "1",
-            title: "1",
-            description: "Mixed media artwork.",
-            printType: "Mixed Media",
-            price: "£450",
+            slug: "the-war-theatre-1",
+            title: "Theatre of War",
+            description: "This piece is a unique exploration of the idea of who is the audience, and who is the performance for? The concept of cutting elements from a two dimensional set of four prints which pan downwards into the depths of hell, to a three dimensional theatre set, produces different questions, differing perspectives and raises, as all live performances do, dialogues between performer and viewer. Nothing is static, just as the topics raised here, are not. But overarching all is the frightening theme of Big Brother looming over us, pulling strings and wielding power and control which seem to be taken out of our hands. However, an audience/viewer are not passive: they can, and must, react.",
+            printType: "Lino cut prints & card",
+            size: "60 x 55 x 45 cm (W x H x D)",
+            price: "£2000",
             imageUrls: ["@assets/works/mixed/theWarTheatre/1.avif"],
           },
           {
-            slug: "2",
-            title: "2",
+            slug: "the-war-theatre-2",
+            title: "The War Theatre 2",
             description: "Mixed media artwork.",
-            printType: "Mixed Media",
-            price: "£450",
+            printType: "Lino cut prints & card",
             imageUrls: ["@assets/works/mixed/theWarTheatre/2.avif"],
           },
           {
-            slug: "3",
-            title: "3",
+            slug: "the-war-theatre-3",
+            title: "The War Theatre 3",
             description: "Mixed media artwork.",
-            printType: "Mixed Media",
-            price: "£450",
+            printType: "Lino cut prints & card",
             imageUrls: ["@assets/works/mixed/theWarTheatre/3.avif"],
           },
           {
-            slug: "4",
-            title: "4",
+            slug: "the-war-theatre-4",
+            title: "The War Theatre 4",
             description: "Mixed media artwork.",
-            printType: "Mixed Media",
-            price: "£450",
+            printType: "Lino cut prints & card",
             imageUrls: ["@assets/works/mixed/theWarTheatre/4.avif"],
           },
           {
-            slug: "5",
-            title: "5",
+            slug: "the-war-theatre-5",
+            title: "The War Theatre 5",
             description: "Mixed media artwork.",
-            printType: "Mixed Media",
-            price: "£450",
+            printType: "Lino cut prints & card",
             imageUrls: ["@assets/works/mixed/theWarTheatre/5.avif"],
           },
           {
-            slug: "6",
-            title: "6",
+            slug: "the-war-theatre-6",
+            title: "The War Theatre 6",
             description: "Mixed media artwork.",
-            printType: "Mixed Media",
-            price: "£450",
+            printType: "Lino cut prints & card",
             imageUrls: ["@assets/works/mixed/theWarTheatre/6.avif"],
           },
         ],

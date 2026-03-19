@@ -4,8 +4,8 @@ import SliderHero from "@components/SliderHero.astro";
 import ContactBanner from "@components/Hero/ContactBanner.astro";
 import { WORKS } from "@data/works";
 import Cta from "@components/Cta.astro";
-import { resolveImage, processImageUrl } from "@utils/images";
-import type { Category } from "@data/works";
+import { resolveImage } from "@utils/images";
+import type { Category } from "@/types";
 import { Image } from "astro:assets";
 
 // Import specific images for PRINTS section (exact order requested)
@@ -47,7 +47,6 @@ interface HeroItem {
   title: string;
   subtitle: string;
   image?: ImageMetadata;
-  fallbackImage?: string;
   href: string;
   isCollection: boolean;
 }
@@ -71,7 +70,7 @@ const PRINTS_ITEMS: HeroItem[] = [
     title: "Angel of Victory",
     subtitle: "Citizens & Wastrels",
     image: angelOfVictory,
-    href: "/works/prints/citizens&wastrels",
+    href: "/works/prints/citizens-and-wastrels",
     isCollection: true,
   },
   {
@@ -85,7 +84,7 @@ const PRINTS_ITEMS: HeroItem[] = [
     title: "Machiavellian",
     subtitle: "Games & Players",
     image: machiavellian,
-    href: "/works/prints/games&players",
+    href: "/works/prints/games-and-players",
     isCollection: true,
   },
   {
@@ -99,14 +98,14 @@ const PRINTS_ITEMS: HeroItem[] = [
     title: "Revolution",
     subtitle: "Robots & Cranks",
     image: revolution,
-    href: "/works/prints/robots&cranks",
+    href: "/works/prints/robots-and-cranks",
     isCollection: true,
   },
   {
     title: "Joaquin",
     subtitle: "Persons & Personas",
     image: joaquin,
-    href: "/works/prints/persons&personas",
+    href: "/works/prints/persons-and-personas",
     isCollection: true,
   },
   {
@@ -134,7 +133,7 @@ const PRINTS_ITEMS: HeroItem[] = [
     title: "Agni",
     subtitle: "Gods & Monsters",
     image: agni,
-    href: "/works/prints/gods&monsters",
+    href: "/works/prints/gods-and-monsters",
     isCollection: true,
   },
 ];
@@ -313,9 +312,6 @@ const gallery: GallerySection[] = WORKS.map((category: Category) => {
         title: collection.title,
         subtitle: category.title,
         image: resolveImage(imgPath),
-        fallbackImage: !resolveImage(imgPath)
-          ? processImageUrl(imgPath)
-          : undefined,
         href: `/works/${category.slug}/${collection.slug}`,
         isCollection: true,
       };
@@ -327,9 +323,6 @@ const gallery: GallerySection[] = WORKS.map((category: Category) => {
         title: work.title,
         subtitle: category.title,
         image: resolveImage(imgPath),
-        fallbackImage: !resolveImage(imgPath)
-          ? processImageUrl(imgPath)
-          : undefined,
         href: `/works/${work.slug}`,
         isCollection: false,
       };
@@ -372,16 +365,6 @@ const gallery: GallerySection[] = WORKS.map((category: Category) => {
                         alt={item.title}
                         width={400}
                         height={400}
-                        loading={isAboveFold ? "eager" : "lazy"}
-                        decoding="async"
-                        class="card-img"
-                      />
-                    ) : item.fallbackImage ? (
-                      <img
-                        src={item.fallbackImage}
-                        alt={item.title}
-                        width="400"
-                        height="400"
                         loading={isAboveFold ? "eager" : "lazy"}
                         decoding="async"
                         class="card-img"
@@ -569,10 +552,6 @@ const gallery: GallerySection[] = WORKS.map((category: Category) => {
   /* Dark overlay on hover - darker */
   .card-overlay {
     position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
     inset: 0;
     background: rgba(0, 0, 0, 0.85);
     opacity: 0;
@@ -609,10 +588,6 @@ const gallery: GallerySection[] = WORKS.map((category: Category) => {
   /* Content */
   .card-content {
     position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
     inset: 0;
     display: flex;
     flex-direction: column;
@@ -702,10 +677,6 @@ const gallery: GallerySection[] = WORKS.map((category: Category) => {
   /* Border frame */
   .card-frame {
     position: absolute;
-    top: 0.75rem;
-    right: 0.75rem;
-    bottom: 0.75rem;
-    left: 0.75rem;
     inset: 0.75rem;
     border: 1px solid rgba(255, 255, 255, 0);
     border-radius: 2px;
@@ -781,10 +752,6 @@ const gallery: GallerySection[] = WORKS.map((category: Category) => {
     }
 
     .card-frame {
-      top: 1rem;
-      right: 1rem;
-      bottom: 1rem;
-      left: 1rem;
       inset: 1rem;
     }
 

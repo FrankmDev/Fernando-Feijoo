@@ -2,7 +2,7 @@
 import WorksLayout from "@components/WorksLayout.astro";
 import WorkCard from "@components/WorkCard.astro";
 import { WORKS } from "@data/works";
-import { processImageUrl } from "@utils/images";
+import { resolveImage } from "@utils/images";
 
 const mixedMediaCategory = WORKS.find(
   (category) => category.slug === "mixed-media"
@@ -11,22 +11,10 @@ if (!mixedMediaCategory) throw new Error("Mixed Media category not found");
 
 const collections = mixedMediaCategory.collections || [];
 
-const getFirstImageFromCollection = (
-  collection: (typeof collections)[0]
-): string => {
-  if (collection.works && collection.works.length > 0) {
-    const work = collection.works[0];
-    if (work.imageUrls && work.imageUrls.length > 0) {
-      return processImageUrl(work.imageUrls[0]);
-    }
-  }
-  return "";
-};
+const getFirstImageUrl = (collection: (typeof collections)[0]): string =>
+  collection.works?.[0]?.imageUrls?.[0] || "";
 
-const bannerImage =
-  collections.length > 0
-    ? getFirstImageFromCollection(collections[0])
-    : undefined;
+const bannerImage = resolveImage(getFirstImageUrl(collections[0]));
 
 const description = `Just as the sketchbook is a means of observation and investigation and recording, other media are sometimes explored: painting, collage, mixed media and experiments with colour.
 
@@ -57,7 +45,7 @@ Fascinated by the past, by myth, by architecture, nature and landscape, and char
           href={`/works/mixed-media/${collection.slug}`}
           title={collection.title}
           subtitle=""
-          imageUrl={getFirstImageFromCollection(collection)}
+          imageUrl={getFirstImageUrl(collection)}
           imageAlt={`${collection.title} collection`}
           isAboveFold={index < 3}
         />

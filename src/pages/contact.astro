@@ -1,5 +1,4 @@
 ---
-import "@styles/general.css";
 import Layout from "@layouts/Layout.astro";
 import PageBanner from "@components/PageBanner.astro";
 import MailIcon from "@icons/mail-icon.astro";
@@ -28,7 +27,7 @@ const pageDescription =
 ---
 
 <Layout title="Contact - Fernando Feijoo" description={pageDescription}>
-  <main class="contact-page">
+  <div class="contact-page">
     <PageBanner title="Contact" />
 
     <!-- Editorial Header -->
@@ -172,6 +171,7 @@ const pageDescription =
               class="newsletter-form"
               target="_blank"
             >
+              {/* TODO: Replace with actual Mailchimp u and id values from your list's embed code */}
               <input type="hidden" name="u" value="YOUR_MAILCHIMP_U_VALUE" />
               <input type="hidden" name="id" value="YOUR_MAILCHIMP_ID_VALUE" />
 
@@ -206,7 +206,7 @@ const pageDescription =
         <div class="deco-dot"></div>
       </div>
     </section>
-  </main>
+  </div>
 </Layout>
 
 <style>
@@ -896,13 +896,6 @@ const pageDescription =
       revealElements.forEach(el => revealObserver.observe(el));
     }
 
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initContactPage);
-    } else {
-      initContactPage();
-    }
-
-    document.addEventListener('astro:after-swap', initContactPage);
     document.addEventListener('astro:page-load', initContactPage);
   })();
 </script>

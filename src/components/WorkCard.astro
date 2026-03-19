@@ -1,6 +1,6 @@
 ---
 import { Image } from "astro:assets";
-import { resolveImage, processImageUrl } from "@utils/images";
+import { resolveImage } from "@utils/images";
 import type { WorkCardProps } from "@/types";
 
 type Props = WorkCardProps;
@@ -15,10 +15,9 @@ const {
 } = Astro.props;
 
 const imageMeta = resolveImage(imageUrl);
-const fallbackSrc = !imageMeta ? processImageUrl(imageUrl || "") : "";
 ---
 
-<a href={href} class="card">
+<a href={href} class="card" aria-label={imageAlt || title}>
   {
     imageMeta ? (
       <Image
@@ -26,16 +25,6 @@ const fallbackSrc = !imageMeta ? processImageUrl(imageUrl || "") : "";
         alt={imageAlt || title}
         width={400}
         height={400}
-        loading={isAboveFold ? "eager" : "lazy"}
-        decoding="async"
-        class="card-img"
-      />
-    ) : fallbackSrc ? (
-      <img
-        src={fallbackSrc}
-        alt={imageAlt || title}
-        width="400"
-        height="400"
         loading={isAboveFold ? "eager" : "lazy"}
         decoding="async"
         class="card-img"
@@ -95,10 +84,6 @@ const fallbackSrc = !imageMeta ? processImageUrl(imageUrl || "") : "";
   .card::before {
     content: "";
     position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
     inset: 0;
     background: linear-gradient(
       135deg,
@@ -157,10 +142,6 @@ const fallbackSrc = !imageMeta ? processImageUrl(imageUrl || "") : "";
 
   .card-overlay {
     position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
     inset: 0;
     background: linear-gradient(
       to top,
@@ -187,10 +168,6 @@ const fallbackSrc = !imageMeta ? processImageUrl(imageUrl || "") : "";
 
   .card-content {
     position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
     inset: 0;
     display: flex;
     flex-direction: column;

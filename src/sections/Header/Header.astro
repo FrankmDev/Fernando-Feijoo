@@ -136,15 +136,17 @@ const currentPath = Astro.url.pathname;
     transition: color 0.3s ease;
     border: none;
     background: transparent;
-    outline: none;
     -webkit-tap-highlight-color: transparent;
   }
 
-  /* Remove default focus outline */
-  .nav-link:focus,
-  .nav-link:focus-visible {
+  .nav-link:focus {
     outline: none;
-    box-shadow: none;
+  }
+
+  .nav-link:focus-visible {
+    outline: 2px solid #000;
+    outline-offset: 3px;
+    border-radius: 2px;
   }
 
   /* Elegant underline effect */
@@ -193,14 +195,18 @@ const currentPath = Astro.url.pathname;
     border: none;
     cursor: pointer;
     padding: 0;
-    outline: none;
     -webkit-tap-highlight-color: transparent;
     flex-shrink: 0;
   }
 
-  .menu-toggle:focus,
-  .menu-toggle:focus-visible {
+  .menu-toggle:focus {
     outline: none;
+  }
+
+  .menu-toggle:focus-visible {
+    outline: 2px solid #000;
+    outline-offset: 3px;
+    border-radius: 4px;
   }
 
   .toggle-line {
@@ -272,18 +278,22 @@ const currentPath = Astro.url.pathname;
     text-decoration: none;
     opacity: 0;
     transform: translateY(20px);
-    transition: 
+    transition:
       opacity 0.4s ease,
       transform 0.4s ease,
       color 0.2s ease;
     transition-delay: var(--delay);
-    outline: none;
     -webkit-tap-highlight-color: transparent;
   }
 
-  .mobile-link:focus,
-  .mobile-link:focus-visible {
+  .mobile-link:focus {
     outline: none;
+  }
+
+  .mobile-link:focus-visible {
+    outline: 2px solid rgba(255, 255, 255, 0.7);
+    outline-offset: 3px;
+    border-radius: 2px;
   }
 
   .mobile-menu.open .mobile-link {
@@ -452,9 +462,9 @@ const currentPath = Astro.url.pathname;
       });
 
       // Escape key
-      document.onkeydown = function(e) {
+      document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape' && isOpen) close();
-      };
+      });
 
       // Click backdrop
       menu.onclick = function(e) {
@@ -477,12 +487,12 @@ const currentPath = Astro.url.pathname;
         ticking = false;
       }
 
-      window.onscroll = function() {
+      window.addEventListener('scroll', function() {
         if (!ticking) {
           requestAnimationFrame(onScroll);
           ticking = true;
         }
-      };
+      }, { passive: true });
 
       onScroll();
     }

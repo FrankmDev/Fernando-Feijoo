@@ -1,15 +1,11 @@
 ---
 import Layout from "@layouts/Layout.astro";
-import Header from "@sections/Header/Header.astro";
-import Footer from "@sections/Footer/Footer.astro";
 import PageBanner from "@components/PageBanner.astro";
-import ContactBanner from "@components/Hero/ContactBanner.astro";
 import { WORKS } from "@data/works";
 import {
   getFirstImageMetaFromCategory,
   getFirstImageFromCategory,
 } from "@utils/images";
-import type { Category } from "@/types";
 import { Image } from "astro:assets";
 
 // Separar Prints del resto
@@ -21,9 +17,7 @@ const pageDescription =
 ---
 
 <Layout title="Works - Fernando Feijoo" description={pageDescription}>
-  <Header slot="header" />
-  <main>
-    <PageBanner title="Works" />
+  <PageBanner title="Works" />
 
     <section class="works-section">
       <div class="container">
@@ -35,16 +29,19 @@ const pageDescription =
         <div class="bento-grid">
           {/* Prints - Featured (Full Width Top Row) */}
           {
-            printsCategory && (
+            (() => {
+              if (!printsCategory) return null;
+              const printsMeta = getFirstImageMetaFromCategory(printsCategory);
+              return (
               <a
                 href={`/works/${printsCategory.slug}`}
                 class="bento-item bento-featured reveal"
                 style="--delay: 0s"
               >
                 <div class="featured-image-wrapper">
-                  {getFirstImageMetaFromCategory(printsCategory) ? (
+                  {printsMeta ? (
                     <Image
-                      src={getFirstImageMetaFromCategory(printsCategory)!}
+                      src={printsMeta}
                       alt={`${printsCategory.title} by Fernando Feijoo`}
                       class="featured-image"
                       loading="eager"
@@ -84,21 +81,24 @@ const pageDescription =
                 </div>
 
               </a>
-            )
+              );
+            })()
           }
 
           {/* Other Categories - 2x2 Grid */}
           {
-            otherCategories.map((category, index) => (
+            otherCategories.map((category, index) => {
+              const categoryMeta = getFirstImageMetaFromCategory(category);
+              return (
               <a
                 href={`/works/${category.slug}`}
                 class={`bento-item bento-regular reveal bento-${category.slug}`}
                 style={`--delay: ${0.15 + index * 0.1}s`}
               >
                 <div class="regular-image-wrapper">
-                  {getFirstImageMetaFromCategory(category) ? (
+                  {categoryMeta ? (
                     <Image
-                      src={getFirstImageMetaFromCategory(category)!}
+                      src={categoryMeta}
                       alt={`${category.title} by Fernando Feijoo`}
                       class="regular-image"
                       loading="lazy"
@@ -138,7 +138,8 @@ const pageDescription =
                 </div>
 
               </a>
-            ))
+              );
+            })
           }
         </div>
 
@@ -177,8 +178,7 @@ const pageDescription =
     </section>
 
 
-  </main>
-  <Footer slot="footer" />
+
 </Layout>
 
 <style>
@@ -543,13 +543,12 @@ const pageDescription =
     text-transform: uppercase;
     border-radius: 100px;
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    outline: none;
     -webkit-tap-highlight-color: transparent;
   }
 
-  .cta-button:focus,
   .cta-button:focus-visible {
-    outline: none;
+    outline: 2px solid #fff;
+    outline-offset: 3px;
   }
 
   .cta-button:hover {
@@ -576,13 +575,12 @@ const pageDescription =
     letter-spacing: 0.02em;
     position: relative;
     transition: color 0.3s ease;
-    outline: none;
     -webkit-tap-highlight-color: transparent;
   }
 
-  .cta-link:focus,
   .cta-link:focus-visible {
-    outline: none;
+    outline: 2px solid rgba(255, 255, 255, 0.8);
+    outline-offset: 3px;
   }
 
   .cta-link::after {
@@ -767,7 +765,8 @@ const pageDescription =
 
 <script>
   // Intersection Observer for reveal animations
-  document.addEventListener("DOMContentLoaded", () => {
+  // Uses astro:page-load so it also runs after View Transitions navigation
+  function initReveal() {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -786,5 +785,7 @@ const pageDescription =
     document.querySelectorAll(".reveal").forEach((el) => {
       observer.observe(el);
     });
-  });
+  }
+
+  document.addEventListener("astro:page-load", initReveal);
 </script>

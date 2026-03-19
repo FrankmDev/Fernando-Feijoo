@@ -496,9 +496,16 @@ const slides: Slide[] = [
         }
       });
 
-      // Cleanup on page unload
+      // Cleanup RAF + autoplay when navigating away (View Transitions)
+      document.addEventListener('astro:before-swap', () => {
+        if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+        if (autoplayInterval) { clearInterval(autoplayInterval); autoplayInterval = null; }
+      }, { once: true });
+
+      // Fallback cleanup on full page unload
       window.addEventListener('beforeunload', () => {
         if (rafId) cancelAnimationFrame(rafId);
+        if (autoplayInterval) clearInterval(autoplayInterval);
       });
 
       // Initialize
@@ -737,7 +744,6 @@ const slides: Slide[] = [
     opacity: 0;
     transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     -webkit-tap-highlight-color: transparent;
-    outline: none;
     transform: translateY(-50%);
   }
 
@@ -842,17 +848,10 @@ const slides: Slide[] = [
     right: 1.5rem;
   }
 
-  /* Focus - Completely remove default browser outline */
-  .nav-arrow:focus,
   .nav-arrow:focus-visible {
-    outline: none !important;
-    box-shadow: none !important;
-    -webkit-appearance: none;
-  }
-
-  /* Webkit-specific focus removal */
-  .nav-arrow::-moz-focus-inner {
-    border: 0;
+    outline: 2px solid rgba(255, 255, 255, 0.7);
+    outline-offset: 3px;
+    border-radius: 50%;
   }
 
   /* ============================================
@@ -899,14 +898,13 @@ const slides: Slide[] = [
     color: rgba(255, 255, 255, 0.6);
     cursor: pointer;
     transition: all 0.3s ease;
-    outline: none;
     -webkit-tap-highlight-color: transparent;
   }
 
-  .autoplay-toggle:focus,
   .autoplay-toggle:focus-visible {
-    outline: none !important;
-    box-shadow: none !important;
+    outline: 2px solid rgba(255, 255, 255, 0.7);
+    outline-offset: 3px;
+    border-radius: 50%;
   }
 
   .toggle-bg {
@@ -1033,7 +1031,6 @@ const slides: Slide[] = [
     padding: 8px 0;
     cursor: pointer;
     transition: all 0.3s ease;
-    outline: none;
     -webkit-tap-highlight-color: transparent;
   }
 
@@ -1069,10 +1066,10 @@ const slides: Slide[] = [
     background: rgba(255, 255, 255, 0.25);
   }
 
-  .indicator:focus,
   .indicator:focus-visible {
-    outline: none !important;
-    box-shadow: none !important;
+    outline: 2px solid rgba(255, 255, 255, 0.7);
+    outline-offset: 3px;
+    border-radius: 2px;
   }
 
   /* ============================================

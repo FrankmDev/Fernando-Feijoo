@@ -1,5 +1,4 @@
 ---
-import "@styles/general.css";
 import Layout from "@layouts/Layout.astro";
 import PageBanner from "@components/PageBanner.astro";
 import ContactBanner from "@components/Hero/ContactBanner.astro";
@@ -11,11 +10,13 @@ interface BreadcrumbItem {
   href?: string;
 }
 
+import type { ImageMetadata } from "astro";
+
 interface Props {
   title: string;
   pageTitle?: string;
   description: string;
-  bannerImage?: string;
+  bannerImage?: ImageMetadata | string;
   breadcrumbs: BreadcrumbItem[];
   introText: string;
   sectionTitle?: string;
@@ -44,7 +45,7 @@ const {
   title={pageTitle || `${title} - Fernando Feijoo`}
   description={description}
 >
-  <main>
+  <div>
     <PageBanner title={title} backgroundImage={bannerImage} />
 
     <section class="works-section">
@@ -88,7 +89,7 @@ const {
     </section>
 
     <ContactBanner />
-  </main>
+  </div>
 </Layout>
 
 <style>

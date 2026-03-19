@@ -1,6 +1,6 @@
 ---
 import { Image } from "astro:assets";
-import BannerImg from "/public/bannerimg.avif";
+import BannerImg from "@assets/bannerimg.avif";
 ---
 
 <section class="contact-banner reveal">
@@ -507,6 +507,12 @@ import BannerImg from "/public/bannerimg.avif";
     transform-origin: left;
   }
 
+  .cta-secondary:focus-visible {
+    outline: 2px solid rgba(255, 255, 255, 0.5);
+    outline-offset: 4px;
+    border-radius: 2px;
+  }
+
   /* Decorative Corner - Enhanced */
   .decor-corner {
     position: absolute;
@@ -763,8 +769,8 @@ import BannerImg from "/public/bannerimg.avif";
 </style>
 
 <script>
-  // Reveal animation on scroll
-  document.addEventListener("DOMContentLoaded", () => {
+  // Reveal animation on scroll - use astro:page-load so it fires after View Transitions too
+  function initReveal() {
     const revealBanner = document.querySelector(".contact-banner.reveal");
 
     if (revealBanner) {
@@ -782,5 +788,7 @@ import BannerImg from "/public/bannerimg.avif";
 
       observer.observe(revealBanner);
     }
-  });
+  }
+
+  document.addEventListener("astro:page-load", initReveal);
 </script>
