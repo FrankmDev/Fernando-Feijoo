@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: "Exo";
+  font-family: "Exo 2";
   src: url("/Exo2-VariableFont_wght.woff2") format("woff2");
   font-display: swap;
 }
@@ -89,7 +89,7 @@
 }
 
 html {
-  font-family: "Exo", system-ui, sans-serif;
+  font-family: "Exo 2", system-ui, sans-serif;
   scroll-behavior: smooth;
   overflow-x: hidden;
 }
