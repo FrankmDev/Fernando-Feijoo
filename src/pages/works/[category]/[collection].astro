@@ -7,6 +7,7 @@ import WorkCard from "@components/WorkCard.astro";
 import Cta from "@components/Cta.astro";
 import { WORKS } from "@data/works";
 import { resolveImage } from "@utils/images";
+import { Image } from "astro:assets";
 
 export async function getStaticPaths() {
   const paths = [];
@@ -39,6 +40,19 @@ const bannerMeta = resolveImage(collection.works?.[0]?.imageUrls?.[0]);
 const description =
   collection.description ||
   `Explore ${collection.title} - a collection of ${collection.works.length} ${categoryTitle.toLowerCase()} works by Fernando Feijoo.`;
+
+const isSketchbooks = categorySlug === "sketchbooks";
+
+// For sketchbook collections, gather all images with their work info
+const sketchSlides = isSketchbooks
+  ? collection.works
+      .map((work) => ({
+        imageUrl: work.imageUrls?.[0] || "",
+        title: work.title,
+        meta: resolveImage(work.imageUrls?.[0] || ""),
+      }))
+      .filter((s) => s.meta)
+  : [];
 ---
 
 <Layout
@@ -72,22 +86,88 @@ const description =
         {collection.title}
       </h2>
 
-      <div class="grid">
-        {
-          collection.works.map((work, index) => (
-            <div class="grid-item" style={`--delay: ${0.2 + index * 0.06}s`}>
-              <WorkCard
-                href={`/works/${work.slug}`}
-                title={work.title}
-                subtitle={work.printType}
-                imageUrl={work.imageUrls?.[0] || ""}
-                imageAlt={work.title}
-                isAboveFold={index < 3}
-              />
-            </div>
-          ))
-        }
-      </div>
+      {isSketchbooks ? (
+        <!-- Sketchbook Slider -->
+        <div
+          class="sketch-slider"
+          data-sketch-slider
+          data-total={sketchSlides.length}
+        >
+          <div class="sketch-slider-viewport">
+            {sketchSlides.map((slide, index) => (
+              <div
+                class={`sketch-slide ${index === 0 ? "active" : ""}`}
+                data-sketch-slide={index}
+                aria-hidden={index !== 0}
+              >
+                {slide.meta && (
+                  <Image
+                    src={slide.meta}
+                    alt={slide.title}
+                    class="sketch-slide-image"
+                    loading={index === 0 ? "eager" : "lazy"}
+                    decoding="async"
+                  />
+                )}
+                <div class="sketch-slide-caption">
+                  <span class="sketch-slide-title">{slide.title}</span>
+                  <span class="sketch-slide-count">{String(index + 1).padStart(2, "0")} / {String(sketchSlides.length).padStart(2, "0")}</span>
+                </div>
+              </div>
+            ))}
+
+            <button class="sketch-nav sketch-prev" aria-label="Previous image" data-sketch-prev>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <path d="M15 4l-8 8 8 8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <button class="sketch-nav sketch-next" aria-label="Next image" data-sketch-next>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <path d="M9 4l8 8-8 8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+
+          <!-- Thumbnail strip -->
+          <div class="sketch-thumbs">
+            {sketchSlides.map((slide, index) => (
+              <button
+                class={`sketch-thumb ${index === 0 ? "active" : ""}`}
+                data-sketch-thumb={index}
+                aria-label={slide.title}
+              >
+                {slide.meta && (
+                  <Image
+                    src={slide.meta}
+                    alt={slide.title}
+                    width={80}
+                    height={60}
+                    class="sketch-thumb-image"
+                    loading="lazy"
+                  />
+                )}
+              </button>
+            ))}
+          </div>
+        </div>
+      ) : (
+        <div class="grid">
+          {
+            collection.works.map((work, index) => (
+              <div class="grid-item" style={`--delay: ${0.2 + index * 0.06}s`}>
+                <WorkCard
+                  href={`/works/${work.slug}`}
+                  title={work.title}
+                  subtitle={work.printType}
+                  imageUrl={work.imageUrls?.[0] || ""}
+                  imageAlt={work.title}
+                  isAboveFold={index < 3}
+                />
+              </div>
+            ))
+          }
+        </div>
+      )}
 
       <div class="cta-section animate-fade-in" style="--delay: 0.5s">
         <Cta
@@ -188,4 +268,192 @@ const description =
       animation: none;
     }
   }
+
+  /* ============================
+     SKETCHBOOK SLIDER
+     ============================ */
+  .sketch-slider {
+    margin-bottom: 3rem;
+  }
+
+  .sketch-slider-viewport {
+    position: relative;
+    background: #111;
+    overflow: hidden;
+    min-height: 300px;
+  }
+
+  .sketch-slide {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .sketch-slide.active {
+    display: flex;
+  }
+
+  .sketch-slide-image {
+    width: 100%;
+    height: auto;
+    max-height: 75vh;
+    object-fit: contain;
+    display: block;
+  }
+
+  .sketch-slide-caption {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: rgba(0,0,0,0.85);
+    color: #fff;
+  }
+
+  .sketch-slide-title {
+    font-size: 0.9375rem;
+    font-weight: 400;
+    color: #eee;
+  }
+
+  .sketch-slide-count {
+    font-size: 0.8125rem;
+    color: #aaa;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+  }
+
+  .sketch-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.9);
+    border: none;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    color: #000;
+  }
+
+  .sketch-slider-viewport:hover .sketch-nav,
+  .sketch-slider-viewport:focus-within .sketch-nav {
+    opacity: 1;
+  }
+
+  .sketch-nav:hover {
+    background: #fff;
+  }
+
+  .sketch-nav:focus-visible {
+    outline: 2px solid #000;
+    outline-offset: 2px;
+    opacity: 1;
+  }
+
+  .sketch-prev {
+    left: 0.75rem;
+  }
+
+  .sketch-next {
+    right: 0.75rem;
+  }
+
+  /* Thumbnail strip */
+  .sketch-thumbs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 6px;
+  }
+
+  .sketch-thumb {
+    width: 80px;
+    height: 60px;
+    padding: 0;
+    border: 2px solid transparent;
+    cursor: pointer;
+    background: #f0f0f0;
+    overflow: hidden;
+    flex-shrink: 0;
+    transition: border-color 0.2s ease, opacity 0.2s ease;
+    opacity: 0.6;
+  }
+
+  .sketch-thumb.active {
+    border-color: #000;
+    opacity: 1;
+  }
+
+  .sketch-thumb:hover {
+    opacity: 1;
+  }
+
+  .sketch-thumb-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sketch-slide {
+      transition: none;
+    }
+    .sketch-nav {
+      transition: none;
+    }
+  }
 </style>
+
+<script is:inline>
+  (function() {
+    function initSketchSlider() {
+      var slider = document.querySelector("[data-sketch-slider]");
+      if (!slider || slider.dataset.initialized) return;
+      slider.dataset.initialized = "true";
+
+      var slides = slider.querySelectorAll("[data-sketch-slide]");
+      var thumbs = slider.querySelectorAll("[data-sketch-thumb]");
+      var prevBtn = slider.querySelector("[data-sketch-prev]");
+      var nextBtn = slider.querySelector("[data-sketch-next]");
+      var currentIndex = 0;
+
+      function goTo(index) {
+        if (index === currentIndex) return;
+        slides[currentIndex].classList.remove("active");
+        slides[currentIndex].setAttribute("aria-hidden", "true");
+        thumbs[currentIndex].classList.remove("active");
+
+        currentIndex = (index + slides.length) % slides.length;
+
+        slides[currentIndex].classList.add("active");
+        slides[currentIndex].setAttribute("aria-hidden", "false");
+        thumbs[currentIndex].classList.add("active");
+        thumbs[currentIndex].scrollIntoView({ block: "nearest", inline: "nearest" });
+      }
+
+      if (prevBtn) prevBtn.addEventListener("click", function() { goTo(currentIndex - 1); });
+      if (nextBtn) nextBtn.addEventListener("click", function() { goTo(currentIndex + 1); });
+
+      thumbs.forEach(function(thumb) {
+        thumb.addEventListener("click", function() {
+          goTo(parseInt(thumb.getAttribute("data-sketch-thumb") || "0"));
+        });
+      });
+
+      // Keyboard navigation
+      slider.addEventListener("keydown", function(e) {
+        if (e.key === "ArrowLeft") { e.preventDefault(); goTo(currentIndex - 1); }
+        if (e.key === "ArrowRight") { e.preventDefault(); goTo(currentIndex + 1); }
+      });
+    }
+
+    document.addEventListener("astro:page-load", initSketchSlider);
+  })();
+</script>
