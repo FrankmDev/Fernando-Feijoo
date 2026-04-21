@@ -1230,7 +1230,7 @@ export const WORKS: Category[] = [
             size: "112 x 60 cm (W x H)",
             price: "£650",
             imageUrls: [
-              "@assets/works/prints/structDestruct/Cromer_lighthouse_fernando_feijoo.avif",
+              "@assets/works/prints/structDestruct/cromer-pier-colour-collage.avif",
             ],
           },
           {

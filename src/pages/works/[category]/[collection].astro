@@ -43,6 +43,18 @@ const description =
 
 const isSketchbooks = categorySlug === "sketchbooks";
 
+// Adaptive grid columns based on work count to prevent orphan items
+function getGridColumns(count: number): number {
+  if (count <= 2) return count;
+  if (count === 3) return 3;
+  if (count === 4) return 2; // 2x2
+  if (count === 5 || count === 6) return 3;
+  if (count === 7 || count === 8) return 4;
+  if (count === 9) return 3; // 3x3
+  return 4;
+}
+const gridCols = getGridColumns(collection.works.length);
+
 // For sketchbook collections, gather all images with their work info
 const sketchSlides = isSketchbooks
   ? collection.works
@@ -151,7 +163,7 @@ const sketchSlides = isSketchbooks
           </div>
         </div>
       ) : (
-        <div class="grid">
+        <div class="grid" style={`--grid-cols: ${gridCols}`}>
           {
             collection.works.map((work, index) => (
               <div class="grid-item" style={`--delay: ${0.2 + index * 0.06}s`}>
@@ -258,7 +270,7 @@ const sketchSlides = isSketchbooks
 
   @media (min-width: 1024px) {
     .grid {
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(var(--grid-cols, 3), 1fr);
     }
   }
 
