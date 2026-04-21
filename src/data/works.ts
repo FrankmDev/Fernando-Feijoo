@@ -24,7 +24,7 @@ export const WORKS: Category[] = [
               "@assets/works/prints/citizensWastrels/afterHours.avif",
             ],
             printEdition: 30,
-            size: "30 x 20 cm",
+            size: "30 x 20 cm (W x H)",
           },
           {
             slug: "angel-of-victory",
@@ -37,7 +37,7 @@ export const WORKS: Category[] = [
               "@assets/works/prints/citizensWastrels/angelOfVictory.avif",
             ],
             printEdition: 10,
-            size: "20 x 30 cm",
+            size: "20 x 30 cm (W x H)",
           },
           {
             slug: "early-hour-of-the-morning",
@@ -50,7 +50,7 @@ export const WORKS: Category[] = [
               "@assets/works/prints/citizensWastrels/earlyHourOfTheMorning.avif",
             ],
             printEdition: 30,
-            size: "65 x 45 cm",
+            size: "65 x 45 cm (W x H)",
           },
           {
             slug: "getting-weighed",
@@ -63,7 +63,7 @@ export const WORKS: Category[] = [
               "@assets/works/prints/citizensWastrels/gettingWeighed.avif",
             ],
             printEdition: 15,
-            size: "60 x 40 cm",
+            size: "60 x 40 cm (W x H)",
           },
           {
             slug: "nightcap",
@@ -74,7 +74,7 @@ export const WORKS: Category[] = [
             price: "£175",
             imageUrls: ["@assets/works/prints/citizensWastrels/nightcap.avif"],
             printEdition: 10,
-            size: "30 x 30 cm",
+            size: "30 x 30 cm (W x H)",
           },
           {
             slug: "selfmade-man",
@@ -87,7 +87,7 @@ export const WORKS: Category[] = [
               "@assets/works/prints/citizensWastrels/selfMadeMan.avif",
             ],
             printEdition: 10,
-            size: "30 x 30 cm",
+            size: "30 x 30 cm (W x H)",
           },
           {
             slug: "time-is-just-an-illusion",
@@ -100,7 +100,7 @@ export const WORKS: Category[] = [
               "@assets/works/prints/citizensWastrels/timeIsJustAnIllution.avif",
             ],
             printEdition: 30,
-            size: "30 x 40 cm",
+            size: "30 x 40 cm (W x H)",
           },
           {
             slug: "metamorphosis",
@@ -110,7 +110,7 @@ export const WORKS: Category[] = [
             printType: "Reduction Linocut",
             price: "£150",
             printEdition: 12,
-            size: "40 x 30 cm",
+            size: "40 x 30 cm (W x H)",
             imageUrls: [
               "@assets/works/prints/citizensWastrels/metamorphosis_fernando_feijoo.avif",
             ],
@@ -124,7 +124,7 @@ export const WORKS: Category[] = [
             printType: "Lithograph",
             price: "£150",
             printEdition: 50,
-            size: "60 x 30 cm",
+            size: "60 x 30 cm (W x H)",
             imageUrls: [
               "@assets/works/prints/citizensWastrels/lifting-the-spirits-in-tonic-row-laying-down-the-law-in-lager-lane_fernando_feijoo.avif",
               "@assets/works/prints/citizensWastrels/liftingTheSpirits.avif",
@@ -140,7 +140,7 @@ export const WORKS: Category[] = [
               "@assets/works/prints/citizensWastrels/gangstersCollection/contracter.avif",
             ],
             printEdition: 30,
-            size: "50 x 40 cm",
+            size: "50 x 40 cm (W x H)",
           },
           {
             slug: "driven",
@@ -152,7 +152,7 @@ export const WORKS: Category[] = [
               "@assets/works/prints/citizensWastrels/gangstersCollection/driven.avif",
             ],
             printEdition: 30,
-            size: "50 x 40 cm",
+            size: "50 x 40 cm (W x H)",
           },
           {
             slug: "wacked",
@@ -164,7 +164,7 @@ export const WORKS: Category[] = [
               "@assets/works/prints/citizensWastrels/gangstersCollection/wacked.avif",
             ],
             printEdition: 30,
-            size: "50 x 40 cm",
+            size: "50 x 40 cm (W x H)",
           },
           {
             slug: "busted",
@@ -172,7 +172,7 @@ export const WORKS: Category[] = [
             description: "Locked in shackles and sent to the clink.",
             printType: "Linocut",
             price: "£150 (Set £450)",
-            size: "50 x 40 cm",
+            size: "50 x 40 cm (W x H)",
             imageUrls: [
               "@assets/works/prints/citizensWastrels/gangstersCollection/busted.avif",
             ],
@@ -210,7 +210,7 @@ export const WORKS: Category[] = [
             printType: "Zinc Lithograph",
             price: "£100",
             printEdition: 5,
-            size: "50 x 50 cm",
+            size: "50 x 50 cm (W x H)",
             imageUrls: [
               "@assets/works/prints/gamesPlayer/hierarchiOfAnarchy.avif",
             ],
@@ -224,7 +224,7 @@ export const WORKS: Category[] = [
             price: "£250",
             imageUrls: ["@assets/works/prints/gamesPlayer/machiavellian.avif"],
             printEdition: 10,
-            size: "60 x 80 cm",
+            size: "60 x 80 cm (W x H)",
           },
           {
             slug: "ace-of-diamonds",
@@ -396,7 +396,7 @@ export const WORKS: Category[] = [
             price: "£195 (Complete set of 30 prints £2500)",
             printEdition: 30,
             imageUrls: ["@assets/works/prints/godsMonsters/agni.avif"],
-            size: "57 x 37 cm",
+            size: "57 x 37 cm (W x H)",
           },
           {
             slug: "bala",
@@ -406,7 +406,7 @@ export const WORKS: Category[] = [
             price: "£195 (Complete set of 30 prints £2500)",
             printEdition: 30,
             imageUrls: ["@assets/works/prints/godsMonsters/bala.avif"],
-            size: "57 x 37 cm",
+            size: "57 x 37 cm (W x H)",
           },
           {
             slug: "cerbus",
@@ -416,7 +416,7 @@ export const WORKS: Category[] = [
             price: "£195 (Complete set of 30 prints £2500)",
             printEdition: 30,
             imageUrls: ["@assets/works/prints/godsMonsters/cerbus.avif"],
-            size: "57 x 37 cm",
+            size: "57 x 37 cm (W x H)",
           },
           {
             slug: "draco",
@@ -426,7 +426,7 @@ export const WORKS: Category[] = [
             price: "£195 (Complete set of 30 prints £2500)",
             printEdition: 30,
             imageUrls: ["@assets/works/prints/godsMonsters/draco.avif"],
-            size: "57 x 37 cm",
+            size: "57 x 37 cm (W x H)",
           },
           {
             slug: "europa",
@@ -436,7 +436,7 @@ export const WORKS: Category[] = [
             price: "£195 (Complete set of 30 prints £2500)",
             printEdition: 30,
             imageUrls: ["@assets/works/prints/godsMonsters/europa.avif"],
-            size: "57 x 37 cm",
+            size: "57 x 37 cm (W x H)",
           },
           {
             slug: "fenir",
@@ -446,7 +446,7 @@ export const WORKS: Category[] = [
             price: "£195 (Complete set of 30 prints £2500)",
             printEdition: 30,
             imageUrls: ["@assets/works/prints/godsMonsters/fenir.avif"],
-            size: "57 x 37 cm",
+            size: "57 x 37 cm (W x H)",
           },
           {
             slug: "gala",
@@ -456,7 +456,7 @@ export const WORKS: Category[] = [
             price: "£195 (Complete set of 30 prints £2500)",
             printEdition: 30,
             imageUrls: ["@assets/works/prints/godsMonsters/gala.avif"],
-            size: "57 x 37 cm",
+            size: "57 x 37 cm (W x H)",
           },
           {
             slug: "hercules",
@@ -466,7 +466,7 @@ export const WORKS: Category[] = [
             price: "£195 (Complete set of 30 prints £2500)",
             printEdition: 30,
             imageUrls: ["@assets/works/prints/godsMonsters/hercules.avif"],
-            size: "57 x 37 cm",
+            size: "57 x 37 cm (W x H)",
           },
           {
             slug: "icarus",
@@ -476,7 +476,7 @@ export const WORKS: Category[] = [
             price: "£195 (Complete set of 30 prints £2500)",
             printEdition: 30,
             imageUrls: ["@assets/works/prints/godsMonsters/icarus.avif"],
-            size: "57 x 37 cm",
+            size: "57 x 37 cm (W x H)",
           },
           {
             slug: "janus",
@@ -486,7 +486,7 @@ export const WORKS: Category[] = [
             price: "£195 (Complete set of 30 prints £2500)",
             printEdition: 30,
             imageUrls: ["@assets/works/prints/godsMonsters/janus.avif"],
-            size: "57 x 37 cm",
+            size: "57 x 37 cm (W x H)",
           },
           {
             slug: "kraken",
@@ -496,7 +496,7 @@ export const WORKS: Category[] = [
             price: "£195 (Complete set of 30 prints £2500)",
             printEdition: 30,
             imageUrls: ["@assets/works/prints/godsMonsters/kraken.avif"],
-            size: "57 x 37 cm",
+            size: "57 x 37 cm (W x H)",
           },
           {
             slug: "lucifer",
@@ -506,7 +506,7 @@ export const WORKS: Category[] = [
             price: "£195 (Complete set of 30 prints £2500)",
             printEdition: 30,
             imageUrls: ["@assets/works/prints/godsMonsters/lucifer.avif"],
-            size: "57 x 37 cm",
+            size: "57 x 37 cm (W x H)",
           },
           {
             slug: "medusa",
@@ -516,7 +516,7 @@ export const WORKS: Category[] = [
             price: "£195 (Complete set of 30 prints £2500)",
             printEdition: 30,
             imageUrls: ["@assets/works/prints/godsMonsters/medusa.avif"],
-            size: "57 x 37 cm",
+            size: "57 x 37 cm (W x H)",
           },
           {
             slug: "neptune",
@@ -526,7 +526,7 @@ export const WORKS: Category[] = [
             price: "£195 (Complete set of 30 prints £2500)",
             printEdition: 30,
             imageUrls: ["@assets/works/prints/godsMonsters/neptune.avif"],
-            size: "57 x 37 cm",
+            size: "57 x 37 cm (W x H)",
           },
           {
             slug: "odin",
@@ -536,7 +536,7 @@ export const WORKS: Category[] = [
             price: "£195 (Complete set of 30 prints £2500)",
             printEdition: 30,
             imageUrls: ["@assets/works/prints/godsMonsters/odin.avif"],
-            size: "57 x 37 cm",
+            size: "57 x 37 cm (W x H)",
           },
           {
             slug: "prometheus",
@@ -546,7 +546,7 @@ export const WORKS: Category[] = [
             price: "£195 (Complete set of 30 prints £2500)",
             printEdition: 30,
             imageUrls: ["@assets/works/prints/godsMonsters/prometheus.avif"],
-            size: "57 x 37 cm",
+            size: "57 x 37 cm (W x H)",
           },
           {
             slug: "quetzlcoatl",
@@ -556,7 +556,7 @@ export const WORKS: Category[] = [
             price: "£195 (Complete set of 30 prints £2500)",
             printEdition: 30,
             imageUrls: ["@assets/works/prints/godsMonsters/quetzlcoatl.avif"],
-            size: "57 x 37 cm",
+            size: "57 x 37 cm (W x H)",
           },
           {
             slug: "ra",
@@ -566,7 +566,7 @@ export const WORKS: Category[] = [
             price: "£195 (Complete set of 30 prints £2500)",
             printEdition: 30,
             imageUrls: ["@assets/works/prints/godsMonsters/ra.avif"],
-            size: "57 x 37 cm",
+            size: "57 x 37 cm (W x H)",
           },
           {
             slug: "shu",
@@ -576,7 +576,7 @@ export const WORKS: Category[] = [
             price: "£195 (Complete set of 30 prints £2500)",
             printEdition: 30,
             imageUrls: ["@assets/works/prints/godsMonsters/shu.avif"],
-            size: "57 x 37 cm",
+            size: "57 x 37 cm (W x H)",
           },
           {
             slug: "theseus",
@@ -586,7 +586,7 @@ export const WORKS: Category[] = [
             price: "£195 (Complete set of 30 prints £2500)",
             printEdition: 30,
             imageUrls: ["@assets/works/prints/godsMonsters/theseus.avif"],
-            size: "57 x 37 cm",
+            size: "57 x 37 cm (W x H)",
           },
           {
             slug: "urania",
@@ -596,7 +596,7 @@ export const WORKS: Category[] = [
             price: "£195 (Complete set of 30 prints £2500)",
             printEdition: 30,
             imageUrls: ["@assets/works/prints/godsMonsters/urania.avif"],
-            size: "57 x 37 cm",
+            size: "57 x 37 cm (W x H)",
           },
           {
             slug: "volcan",
@@ -606,7 +606,7 @@ export const WORKS: Category[] = [
             price: "£195 (Complete set of 30 prints £2500)",
             printEdition: 30,
             imageUrls: ["@assets/works/prints/godsMonsters/volcan.avif"],
-            size: "57 x 37 cm",
+            size: "57 x 37 cm (W x H)",
           },
           {
             slug: "walpurgis",
@@ -616,7 +616,7 @@ export const WORKS: Category[] = [
             price: "£195 (Complete set of 30 prints £2500)",
             printEdition: 30,
             imageUrls: ["@assets/works/prints/godsMonsters/walpurgis.avif"],
-            size: "57 x 37 cm",
+            size: "57 x 37 cm (W x H)",
           },
           {
             slug: "xanthos",
@@ -626,7 +626,7 @@ export const WORKS: Category[] = [
             price: "£195 (Complete set of 30 prints £2500)",
             printEdition: 30,
             imageUrls: ["@assets/works/prints/godsMonsters/xanthos.avif"],
-            size: "57 x 37 cm",
+            size: "57 x 37 cm (W x H)",
           },
           {
             slug: "yggdrasil",
@@ -636,7 +636,7 @@ export const WORKS: Category[] = [
             price: "£195 (Complete set of 30 prints £2500)",
             printEdition: 30,
             imageUrls: ["@assets/works/prints/godsMonsters/yggdrasil.avif"],
-            size: "57 x 37 cm",
+            size: "57 x 37 cm (W x H)",
           },
           {
             slug: "zephyr",
@@ -646,7 +646,7 @@ export const WORKS: Category[] = [
             price: "£195 (Complete set of 30 prints £2500)",
             printEdition: 30,
             imageUrls: ["@assets/works/prints/godsMonsters/zephyr.avif"],
-            size: "57 x 37 cm",
+            size: "57 x 37 cm (W x H)",
           },
         ],
       },
@@ -664,7 +664,7 @@ export const WORKS: Category[] = [
             printType: "Wood engraving",
             price: "£150",
             printEdition: 50,
-            size: "8 x 10 cm",
+            size: "8 x 10 cm (W x H)",
             imageUrls: [
               "@assets/works/prints/inferno/Night_Attack_fernando_feijoo.avif",
             ],
@@ -677,7 +677,7 @@ export const WORKS: Category[] = [
             printType: "Wood engraving",
             price: "£150",
             printEdition: 50,
-            size: "8 x 10 cm",
+            size: "8 x 10 cm (W x H)",
             imageUrls: [
               "@assets/works/prints/inferno/Night_Terrors_fernando_feijoo.avif",
             ],
@@ -693,7 +693,7 @@ export const WORKS: Category[] = [
               "@assets/works/prints/inferno/descentIntoDarkness.avif",
             ],
             printEdition: 50,
-            size: "8 x 10 cm",
+            size: "8 x 10 cm (W x H)",
           },
           {
             slug: "hell-is-empty",
@@ -704,7 +704,7 @@ export const WORKS: Category[] = [
             price: "£250",
             imageUrls: ["@assets/works/prints/inferno/hellIsEmpty.avif"],
             printEdition: 50,
-            size: "30 x 20 cm",
+            size: "30 x 20 cm (W x H)",
           },
           {
             slug: "hell-on-earth",
@@ -715,7 +715,7 @@ export const WORKS: Category[] = [
             price: "£325",
             imageUrls: ["@assets/works/prints/inferno/hellOnEarth.avif"],
             printEdition: 30,
-            size: "56 x 76 cm",
+            size: "56 x 76 cm (W x H)",
           },
           {
             slug: "stewpot",
@@ -726,7 +726,7 @@ export const WORKS: Category[] = [
             price: "£325",
             imageUrls: ["@assets/works/prints/inferno/stewpot.avif"],
             printEdition: 30,
-            size: "76 x 56 cm",
+            size: "76 x 56 cm (W x H)",
           },
           {
             slug: "swamp",
@@ -737,7 +737,7 @@ export const WORKS: Category[] = [
             price: "£325",
             imageUrls: ["@assets/works/prints/inferno/swamp.avif"],
             printEdition: 30,
-            size: "76 x 56 cm",
+            size: "76 x 56 cm (W x H)",
           },
           {
             slug: "the-future",
@@ -781,7 +781,7 @@ export const WORKS: Category[] = [
             printType: "Linocut",
             price: "£325",
             printEdition: 30,
-            size: "76 x 56 cm",
+            size: "76 x 56 cm (W x H)",
             imageUrls: ["@assets/works/prints/inferno/today.avif"],
           },
           {
@@ -910,7 +910,7 @@ export const WORKS: Category[] = [
               "Sun shines too hot. Drink goes down too fast. Legs feel rubbery. Arms are dead weights.\nThis chair is too comfy. The air is too thick. Life is too hard. Every day the same.\nSit, snooze, wake, top up; slump, sleep, half awake, top up; out for the count.",
             printType: "Reduction Lino Cut",
             printEdition: 15,
-            size: "40 x 50 cm",
+            size: "40 x 50 cm (W x H)",
             price: "£250",
             imageUrls: ["@assets/works/prints/persons&Personas/Siesta.avif"],
           },
@@ -921,7 +921,7 @@ export const WORKS: Category[] = [
               "But man or Minotaur?\nFierce or fragile?\nInvincible or vulnerable?\n\nThe mask hides expressions but also reveals other interpretations. So, does the fighter observe the audience's reactions, or does the audience see themselves as if in a mirror?\nInfluenced by Picasso and his relationship with the Minotaur: a life-long theme for the man and the artist.",
             printType: "Collagraph",
             printEdition: 5,
-            size: "20 x 20 cm",
+            size: "20 x 20 cm (W x H)",
             price: "£75",
             imageUrls: [
               "@assets/works/prints/persons&Personas/Step into the arena.avif",
@@ -943,7 +943,7 @@ export const WORKS: Category[] = [
             printType: "Reduction Linocut",
             price: "£175",
             printEdition: 10,
-            size: "30 x 40 cm",
+            size: "30 x 40 cm (W x H)",
             imageUrls: [
               "@assets/works/prints/robotsCranks/revolution.avif",
               "@assets/works/prints/robotsCranks/1_Revolution_fernando_feijoov2.avif",
@@ -955,7 +955,7 @@ export const WORKS: Category[] = [
             description: "No mercy\nNo heart\nNo love\nNo Soul\nNo life",
             printType: "Reduction Linocut — colour variations",
             printEdition: 30,
-            size: "30 x 40 cm",
+            size: "30 x 40 cm (W x H)",
             price: "£125",
             imageUrls: ["@assets/works/prints/robotsCranks/searchDestroy.avif"],
           },
@@ -1020,7 +1020,7 @@ export const WORKS: Category[] = [
             printType: "Reduction Linocut",
             price: "£195",
             printEdition: 10,
-            size: "40 x 50 cm",
+            size: "40 x 50 cm (W x H)",
             imageUrls: ["@assets/works/prints/robotsCranks/metamorph.avif"],
           },
           {
@@ -1031,7 +1031,7 @@ export const WORKS: Category[] = [
             printType: "Reduction Linocut",
             price: "£195",
             printEdition: 10,
-            size: "40 x 50 cm",
+            size: "40 x 50 cm (W x H)",
             imageUrls: ["@assets/works/prints/robotsCranks/metamorph.avif"],
           },
           {
@@ -1042,7 +1042,7 @@ export const WORKS: Category[] = [
             printType: "Reduction Linocut",
             price: "£375",
             printEdition: 30,
-            size: "40 x 50 cm",
+            size: "40 x 50 cm (W x H)",
             imageUrls: ["@assets/works/prints/robotsCranks/metamorph.avif"],
           },
         ],
@@ -1171,7 +1171,7 @@ export const WORKS: Category[] = [
               "Beaming out into the North Sea.\nBeware invaders, beware sailing too close.\nThe cottage alongside is a holiday let.\nVisitors drawn by the light, the beacon of the town.\nCromer welcomes; its lighthouse protects.",
             printType: "Collagraph",
             printEdition: 10,
-            size: "40 x 30 cm",
+            size: "40 x 30 cm (W x H)",
             price: "£175",
             imageUrls: [
               "@assets/works/prints/structDestruct/Cromer_lighthouse_fernando_feijoo.avif",
@@ -1182,7 +1182,7 @@ export const WORKS: Category[] = [
             title: "House on the Hill B&W",
             description: "",
             printType: "Linocut, wood block & Letterpress",
-            size: "40 x 50 cm",
+            size: "40 x 50 cm (W x H)",
             price: "£150",
             imageUrls: [
               "@assets/works/prints/structDestruct/House_on_the_hill_B&W_Fernando_Feijoo.avif",
@@ -1193,7 +1193,7 @@ export const WORKS: Category[] = [
             title: "House on the Hill Colour",
             description: "",
             printType: "Linocut, wood block & Letterpress",
-            size: "40 x 50 cm",
+            size: "40 x 50 cm (W x H)",
             price: "£195",
             imageUrls: [
               "@assets/works/prints/structDestruct/house on the hill colour_fernando_feijoo.avif",
@@ -1203,13 +1203,13 @@ export const WORKS: Category[] = [
             slug: "nightwatch",
             title: "Nightwatch",
             description: "",
-            printType: "Wood engraving",
+            printType: "Linocut",
             imageUrls: [
               "@assets/works/prints/structDestruct/Nightwatch_fernando_feijoo.avif",
             ],
             price: "£150",
             printEdition: 50,
-            size: "40 x 50 cm",
+            size: "40 x 50 cm (W x H)",
           },
           {
             slug: "nightwatch-colour",
@@ -1227,7 +1227,7 @@ export const WORKS: Category[] = [
               "Nostalgia for past times is conjured when one thinks of a place by the sea.\n\nA special memory is created, locked away for ever and treasured, until your return visit sparks it alive again.\n\nThe crashing sound of the waves pounding the sea wall.\nWhispers and fragrances of sea salt mist fill the air; and the smell of fish and chips lingers around each corner. Queues of excited children line up for ice cream.\n\nArchitectural grandeur and elegance prevail with old, battered buildings still standing strong against the North Sea winds which have blown ceaselessly over the centuries.\n\nThe pier juts into the sea as a bold statement of British historical character, while the sounds of laughter and dancing from the musical performance reverberate and echo out to sea.",
             printType: "Reduction Linocut",
             printEdition: 30,
-            size: "112 x 60 cm",
+            size: "112 x 60 cm (W x H)",
             price: "£650",
             imageUrls: [
               "@assets/works/prints/structDestruct/Cromer_lighthouse_fernando_feijoo.avif",
@@ -1240,7 +1240,7 @@ export const WORKS: Category[] = [
               "Not just books - but where have the dreams gone, the adventures through the leaves, the words of writers, long gone, but who still speak to us now? The pictures that we daydreamed about, the flights of fancy enjoyed?\nNot just books - but the seeds that were sown, the people met in the corners of this imposing building. An edifice that enthralled and helped us realise that we are small, but not insignificant. That we are one of many and can join with others - to save our libraries.",
             printType: "Collagraph",
             printEdition: 10,
-            size: "40 x 30 cm",
+            size: "40 x 30 cm (W x H)",
             price: "£175",
             imageUrls: [
               "@assets/works/prints/structDestruct/Mill-Road-Library.avif",
@@ -1252,7 +1252,7 @@ export const WORKS: Category[] = [
         slug: "the-journey-man-prints",
         title: "The Journey Man",
         description:
-          "Inspired by a surreal dream and the universal idea of the journeyman. The labyrinth represents the twists and turns of modern life. Symbols include the jellyfish (rescue/care) and the dream catcher. Themes: life’s excitements, fears and dangers. A story that does not end: it evolves with the times.",
+          "Inspired by a surreal dream and the universal idea of the journeyman. The labyrinth represents the twists and turns of modern life. Symbols include the jellyfish (rescue/care) and the dream catcher. Themes: life's excitements, fears and dangers. A story that does not end: it evolves with the times.",
         works: [
           {
             slug: "arrival",
@@ -1262,35 +1262,9 @@ export const WORKS: Category[] = [
             printType: "Etching",
             price: "£125 (Complete set available for £750 of 10 prints)",
             printEdition: 30,
-            size: "15 x 20 cm (Image size) / 28 x 38 cm (Paper size)",
+            size: "15 x 20 cm (Image size) / 28 x 38 cm (Paper size) (W x H)",
             imageUrls: [
               "@assets/works/prints/theJourneyMan/1_Arrival_fernando_feijoo.avif",
-            ],
-          },
-          {
-            slug: "darkness",
-            title: "6. Darkness",
-            description:
-              "This is hell under earth.\nEndless steps lead up and out.\nA lamplight flickers:\nDarkness must end.",
-            printType: "Etching",
-            price: "£125 (Complete set available for £750 of 10 prints)",
-            printEdition: 30,
-            size: "15 x 20 cm (Image size) / 28 x 38 cm (Paper size)",
-            imageUrls: [
-              "@assets/works/prints/theJourneyMan/6_Darkness__fernando_feijoo.avif",
-            ],
-          },
-          {
-            slug: "metropolis",
-            title: "10. Metropolis",
-            description:
-              "A safety net protects new life:\nA city emerges from the smog.\nThe dream catcher journeys on:\nDown, then up, then down again.\nAnd on and on …",
-            printType: "Etching",
-            price: "£125 (Complete set available for £750 of 10 prints)",
-            printEdition: 30,
-            size: "15 x 20 cm (Image size) / 28 x 38 cm (Paper size)",
-            imageUrls: [
-              "@assets/works/prints/theJourneyMan/10_Metropolis__fernando_feijoo.avif",
             ],
           },
           {
@@ -1301,7 +1275,7 @@ export const WORKS: Category[] = [
             printType: "Etching",
             price: "£125 (Complete set available for £750 of 10 prints)",
             printEdition: 30,
-            size: "15 x 20 cm (Image size) / 28 x 38 cm (Paper size)",
+            size: "15 x 20 cm (Image size) / 28 x 38 cm (Paper size) (W x H)",
             imageUrls: [
               "@assets/works/prints/theJourneyMan/2_Submerged_fernando_feijoo.avif",
             ],
@@ -1314,7 +1288,7 @@ export const WORKS: Category[] = [
             printType: "Etching",
             price: "£125 (Complete set available for £750 of 10 prints)",
             printEdition: 30,
-            size: "15 x 20 cm (Image size) / 28 x 38 cm (Paper size)",
+            size: "15 x 20 cm (Image size) / 28 x 38 cm (Paper size) (W x H)",
             imageUrls: [
               "@assets/works/prints/theJourneyMan/3_Secret_doorway_fernando_feijoo.avif",
             ],
@@ -1327,7 +1301,7 @@ export const WORKS: Category[] = [
             printType: "Etching",
             price: "£125 (Complete set available for £750 of 10 prints)",
             printEdition: 30,
-            size: "15 x 20 cm (Image size) / 28 x 38 cm (Paper size)",
+            size: "15 x 20 cm (Image size) / 28 x 38 cm (Paper size) (W x H)",
             imageUrls: [
               "@assets/works/prints/theJourneyMan/4_Labyrinth_fernando_feijoo.avif",
             ],
@@ -1340,9 +1314,22 @@ export const WORKS: Category[] = [
             printType: "Etching",
             price: "£125 (Complete set available for £750 of 10 prints)",
             printEdition: 30,
-            size: "15 x 20 cm (Image size) / 28 x 38 cm (Paper size)",
+            size: "15 x 20 cm (Image size) / 28 x 38 cm (Paper size) (W x H)",
             imageUrls: [
               "@assets/works/prints/theJourneyMan/5_Confusion_fernando_feijoo.avif",
+            ],
+          },
+          {
+            slug: "darkness",
+            title: "6. Darkness",
+            description:
+              "This is hell under earth.\nEndless steps lead up and out.\nA lamplight flickers:\nDarkness must end.",
+            printType: "Etching",
+            price: "£125 (Complete set available for £750 of 10 prints)",
+            printEdition: 30,
+            size: "15 x 20 cm (Image size) / 28 x 38 cm (Paper size) (W x H)",
+            imageUrls: [
+              "@assets/works/prints/theJourneyMan/6_Darkness__fernando_feijoo.avif",
             ],
           },
           {
@@ -1353,22 +1340,9 @@ export const WORKS: Category[] = [
             printType: "Etching",
             price: "£125 (Complete set available for £750 of 10 prints)",
             printEdition: 30,
-            size: "15 x 20 cm (Image size) / 28 x 38 cm (Paper size)",
+            size: "15 x 20 cm (Image size) / 28 x 38 cm (Paper size) (W x H)",
             imageUrls: [
               "@assets/works/prints/theJourneyMan/7_Ascent_fernando_feijoo.avif",
-            ],
-          },
-          {
-            slug: "departure",
-            title: "9. Departure",
-            description:
-              "The fires burning on earth\nLaunch flames and debris into the air.\nRise, rise above,\nRide the airwaves to safety.",
-            printType: "Etching",
-            price: "£125 (Complete set available for £750 of 10 prints)",
-            printEdition: 30,
-            size: "15 x 20 cm (Image size) / 28 x 38 cm (Paper size)",
-            imageUrls: [
-              "@assets/works/prints/theJourneyMan/9_Departure_fernando_feijoo.avif",
             ],
           },
           {
@@ -1379,9 +1353,35 @@ export const WORKS: Category[] = [
             printType: "Etching",
             price: "£125 (Complete set available for £750 of 10 prints)",
             printEdition: 30,
-            size: "15 x 20 cm (Image size) / 28 x 38 cm (Paper size)",
+            size: "15 x 20 cm (Image size) / 28 x 38 cm (Paper size) (W x H)",
             imageUrls: [
               "@assets/works/prints/theJourneyMan/8_Eruption_fernando_feijoo.avif",
+            ],
+          },
+          {
+            slug: "departure",
+            title: "9. Departure",
+            description:
+              "The fires burning on earth\nLaunch flames and debris into the air.\nRise, rise above,\nRide the airwaves to safety.",
+            printType: "Etching",
+            price: "£125 (Complete set available for £750 of 10 prints)",
+            printEdition: 30,
+            size: "15 x 20 cm (Image size) / 28 x 38 cm (Paper size) (W x H)",
+            imageUrls: [
+              "@assets/works/prints/theJourneyMan/9_Departure_fernando_feijoo.avif",
+            ],
+          },
+          {
+            slug: "metropolis",
+            title: "10. Metropolis",
+            description:
+              "A safety net protects new life:\nA city emerges from the smog.\nThe dream catcher journeys on:\nDown, then up, then down again.\nAnd on and on …",
+            printType: "Etching",
+            price: "£125 (Complete set available for £750 of 10 prints)",
+            printEdition: 30,
+            size: "15 x 20 cm (Image size) / 28 x 38 cm (Paper size) (W x H)",
+            imageUrls: [
+              "@assets/works/prints/theJourneyMan/10_Metropolis__fernando_feijoo.avif",
             ],
           },
         ],
@@ -1399,7 +1399,7 @@ export const WORKS: Category[] = [
               "The stage is set. The curtain rises on a convoluted tale. Each of the three narratives is played out for us to spectate and observe, reflect on and consider our own judgements.",
             printType: "Linocut",
             printEdition: 30,
-            size: "60 x 40 cm",
+            size: "60 x 40 cm (W x H)",
             price: "£325",
             imageUrls: [
               "@assets/works/prints/theThreeProgresses/curtainRises/The_curtain_rises_fernando_feijoo.avif",
@@ -1421,7 +1421,7 @@ export const WORKS: Category[] = [
             printType: "Linocut",
             price: "£325",
             printEdition: 30,
-            size: "60 x 40 cm",
+            size: "60 x 40 cm (W x H)",
             imageUrls: [
               "@assets/works/prints/theThreeProgresses/cracksProgress/1_crack_could_get_by_fernado_feijoo.avif",
             ],
@@ -1434,7 +1434,7 @@ export const WORKS: Category[] = [
             printType: "Linocut",
             price: "£325",
             printEdition: 30,
-            size: "60 x 40 cm",
+            size: "60 x 40 cm (W x H)",
             imageUrls: [
               "@assets/works/prints/theThreeProgresses/cracksProgress/2_to_be_bad_he_became_bad_fernando_feijoo.avif",
             ],
@@ -1447,7 +1447,7 @@ export const WORKS: Category[] = [
             printType: "Linocut",
             price: "£325",
             printEdition: 30,
-            size: "60 x 40 cm",
+            size: "60 x 40 cm (W x H)",
             imageUrls: [
               "@assets/works/prints/theThreeProgresses/cracksProgress/3_Nice_girls_wouldnt_touch_him_fernando_feijoo.avif",
             ],
@@ -1460,7 +1460,7 @@ export const WORKS: Category[] = [
             printType: "Linocut",
             price: "£325",
             printEdition: 30,
-            size: "60 x 40 cm",
+            size: "60 x 40 cm (W x H)",
             imageUrls: [
               "@assets/works/prints/theThreeProgresses/cracksProgress/4_Caught_fernando_feijoo.avif",
             ],
@@ -1473,7 +1473,7 @@ export const WORKS: Category[] = [
             printType: "Linocut",
             price: "£325",
             printEdition: 30,
-            size: "60 x 40 cm",
+            size: "60 x 40 cm (W x H)",
             imageUrls: [
               "@assets/works/prints/theThreeProgresses/cracksProgress/5_Crack_came_out_fernando_feijoo.avif",
             ],
@@ -1486,7 +1486,7 @@ export const WORKS: Category[] = [
             printType: "Linocut",
             price: "£325",
             printEdition: 30,
-            size: "60 x 40 cm",
+            size: "60 x 40 cm (W x H)",
             imageUrls: [
               "@assets/works/prints/theThreeProgresses/cracksProgress/6_Crack_took_crack_fernando_feijoo.avif",
             ],
@@ -1499,7 +1499,7 @@ export const WORKS: Category[] = [
             printType: "Linocut",
             price: "£325",
             printEdition: 30,
-            size: "60 x 40 cm",
+            size: "60 x 40 cm (W x H)",
             imageUrls: [
               "@assets/works/prints/theThreeProgresses/cracksProgress/7_taken_a_life_fernando_feijoo.avif",
             ],
@@ -1512,7 +1512,7 @@ export const WORKS: Category[] = [
             printType: "Linocut",
             price: "£325",
             printEdition: 30,
-            size: "60 x 40 cm",
+            size: "60 x 40 cm (W x H)",
             imageUrls: [
               "@assets/works/prints/theThreeProgresses/cracksProgress/8_Now_it_is_the_nightmare_fernando_feijoo.avif",
             ],
@@ -1533,7 +1533,7 @@ export const WORKS: Category[] = [
             printType: "Linocut",
             price: "£325",
             printEdition: 30,
-            size: "60 x 40 cm",
+            size: "60 x 40 cm (W x H)",
             imageUrls: [
               "@assets/works/prints/theThreeProgresses/charliesProgress/1_Conceived_in_a_summer_of_love_fernando_feijoo.avif",
             ],
@@ -1546,7 +1546,7 @@ export const WORKS: Category[] = [
             printType: "Linocut",
             price: "£325",
             printEdition: 30,
-            size: "60 x 40 cm",
+            size: "60 x 40 cm (W x H)",
             imageUrls: [
               "@assets/works/prints/theThreeProgresses/charliesProgress/2_To_be_safe_in_the_city_fernando_feijoo.avif",
             ],
@@ -1559,7 +1559,7 @@ export const WORKS: Category[] = [
             printType: "Linocut",
             price: "£325",
             printEdition: 30,
-            size: "60 x 40 cm",
+            size: "60 x 40 cm (W x H)",
             imageUrls: [
               "@assets/works/prints/theThreeProgresses/charliesProgress/3_Wayward_Women_Working_the_web_fernando_feijoo.avif",
             ],
@@ -1572,7 +1572,7 @@ export const WORKS: Category[] = [
             printType: "Linocut",
             price: "£325",
             printEdition: 30,
-            size: "60 x 40 cm",
+            size: "60 x 40 cm (W x H)",
             imageUrls: [
               "@assets/works/prints/theThreeProgresses/charliesProgress/4_Caught_fernando_feijoo.avif",
             ],
@@ -1585,7 +1585,7 @@ export const WORKS: Category[] = [
             printType: "Linocut",
             price: "£325",
             printEdition: 30,
-            size: "60 x 40 cm",
+            size: "60 x 40 cm (W x H)",
             imageUrls: [
               "@assets/works/prints/theThreeProgresses/charliesProgress/5_To_pay_her_debt_fernando_feijoo.avif",
             ],
@@ -1598,7 +1598,7 @@ export const WORKS: Category[] = [
             printType: "Linocut",
             price: "£325",
             printEdition: 30,
-            size: "60 x 40 cm",
+            size: "60 x 40 cm (W x H)",
             imageUrls: [
               "@assets/works/prints/theThreeProgresses/charliesProgress/6_Tara_came_in_graduation_gown_fernando_feijoo.avif",
             ],
@@ -1611,7 +1611,7 @@ export const WORKS: Category[] = [
             printType: "Linocut",
             price: "£325",
             printEdition: 30,
-            size: "60 x 40 cm",
+            size: "60 x 40 cm (W x H)",
             imageUrls: [
               "@assets/works/prints/theThreeProgresses/charliesProgress/7_Nearly_Died_fernando_feijoo.avif",
             ],
@@ -1624,7 +1624,7 @@ export const WORKS: Category[] = [
             printType: "Linocut",
             price: "£325",
             printEdition: 30,
-            size: "60 x 40 cm",
+            size: "60 x 40 cm (W x H)",
             imageUrls: [
               "@assets/works/prints/theThreeProgresses/charliesProgress/8_Bad_bawdy_drams_fernando_feijoo.avif",
             ],
@@ -1643,7 +1643,7 @@ export const WORKS: Category[] = [
             description: "",
             printType: "Linocut",
             printEdition: 30,
-            size: "60 x 40 cm",
+            size: "60 x 40 cm (W x H)",
             price: "£325",
             imageUrls: [
               "@assets/works/prints/theThreeProgresses/modernMarriage/1_youngest_sister_of_crack_and_charlie_fernando_feijoo.avif",
@@ -1655,7 +1655,7 @@ export const WORKS: Category[] = [
             description: "",
             printType: "Linocut",
             printEdition: 30,
-            size: "60 x 40 cm",
+            size: "60 x 40 cm (W x H)",
             price: "£325",
             imageUrls: [
               "@assets/works/prints/theThreeProgresses/modernMarriage/2_at_the_back_end_of_town_fernando_feijoo.avif",
@@ -1667,7 +1667,7 @@ export const WORKS: Category[] = [
             description: "",
             printType: "Linocut",
             printEdition: 30,
-            size: "60 x 40 cm",
+            size: "60 x 40 cm (W x H)",
             price: "£325",
             imageUrls: [
               "@assets/works/prints/theThreeProgresses/modernMarriage/3_conceived_a_child_fernando_feijoo.avif",
@@ -1679,7 +1679,7 @@ export const WORKS: Category[] = [
             description: "",
             printType: "Linocut",
             printEdition: 30,
-            size: "60 x 40 cm",
+            size: "60 x 40 cm (W x H)",
             price: "£325",
             imageUrls: [
               "@assets/works/prints/theThreeProgresses/modernMarriage/4_young_wayne_became_wayward_fernando_feijoo.avif",
@@ -1691,7 +1691,7 @@ export const WORKS: Category[] = [
             description: "",
             printType: "Linocut",
             printEdition: 30,
-            size: "60 x 40 cm",
+            size: "60 x 40 cm (W x H)",
             price: "£325",
             imageUrls: [
               "@assets/works/prints/theThreeProgresses/modernMarriage/5_behind_the_scenes_fernando_feijoo.avif",
@@ -1703,7 +1703,7 @@ export const WORKS: Category[] = [
             description: "",
             printType: "Linocut",
             printEdition: 30,
-            size: "60 x 40 cm",
+            size: "60 x 40 cm (W x H)",
             price: "£325",
             imageUrls: [
               "@assets/works/prints/theThreeProgresses/modernMarriage/6_the_river_rats_fernando_feijoo.avif",
@@ -1715,7 +1715,7 @@ export const WORKS: Category[] = [
             description: "",
             printType: "Linocut",
             printEdition: 30,
-            size: "60 x 40 cm",
+            size: "60 x 40 cm (W x H)",
             price: "£325",
             imageUrls: [
               "@assets/works/prints/theThreeProgresses/modernMarriage/7_walking_the_line_into_oblivion_fernando_feijoo.avif",
@@ -1727,7 +1727,7 @@ export const WORKS: Category[] = [
             description: "",
             printType: "Linocut",
             printEdition: 30,
-            size: "60 x 40 cm",
+            size: "60 x 40 cm (W x H)",
             price: "£325",
             imageUrls: [
               "@assets/works/prints/theThreeProgresses/modernMarriage/8_protecting_a_new_generation_fernando_feijoo.avif",
@@ -1748,7 +1748,7 @@ export const WORKS: Category[] = [
               "The procession passes.\nThe procession pauses.\nLeaves tremble, people quiver.\nThe procession passes.",
             printType: "Linocut",
             printEdition: 30,
-            size: "56 x 76 cm",
+            size: "56 x 76 cm (W x H)",
             price: "£325",
             imageUrls: [
               "@assets/works/prints/watchBewitched/Rumble_in_the_Jungle_Fernando_Feijoo.avif",
@@ -1761,7 +1761,7 @@ export const WORKS: Category[] = [
               "The bull runs, streets full of tourists turn to streets full of terror as the bulls charge the men who dare to defy these furious beasts. Commentators, safe behind the barriers, use inflammatory language; crowds, cowering behind each other, yell encouragement or disparagement.\nThe bulls are the heroes in this barbaric spectacle.",
             printType: "Reduction Linocut",
             printEdition: 10,
-            size: "30 x 20 cm",
+            size: "30 x 20 cm (W x H)",
             price: "£150",
             imageUrls: [
               "@assets/works/prints/watchBewitched/Carrera_de_san_fermin__fernando_feijoo.avif",
@@ -1774,7 +1774,7 @@ export const WORKS: Category[] = [
               "Fight as a game.\nFight for life.\nOn guard, guard down.\nLunge forward, fall back.\nKnocked out, a symbol of life.",
             printType: "Colour Wood Cut — variable colours",
             printEdition: 30,
-            size: "80 x 60 cm",
+            size: "80 x 60 cm (W x H)",
             price: "£150",
             imageUrls: [
               "@assets/works/prints/watchBewitched/knock-out_1_fernando_feijoo.avif",
@@ -1787,7 +1787,7 @@ export const WORKS: Category[] = [
               "Fight as a game.\nFight for life.\nOn guard, guard down.\nLunge forward, fall back.\nKnocked out, a symbol of life.",
             printType: "Wood Cut",
             printEdition: 30,
-            size: "60 x 40 cm",
+            size: "60 x 40 cm (W x H)",
             price: "£100",
             imageUrls: [
               "@assets/works/prints/watchBewitched/knock_out_2_fernando_feijoo.avif",
@@ -1800,7 +1800,7 @@ export const WORKS: Category[] = [
               "Fight as a game.\nFight for life.\nOn guard, guard down.\nLunge forward, fall back.\nKnocked out, a symbol of life.",
             printType: "Linocut — variable colours",
             printEdition: 10,
-            size: "30 x 620 cm",
+            size: "30 x 620 cm (W x H)",
             price: "£125",
             imageUrls: [
               "@assets/works/prints/watchBewitched/Knock_Out_3_fernando_feijoo.avif",
@@ -1813,7 +1813,7 @@ export const WORKS: Category[] = [
               "The bull runs, streets full of tourists turn to streets full of terror as the bulls charge the men who dare to defy these furious beasts. Commentators, safe behind the barriers, use inflammatory language; crowds, cowering behind each other, yell encouragement or disparagement.\nThe bulls are the heroes in this barbaric spectacle.",
             printType: "Etching",
             printEdition: 50,
-            size: "30 x 40 cm",
+            size: "30 x 40 cm (W x H)",
             price: "£150",
             imageUrls: [
               "@assets/works/prints/watchBewitched/Pamplona_fernando_feijoo.avif",
@@ -1826,7 +1826,7 @@ export const WORKS: Category[] = [
               "The roles have been switched.\nThe hunter becomes poacher.\nThe crowd roars, blood spills.\nThe triumphant stand defiantly.\nWho is laughing now?",
             printType: "Screenprint",
             printEdition: 10,
-            size: "60 x 80 cm",
+            size: "60 x 80 cm (W x H)",
             price: "£95",
             imageUrls: [
               "@assets/works/prints/watchBewitched/Role_reversal_1_fernando_feijoo.avif",
@@ -1839,7 +1839,7 @@ export const WORKS: Category[] = [
               "The roles have been switched.\nThe hunter becomes poacher.\nThe crowd roars, blood spills.\nThe triumphant stand defiantly.\nWho is laughing now?",
             printType: "Screenprint",
             printEdition: 10,
-            size: "60 x 80 cm",
+            size: "60 x 80 cm (W x H)",
             price: "£95",
             imageUrls: [
               "@assets/works/prints/watchBewitched/Role_reversal_2_fernando_feijoo.avif",
@@ -1852,7 +1852,7 @@ export const WORKS: Category[] = [
               "The roles have been switched.\nThe hunter becomes poacher.\nThe crowd roars, blood spills.\nThe triumphant stand defiantly.\nWho is laughing now?",
             printType: "Screenprint",
             printEdition: 10,
-            size: "60 x 80 cm",
+            size: "60 x 80 cm (W x H)",
             price: "£95",
             imageUrls: [
               "@assets/works/prints/watchBewitched/Role_reversal_3_fernando_feijoo.avif",
@@ -1865,7 +1865,7 @@ export const WORKS: Category[] = [
               "Step into the arena, the fight is on, the crowd is roaring, but only one winner will stand triumphant and victorious. The identity of each fighter is masked. Superheroes battle amongst themselves. The crowd below beckons. Strength and power are on display as the magical minotaur steps into the arena to command supremacy over all that stand in his path.",
             printType: "Stone Lithograph",
             printEdition: 10,
-            size: "40 x 50 cm",
+            size: "40 x 50 cm (W x H)",
             price: "£195",
             imageUrls: [
               "@assets/works/prints/watchBewitched/Rudos_Vs_Tecnicos_fernando_feijoo.avif",
@@ -1878,7 +1878,7 @@ export const WORKS: Category[] = [
               "The bull runs, streets full of tourists turn to streets full of terror as the bulls charge the men who dare to defy these furious beasts. Commentators, safe behind the barriers, use inflammatory language; crowds, cowering behind each other, yell encouragement or disparagement.\nThe bulls are the heroes in this barbaric spectacle.",
             printType: "Etching",
             printEdition: 30,
-            size: "60 x 20 cm",
+            size: "60 x 20 cm (W x H)",
             price: "£150",
             imageUrls: [
               "@assets/works/prints/watchBewitched/run-run-run_fernando_feijoo.avif",
@@ -1891,7 +1891,7 @@ export const WORKS: Category[] = [
               "Fight as a game.\nFight for life.\nOn guard, guard down.\nLunge forward, fall back.\nKnocked out, a symbol of life.",
             printType: "Etching",
             printEdition: 30,
-            size: "20 x 15 cm",
+            size: "20 x 15 cm (W x H)",
             price: "£125",
             imageUrls: [
               "@assets/works/prints/watchBewitched/Take-Down_fernando_feijoo.avif",
@@ -1904,7 +1904,7 @@ export const WORKS: Category[] = [
               "The lustful Catrina bewitches the viewers, drawing them in with her powerful gaze.\nShe symbolises life and death, but which path will she choose for you?",
             printType: "Linocut",
             printEdition: 30,
-            size: "30 x 40 cm",
+            size: "30 x 40 cm (W x H)",
             price: "£95",
             imageUrls: [
               "@assets/works/prints/watchBewitched/Temptation_fernando_feijoo.avif",
@@ -1917,7 +1917,7 @@ export const WORKS: Category[] = [
               "The triumphant Skeleton entertains his spectators as he pours out his magic potion which represents strength and power. Will you dare to sample this deadly drink and play the game of life and death?",
             printType: "Linocut",
             printEdition: 30,
-            size: "30 x 40 cm",
+            size: "30 x 40 cm (W x H)",
             price: "£95",
             imageUrls: [
               "@assets/works/prints/watchBewitched/Tollerance_fernando_feijoo.avif",
@@ -1930,7 +1930,7 @@ export const WORKS: Category[] = [
               "The big trucks roll along the bumpy cobbled roads down into the village of Bunol near Valencia. There are no spectators in this festival, everyone is a participant.\nTake aim and fire.\nSwish, swash, slop – the target is hit. Now it is time to duck and hide.\nTrucks roll out, water hoses come out to spray everything down, and then the party begins.",
             printType: "Lithograph",
             printEdition: 30,
-            size: "50 x 20 cm",
+            size: "50 x 20 cm (W x H)",
             price: "£95",
             imageUrls: [
               "@assets/works/prints/watchBewitched/Tomatina_fernando_feijoo.avif",
@@ -2292,23 +2292,26 @@ export const WORKS: Category[] = [
           },
           {
             slug: "circus-loc",
-            title: "circus",
+            title: "Circus",
             description: "Character study from sketchbook.",
             printType: "Mixed Media on Paper",
+            size: "30 x 40 cm (W x H)",
             imageUrls: ["@assets/works/sketchbooks/circus.avif"],
           },
           {
             slug: "repent-loc",
-            title: "repent",
+            title: "Repent",
             description: "Character study from sketchbook.",
             printType: "Mixed Media on Paper",
+            size: "30 x 40 cm (W x H)",
             imageUrls: ["@assets/works/sketchbooks/repent.avif"],
           },
           {
             slug: "characterdesign-loc",
-            title: "character Design",
+            title: "Character Design 3.1",
             description: "Character study from sketchbook.",
             printType: "Mixed Media on Paper",
+            size: "30 x 40 cm (W x H)",
             imageUrls: ["@assets/works/sketchbooks/characterDesign.avif"],
           },
         ],
