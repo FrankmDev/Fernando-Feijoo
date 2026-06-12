@@ -1,4 +1,6 @@
 ---
+import { SITE_CONFIG } from "@constants";
+
 interface BreadcrumbItem {
   label: string;
   href?: string;
@@ -9,32 +11,35 @@ interface Props {
 }
 
 const { items } = Astro.props;
+
+const siteUrl = SITE_CONFIG.url;
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: items.map((item, index) => ({
+    "@type": "ListItem",
+    position: index + 1,
+    name: item.label,
+    ...(item.href ? { item: `${siteUrl}${item.href}` } : {}),
+  })),
+};
 ---
 
 <nav class="breadcrumb" aria-label="Breadcrumb">
-  <ol
-    class="breadcrumb-list"
-    itemscope
-    itemtype="https://schema.org/BreadcrumbList"
-  >
+  <ol class="breadcrumb-list">
     {
       items.map((item, index) => (
-        <li
-          class="breadcrumb-item"
-          itemprop="itemListElement"
-          itemscope
-          itemtype="https://schema.org/ListItem"
-        >
+        <li class="breadcrumb-item">
           {item.href ? (
-            <a href={item.href} itemprop="item">
-              <span itemprop="name">{item.label}</span>
+            <a href={item.href}>
+              <span>{item.label}</span>
             </a>
           ) : (
-            <span class="current" itemprop="name" aria-current="page">
+            <span class="current" aria-current="page">
               {item.label}
             </span>
           )}
-          <meta itemprop="position" content={String(index + 1)} />
           {index < items.length - 1 && (
             <span class="separator" aria-hidden="true">
               /
@@ -45,6 +50,12 @@ const { items } = Astro.props;
     }
   </ol>
 </nav>
+
+<script
+  type="application/ld+json"
+  is:inline
+  set:html={JSON.stringify(breadcrumbSchema)}
+/>
 
 <style>
   .breadcrumb {

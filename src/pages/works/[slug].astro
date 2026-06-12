@@ -19,8 +19,8 @@ export async function getStaticPaths() {
           props: {
             work,
             categorySlug: category.slug,
-            categoryTitle: category.title
-          }
+            categoryTitle: category.title,
+          },
         });
       }
     }
@@ -35,8 +35,8 @@ export async function getStaticPaths() {
               categorySlug: category.slug,
               categoryTitle: category.title,
               collectionSlug: collection.slug,
-              collectionTitle: collection.title
-            }
+              collectionTitle: collection.title,
+            },
           });
         }
       }
@@ -46,14 +46,15 @@ export async function getStaticPaths() {
   return paths;
 }
 
-const { work, categorySlug, categoryTitle, collectionSlug, collectionTitle } = Astro.props;
+const { work, categorySlug, categoryTitle, collectionSlug, collectionTitle } =
+  Astro.props;
 
 const allImageMetas = (work.imageUrls ?? [])
-  .map(url => resolveImage(url))
+  .map((url) => resolveImage(url))
   .filter((m): m is ImageMetadata => m !== undefined);
 
 const mainImageMeta = allImageMetas[0];
-const mainImageSrc = mainImageMeta?.src || '';
+const mainImageSrc = mainImageMeta?.src || "";
 const hasMultipleImages = allImageMetas.length > 1;
 const additionalImageMetas = allImageMetas.slice(1);
 const additionalImagesCount = additionalImageMetas.length;
@@ -74,252 +75,324 @@ const relatedWorks = [];
 for (const category of WORKS) {
   if (category.slug === categorySlug) {
     if (collectionSlug && category.collections) {
-      const collection = category.collections.find(c => c.slug === collectionSlug);
+      const collection = category.collections.find(
+        (c) => c.slug === collectionSlug,
+      );
       if (collection) {
-        relatedWorks.push(...collection.works.filter(w => w.slug !== work.slug).slice(0, 4));
+        relatedWorks.push(
+          ...collection.works.filter((w) => w.slug !== work.slug).slice(0, 4),
+        );
       }
     } else if (category.works) {
-      relatedWorks.push(...category.works.filter(w => w.slug !== work.slug).slice(0, 4));
+      relatedWorks.push(
+        ...category.works.filter((w) => w.slug !== work.slug).slice(0, 4),
+      );
     }
     break;
   }
 }
 
-const pageTitle = `${work?.title || 'Work'} | Fernando Feijoo`;
+const pageTitle = `${work?.title || "Work"} | Fernando Feijoo`;
 const pageDescription = work?.description?.trim()
   ? work.description.substring(0, 160)
-  : `${work?.title} - ${work?.printType || 'Artwork'} by Fernando Feijoo`;
-const ogImage = mainImageSrc || '/favicon.png';
+  : `${work?.title} - ${work?.printType || "Artwork"} by Fernando Feijoo`;
+const ogImage = mainImageSrc || "/favicon.png";
 
 const backLink = collectionSlug
   ? `/works/${categorySlug}/${collectionSlug}`
   : `/works/${categorySlug}`;
 const backLabel = collectionTitle || categoryTitle;
+
 ---
 
-<Layout
-  title={pageTitle}
-  description={pageDescription}
-  image={ogImage}
->
+<Layout title={pageTitle} description={pageDescription} image={ogImage}>
   <SectionContainer id="work-detail">
     <div class="work-page">
-          {/* Elegant Navigation */}
-          <nav class="work-nav">
-            <div class="nav-inner">
-              <a href={backLink} class="nav-back">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                  <path d="M19 12H5M12 19l-7-7 7-7"/>
-                </svg>
-                <span>Back to {backLabel}</span>
-              </a>
-              <div class="nav-path">
-                <span class="path-segment"><a href="/">Home</a></span>
-                <span class="path-divider">/</span>
-                <span class="path-segment"><a href="/works">Works</a></span>
-                <span class="path-divider">/</span>
-                <span class="path-segment active">{work.title}</span>
+      {/* Elegant Navigation */}
+      <nav class="work-nav">
+        <div class="nav-inner">
+          <a href={backLink} class="nav-back">
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <path d="M19 12H5M12 19l-7-7 7-7"></path>
+            </svg>
+            <span>Back to {backLabel}</span>
+          </a>
+          <div class="nav-path">
+            <span class="path-segment"><a href="/">Home</a></span>
+            <span class="path-divider">/</span>
+            <span class="path-segment"><a href="/works">Works</a></span>
+            <span class="path-divider">/</span>
+            <span class="path-segment active">{work.title}</span>
+          </div>
+        </div>
+      </nav>
+
+      {/* Main Content - Editorial Layout */}
+      <article class="work-content">
+        {/* Hero Section */}
+        <div class="work-hero">
+          <div class="hero-image-wrapper">
+            <div class="image-frame">
+              <div class="frame-decoration top-left" />
+              <div class="frame-decoration top-right" />
+              <div class="frame-decoration bottom-left" />
+              <div class="frame-decoration bottom-right" />
+
+              <div class="image-container">
+                {mainImageMeta ? (
+                  <Image
+                    id="main-work-image"
+                    src={mainImageMeta}
+                    alt={work.title}
+                    class="hero-image"
+                    loading="eager"
+                    data-images={JSON.stringify(
+                      allImageMetas.map((m) => m.src),
+                    )}
+                  />
+                ) : (
+                  <div class="image-placeholder">
+                    <span>{work.title}</span>
+                  </div>
+                )}
+
+                <button class="expand-trigger" aria-label="Expand image">
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+                  </svg>
+                </button>
               </div>
             </div>
-          </nav>
 
-          {/* Main Content - Editorial Layout */}
-          <article class="work-content">
-            {/* Hero Section */}
-            <div class="work-hero">
-              <div class="hero-image-wrapper">
-                <div class="image-frame">
-                  <div class="frame-decoration top-left"></div>
-                  <div class="frame-decoration top-right"></div>
-                  <div class="frame-decoration bottom-left"></div>
-                  <div class="frame-decoration bottom-right"></div>
-                  
-                  <div class="image-container">
-                    {mainImageMeta ? (
-                      <Image
-                        id="main-work-image"
-                        src={mainImageMeta}
-                        alt={work.title}
-                        class="hero-image"
-                        loading="eager"
-                        data-images={JSON.stringify(allImageMetas.map(m => m.src))}
-                      />
-                    ) : (
-                      <div class="image-placeholder">
-                        <span>{work.title}</span>
-                      </div>
-                    )}
-                    
-                    <button class="expand-trigger" aria-label="Expand image">
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
-                      </svg>
-                    </button>
-                  </div>
+            {hasMultipleImages && (
+              <div class="image-indicator">
+                <span class="indicator-current">01</span>
+                <div class="indicator-bar">
+                  <div
+                    class="indicator-progress"
+                    style={`width: ${100 / allImageMetas.length}%`}
+                  />
+                </div>
+                <span class="indicator-total">
+                  {String(allImageMetas.length).padStart(2, "0")}
+                </span>
+              </div>
+            )}
+          </div>
+
+          <div class="hero-info">
+            <header class="info-header">
+              <div class="info-eyebrow">
+                <span class="eyebrow-line" />
+                <span class="eyebrow-text">
+                  {collectionTitle || categoryTitle}
+                </span>
+              </div>
+
+              <h1 class="info-title">{work.title}</h1>
+
+              {work.description && (
+                <p class="info-description">{work.description}</p>
+              )}
+            </header>
+
+            <div class="info-specs">
+              <div class="spec-list">
+                <div class="spec-item">
+                  <span class="spec-label">Medium</span>
+                  <span class="spec-value">
+                    {work.printType || "Mixed media"}
+                  </span>
                 </div>
 
-                {hasMultipleImages && (
-                  <div class="image-indicator">
-                    <span class="indicator-current">01</span>
-                    <div class="indicator-bar">
-                      <div class="indicator-progress" style={`width: ${100 / allImageMetas.length}%`}></div>
-                    </div>
-                    <span class="indicator-total">{String(allImageMetas.length).padStart(2, '0')}</span>
+                {work.size && (
+                  <div class="spec-item">
+                    <span class="spec-label">Dimensions</span>
+                    <span class="spec-value">{work.size}</span>
+                  </div>
+                )}
+
+                {work.printEdition && (
+                  <div class="spec-item">
+                    <span class="spec-label">Edition</span>
+                    <span class="spec-value">{work.printEdition}</span>
+                  </div>
+                )}
+
+                {work.price && (
+                  <div class="spec-item spec-highlight">
+                    <span class="spec-label">Price</span>
+                    <span class="spec-value">{work.price}</span>
                   </div>
                 )}
               </div>
+            </div>
 
-              <div class="hero-info">
-                <header class="info-header">
-                  <div class="info-eyebrow">
-                    <span class="eyebrow-line"></span>
-                    <span class="eyebrow-text">{collectionTitle || categoryTitle}</span>
-                  </div>
-                  
-                  <h1 class="info-title">{work.title}</h1>
-                  
-                  {work.description && (
-                    <p class="info-description">{work.description}</p>
-                  )}
-                </header>
+            <div class="info-cta">
+              <a
+                href={`mailto:info@fernandofeijoo.com?subject=Inquiry: ${encodeURIComponent(work.title)}`}
+                class="cta-primary"
+              >
+                <span>Inquire about this work</span>
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M5 12h14M12 5l7 7-7 7"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </a>
+              <a href="/contact" class="cta-secondary">
+                <span>Visit studio</span>
+              </a>
+            </div>
+          </div>
+        </div>
 
-                <div class="info-specs">
-                  <div class="spec-list">
-                    <div class="spec-item">
-                      <span class="spec-label">Medium</span>
-                      <span class="spec-value">{work.printType || 'Mixed media'}</span>
+        {/* Gallery Section */}
+        {additionalImagesCount > 0 && (
+          <section class="work-gallery">
+            <div class="section-header">
+              <div class="section-eyebrow">
+                <span class="eyebrow-line" />
+                <span class="eyebrow-text">Gallery</span>
+              </div>
+              <h2 class="section-title">Additional Views</h2>
+            </div>
+
+            <div
+              class="gallery-grid"
+              style={`--cols: ${galleryColCount}`}
+            >
+              {additionalImageMetas.map((meta, index) => (
+                <figure class="gallery-item" data-index={index + 1}>
+                  <div class="gallery-image-container">
+                    <Image
+                      src={meta}
+                      alt={`${work.title} - View ${index + 2}`}
+                      class="gallery-image"
+                    />
+                    <div class="gallery-overlay">
+                      <div class="gallery-expand-icon">
+                        <svg
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                        >
+                          <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+                        </svg>
+                      </div>
                     </div>
-                    
-                    {work.size && (
-                      <div class="spec-item">
-                        <span class="spec-label">Dimensions</span>
-                        <span class="spec-value">{work.size}</span>
-                      </div>
-                    )}
-                    
-                    {work.printEdition && (
-                      <div class="spec-item">
-                        <span class="spec-label">Edition</span>
-                        <span class="spec-value">{work.printEdition}</span>
-                      </div>
-                    )}
-                    
-                    {work.price && (
-                      <div class="spec-item spec-highlight">
-                        <span class="spec-label">Price</span>
-                        <span class="spec-value">{work.price}</span>
-                      </div>
-                    )}
                   </div>
-                </div>
+                  <figcaption class="gallery-caption">
+                    <span class="caption-number">
+                      {String(index + 2).padStart(2, "0")}
+                    </span>
+                  </figcaption>
+                </figure>
+              ))}
+            </div>
+          </section>
+        )}
 
-                <div class="info-cta">
-                  <a 
-                    href={`mailto:info@fernandofeijoo.com?subject=Inquiry: ${encodeURIComponent(work.title)}`}
-                    class="cta-primary"
-                  >
-                    <span>Inquire about this work</span>
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/>
+        {/* Related Works */}
+        {
+          relatedWorks.length > 0 && (
+            <section class="work-related">
+              <div class="section-header">
+                <div class="section-eyebrow">
+                  <span class="eyebrow-line" />
+                  <span class="eyebrow-text">Explore</span>
+                </div>
+                <div class="section-title-row">
+                  <h2 class="section-title">
+                    More from {collectionTitle || categoryTitle}
+                  </h2>
+                  <a href={backLink} class="view-all-link">
+                    <span>View all</span>
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path
+                        d="M5 12h14M12 5l7 7-7 7"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
                     </svg>
-                  </a>
-                  <a href="/contact" class="cta-secondary">
-                    <span>Visit studio</span>
                   </a>
                 </div>
               </div>
-            </div>
 
-            {/* Gallery Section */}
-            {additionalImagesCount > 0 && (
-              <section class="work-gallery">
-                <div class="section-header">
-                  <div class="section-eyebrow">
-                    <span class="eyebrow-line"></span>
-                    <span class="eyebrow-text">Gallery</span>
-                  </div>
-                  <h2 class="section-title">Additional Views</h2>
-                </div>
-                
-                <div class="gallery-grid" style={`--cols: ${galleryColCount}`}>
-                  {additionalImageMetas.map((meta, index) => (
-                    <figure class="gallery-item" data-index={index + 1}>
-                      <div class="gallery-image-container">
-                        <Image
-                          src={meta}
-                          alt={`${work.title} - View ${index + 2}`}
-                          class="gallery-image"
-                        />
-                        <div class="gallery-overlay">
-                          <div class="gallery-expand-icon">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                              <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
-                            </svg>
+              <div class="related-grid">
+                {relatedWorks.map((relatedWork, index) => {
+                  const relatedMeta = resolveImage(relatedWork.imageUrls?.[0]);
+
+                  return (
+                    <a href={`/works/${relatedWork.slug}`} class="related-card">
+                      <div class="related-image-wrapper">
+                        {relatedMeta ? (
+                          <Image
+                            src={relatedMeta}
+                            alt={relatedWork.title}
+                            width={400}
+                            height={400}
+                            loading="lazy"
+                            decoding="async"
+                            class="related-image"
+                          />
+                        ) : (
+                          <div class="related-fallback">
+                            {relatedWork.title}
+                          </div>
+                        )}
+                        <div class="related-hover-overlay">
+                          <div class="related-hover-content">
+                            <span class="related-number">
+                              {String(index + 1).padStart(2, "0")}
+                            </span>
+                            <h3 class="related-title-text">
+                              {relatedWork.title}
+                            </h3>
                           </div>
                         </div>
                       </div>
-                      <figcaption class="gallery-caption">
-                        <span class="caption-number">{String(index + 2).padStart(2, '0')}</span>
-                      </figcaption>
-                    </figure>
-                  ))}
-                </div>
-              </section>
-            )}
-
-            {/* Related Works */}
-            {relatedWorks.length > 0 && (
-              <section class="work-related">
-                <div class="section-header">
-                  <div class="section-eyebrow">
-                    <span class="eyebrow-line"></span>
-                    <span class="eyebrow-text">Explore</span>
-                  </div>
-                  <div class="section-title-row">
-                    <h2 class="section-title">More from {collectionTitle || categoryTitle}</h2>
-                    <a href={backLink} class="view-all-link">
-                      <span>View all</span>
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/>
-                      </svg>
                     </a>
-                  </div>
-                </div>
-
-                <div class="related-grid">
-                  {relatedWorks.map((relatedWork, index) => {
-                    const relatedMeta = resolveImage(relatedWork.imageUrls?.[0]);
-
-                    return (
-                      <a href={`/works/${relatedWork.slug}`} class="related-card">
-                        <div class="related-image-wrapper">
-                          {relatedMeta ? (
-                            <Image
-                              src={relatedMeta}
-                              alt={relatedWork.title}
-                              width={400}
-                              height={400}
-                              loading="lazy"
-                              decoding="async"
-                              class="related-image"
-                            />
-                          ) : (
-                            <div class="related-fallback">{relatedWork.title}</div>
-                          )}
-                          <div class="related-hover-overlay">
-                            <div class="related-hover-content">
-                              <span class="related-number">{String(index + 1).padStart(2, "0")}</span>
-                              <h3 class="related-title-text">{relatedWork.title}</h3>
-                            </div>
-                          </div>
-                        </div>
-                      </a>
-                    );
-                  })}
-                </div>
-              </section>
-            )}
-          </article>
+                  );
+                })}
+              </div>
+            </section>
+          )
+        }
+      </article>
 
       <ContactBanner />
     </div>
@@ -327,44 +400,48 @@ const backLabel = collectionTitle || categoryTitle;
 
   <ImageModal id="imageModal" />
 
-  <script type="application/ld+json" is:inline set:html={JSON.stringify(
-    (() => {
-      const siteUrl = SITE_CONFIG.url;
-      const schema: Record<string, unknown> = {
-        "@context": "https://schema.org",
-        "@type": "VisualArtwork",
-        "name": work.title,
-        "image": allImageMetas.map(m => `${siteUrl}${m.src}`),
-        "description": work.description,
-        "creator": {
-          "@type": "Person",
-          "name": "Fernando Feijoo",
-          "url": siteUrl
-        },
-        "artMedium": work.printType,
-        "artform": categoryTitle,
-        "size": work.size
-      };
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(
+      (() => {
+        const siteUrl = SITE_CONFIG.url;
+        const schema: Record<string, unknown> = {
+          "@context": "https://schema.org",
+          "@type": "VisualArtwork",
+          name: work.title,
+          image: allImageMetas.map((m) => `${siteUrl}${m.src}`),
+          description: work.description,
+          creator: {
+            "@type": "Person",
+            name: "Fernando Feijoo",
+            url: siteUrl,
+          },
+          artMedium: work.printType,
+          artform: categoryTitle,
+          size: work.size,
+        };
 
-      if (work.price) {
-        const priceMatch = work.price.match(/[\d.]+/);
-        if (priceMatch) {
-          schema.offers = {
-            "@type": "Offer",
-            "price": priceMatch[0],
-            "priceCurrency": "GBP",
-            "availability": "https://schema.org/InStock",
-            "url": `${siteUrl}/works/${work.slug}`
-          };
+        if (work.price) {
+          const priceMatch = work.price.match(/[\d.]+/);
+          if (priceMatch) {
+            schema.offers = {
+              "@type": "Offer",
+              price: priceMatch[0],
+              priceCurrency: "GBP",
+              availability: "https://schema.org/InStock",
+              url: `${siteUrl}/works/${work.slug}`,
+            };
+          }
         }
-      }
 
-      return schema;
-    })()
-  )} />
+        return schema;
+      })(),
+    )}
+  />
 
   <script is:inline>
-    (function() {
+    (function () {
       var controller;
 
       function initWorkPage() {
@@ -373,10 +450,10 @@ const backLabel = collectionTitle || categoryTitle;
         controller = new AbortController();
         var signal = controller.signal;
 
-        var mainImage = document.getElementById('main-work-image');
+        var mainImage = document.getElementById("main-work-image");
 
         function openModal(index) {
-          var imagesData = mainImage && mainImage.getAttribute('data-images');
+          var imagesData = mainImage && mainImage.getAttribute("data-images");
           if (!imagesData) return;
           try {
             var images = JSON.parse(imagesData);
@@ -384,31 +461,47 @@ const backLabel = collectionTitle || categoryTitle;
               window.imageModal.openModal(images, index);
             }
           } catch (e) {
-            console.error('Error opening modal:', e);
+            console.error("Error opening modal:", e);
           }
         }
 
         if (mainImage) {
-          mainImage.addEventListener('click', function() { openModal(0); }, { signal: signal });
+          mainImage.addEventListener(
+            "click",
+            function () {
+              openModal(0);
+            },
+            { signal: signal },
+          );
         }
 
-        var expandBtn = document.querySelector('.expand-trigger');
+        var expandBtn = document.querySelector(".expand-trigger");
         if (expandBtn) {
-          expandBtn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            openModal(0);
-          }, { signal: signal });
+          expandBtn.addEventListener(
+            "click",
+            function (e) {
+              e.stopPropagation();
+              openModal(0);
+            },
+            { signal: signal },
+          );
         }
 
-        document.querySelectorAll('.gallery-item').forEach(function(item) {
-          item.addEventListener('click', function() {
-            var idx = parseInt(item.getAttribute('data-index') || '0');
-            openModal(idx);
-          }, { signal: signal });
-        });
+        document
+          .querySelectorAll(".gallery-item")
+          .forEach(function (item) {
+            item.addEventListener(
+              "click",
+              function () {
+                var idx = parseInt(item.getAttribute("data-index") || "0");
+                openModal(idx);
+              },
+              { signal: signal },
+            );
+          });
       }
 
-      document.addEventListener('astro:page-load', initWorkPage);
+      document.addEventListener("astro:page-load", initWorkPage);
     })();
   </script>
 </Layout>
@@ -427,16 +520,19 @@ const backLabel = collectionTitle || categoryTitle;
     --color-text-secondary: #525252;
     --color-text-muted: #737373;
     --color-accent: #000000;
-    
+
     --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
     --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
     --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
-    
+
     --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-    
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1),
+      0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1),
+      0 4px 6px -4px rgb(0 0 0 / 0.1);
+    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1),
+      0 8px 10px -6px rgb(0 0 0 / 0.1);
+
     width: 100%;
     background: var(--color-bg);
   }
@@ -577,10 +673,30 @@ const backLabel = collectionTitle || categoryTitle;
     transition: opacity 0.4s var(--ease-out);
   }
 
-  .top-left { top: 0.5rem; left: 0.5rem; border-right: none; border-bottom: none; }
-  .top-right { top: 0.5rem; right: 0.5rem; border-left: none; border-bottom: none; }
-  .bottom-left { bottom: 0.5rem; left: 0.5rem; border-right: none; border-top: none; }
-  .bottom-right { bottom: 0.5rem; right: 0.5rem; border-left: none; border-top: none; }
+  .top-left {
+    top: 0.5rem;
+    left: 0.5rem;
+    border-right: none;
+    border-bottom: none;
+  }
+  .top-right {
+    top: 0.5rem;
+    right: 0.5rem;
+    border-left: none;
+    border-bottom: none;
+  }
+  .bottom-left {
+    bottom: 0.5rem;
+    left: 0.5rem;
+    border-right: none;
+    border-top: none;
+  }
+  .bottom-right {
+    bottom: 0.5rem;
+    right: 0.5rem;
+    border-left: none;
+    border-top: none;
+  }
 
   .image-frame:hover .frame-decoration {
     opacity: 0.4;
@@ -652,8 +768,9 @@ const backLabel = collectionTitle || categoryTitle;
     padding: 0 0.5rem;
   }
 
-  .indicator-current, .indicator-total {
-    font-family: 'Exo 2', system-ui, sans-serif;
+  .indicator-current,
+  .indicator-total {
+    font-family: "Exo 2", system-ui, sans-serif;
     font-size: 0.875rem;
     font-weight: 500;
     color: var(--color-text-muted);
@@ -946,7 +1063,7 @@ const backLabel = collectionTitle || categoryTitle;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(0,0,0,0.5);
+    background: rgba(0, 0, 0, 0.5);
     opacity: 0;
     transition: opacity 0.4s var(--ease-out);
   }
@@ -972,7 +1089,7 @@ const backLabel = collectionTitle || categoryTitle;
   }
 
   .caption-number {
-    font-family: 'Exo 2', system-ui, sans-serif;
+    font-family: "Exo 2", system-ui, sans-serif;
     font-size: 0.75rem;
     font-weight: 500;
     color: var(--color-text-muted);
@@ -1050,7 +1167,12 @@ const backLabel = collectionTitle || categoryTitle;
   .related-hover-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 50%, transparent 100%);
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.85) 0%,
+      rgba(0, 0, 0, 0.4) 50%,
+      transparent 100%
+    );
     opacity: 0;
     transition: opacity 0.4s var(--ease-out);
   }
@@ -1077,10 +1199,10 @@ const backLabel = collectionTitle || categoryTitle;
   }
 
   .related-number {
-    font-family: 'Exo 2', system-ui, sans-serif;
+    font-family: "Exo 2", system-ui, sans-serif;
     font-size: 0.75rem;
     font-weight: 500;
-    color: rgba(255,255,255,0.6);
+    color: rgba(255, 255, 255, 0.6);
   }
 
   .related-title-text {
@@ -1090,5 +1212,4 @@ const backLabel = collectionTitle || categoryTitle;
     margin: 0;
     line-height: 1.3;
   }
-
 </style>

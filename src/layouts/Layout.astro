@@ -11,12 +11,12 @@ interface Props extends SeoMeta {}
 const {
   title,
   description = SITE_CONFIG.description,
-  image = "/favicon.png",
+  image = "/bannerimg.avif",
   canonicalURL,
   noindex = false,
 } = Astro.props;
 
-const siteUrl = Astro.site?.toString() || SITE_CONFIG.url;
+const siteUrl = (Astro.site?.toString() || SITE_CONFIG.url).replace(/\/$/, "");
 const currentUrl = canonicalURL || `${siteUrl}${Astro.url.pathname}`;
 const imageUrl = image.startsWith("http") ? image : `${siteUrl}${image}`;
 
@@ -27,13 +27,14 @@ const structuredData = {
   jobTitle: "Artist & Printmaker",
   description: SITE_CONFIG.description,
   url: siteUrl,
+  image: `${siteUrl}/bannerimg.avif`,
   sameAs: ["https://www.instagram.com/fernandofeijoo/", "https://x.com/fernando_feijoo", "https://vimeo.com/573857181"],
-  knowsAbout: ["Printmaking", "Ceramics", "Drawing", "Mixed Media", "Artist Books"],
+  knowsAbout: ["Printmaking", "Ceramics", "Drawing", "Mixed Media", "Artist Books", "Linocut", "Letterpress", "Woodcut", "Etching"],
 };
 ---
 
 <!doctype html>
-<html lang="en" prefix="og: http://ogp.me/ns#">
+<html lang="en-GB" prefix="og: http://ogp.me/ns#">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
@@ -63,6 +64,8 @@ const structuredData = {
     <meta property="og:locale" content="en_GB" />
 
     <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:site" content="@fernando_feijoo" />
+    <meta property="twitter:creator" content="@fernando_feijoo" />
     <meta property="twitter:url" content={currentUrl} />
     <meta property="twitter:title" content={title} />
     <meta property="twitter:description" content={description} />

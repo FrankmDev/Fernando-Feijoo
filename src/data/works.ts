@@ -754,12 +754,27 @@ export const WORKS: Category[] = [
             slug: "the-war",
             title: "The War: A Reflection on Power, and Survival",
             description:
-              "Stark reminder of turbulent times. Echoes German Expressionism. Imagery of underground tunnels. 'Who will have the nerve to push the red button?'",
+              "This piece of work stands as a stark and urgent reminder of the dangers of the turbulent times we live in. Through raw and unfiltered expression in the images, we are confronted by themes of war, power, and the devastating consequences of human conflict. Echoing the spirit of the German Expressionist movement, the work channels an outcry against the atrocities of war, mirroring the chaos, destruction, and political unrests that define our modern era.\n\nAt its core, the piece explores the unrelenting cycles of violence where power-hungry, egotistical and fanatic leaders shape the world with war, greed and conquest, while innocent lives are displaced, shattered, and lost. We are faced with the brutality of conflict, the facelessness of mass suffering, and the eerie, but ever-present threat of total annihilation. The imagery of underground tunnels and hidden networks serves as a haunting metaphor for both survival and control, illustrating how war is fought not only on the battlefields but in the shadows of ignorance, misinformation and manipulation.\n\nThere is an undeniable urgency in the artist's message-an ominous warning that we are skating on thin ice, inching closer to complete catastrophe. The question lingers: who will push the red button? The stark contrast between the creation of the world in six days and its potential destruction in seconds, highlights the fragility of our existence. The work compels viewers to reflect on the precarious state of global affairs and the thin veil that separates us from irreversible devastation.\n\nThis is not just an artwork; it is a call to awareness, a cry to comprehend the fawning sycophancy of the followers of evil that perpetuates the horrors committed in our name. This is a visual manifesto for the urgency of resistance, and a powerful commentary on the choices that shape our collective future.",
             printType: "Quadriptych of Lino cuts",
-            price: "£1000",
-            imageUrls: ["@assets/works/prints/inferno/theWar.avif"],
+            price: "£1000 UF",
+            priceFramed: "£1450",
+            imageUrls: [
+              "@assets/works/prints/inferno/theWarFull.avif",
+              "@assets/works/prints/inferno/theWar1.avif",
+              "@assets/works/prints/inferno/theWar2.avif",
+              "@assets/works/prints/inferno/theWar3.avif",
+              "@assets/works/prints/inferno/theWar4.avif",
+            ],
+            componentImageUrls: [
+              "@assets/works/prints/inferno/theWar1.avif",
+              "@assets/works/prints/inferno/theWar2.avif",
+              "@assets/works/prints/inferno/theWar3.avif",
+              "@assets/works/prints/inferno/theWar4.avif",
+            ],
             printEdition: 50,
-            size: "Various paper sizes: 76 x 56 & 40 x 50 cm",
+            size: "56 x 76 cm two printed sheets, 40 x 50 cm two printed sheets",
+            paperNote:
+              "All prints are hand made by the artist and printed on Somerset Satin White 300gsm acid free paper, using lightfast printing inks. Dimensions refer to full paper size W x H in cm.",
           },
 
           {
@@ -1735,7 +1750,7 @@ export const WORKS: Category[] = [
           },
         ],
       },
-            {
+      {
         slug: "watch-and-bewitched",
         title: "Watch & Bewitched",
         description:

@@ -51,6 +51,9 @@ export interface Work {
   size?: string;
   printEdition?: number;
   price?: string;
+  priceFramed?: string;
+  paperNote?: string;
+  componentImageUrls?: string[];
   imageUrls: string[];
 }
 

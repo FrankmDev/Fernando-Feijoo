@@ -1,0 +1,481 @@
+---
+import { Image } from "astro:assets";
+import type { Work } from "@/types";
+
+interface Props {
+  work: Work;
+  categoryTitle: string;
+  collectionTitle?: string;
+  allImageMetas: ImageMetadata[];
+  coverImageMeta?: ImageMetadata;
+  panelImageMetas: ImageMetadata[];
+}
+
+const {
+  work,
+  categoryTitle,
+  collectionTitle,
+  allImageMetas,
+  coverImageMeta,
+  panelImageMetas,
+} = Astro.props;
+
+const statementParagraphs = (work.description ?? "")
+  .split("\n\n")
+  .map((paragraph: string) => paragraph.trim())
+  .filter(Boolean);
+
+const contextLabel = collectionTitle || categoryTitle;
+---
+
+<section class="the-war-layout">
+  <header class="the-war-hero">
+    <figure class="the-war-cover">
+      {
+        coverImageMeta ? (
+          <div class="the-war-image-frame">
+            <Image
+              id="the-war-cover-image"
+              src={coverImageMeta}
+              alt={`${work.title} complete quadriptych`}
+              class="the-war-cover-image"
+              loading="eager"
+              data-images={JSON.stringify(allImageMetas.map((m) => m.src))}
+            />
+            <button
+              class="expand-trigger the-war-expand"
+              aria-label="Expand complete work"
+            >
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+              </svg>
+            </button>
+          </div>
+        ) : (
+          <div class="image-placeholder">
+            <span>{work.title}</span>
+          </div>
+        )
+      }
+      <figcaption>Complete quadriptych composition</figcaption>
+    </figure>
+
+    <div class="the-war-intro">
+      <p class="the-war-kicker">{contextLabel}</p>
+      <h1>{work.title}</h1>
+      <p class="the-war-summary">
+        The complete composition is presented above as a single work. The four
+        printed views that form the quadriptych are shown below in a dedicated
+        2x2 gallery.
+      </p>
+
+      <div class="the-war-specs" aria-label="Artwork details">
+        <div class="spec-item">
+          <span class="spec-label">Medium</span>
+          <span class="spec-value">{work.printType}</span>
+        </div>
+
+        {
+          work.size && (
+            <div class="spec-item">
+              <span class="spec-label">Dimensions</span>
+              <span class="spec-value">{work.size}</span>
+            </div>
+          )
+        }
+
+        {
+          work.printEdition && (
+            <div class="spec-item">
+              <span class="spec-label">Edition</span>
+              <span class="spec-value">{work.printEdition}</span>
+            </div>
+          )
+        }
+
+        {
+          work.price && (
+            <div class="spec-item">
+              <span class="spec-label">Price</span>
+              <span class="spec-value">{work.price}</span>
+            </div>
+          )
+        }
+
+        {
+          work.priceFramed && (
+            <div class="spec-item">
+              <span class="spec-label">Price Framed</span>
+              <span class="spec-value">{work.priceFramed}</span>
+            </div>
+          )
+        }
+      </div>
+
+      {work.paperNote && <p class="the-war-paper-note">{work.paperNote}</p>}
+
+      <div class="the-war-actions">
+        <a
+          href={`mailto:info@fernandofeijoo.com?subject=Inquiry: ${encodeURIComponent(work.title)}`}
+          class="the-war-primary-link"
+        >
+          Inquire about this work
+        </a>
+        <a href="#the-war-panels" class="the-war-secondary-link">
+          View individual images
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <section class="the-war-statement" aria-labelledby="the-war-statement-title">
+    <div class="the-war-section-heading">
+      <p class="the-war-kicker">Artist Statement</p>
+      <h2 id="the-war-statement-title">A reflection on power and survival</h2>
+    </div>
+    <div class="the-war-statement-copy">
+      {statementParagraphs.map((paragraph) => <p>{paragraph}</p>)}
+    </div>
+  </section>
+
+  <section class="the-war-panels-section" id="the-war-panels">
+    <div class="the-war-section-heading">
+      <p class="the-war-kicker">Four Views</p>
+      <h2>The quadriptych, separated into its four printed images.</h2>
+    </div>
+
+    <div class="the-war-panel-grid" aria-label="The War individual panels">
+      {
+        panelImageMetas.map((meta, index) => (
+          <figure class="the-war-panel" data-index={index + 1}>
+            <div class="the-war-panel-frame">
+              <Image
+                src={meta}
+                alt={`${work.title} panel ${index + 1}`}
+                class="the-war-panel-image"
+                loading={index < 2 ? "eager" : "lazy"}
+                decoding="async"
+              />
+            </div>
+            <figcaption>
+              <span>{String(index + 1).padStart(2, "0")}</span>
+              <span>Printed sheet {index + 1}</span>
+            </figcaption>
+          </figure>
+        ))
+      }
+    </div>
+  </section>
+</section>
+
+<style>
+  .the-war-layout {
+    --war-text: #111111;
+    --war-muted: #666666;
+    --war-soft: #f7f7f7;
+    --war-line: #e5e5e5;
+    --war-paper: #ffffff;
+
+    padding: 2rem 1.5rem 6rem;
+    color: var(--war-text);
+  }
+
+  .the-war-hero,
+  .the-war-statement,
+  .the-war-panels-section {
+    max-width: 1480px;
+    margin: 0 auto;
+  }
+
+  .the-war-hero {
+    display: grid;
+    gap: clamp(2rem, 5vw, 4.5rem);
+    align-items: start;
+    padding-bottom: clamp(3.5rem, 7vw, 6rem);
+    border-bottom: 1px solid var(--war-line);
+  }
+
+  .the-war-cover {
+    margin: 0;
+  }
+
+  .the-war-image-frame,
+  .the-war-panel-frame {
+    position: relative;
+    display: grid;
+    place-items: center;
+    background: var(--war-paper);
+    border: 1px solid var(--war-line);
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.06);
+  }
+
+  .the-war-image-frame {
+    padding: clamp(0.7rem, 1.5vw, 1.25rem);
+  }
+
+  .the-war-cover-image {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: min(78vh, 860px);
+    object-fit: contain;
+    cursor: zoom-in;
+  }
+
+  .the-war-cover figcaption,
+  .the-war-panel figcaption {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 0.8rem;
+    color: var(--war-muted);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    line-height: 1.4;
+    text-transform: uppercase;
+  }
+
+  .the-war-expand {
+    right: 1.5rem;
+    bottom: 1.5rem;
+    background: #111111;
+    color: #ffffff;
+    opacity: 1;
+    transform: none;
+  }
+
+  .the-war-image-frame:hover .the-war-expand {
+    transform: translateY(-2px);
+  }
+
+  .the-war-intro {
+    align-self: center;
+    max-width: 560px;
+  }
+
+  .the-war-kicker {
+    margin: 0 0 0.9rem;
+    color: var(--war-muted);
+    font-size: 0.76rem;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    line-height: 1.4;
+    text-transform: uppercase;
+  }
+
+  .the-war-intro h1,
+  .the-war-section-heading h2 {
+    margin: 0;
+    color: var(--war-text);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+
+  .the-war-intro h1 {
+    font-size: clamp(2.6rem, 6vw, 5.8rem);
+    line-height: 0.98;
+  }
+
+  .the-war-summary {
+    margin: 1.5rem 0 0;
+    color: #333333;
+    font-size: clamp(1rem, 1.25vw, 1.15rem);
+    line-height: 1.8;
+  }
+
+  .the-war-specs {
+    display: grid;
+    margin-top: 2rem;
+    border-top: 1px solid var(--war-line);
+  }
+
+  .the-war-specs .spec-item {
+    display: grid;
+    grid-template-columns: minmax(7rem, 0.35fr) minmax(0, 0.65fr);
+    gap: 1.25rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--war-line);
+  }
+
+  .the-war-specs .spec-label {
+    color: var(--war-muted);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.13em;
+    line-height: 1.4;
+    text-transform: uppercase;
+  }
+
+  .the-war-specs .spec-value {
+    color: var(--war-text);
+    font-size: 0.98rem;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+
+  .the-war-paper-note {
+    margin: 1.25rem 0 0;
+    color: var(--war-muted);
+    font-size: 0.9rem;
+    line-height: 1.75;
+  }
+
+  .the-war-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-top: 2rem;
+  }
+
+  .the-war-primary-link,
+  .the-war-secondary-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 3rem;
+    padding: 0 1.2rem;
+    border: 1px solid #111111;
+    font-size: 0.76rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition:
+      transform 0.25s var(--ease-out),
+      background 0.25s var(--ease-out),
+      color 0.25s var(--ease-out);
+  }
+
+  .the-war-primary-link {
+    background: #111111;
+    color: #ffffff;
+  }
+
+  .the-war-secondary-link {
+    background: #ffffff;
+    color: #111111;
+  }
+
+  .the-war-primary-link:hover,
+  .the-war-secondary-link:hover {
+    transform: translateY(-2px);
+  }
+
+  .the-war-secondary-link:hover {
+    background: #111111;
+    color: #ffffff;
+  }
+
+  .the-war-statement,
+  .the-war-panels-section {
+    display: grid;
+    gap: clamp(1.75rem, 4vw, 4rem);
+    padding-top: clamp(3.5rem, 7vw, 6rem);
+  }
+
+  .the-war-section-heading {
+    max-width: 520px;
+  }
+
+  .the-war-section-heading h2 {
+    font-size: clamp(2rem, 4vw, 4.25rem);
+    line-height: 1.02;
+  }
+
+  .the-war-statement-copy {
+    max-width: 880px;
+  }
+
+  .the-war-statement-copy p {
+    margin: 0;
+    color: #2f2f2f;
+    font-size: clamp(1rem, 1.25vw, 1.14rem);
+    line-height: 1.9;
+  }
+
+  .the-war-statement-copy p + p {
+    margin-top: 1.25rem;
+  }
+
+  .the-war-panel-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(1.25rem, 3vw, 2.5rem);
+  }
+
+  .the-war-panel {
+    margin: 0;
+    cursor: zoom-in;
+  }
+
+  .the-war-panel-frame {
+    aspect-ratio: 1 / 1;
+    padding: clamp(0.7rem, 1.4vw, 1.1rem);
+    background: var(--war-soft);
+    overflow: hidden;
+  }
+
+  .the-war-panel-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition:
+      transform 0.35s var(--ease-out),
+      filter 0.35s var(--ease-out);
+  }
+
+  .the-war-panel:hover .the-war-panel-image {
+    transform: scale(1.015);
+    filter: contrast(1.03);
+  }
+
+  .the-war-panel figcaption span:first-child {
+    color: var(--war-text);
+  }
+
+  @media (min-width: 860px) {
+    .the-war-hero {
+      grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.72fr);
+    }
+
+    .the-war-statement,
+    .the-war-panels-section {
+      grid-template-columns: minmax(260px, 0.34fr) minmax(0, 0.66fr);
+      align-items: start;
+    }
+
+    .the-war-section-heading {
+      position: sticky;
+      top: 6rem;
+    }
+
+    .the-war-panel-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 640px) {
+    .the-war-layout {
+      padding: 1.5rem 1rem 4rem;
+    }
+
+    .the-war-specs .spec-item {
+      grid-template-columns: 1fr;
+      gap: 0.35rem;
+    }
+
+    .the-war-primary-link,
+    .the-war-secondary-link {
+      width: 100%;
+    }
+  }
+</style>
